@@ -87,6 +87,9 @@ const RenderGhostTrackSVG: React.FC<{ direction: Direction; length: number; tile
 
   const angle = rotationDegrees[direction];
   const totalWidth = tileSize * length;
+  const scale = tileSize / 52;
+  const s = (val: number) => val * scale;
+  const cy = tileSize / 2;
 
   return (
     <div
@@ -100,16 +103,16 @@ const RenderGhostTrackSVG: React.FC<{ direction: Direction; length: number; tile
     >
       <svg width={totalWidth} height={tileSize} viewBox={`0 0 ${totalWidth} ${tileSize}`} fill="none">
         <path
-          d={`M 8 ${tileSize / 2 - 5} 
-             L ${totalWidth - 18} ${tileSize / 2 - 5} 
-             L ${totalWidth - 18} ${tileSize / 2 - 10} 
-             L ${totalWidth - 6} ${tileSize / 2} 
-             L ${totalWidth - 18} ${tileSize / 2 + 10} 
-             L ${totalWidth - 18} ${tileSize / 2 + 5} 
-             L 8 ${tileSize / 2 + 5} Z`}
+          d={`M ${s(8)} ${cy - s(5)} 
+             L ${totalWidth - s(18)} ${cy - s(5)} 
+             L ${totalWidth - s(18)} ${cy - s(10)} 
+             L ${totalWidth - s(6)} ${cy} 
+             L ${totalWidth - s(18)} ${cy + s(10)} 
+             L ${totalWidth - s(18)} ${cy + s(5)} 
+             L ${s(8)} ${cy + s(5)} Z`}
           fill="#94A3B8"
           stroke="#64748B"
-          strokeWidth="1.5"
+          strokeWidth={Math.max(1, s(1.5))}
           strokeLinejoin="round"
         />
       </svg>
@@ -143,6 +146,10 @@ const Render3DArrowSVG: React.FC<{
   const h = tileSize;
   const cy = h / 2;
 
+  // Proportional scale relative to standard 52px base
+  const scale = tileSize / 52;
+  const s = (val: number) => val * scale;
+
   return (
     <div
       className={`absolute top-0 left-0 flex items-center justify-center transition-all duration-200 ${
@@ -160,7 +167,7 @@ const Render3DArrowSVG: React.FC<{
         height={h}
         viewBox={`0 0 ${totalWidth} ${h}`}
         fill="none"
-        className="filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.14)] cursor-pointer select-none overflow-visible"
+        className="filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.14)] cursor-pointer select-none overflow-visible"
       >
         <defs>
           <linearGradient id={`grad-${arrow.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
@@ -170,41 +177,41 @@ const Render3DArrowSVG: React.FC<{
           </linearGradient>
 
           <filter id={`shadow-${arrow.id}`} x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="3" stdDeviation="2" floodColor={theme.border} floodOpacity="0.4" />
+            <feDropShadow dx="0" dy={s(3)} stdDeviation={s(2)} floodColor={theme.border} floodOpacity="0.4" />
           </filter>
         </defs>
 
         {/* 3D Bottom Bevel Shadow Layer */}
         <path
-          d={`M 10 ${cy - 8} 
-             L ${totalWidth - 20} ${cy - 8} 
-             L ${totalWidth - 20} ${cy - 14} 
-             L ${totalWidth - 4} ${cy} 
-             L ${totalWidth - 20} ${cy + 14} 
-             L ${totalWidth - 20} ${cy + 8} 
-             L 10 ${cy + 8} Z`}
+          d={`M ${s(10)} ${cy - s(8)} 
+             L ${totalWidth - s(20)} ${cy - s(8)} 
+             L ${totalWidth - s(20)} ${cy - s(14)} 
+             L ${totalWidth - s(4)} ${cy} 
+             L ${totalWidth - s(20)} ${cy + s(14)} 
+             L ${totalWidth - s(20)} ${cy + s(8)} 
+             L ${s(10)} ${cy + s(8)} Z`}
           fill={theme.border}
           opacity="0.5"
-          transform="translate(0, 3.5)"
+          transform={`translate(0, ${s(3.5)})`}
         />
 
         {/* Main Glossy Tube Body with Rounded Arrow Head */}
         <path
-          d={`M 10 ${cy - 10} 
-             C 6 ${cy - 10}, 4 ${cy - 6}, 4 ${cy} 
-             C 4 ${cy + 6}, 6 ${cy + 10}, 10 ${cy + 10} 
-             L ${totalWidth - 22} ${cy + 10} 
-             L ${totalWidth - 22} ${cy + 17} 
-             C ${totalWidth - 22} ${cy + 20}, ${totalWidth - 18} ${cy + 21}, ${totalWidth - 15} ${cy + 19} 
-             L ${totalWidth - 2} ${cy + 2} 
-             C ${totalWidth + 1} ${cy}, ${totalWidth + 1} ${cy - 2}, ${totalWidth - 2} ${cy - 4} 
-             L ${totalWidth - 15} ${cy - 21} 
-             C ${totalWidth - 18} ${cy - 23}, ${totalWidth - 22} ${cy - 22}, ${totalWidth - 22} ${cy - 19} 
-             L ${totalWidth - 22} ${cy - 10} 
+          d={`M ${s(10)} ${cy - s(10)} 
+             C ${s(6)} ${cy - s(10)}, ${s(4)} ${cy - s(6)}, ${s(4)} ${cy} 
+             C ${s(4)} ${cy + s(6)}, ${s(6)} ${cy + s(10)}, ${s(10)} ${cy + s(10)} 
+             L ${totalWidth - s(22)} ${cy + s(10)} 
+             L ${totalWidth - s(22)} ${cy + s(17)} 
+             C ${totalWidth - s(22)} ${cy + s(20)}, ${totalWidth - s(18)} ${cy + s(21)}, ${totalWidth - s(15)} ${cy + s(19)} 
+             L ${totalWidth - s(2)} ${cy + s(2)} 
+             C ${totalWidth + s(1)} ${cy}, ${totalWidth + s(1)} ${cy - s(2)}, ${totalWidth - s(2)} ${cy - s(4)} 
+             L ${totalWidth - s(15)} ${cy - s(21)} 
+             C ${totalWidth - s(18)} ${cy - s(23)}, ${totalWidth - s(22)} ${cy - s(22)}, ${totalWidth - s(22)} ${cy - s(19)} 
+             L ${totalWidth - s(22)} ${cy - s(10)} 
              Z`}
           fill={`url(#grad-${arrow.id})`}
           stroke={theme.border}
-          strokeWidth="2.2"
+          strokeWidth={Math.max(1.2, s(2.2))}
           strokeLinejoin="round"
           strokeLinecap="round"
           filter={`url(#shadow-${arrow.id})`}
@@ -212,9 +219,9 @@ const Render3DArrowSVG: React.FC<{
 
         {/* Specular White Gloss Top Edge Highlight */}
         <path
-          d={`M 12 ${cy - 7} L ${totalWidth - 22} ${cy - 7} L ${totalWidth - 22} ${cy - 13} L ${totalWidth - 12} ${cy - 3}`}
+          d={`M ${s(12)} ${cy - s(7)} L ${totalWidth - s(22)} ${cy - s(7)} L ${totalWidth - s(22)} ${cy - s(13)} L ${totalWidth - s(12)} ${cy - s(3)}`}
           stroke="white"
-          strokeWidth="2.5"
+          strokeWidth={Math.max(1.2, s(2.5))}
           strokeLinecap="round"
           opacity="0.8"
         />
@@ -231,8 +238,31 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
   onArrowBlocked,
   isCompleted,
 }) => {
+  const containerRef = React.useRef<HTMLDivElement>(null);
   const [bumpingArrowId, setBumpingArrowId] = useState<string | null>(null);
   const [flyingArrows, setFlyingArrows] = useState<Record<string, { x: number; y: number }>>({});
+  const [tileSize, setTileSize] = useState<number>(52);
+
+  // Dynamic board & tile size calculator for responsive mobile perfection
+  useEffect(() => {
+    const updateTileSize = () => {
+      if (!containerRef.current) return;
+      const availableWidth = containerRef.current.clientWidth - 16;
+      const availableHeight = window.innerHeight - 210;
+
+      const maxTileW = Math.floor(availableWidth / gridCols);
+      const maxTileH = Math.floor(availableHeight / gridRows);
+
+      const optimal = Math.min(maxTileW, maxTileH);
+      // Clamp between 24 and 54 for perfect mobile scaling
+      const clamped = Math.max(24, Math.min(54, optimal));
+      setTileSize(clamped);
+    };
+
+    updateTileSize();
+    window.addEventListener('resize', updateTileSize);
+    return () => window.removeEventListener('resize', updateTileSize);
+  }, [gridCols, gridRows]);
 
   useEffect(() => {
     setBumpingArrowId(null);
@@ -279,16 +309,17 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
     }
   };
 
-  const tileSize = 52; // Cell width for compact clean layout matching user's image
-
   return (
-    <div className="w-full flex-1 flex flex-col items-center justify-center relative my-4 px-2 overflow-hidden select-none">
+    <div
+      ref={containerRef}
+      className="w-full flex-1 flex flex-col items-center justify-center relative my-2 px-1 sm:px-2 overflow-hidden select-none"
+    >
       {/* Off-White Stage matching screenshot clean ivory background */}
       <div className="relative w-full max-w-4xl flex items-center justify-center">
         <div
-          className="relative bg-white/40 backdrop-blur-xs rounded-3xl p-4 sm:p-8 flex items-center justify-center transition-all duration-300"
+          className="relative bg-white/45 backdrop-blur-xs rounded-3xl p-2 sm:p-6 flex items-center justify-center transition-all duration-300 border border-slate-200/50 shadow-xs"
           style={{
-            minHeight: `${gridRows * tileSize + 60}px`,
+            minHeight: `${gridRows * tileSize + 32}px`,
             width: '100%',
           }}
         >
@@ -300,7 +331,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
               height: `${gridRows * tileSize}px`,
             }}
           >
-            {/* Background Ghost Track Arrows (Matching screenshot guide tracks) */}
+            {/* Background Ghost Track Arrows */}
             {arrows.map((arrow) => {
               const left = arrow.gridX * tileSize;
               const top = arrow.gridY * tileSize;
@@ -338,7 +369,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
                 <div
                   key={arrow.id}
                   onClick={() => handleArrowClick(arrow)}
-                  className="absolute transition-transform ease-out cursor-pointer z-10"
+                  className="absolute transition-transform ease-out cursor-pointer z-10 touch-manipulation"
                   style={{
                     left: `${left}px`,
                     top: `${top}px`,
