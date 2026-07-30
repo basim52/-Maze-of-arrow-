@@ -72,8 +72,6 @@ export function checkPathClear(
   const startY = isForward ? arrow.gridY + DIRECTION_VECTORS[arrow.direction].y * (len - 1) : arrow.gridY;
 
   const maxSteps = Math.max(gridCols, gridRows) + 4;
-  let blockerCount = 0;
-  let firstBlocker: Arrow | null = null;
 
   for (let step = 1; step <= maxSteps; step++) {
     const targetX = startX + vec.x * step;
@@ -86,12 +84,10 @@ export function checkPathClear(
 
     const blocker = getArrowOccupyingTile(targetX, targetY, allArrows, arrow.id);
     if (blocker) {
-      if (isGhost) {
-        blockerCount++;
-        if (!firstBlocker) firstBlocker = blocker;
-        if (blockerCount > 1) {
-          return { canEscape: false, blocker: firstBlocker };
-        }
+      const isBlockerNormal = !blocker.isBomb && !blocker.isDouble && blocker.type !== 'bomb' && blocker.type !== 'double';
+      if (isGhost && isBlockerNormal) {
+        // Ghost arrow phases right through normal arrows!
+        continue;
       } else {
         return { canEscape: false, blocker };
       }

@@ -16,6 +16,7 @@ interface ShopModalProps {
   onBuyHammer: (cost: number) => void;
   onBuyThunder: (cost: number) => void;
   onBuyCream: (cost: number) => void;
+  onBuyBundle: (cost: number) => void;
   onClose: () => void;
 }
 
@@ -76,9 +77,11 @@ export const ShopModal: React.FC<ShopModalProps> = ({
   onBuyHammer,
   onBuyThunder,
   onBuyCream,
+  onBuyBundle,
   onClose,
 }) => {
   const isAr = language === 'ar';
+  const canAffordBundle = coins >= 255;
   const canAffordHammer = coins >= 45;
   const canAffordThunder = coins >= 95;
   const canAffordCream = coins >= 129;
@@ -113,6 +116,61 @@ export const ShopModal: React.FC<ShopModalProps> = ({
           <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider">
             {isAr ? 'الأدوات والمساعدات' : 'Tools & Power-ups'}
           </h3>
+
+          {/* Mega Triple Power-Up Bundle (255 coins) */}
+          <div className="p-4 rounded-2xl border-2 border-amber-400 bg-gradient-to-r from-amber-50 via-yellow-100/70 to-purple-50 flex flex-col gap-2.5 shadow-md relative overflow-hidden">
+            <div className="absolute -right-4 -top-4 w-16 h-16 bg-amber-300/30 rounded-full blur-lg pointer-events-none" />
+            
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5 bg-amber-500 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-xs">
+                <span>🎁</span>
+                <span>{isAr ? 'عرض البكج الشامل' : 'Mega Value Bundle'}</span>
+              </div>
+              <span className="text-[10px] font-extrabold text-amber-800 bg-amber-200/80 px-2 py-0.5 rounded-full border border-amber-300">
+                {isAr ? 'توفير 14 نقطة!' : 'Save 14 coins!'}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-400 via-orange-400 to-purple-500 flex items-center justify-center text-xl shadow-md gap-0.5">
+                  <span>🍦</span>
+                  <span>🔨</span>
+                  <span>⚡</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-black text-slate-900 text-xs sm:text-sm">
+                    {isAr ? 'بكج الكريمة والمطرقة والرعد' : 'Cream + Hammer + Thunder'}
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-600 mt-0.5">
+                    {isAr ? '1x كريمة 🍦 + 1x مطرقة 🔨 + 1x رعد ⚡' : '1x Cream 🍦 + 1x Hammer 🔨 + 1x Thunder ⚡'}
+                  </span>
+                  <span className="text-xs font-black text-amber-700 mt-1 flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 text-amber-500 fill-amber-400" />
+                    255 {isAr ? 'نقطة' : 'Coins'}
+                  </span>
+                </div>
+              </div>
+
+              <button
+                disabled={!canAffordBundle}
+                onClick={() => {
+                  soundManager.playClick();
+                  if (canAffordBundle) {
+                    onBuyBundle(255);
+                  }
+                }}
+                className={`px-3 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-xs ${
+                  canAffordBundle
+                    ? 'bg-gradient-to-r from-amber-500 via-orange-500 to-purple-600 text-white hover:scale-105 active:scale-95 shadow-amber-300'
+                    : 'bg-slate-200 text-slate-400 cursor-not-allowed opacity-70'
+                }`}
+                title={isAr ? 'شراء بكج الأدوات بـ 255 نقطة' : 'Buy Power-Up Bundle for 255 coins'}
+              >
+                <span>{isAr ? 'شراء البكج' : 'Buy Bundle'}</span>
+              </button>
+            </div>
+          </div>
 
           {/* Lightning / Thunder Item (95 coins) */}
           <div className="p-3.5 rounded-2xl border-2 border-sky-300 bg-gradient-to-br from-sky-50/90 via-cyan-50/60 to-blue-50/40 flex items-center justify-between shadow-xs">

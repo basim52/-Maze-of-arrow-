@@ -319,6 +319,17 @@ export default function App() {
     }
   };
 
+  const handleBuyBundle = (cost: number) => {
+    const isAr = language === 'ar';
+    if (coins >= cost) {
+      setCoins((prev) => prev - cost);
+      setCreams((prev) => prev + 1);
+      setHammers((prev) => prev + 1);
+      setThunders((prev) => prev + 1);
+      triggerToast(isAr ? 'تم شراء بكج الأدوات الشامل بنجاح! 🍦🔨⚡' : 'Mega Power-Up Bundle purchased! 🍦🔨⚡');
+    }
+  };
+
   const handleUseLightning = () => {
     const isAr = language === 'ar';
     soundManager.playClick();
@@ -796,6 +807,7 @@ export default function App() {
           onBuyHammer={handleBuyHammer}
           onBuyThunder={handleBuyThunder}
           onBuyCream={handleBuyCream}
+          onBuyBundle={handleBuyBundle}
           onClose={() => setShowShopModal(false)}
         />
       )}
