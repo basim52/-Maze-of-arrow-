@@ -10,9 +10,11 @@ export interface Arrow {
   direction: Direction;
   color: ArrowColor;
   length: number; // Standard length in grid units
-  type?: 'standard' | 'double' | 'bomb'; // Type of arrow: standard, double-headed bidirectional, or explosive bomb
+  type?: 'standard' | 'double' | 'bomb' | 'ghost' | 'star'; // Type of arrow: standard, double-headed, bomb, ghost, or bonus star
   isDouble?: boolean;
   isBomb?: boolean;
+  isGhost?: boolean;
+  isStar?: boolean;
   cells?: { x: number; y: number }[]; // Ordered list of grid coordinates relative to (gridX, gridY) or absolute grid positions
   isEscaped?: boolean;
   isFlying?: boolean;

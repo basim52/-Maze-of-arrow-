@@ -22,8 +22,8 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
 }) => {
   const isAr = language === 'ar';
 
-  // Display all levels dynamically (min 125, expanding as player progresses)
-  const TOTAL_LEVELS = Math.max(125, unlockedLevel, currentLevel + 5);
+  // Display all levels dynamically (200 levels total with new arrow mechanics)
+  const TOTAL_LEVELS = Math.max(200, unlockedLevel, currentLevel + 5);
   const levelIds = Array.from({ length: TOTAL_LEVELS }, (_, i) => i + 1);
 
   return (

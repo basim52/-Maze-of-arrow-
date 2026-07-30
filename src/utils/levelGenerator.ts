@@ -65,12 +65,16 @@ export function checkPathClear(
 ): { canEscape: boolean; blocker: Arrow | null } {
   const vec = DIRECTION_VECTORS[checkDir];
   const len = arrow.length || 1;
+  const isGhost = arrow.isGhost || arrow.type === 'ghost';
 
   const isForward = checkDir === arrow.direction;
   const startX = isForward ? arrow.gridX + DIRECTION_VECTORS[arrow.direction].x * (len - 1) : arrow.gridX;
   const startY = isForward ? arrow.gridY + DIRECTION_VECTORS[arrow.direction].y * (len - 1) : arrow.gridY;
 
   const maxSteps = Math.max(gridCols, gridRows) + 4;
+  let blockerCount = 0;
+  let firstBlocker: Arrow | null = null;
+
   for (let step = 1; step <= maxSteps; step++) {
     const targetX = startX + vec.x * step;
     const targetY = startY + vec.y * step;
@@ -82,7 +86,15 @@ export function checkPathClear(
 
     const blocker = getArrowOccupyingTile(targetX, targetY, allArrows, arrow.id);
     if (blocker) {
-      return { canEscape: false, blocker };
+      if (isGhost) {
+        blockerCount++;
+        if (!firstBlocker) firstBlocker = blocker;
+        if (blockerCount > 1) {
+          return { canEscape: false, blocker: firstBlocker };
+        }
+      } else {
+        return { canEscape: false, blocker };
+      }
     }
   }
   return { canEscape: true, blocker: null };
@@ -5398,8 +5410,10 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
       const dir = directions[Math.floor(Math.random() * directions.length)];
       const color = COLORS[Math.floor(Math.random() * COLORS.length)];
       const len = Math.random() > 0.6 ? 2 : 1;
-      const isBomb = levelNumber >= 8 && Math.random() < 0.15;
-      const isDouble = !isBomb && levelNumber >= 6 && Math.random() < 0.2;
+      const isBomb = levelNumber >= 8 && Math.random() < 0.12;
+      const isGhost = !isBomb && levelNumber >= 4 && Math.random() < 0.16;
+      const isStar = !isBomb && !isGhost && Math.random() < 0.18;
+      const isDouble = !isBomb && !isGhost && !isStar && levelNumber >= 6 && Math.random() < 0.20;
 
       const candidate: Arrow = {
         id: `gen-${levelNumber}-${arrows.length}-${Math.random().toString(36).substring(2, 7)}`,
@@ -5408,7 +5422,15 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
         direction: dir,
         color: color,
         length: len,
-        ...(isBomb ? { type: 'bomb', isBomb: true } : isDouble ? { type: 'double', isDouble: true } : {}),
+        ...(isBomb
+          ? { type: 'bomb', isBomb: true }
+          : isGhost
+          ? { type: 'ghost', isGhost: true }
+          : isStar
+          ? { type: 'star', isStar: true }
+          : isDouble
+          ? { type: 'double', isDouble: true }
+          : {}),
       };
 
       const testLevel: Level = {
@@ -5469,7 +5491,7 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
   };
 }
 
-export const HAMMER_REQUIRED_LEVEL_IDS = [45, 52, 60, 68, 77, 85, 93, 100, 108, 115, 122, 125];
+export const HAMMER_REQUIRED_LEVEL_IDS = [45, 52, 60, 68, 77, 85, 93, 100, 108, 115, 122, 125, 140, 160, 180, 200];
 
 export function createHammerRequiredLevel(levelNumber: number): Level {
   const isEvery5th = levelNumber % 5 === 0;
@@ -5727,6 +5749,79 @@ export function createHammerRequiredLevel(levelNumber: number): Level {
         { id: '125-10', gridX: 1, gridY: 1, direction: 'down', color: 'pink', length: 3 },
         { id: '125-11', gridX: 1, gridY: 8, direction: 'right', color: 'orange', length: 3 },
         { id: '125-12', gridX: 9, gridY: 8, direction: 'up', color: 'yellow', length: 2 },
+      ];
+      break;
+
+    case 140:
+      cols = 16;
+      rows = 9;
+      nameAr = `🔨 👻 140 - متاهة الأشباح الفولاذية 🔥`;
+      nameEn = `🔨 👻 140 - Ghost Steel Labyrinth 🔥`;
+      deadlockArrows = [
+        { id: '140-1', gridX: 4, gridY: 2, direction: 'right', color: 'purple', length: 2, type: 'ghost', isGhost: true },
+        { id: '140-2', gridX: 7, gridY: 2, direction: 'down', color: 'cyan', length: 2, type: 'ghost', isGhost: true },
+        { id: '140-3', gridX: 7, gridY: 5, direction: 'left', color: 'pink', length: 2, type: 'star', isStar: true },
+        { id: '140-4', gridX: 4, gridY: 5, direction: 'up', color: 'lime', length: 2 },
+        { id: '140-5', gridX: 10, gridY: 2, direction: 'right', color: 'yellow', length: 3, type: 'double', isDouble: true },
+        { id: '140-6', gridX: 14, gridY: 2, direction: 'down', color: 'orange', length: 3, type: 'bomb', isBomb: true },
+        { id: '140-7', gridX: 14, gridY: 6, direction: 'left', color: 'cyan', length: 3 },
+        { id: '140-8', gridX: 10, gridY: 6, direction: 'up', color: 'purple', length: 3 },
+        { id: '140-9', gridX: 1, gridY: 4, direction: 'right', color: 'lime', length: 2 },
+        { id: '140-10', gridX: 2, gridY: 7, direction: 'right', color: 'yellow', length: 2, type: 'star', isStar: true },
+      ];
+      break;
+
+    case 160:
+      cols = 16;
+      rows = 10;
+      nameAr = `🔨 🌟 160 - حصن النجوم الفولاذي 🔥`;
+      nameEn = `🔨 🌟 160 - Star Steel Fortress 🔥`;
+      deadlockArrows = [
+        { id: '160-1', gridX: 5, gridY: 3, direction: 'right', color: 'yellow', length: 2, type: 'star', isStar: true },
+        { id: '160-2', gridX: 8, gridY: 3, direction: 'down', color: 'orange', length: 2, type: 'ghost', isGhost: true },
+        { id: '160-3', gridX: 8, gridY: 6, direction: 'left', color: 'purple', length: 2, type: 'star', isStar: true },
+        { id: '160-4', gridX: 5, gridY: 6, direction: 'up', color: 'cyan', length: 2, type: 'ghost', isGhost: true },
+        { id: '160-5', gridX: 2, gridY: 1, direction: 'right', color: 'pink', length: 3, type: 'double', isDouble: true },
+        { id: '160-6', gridX: 13, gridY: 1, direction: 'left', color: 'lime', length: 3 },
+        { id: '160-7', gridX: 13, gridY: 8, direction: 'up', color: 'orange', length: 3, type: 'bomb', isBomb: true },
+        { id: '160-8', gridX: 2, gridY: 8, direction: 'right', color: 'cyan', length: 3 },
+      ];
+      break;
+
+    case 180:
+      cols = 16;
+      rows = 10;
+      nameAr = `🔨 👻 180 - قمة الأشباح والنجوم 🔥`;
+      nameEn = `🔨 👻 180 - Ghost Star Citadel 🔥`;
+      deadlockArrows = [
+        { id: '180-1', gridX: 4, gridY: 3, direction: 'right', color: 'purple', length: 2, type: 'ghost', isGhost: true },
+        { id: '180-2', gridX: 7, gridY: 3, direction: 'down', color: 'lime', length: 2, type: 'ghost', isGhost: true },
+        { id: '180-3', gridX: 7, gridY: 6, direction: 'left', color: 'yellow', length: 2, type: 'star', isStar: true },
+        { id: '180-4', gridX: 4, gridY: 6, direction: 'up', color: 'pink', length: 2, type: 'star', isStar: true },
+        { id: '180-5', gridX: 10, gridY: 2, direction: 'right', color: 'cyan', length: 3, type: 'double', isDouble: true },
+        { id: '180-6', gridX: 14, gridY: 2, direction: 'down', color: 'orange', length: 3, type: 'bomb', isBomb: true },
+        { id: '180-7', gridX: 14, gridY: 7, direction: 'left', color: 'purple', length: 3 },
+        { id: '180-8', gridX: 10, gridY: 7, direction: 'up', color: 'lime', length: 3, type: 'ghost', isGhost: true },
+        { id: '180-9', gridX: 1, gridY: 4, direction: 'right', color: 'yellow', length: 3 },
+      ];
+      break;
+
+    case 200:
+      cols = 16;
+      rows = 10;
+      nameAr = `🔨 👑 200 - قمة الفولاذ الكونية الخارقة 🔥`;
+      nameEn = `🔨 👑 200 - Ultimate Cosmic Steel Pinnacle 🔥`;
+      deadlockArrows = [
+        { id: '200-1', gridX: 4, gridY: 3, direction: 'right', color: 'cyan', length: 2, type: 'ghost', isGhost: true },
+        { id: '200-2', gridX: 7, gridY: 3, direction: 'down', color: 'purple', length: 2, type: 'star', isStar: true },
+        { id: '200-3', gridX: 7, gridY: 6, direction: 'left', color: 'orange', length: 2, type: 'bomb', isBomb: true },
+        { id: '200-4', gridX: 4, gridY: 6, direction: 'up', color: 'lime', length: 2, type: 'double', isDouble: true },
+        { id: '200-5', gridX: 10, gridY: 2, direction: 'right', color: 'yellow', length: 3, type: 'star', isStar: true },
+        { id: '200-6', gridX: 14, gridY: 2, direction: 'down', color: 'pink', length: 3, type: 'ghost', isGhost: true },
+        { id: '200-7', gridX: 14, gridY: 7, direction: 'left', color: 'purple', length: 3, type: 'bomb', isBomb: true },
+        { id: '200-8', gridX: 10, gridY: 7, direction: 'up', color: 'cyan', length: 3, type: 'double', isDouble: true },
+        { id: '200-9', gridX: 1, gridY: 1, direction: 'down', color: 'lime', length: 3 },
+        { id: '200-10', gridX: 1, gridY: 8, direction: 'right', color: 'yellow', length: 3 },
       ];
       break;
 

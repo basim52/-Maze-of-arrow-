@@ -439,6 +439,18 @@ export default function App() {
 
   // Handle Arrow Escaped successfully
   const handleArrowEscaped = (arrowId: string) => {
+    const escapedArrow = arrows.find((a) => a.id === arrowId);
+    if (escapedArrow) {
+      if (escapedArrow.isStar || escapedArrow.type === 'star') {
+        const isAr = language === 'ar';
+        setCoins((prev) => prev + 25);
+        triggerToast(isAr ? '🌟 سهم النجمة الذهبية منحك +25 نقطة!' : '🌟 Star Arrow granted +25 coins!');
+      } else if (escapedArrow.isGhost || escapedArrow.type === 'ghost') {
+        const isAr = language === 'ar';
+        triggerToast(isAr ? '👻 سهم الشبح اخترق العوائق وهرب ببراعة!' : '👻 Ghost Arrow phased through obstacles!');
+      }
+    }
+
     setArrows((prev) => {
       const next = prev.map((a) => (a.id === arrowId ? { ...a, isEscaped: true } : a));
       const remaining = next.filter((a) => !a.isEscaped).length;

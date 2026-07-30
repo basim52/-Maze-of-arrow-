@@ -148,6 +148,8 @@ const Render3DArrowSVG: React.FC<{
   const theme = COLOR_THEMES[arrow.color] || COLOR_THEMES.cyan;
   const isDouble = arrow.isDouble || arrow.type === 'double';
   const isBomb = arrow.isBomb || arrow.type === 'bomb';
+  const isGhost = arrow.isGhost || arrow.type === 'ghost';
+  const isStar = arrow.isStar || arrow.type === 'star';
 
   const rotationDegrees: Record<Direction, number> = {
     up: -90,
@@ -240,20 +242,76 @@ const Render3DArrowSVG: React.FC<{
       >
         <defs>
           <linearGradient id={`grad-${arrow.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor={isBomb ? '#FDE047' : theme.highlight} stopOpacity="0.95" />
-            <stop offset="30%" stopColor={isBomb ? '#F97316' : theme.gradientStart} />
-            <stop offset="100%" stopColor={isBomb ? '#DC2626' : theme.gradientEnd} />
+            <stop
+              offset="0%"
+              stopColor={
+                isBomb
+                  ? '#FDE047'
+                  : isGhost
+                  ? '#E9D5FF'
+                  : isStar
+                  ? '#FEF08A'
+                  : theme.highlight
+              }
+              stopOpacity="0.95"
+            />
+            <stop
+              offset="30%"
+              stopColor={
+                isBomb
+                  ? '#F97316'
+                  : isGhost
+                  ? '#A855F7'
+                  : isStar
+                  ? '#F59E0B'
+                  : theme.gradientStart
+              }
+            />
+            <stop
+              offset="100%"
+              stopColor={
+                isBomb
+                  ? '#DC2626'
+                  : isGhost
+                  ? '#581C87'
+                  : isStar
+                  ? '#E11D48'
+                  : theme.gradientEnd
+              }
+            />
           </linearGradient>
 
           <filter id={`shadow-${arrow.id}`} x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy={s(3)} stdDeviation={s(2)} floodColor={isBomb ? '#991B1B' : theme.border} floodOpacity="0.4" />
+            <feDropShadow
+              dx="0"
+              dy={s(3)}
+              stdDeviation={s(2)}
+              floodColor={
+                isBomb
+                  ? '#991B1B'
+                  : isGhost
+                  ? '#3B0764'
+                  : isStar
+                  ? '#78350F'
+                  : theme.border
+              }
+              floodOpacity="0.4"
+            />
           </filter>
         </defs>
 
         {/* 3D Bottom Bevel Shadow Layer */}
         <path
           d={shadowPath}
-          fill={isBomb ? '#991B1B' : theme.border}
+          fill={
+            isBomb
+              ? '#991B1B'
+              : isGhost
+              ? '#3B0764'
+              : isStar
+              ? '#78350F'
+              : theme.border
+          }
           opacity="0.5"
           transform={`translate(0, ${s(3.5)})`}
         />
@@ -262,11 +320,20 @@ const Render3DArrowSVG: React.FC<{
         <path
           d={bodyPath}
           fill={`url(#grad-${arrow.id})`}
-          stroke={isBomb ? '#7F1D1D' : theme.border}
+          stroke={
+            isBomb
+              ? '#7F1D1D'
+              : isGhost
+              ? '#6B21A8'
+              : isStar
+              ? '#B45309'
+              : theme.border
+          }
           strokeWidth={Math.max(1.2, s(2.2))}
           strokeLinejoin="round"
           strokeLinecap="round"
           filter={`url(#shadow-${arrow.id})`}
+          opacity={isGhost ? 0.9 : 1}
         />
 
         {/* Specular White Gloss Top Edge Highlight */}
@@ -309,6 +376,36 @@ const Render3DArrowSVG: React.FC<{
             className="select-none pointer-events-none drop-shadow-md animate-pulse"
           >
             💣
+          </text>
+        )}
+
+        {/* Ghost Arrow Badge Icon in the center */}
+        {isGhost && (
+          <text
+            x={totalWidth / 2}
+            y={cy + s(5)}
+            textAnchor="middle"
+            fill="white"
+            fontSize={s(15)}
+            fontWeight="900"
+            className="select-none pointer-events-none drop-shadow-md animate-pulse"
+          >
+            👻
+          </text>
+        )}
+
+        {/* Bonus Star Arrow Badge Icon in the center */}
+        {isStar && (
+          <text
+            x={totalWidth / 2}
+            y={cy + s(5)}
+            textAnchor="middle"
+            fill="white"
+            fontSize={s(15)}
+            fontWeight="900"
+            className="select-none pointer-events-none drop-shadow-md animate-bounce"
+          >
+            🌟
           </text>
         )}
       </svg>
