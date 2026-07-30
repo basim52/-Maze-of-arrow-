@@ -71,10 +71,11 @@ const COLOR_THEMES: Record<
 };
 
 // Background Ghost Guide Arrow (Translucent grey track beneath active arrows as in user screenshot)
-const RenderGhostTrackSVG: React.FC<{ direction: Direction; length: number; tileSize: number }> = ({
+const RenderGhostTrackSVG: React.FC<{ direction: Direction; length: number; tileSize: number; isDouble?: boolean }> = ({
   direction,
   length,
   tileSize,
+  isDouble,
 }) => {
   const rotationDegrees: Record<Direction, number> = {
     up: -90,
@@ -93,6 +94,25 @@ const RenderGhostTrackSVG: React.FC<{ direction: Direction; length: number; tile
   const s = (val: number) => val * scale;
   const cy = tileSize / 2;
 
+  const pathD = isDouble
+    ? `M ${s(18)} ${cy - s(10)} 
+       L ${s(6)} ${cy} 
+       L ${s(18)} ${cy + s(10)} 
+       L ${s(18)} ${cy + s(5)} 
+       L ${totalWidth - s(18)} ${cy + s(5)} 
+       L ${totalWidth - s(18)} ${cy + s(10)} 
+       L ${totalWidth - s(6)} ${cy} 
+       L ${totalWidth - s(18)} ${cy - s(10)} 
+       L ${totalWidth - s(18)} ${cy - s(5)} 
+       L ${s(18)} ${cy - s(5)} Z`
+    : `M ${s(8)} ${cy - s(5)} 
+       L ${totalWidth - s(18)} ${cy - s(5)} 
+       L ${totalWidth - s(18)} ${cy - s(10)} 
+       L ${totalWidth - s(6)} ${cy} 
+       L ${totalWidth - s(18)} ${cy + s(10)} 
+       L ${totalWidth - s(18)} ${cy + s(5)} 
+       L ${s(8)} ${cy + s(5)} Z`;
+
   return (
     <div
       className="absolute top-0 left-0 flex items-center justify-center opacity-30 pointer-events-none"
@@ -105,13 +125,7 @@ const RenderGhostTrackSVG: React.FC<{ direction: Direction; length: number; tile
     >
       <svg width={totalWidth} height={tileSize} viewBox={`0 0 ${totalWidth} ${tileSize}`} fill="none">
         <path
-          d={`M ${s(8)} ${cy - s(5)} 
-             L ${totalWidth - s(18)} ${cy - s(5)} 
-             L ${totalWidth - s(18)} ${cy - s(10)} 
-             L ${totalWidth - s(6)} ${cy} 
-             L ${totalWidth - s(18)} ${cy + s(10)} 
-             L ${totalWidth - s(18)} ${cy + s(5)} 
-             L ${s(8)} ${cy + s(5)} Z`}
+          d={pathD}
           fill="#94A3B8"
           stroke="#64748B"
           strokeWidth={Math.max(1, s(1.5))}
@@ -130,6 +144,7 @@ const Render3DArrowSVG: React.FC<{
   tileSize: number;
 }> = ({ arrow, isBumping, isFlying, tileSize }) => {
   const theme = COLOR_THEMES[arrow.color] || COLOR_THEMES.cyan;
+  const isDouble = arrow.isDouble || arrow.type === 'double';
 
   const rotationDegrees: Record<Direction, number> = {
     up: -90,
@@ -151,6 +166,55 @@ const Render3DArrowSVG: React.FC<{
   // Proportional scale relative to standard 52px base
   const scale = tileSize / 52;
   const s = (val: number) => val * scale;
+
+  const shadowPath = isDouble
+    ? `M ${s(18)} ${cy - s(14)} 
+       L ${s(4)} ${cy} 
+       L ${s(18)} ${cy + s(14)} 
+       L ${s(18)} ${cy + s(8)} 
+       L ${totalWidth - s(18)} ${cy + s(8)} 
+       L ${totalWidth - s(18)} ${cy + s(14)} 
+       L ${totalWidth - s(4)} ${cy} 
+       L ${totalWidth - s(18)} ${cy - s(14)} 
+       L ${totalWidth - s(18)} ${cy - s(8)} 
+       L ${s(18)} ${cy - s(8)} Z`
+    : `M ${s(10)} ${cy - s(8)} 
+       L ${totalWidth - s(20)} ${cy - s(8)} 
+       L ${totalWidth - s(20)} ${cy - s(14)} 
+       L ${totalWidth - s(4)} ${cy} 
+       L ${totalWidth - s(20)} ${cy + s(14)} 
+       L ${totalWidth - s(20)} ${cy + s(8)} 
+       L ${s(10)} ${cy + s(8)} Z`;
+
+  const bodyPath = isDouble
+    ? `M ${s(15)} ${cy - s(19)} 
+       C ${s(18)} ${cy - s(22)}, ${s(22)} ${cy - s(20)}, ${s(22)} ${cy - s(17)} 
+       L ${s(22)} ${cy - s(10)} 
+       L ${totalWidth - s(22)} ${cy - s(10)} 
+       L ${totalWidth - s(22)} ${cy - s(17)} 
+       C ${totalWidth - s(22)} ${cy - s(20)}, ${totalWidth - s(18)} ${cy - s(22)}, ${totalWidth - s(15)} ${cy - s(19)} 
+       L ${totalWidth - s(2)} ${cy - s(2)} 
+       C ${totalWidth + s(1)} ${cy}, ${totalWidth + s(1)} ${cy + s(2)}, ${totalWidth - s(2)} ${cy + s(4)} 
+       L ${totalWidth - s(15)} ${cy + s(19)} 
+       C ${totalWidth - s(18)} ${cy + s(22)}, ${totalWidth - s(22)} ${cy + s(20)}, ${totalWidth - s(22)} ${cy + s(17)} 
+       L ${totalWidth - s(22)} ${cy + s(10)} 
+       L ${s(22)} ${cy + s(10)} 
+       L ${s(22)} ${cy + s(17)} 
+       C ${s(22)} ${cy + s(20)}, ${s(18)} ${cy + s(22)}, ${s(15)} ${cy + s(19)} 
+       L ${s(2)} ${cy + s(4)} 
+       C ${-s(1)} ${cy + s(2)}, ${-s(1)} ${cy - s(2)}, ${s(2)} ${cy - s(4)} Z`
+    : `M ${s(10)} ${cy - s(10)} 
+       C ${s(6)} ${cy - s(10)}, ${s(4)} ${cy - s(6)}, ${s(4)} ${cy} 
+       C ${s(4)} ${cy + s(6)}, ${s(6)} ${cy + s(10)}, ${s(10)} ${cy + s(10)} 
+       L ${totalWidth - s(22)} ${cy + s(10)} 
+       L ${totalWidth - s(22)} ${cy + s(17)} 
+       C ${totalWidth - s(22)} ${cy + s(20)}, ${totalWidth - s(18)} ${cy + s(21)}, ${totalWidth - s(15)} ${cy + s(19)} 
+       L ${totalWidth - s(2)} ${cy + s(2)} 
+       C ${totalWidth + s(1)} ${cy}, ${totalWidth + s(1)} ${cy - s(2)}, ${totalWidth - s(2)} ${cy - s(4)} 
+       L ${totalWidth - s(15)} ${cy - s(21)} 
+       C ${totalWidth - s(18)} ${cy - s(23)}, ${totalWidth - s(22)} ${cy - s(22)}, ${totalWidth - s(22)} ${cy - s(19)} 
+       L ${totalWidth - s(22)} ${cy - s(10)} 
+       Z`;
 
   return (
     <div
@@ -185,32 +249,15 @@ const Render3DArrowSVG: React.FC<{
 
         {/* 3D Bottom Bevel Shadow Layer */}
         <path
-          d={`M ${s(10)} ${cy - s(8)} 
-             L ${totalWidth - s(20)} ${cy - s(8)} 
-             L ${totalWidth - s(20)} ${cy - s(14)} 
-             L ${totalWidth - s(4)} ${cy} 
-             L ${totalWidth - s(20)} ${cy + s(14)} 
-             L ${totalWidth - s(20)} ${cy + s(8)} 
-             L ${s(10)} ${cy + s(8)} Z`}
+          d={shadowPath}
           fill={theme.border}
           opacity="0.5"
           transform={`translate(0, ${s(3.5)})`}
         />
 
-        {/* Main Glossy Tube Body with Rounded Arrow Head */}
+        {/* Main Glossy Tube Body */}
         <path
-          d={`M ${s(10)} ${cy - s(10)} 
-             C ${s(6)} ${cy - s(10)}, ${s(4)} ${cy - s(6)}, ${s(4)} ${cy} 
-             C ${s(4)} ${cy + s(6)}, ${s(6)} ${cy + s(10)}, ${s(10)} ${cy + s(10)} 
-             L ${totalWidth - s(22)} ${cy + s(10)} 
-             L ${totalWidth - s(22)} ${cy + s(17)} 
-             C ${totalWidth - s(22)} ${cy + s(20)}, ${totalWidth - s(18)} ${cy + s(21)}, ${totalWidth - s(15)} ${cy + s(19)} 
-             L ${totalWidth - s(2)} ${cy + s(2)} 
-             C ${totalWidth + s(1)} ${cy}, ${totalWidth + s(1)} ${cy - s(2)}, ${totalWidth - s(2)} ${cy - s(4)} 
-             L ${totalWidth - s(15)} ${cy - s(21)} 
-             C ${totalWidth - s(18)} ${cy - s(23)}, ${totalWidth - s(22)} ${cy - s(22)}, ${totalWidth - s(22)} ${cy - s(19)} 
-             L ${totalWidth - s(22)} ${cy - s(10)} 
-             Z`}
+          d={bodyPath}
           fill={`url(#grad-${arrow.id})`}
           stroke={theme.border}
           strokeWidth={Math.max(1.2, s(2.2))}
@@ -221,12 +268,31 @@ const Render3DArrowSVG: React.FC<{
 
         {/* Specular White Gloss Top Edge Highlight */}
         <path
-          d={`M ${s(12)} ${cy - s(7)} L ${totalWidth - s(22)} ${cy - s(7)} L ${totalWidth - s(22)} ${cy - s(13)} L ${totalWidth - s(12)} ${cy - s(3)}`}
+          d={
+            isDouble
+              ? `M ${s(18)} ${cy - s(7)} L ${totalWidth - s(18)} ${cy - s(7)}`
+              : `M ${s(12)} ${cy - s(7)} L ${totalWidth - s(22)} ${cy - s(7)} L ${totalWidth - s(22)} ${cy - s(13)} L ${totalWidth - s(12)} ${cy - s(3)}`
+          }
           stroke="white"
           strokeWidth={Math.max(1.2, s(2.5))}
           strokeLinecap="round"
           opacity="0.8"
         />
+
+        {/* Double Arrow Badge Icon in the center */}
+        {isDouble && (
+          <text
+            x={totalWidth / 2}
+            y={cy + s(4)}
+            textAnchor="middle"
+            fill="white"
+            fontSize={s(16)}
+            fontWeight="900"
+            className="select-none pointer-events-none drop-shadow-md"
+          >
+            ↔
+          </text>
+        )}
       </svg>
     </div>
   );
@@ -290,13 +356,13 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
 
     soundManager.playClick();
 
-    const { canEscape, blocker } = canArrowEscape(arrow, arrows, gridCols, gridRows);
+    const { canEscape, blocker, escapeDirection } = canArrowEscape(arrow, arrows, gridCols, gridRows);
 
     if (canEscape) {
       soundManager.playPop();
       soundManager.playSwoosh();
 
-      const vec = DIRECTION_VECTORS[arrow.direction];
+      const vec = DIRECTION_VECTORS[escapeDirection || arrow.direction];
       const flyDist = 1200;
       setFlyingArrows((prev) => ({
         ...prev,
@@ -378,6 +444,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
                     direction={arrow.direction}
                     length={arrow.length || 1}
                     tileSize={tileSize}
+                    isDouble={arrow.isDouble || arrow.type === 'double'}
                   />
                 </div>
               );

@@ -11,6 +11,17 @@ export const DIRECTION_VECTORS: Record<Direction, { x: number; y: number }> = {
   'down-right': { x: 1, y: 1 },
 };
 
+export const OPPOSITE_DIRECTIONS: Record<Direction, Direction> = {
+  up: 'down',
+  down: 'up',
+  left: 'right',
+  right: 'left',
+  'up-left': 'down-right',
+  'up-right': 'down-left',
+  'down-left': 'up-right',
+  'down-right': 'up-left',
+};
+
 // Get all grid cells occupied by an arrow
 export function getArrowOccupiedCells(arrow: Arrow): { x: number; y: number }[] {
   if (arrow.cells && arrow.cells.length > 0) {
@@ -44,33 +55,62 @@ export function getArrowOccupyingTile(
   return null;
 }
 
-// Find if an arrow can escape freely without hitting any other arrow in its forward path
+// Check if path is clear for an arrow moving in a specific direction (forward or backward)
+export function checkPathClear(
+  arrow: Arrow,
+  checkDir: Direction,
+  allArrows: Arrow[],
+  gridCols: number = 16,
+  gridRows: number = 10
+): { canEscape: boolean; blocker: Arrow | null } {
+  const vec = DIRECTION_VECTORS[checkDir];
+  const len = arrow.length || 1;
+
+  const isForward = checkDir === arrow.direction;
+  const startX = isForward ? arrow.gridX + DIRECTION_VECTORS[arrow.direction].x * (len - 1) : arrow.gridX;
+  const startY = isForward ? arrow.gridY + DIRECTION_VECTORS[arrow.direction].y * (len - 1) : arrow.gridY;
+
+  const maxSteps = Math.max(gridCols, gridRows) + 4;
+  for (let step = 1; step <= maxSteps; step++) {
+    const targetX = startX + vec.x * step;
+    const targetY = startY + vec.y * step;
+
+    // Check boundary
+    if (targetX < 0 || targetX >= gridCols || targetY < 0 || targetY >= gridRows) {
+      return { canEscape: true, blocker: null };
+    }
+
+    const blocker = getArrowOccupyingTile(targetX, targetY, allArrows, arrow.id);
+    if (blocker) {
+      return { canEscape: false, blocker };
+    }
+  }
+  return { canEscape: true, blocker: null };
+}
+
+// Find if an arrow can escape freely (supports single-headed and double-headed bidirectional arrows)
 export function canArrowEscape(
   arrow: Arrow,
   allArrows: Arrow[],
   gridCols: number = 16,
   gridRows: number = 10
-): { canEscape: boolean; blocker: Arrow | null } {
-  const vec = DIRECTION_VECTORS[arrow.direction];
-  const len = arrow.length || 1;
+): { canEscape: boolean; blocker: Arrow | null; escapeDirection: Direction } {
+  // Test primary direction
+  const forwardResult = checkPathClear(arrow, arrow.direction, allArrows, gridCols, gridRows);
+  if (forwardResult.canEscape) {
+    return { canEscape: true, blocker: null, escapeDirection: arrow.direction };
+  }
 
-  const maxSteps = Math.max(gridCols, gridRows) + 4;
-  for (let step = 1; step <= maxSteps; step++) {
-    const headX = arrow.gridX + vec.x * (len - 1 + step);
-    const headY = arrow.gridY + vec.y * (len - 1 + step);
-
-    // If head leaves grid boundaries, the arrow has escaped!
-    if (headX < 0 || headX >= gridCols || headY < 0 || headY >= gridRows) {
-      return { canEscape: true, blocker: null };
-    }
-
-    const blocker = getArrowOccupyingTile(headX, headY, allArrows, arrow.id);
-    if (blocker) {
-      return { canEscape: false, blocker };
+  // If double arrow (bidirectional), test opposite direction if primary direction is blocked
+  if (arrow.isDouble || arrow.type === 'double') {
+    const oppDir = OPPOSITE_DIRECTIONS[arrow.direction];
+    const backwardResult = checkPathClear(arrow, oppDir, allArrows, gridCols, gridRows);
+    if (backwardResult.canEscape) {
+      return { canEscape: true, blocker: null, escapeDirection: oppDir };
     }
   }
 
-  return { canEscape: true, blocker: null };
+  return { canEscape: false, blocker: forwardResult.blocker, escapeDirection: arrow.direction };
 }
 
 // Check if any arrows overlap on the board
@@ -253,7 +293,8 @@ export const HANDCRAFTED_LEVELS: Level[] = [
         "gridY": 2,
         "direction": "down",
         "color": "cyan",
-        "length": 1
+        "length": 1,
+        "type": "double"
       },
       {
         "id": "3-2",
@@ -615,7 +656,8 @@ export const HANDCRAFTED_LEVELS: Level[] = [
         "gridY": 3,
         "direction": "right",
         "color": "lime",
-        "length": 1
+        "length": 1,
+        "type": "double"
       },
       {
         "id": "6-9",

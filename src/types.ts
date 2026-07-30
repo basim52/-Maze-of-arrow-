@@ -10,6 +10,8 @@ export interface Arrow {
   direction: Direction;
   color: ArrowColor;
   length: number; // Standard length in grid units
+  type?: 'standard' | 'double'; // Type of arrow: standard single-headed or double-headed bidirectional
+  isDouble?: boolean;
   cells?: { x: number; y: number }[]; // Ordered list of grid coordinates relative to (gridX, gridY) or absolute grid positions
   isEscaped?: boolean;
   isFlying?: boolean;
