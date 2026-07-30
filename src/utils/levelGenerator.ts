@@ -5469,7 +5469,7 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
   };
 }
 
-export const HAMMER_REQUIRED_LEVEL_IDS = [45, 52, 60, 68, 77, 85, 93, 100];
+export const HAMMER_REQUIRED_LEVEL_IDS = [45, 52, 60, 68, 77, 85, 93, 100, 108, 115, 122, 125];
 
 export function createHammerRequiredLevel(levelNumber: number): Level {
   const isEvery5th = levelNumber % 5 === 0;
