@@ -1,0 +1,6 @@
+{
+  "name": "Arrow Escape Puzzle - متاهة الأسهم",
+  "description": "لعبة تحدي ومتاهة أسهم تفاعلية ثلاثية الأبعاد (3D Isometric Arrow Jam) للأطفال مع ألوان مبهجة ومؤثرات صوتية وحركية سلسة.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
