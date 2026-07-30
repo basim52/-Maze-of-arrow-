@@ -127,762 +127,3562 @@ export function isLevelSolvable(level: Level): boolean {
 const COLORS: ArrowColor[] = ['cyan', 'lime', 'yellow', 'purple', 'pink', 'orange'];
 
 export const HANDCRAFTED_LEVELS: Level[] = [
-  // Level 1: Simple introduction
   {
-    id: 1,
-    nameAr: 'مرحباً بالأسهم',
-    nameEn: 'Welcome Arrows',
-    difficulty: 'سهل',
-    difficultyEn: 'Easy',
-    gridSize: { cols: 6, rows: 6 },
-    maxDrops: 3,
-    arrows: [
-      { id: '1-1', gridX: 1, gridY: 2, direction: 'up', color: 'cyan', length: 1 },
-      { id: '1-2', gridX: 4, gridY: 2, direction: 'right', color: 'lime', length: 1 },
-      { id: '1-3', gridX: 4, gridY: 4, direction: 'down', color: 'yellow', length: 1 },
-      { id: '1-4', gridX: 1, gridY: 4, direction: 'left', color: 'purple', length: 1 },
-    ],
+    "id": 1,
+    "nameAr": "مرحباً بالأسهم",
+    "nameEn": "Welcome Arrows",
+    "difficulty": "سهل",
+    "difficultyEn": "Easy",
+    "gridSize": {
+      "cols": 6,
+      "rows": 6
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "1-1",
+        "gridX": 1,
+        "gridY": 2,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "1-2",
+        "gridX": 4,
+        "gridY": 2,
+        "direction": "right",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "1-3",
+        "gridX": 4,
+        "gridY": 4,
+        "direction": "down",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "1-4",
+        "gridX": 1,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 1
+      }
+    ]
   },
-  // Level 2: Gentle chain
   {
-    id: 2,
-    nameAr: 'مسار المتاهة الأول',
-    nameEn: 'First Maze Path',
-    difficulty: 'سهل',
-    difficultyEn: 'Easy',
-    gridSize: { cols: 7, rows: 6 },
-    maxDrops: 3,
-    arrows: [
-      { id: '2-1', gridX: 2, gridY: 2, direction: 'right', color: 'cyan', length: 2 },
-      { id: '2-2', gridX: 4, gridY: 2, direction: 'up', color: 'lime', length: 1 },
-      { id: '2-3', gridX: 5, gridY: 4, direction: 'right', color: 'purple', length: 1 },
-      { id: '2-4', gridX: 3, gridY: 4, direction: 'down', color: 'yellow', length: 2 },
-      { id: '2-5', gridX: 1, gridY: 4, direction: 'left', color: 'pink', length: 1 },
-      { id: '2-6', gridX: 2, gridY: 1, direction: 'up', color: 'orange', length: 1 },
-    ],
+    "id": 2,
+    "nameAr": "مسار المتاهة الأول",
+    "nameEn": "First Maze Path",
+    "difficulty": "سهل",
+    "difficultyEn": "Easy",
+    "gridSize": {
+      "cols": 7,
+      "rows": 6
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "2-1",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "2-2",
+        "gridX": 4,
+        "gridY": 2,
+        "direction": "up",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "2-3",
+        "gridX": 5,
+        "gridY": 4,
+        "direction": "right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "2-4",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "2-5",
+        "gridX": 1,
+        "gridY": 4,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "2-6",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "up",
+        "color": "orange",
+        "length": 1
+      }
+    ]
   },
-  // Level 3: Unblocking chain
   {
-    id: 3,
-    nameAr: 'تشابك الألوان',
-    nameEn: 'Color Entanglement',
-    difficulty: 'متوسط',
-    difficultyEn: 'Medium',
-    gridSize: { cols: 8, rows: 6 },
-    maxDrops: 3,
-    arrows: [
-      { id: '3-1', gridX: 2, gridY: 2, direction: 'down', color: 'cyan', length: 1 },
-      { id: '3-2', gridX: 2, gridY: 4, direction: 'left', color: 'purple', length: 1 },
-      { id: '3-3', gridX: 4, gridY: 2, direction: 'up', color: 'lime', length: 2 },
-      { id: '3-4', gridX: 5, gridY: 4, direction: 'right', color: 'yellow', length: 1 },
-      { id: '3-5', gridX: 6, gridY: 2, direction: 'right', color: 'pink', length: 1 },
-      { id: '3-6', gridX: 3, gridY: 1, direction: 'left', color: 'orange', length: 1 },
-      { id: '3-7', gridX: 5, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-    ],
+    "id": 3,
+    "nameAr": "تشابك الألوان",
+    "nameEn": "Color Entanglement",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 8,
+      "rows": 6
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "3-1",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "down",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "3-2",
+        "gridX": 2,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "3-3",
+        "gridX": 4,
+        "gridY": 2,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "3-4",
+        "gridX": 5,
+        "gridY": 4,
+        "direction": "right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "3-5",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "3-6",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "left",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "3-7",
+        "gridX": 5,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      }
+    ]
   },
-  // Level 4: Clean loop without deadlocks
   {
-    id: 4,
-    nameAr: 'الحلقة الناعمة',
-    nameEn: 'Smooth Loop',
-    difficulty: 'متوسط',
-    difficultyEn: 'Medium',
-    gridSize: { cols: 9, rows: 7 },
-    maxDrops: 3,
-    arrows: [
-      { id: '4-1', gridX: 2, gridY: 2, direction: 'right', color: 'lime', length: 2 },
-      { id: '4-2', gridX: 5, gridY: 2, direction: 'down', color: 'cyan', length: 2 },
-      { id: '4-3', gridX: 5, gridY: 5, direction: 'left', color: 'yellow', length: 2 },
-      { id: '4-4', gridX: 2, gridY: 5, direction: 'down', color: 'purple', length: 2 },
-      { id: '4-5', gridX: 3, gridY: 3, direction: 'up', color: 'pink', length: 1 },
-      { id: '4-6', gridX: 4, gridY: 4, direction: 'down', color: 'orange', length: 1 },
-      { id: '4-7', gridX: 1, gridY: 3, direction: 'left', color: 'lime', length: 1 },
-      { id: '4-8', gridX: 6, gridY: 3, direction: 'right', color: 'cyan', length: 1 },
-    ],
+    "id": 4,
+    "nameAr": "الحلقة الناعمة",
+    "nameEn": "Smooth Loop",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 9,
+      "rows": 7
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "4-1",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "4-2",
+        "gridX": 5,
+        "gridY": 2,
+        "direction": "down",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "4-3",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "4-4",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "4-5",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "4-6",
+        "gridX": 4,
+        "gridY": 4,
+        "direction": "down",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "4-7",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "4-8",
+        "gridX": 6,
+        "gridY": 3,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1
+      }
+    ]
   },
-  // Level 5: Intricate Glasses / Butterfly Wing Maze (Perfectly Spaced & 100% Solvable!)
   {
-    id: 5,
-    nameAr: '🔥 متاهة النظارة الخماسية',
-    nameEn: '🔥 Glasses Butterfly Boss',
-    difficulty: 'صعب جداً',
-    difficultyEn: 'Very Hard',
-    gridSize: { cols: 14, rows: 7 },
-    maxDrops: 1,
-    arrows: [
-      // Left Wing Cluster (Cyan, Lime, Yellow)
-      { id: '5-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '5-2', gridX: 4, gridY: 1, direction: 'left', color: 'lime', length: 2 },
-      { id: '5-3', gridX: 1, gridY: 3, direction: 'right', color: 'cyan', length: 2 },
-      { id: '5-4', gridX: 2, gridY: 5, direction: 'down', color: 'lime', length: 1 },
-      { id: '5-5', gridX: 4, gridY: 5, direction: 'down', color: 'yellow', length: 2 },
-      { id: '5-6', gridX: 4, gridY: 3, direction: 'up', color: 'lime', length: 1 },
-      { id: '5-7', gridX: 3, gridY: 2, direction: 'up', color: 'cyan', length: 1 },
-      { id: '5-8', gridX: 2, gridY: 4, direction: 'left', color: 'cyan', length: 1 },
-
-      // Middle Bridge (Yellow)
-      { id: '5-9', gridX: 6, gridY: 2, direction: 'down', color: 'yellow', length: 2 },
-      { id: '5-10', gridX: 7, gridY: 4, direction: 'up', color: 'yellow', length: 2 },
-
-      // Right Wing Cluster (Purple, Pink, Orange)
-      { id: '5-11', gridX: 12, gridY: 1, direction: 'up', color: 'purple', length: 1 },
-      { id: '5-12', gridX: 9, gridY: 1, direction: 'right', color: 'pink', length: 2 },
-      { id: '5-13', gridX: 12, gridY: 3, direction: 'right', color: 'purple', length: 2 },
-      { id: '5-14', gridX: 11, gridY: 5, direction: 'down', color: 'pink', length: 1 },
-      { id: '5-15', gridX: 9, gridY: 5, direction: 'down', color: 'orange', length: 2 },
-      { id: '5-16', gridX: 9, gridY: 3, direction: 'up', color: 'purple', length: 1 },
-      { id: '5-17', gridX: 10, gridY: 2, direction: 'up', color: 'pink', length: 1 },
-      { id: '5-18', gridX: 11, gridY: 4, direction: 'right', color: 'purple', length: 1 },
-    ],
+    "id": 5,
+    "nameAr": "🔥 متاهة النظارة الخماسية",
+    "nameEn": "🔥 Glasses Butterfly Boss",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 7
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "5-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "5-2",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "5-3",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "5-4",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "down",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "5-5",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "5-6",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "up",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "5-7",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "5-8",
+        "gridX": 2,
+        "gridY": 4,
+        "direction": "left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "5-9",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "5-10",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "up",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "5-11",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "up",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "5-12",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "5-13",
+        "gridX": 12,
+        "gridY": 3,
+        "direction": "right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "5-14",
+        "gridX": 11,
+        "gridY": 5,
+        "direction": "down",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "5-15",
+        "gridX": 9,
+        "gridY": 5,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "5-16",
+        "gridX": 9,
+        "gridY": 3,
+        "direction": "up",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "5-17",
+        "gridX": 10,
+        "gridY": 2,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "5-18",
+        "gridX": 11,
+        "gridY": 4,
+        "direction": "right",
+        "color": "purple",
+        "length": 1
+      }
+    ]
   },
-  // Level 6: Crossroads Grid
   {
-    id: 6,
-    nameAr: 'شبكة التقاطعات',
-    nameEn: 'Crossroads Grid',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 8, rows: 7 },
-    maxDrops: 3,
-    arrows: [
-      { id: '6-1', gridX: 1, gridY: 1, direction: 'right', color: 'cyan', length: 2 },
-      { id: '6-2', gridX: 4, gridY: 1, direction: 'down', color: 'lime', length: 2 },
-      { id: '6-3', gridX: 4, gridY: 4, direction: 'right', color: 'yellow', length: 2 },
-      { id: '6-4', gridX: 6, gridY: 2, direction: 'up', color: 'purple', length: 1 },
-      { id: '6-5', gridX: 1, gridY: 3, direction: 'left', color: 'pink', length: 1 },
-      { id: '6-6', gridX: 2, gridY: 5, direction: 'down', color: 'orange', length: 1 },
-      { id: '6-7', gridX: 5, gridY: 5, direction: 'right', color: 'cyan', length: 1 },
-      { id: '6-8', gridX: 2, gridY: 3, direction: 'right', color: 'lime', length: 1 },
-      { id: '6-9', gridX: 6, gridY: 5, direction: 'up', color: 'yellow', length: 1 },
-    ],
+    "id": 6,
+    "nameAr": "شبكة التقاطعات",
+    "nameEn": "Crossroads Grid",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 8,
+      "rows": 7
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "6-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "6-2",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "down",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "6-3",
+        "gridX": 4,
+        "gridY": 4,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "6-4",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "up",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "6-5",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "6-6",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "down",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "6-7",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "6-8",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "right",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "6-9",
+        "gridX": 6,
+        "gridY": 5,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1
+      }
+    ]
   },
-  // Level 7: Color Weave
   {
-    id: 7,
-    nameAr: 'نسيج الألوان',
-    nameEn: 'Color Weave',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 10, rows: 7 },
-    maxDrops: 3,
-    arrows: [
-      { id: '7-1', gridX: 1, gridY: 1, direction: 'left', color: 'cyan', length: 1 },
-      { id: '7-2', gridX: 4, gridY: 1, direction: 'up', color: 'lime', length: 2 },
-      { id: '7-3', gridX: 1, gridY: 3, direction: 'up', color: 'purple', length: 1 },
-      { id: '7-4', gridX: 3, gridY: 3, direction: 'left', color: 'yellow', length: 2 },
-      { id: '7-5', gridX: 4, gridY: 4, direction: 'down', color: 'pink', length: 2 },
-      { id: '7-6', gridX: 6, gridY: 1, direction: 'right', color: 'orange', length: 2 },
-      { id: '7-7', gridX: 9, gridY: 1, direction: 'down', color: 'cyan', length: 2 },
-      { id: '7-8', gridX: 8, gridY: 4, direction: 'up', color: 'lime', length: 2 },
-      { id: '7-9', gridX: 6, gridY: 4, direction: 'left', color: 'yellow', length: 1 },
-      { id: '7-10', gridX: 2, gridY: 5, direction: 'down', color: 'purple', length: 1 },
-      { id: '7-11', gridX: 5, gridY: 5, direction: 'right', color: 'pink', length: 1 },
-    ],
+    "id": 7,
+    "nameAr": "نسيج الألوان",
+    "nameEn": "Color Weave",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 10,
+      "rows": 7
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "7-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "7-2",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "7-3",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "up",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "7-4",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "7-5",
+        "gridX": 4,
+        "gridY": 4,
+        "direction": "down",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "7-6",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "right",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "7-7",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "down",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "7-8",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "7-9",
+        "gridX": 6,
+        "gridY": 4,
+        "direction": "left",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "7-10",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "down",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "7-11",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "right",
+        "color": "pink",
+        "length": 1
+      }
+    ]
   },
-  // Level 8: Spiral Maze
   {
-    id: 8,
-    nameAr: 'المتاهة الحلزونية',
-    nameEn: 'Spiral Maze',
-    difficulty: 'خبير',
-    difficultyEn: 'Expert',
-    gridSize: { cols: 11, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '8-1', gridX: 2, gridY: 1, direction: 'up', color: 'lime', length: 1 },
-      { id: '8-2', gridX: 3, gridY: 2, direction: 'left', color: 'cyan', length: 2 },
-      { id: '8-3', gridX: 6, gridY: 2, direction: 'up', color: 'yellow', length: 2 },
-      { id: '8-4', gridX: 6, gridY: 5, direction: 'down', color: 'purple', length: 2 },
-      { id: '8-5', gridX: 3, gridY: 5, direction: 'left', color: 'pink', length: 2 },
-      { id: '8-6', gridX: 4, gridY: 3, direction: 'up', color: 'orange', length: 1 },
-      { id: '8-7', gridX: 1, gridY: 3, direction: 'left', color: 'cyan', length: 1 },
-      { id: '8-8', gridX: 8, gridY: 2, direction: 'up', color: 'lime', length: 1 },
-      { id: '8-9', gridX: 9, gridY: 4, direction: 'right', color: 'yellow', length: 2 },
-      { id: '8-10', gridX: 8, gridY: 6, direction: 'down', color: 'purple', length: 1 },
-      { id: '8-11', gridX: 5, gridY: 6, direction: 'down', color: 'pink', length: 2 },
-      { id: '8-12', gridX: 2, gridY: 6, direction: 'down', color: 'orange', length: 1 },
-    ],
+    "id": 8,
+    "nameAr": "المتاهة الحلزونية",
+    "nameEn": "Spiral Maze",
+    "difficulty": "خبير",
+    "difficultyEn": "Expert",
+    "gridSize": {
+      "cols": 11,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "8-1",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "up",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "8-2",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "8-3",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "up",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "8-4",
+        "gridX": 6,
+        "gridY": 5,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "8-5",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "left",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "8-6",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "up",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "8-7",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "8-8",
+        "gridX": 8,
+        "gridY": 2,
+        "direction": "up",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "8-9",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "8-10",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "down",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "8-11",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "down",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "8-12",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "down",
+        "color": "orange",
+        "length": 1
+      }
+    ]
   },
-  // Level 9: Twin Wings Challenge
   {
-    id: 9,
-    nameAr: 'تحدي الأجنحة المزدوجة',
-    nameEn: 'Twin Wings Challenge',
-    difficulty: 'خبير',
-    difficultyEn: 'Expert',
-    gridSize: { cols: 12, rows: 7 },
-    maxDrops: 3,
-    arrows: [
-      { id: '9-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '9-2', gridX: 3, gridY: 1, direction: 'right', color: 'lime', length: 2 },
-      { id: '9-3', gridX: 2, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '9-4', gridX: 1, gridY: 5, direction: 'down', color: 'purple', length: 1 },
-      { id: '9-5', gridX: 3, gridY: 5, direction: 'left', color: 'pink', length: 1 },
-      { id: '9-6', gridX: 5, gridY: 3, direction: 'down', color: 'orange', length: 2 },
-      { id: '9-7', gridX: 6, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '9-8', gridX: 7, gridY: 4, direction: 'down', color: 'lime', length: 2 },
-      { id: '9-9', gridX: 8, gridY: 2, direction: 'left', color: 'purple', length: 2 },
-      { id: '9-10', gridX: 10, gridY: 1, direction: 'left', color: 'pink', length: 2 },
-      { id: '9-11', gridX: 10, gridY: 3, direction: 'right', color: 'orange', length: 2 },
-      { id: '9-12', gridX: 11, gridY: 5, direction: 'down', color: 'cyan', length: 1 },
-      { id: '9-13', gridX: 9, gridY: 5, direction: 'right', color: 'yellow', length: 1 },
-    ],
+    "id": 9,
+    "nameAr": "تحدي الأجنحة المزدوجة",
+    "nameEn": "Twin Wings Challenge",
+    "difficulty": "خبير",
+    "difficultyEn": "Expert",
+    "gridSize": {
+      "cols": 12,
+      "rows": 7
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "9-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "9-2",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "9-3",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "9-4",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "down",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "9-5",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "9-6",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "9-7",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "9-8",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "down",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "9-9",
+        "gridX": 8,
+        "gridY": 2,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "9-10",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "9-11",
+        "gridX": 10,
+        "gridY": 3,
+        "direction": "right",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "9-12",
+        "gridX": 11,
+        "gridY": 5,
+        "direction": "down",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "9-13",
+        "gridX": 9,
+        "gridY": 5,
+        "direction": "right",
+        "color": "yellow",
+        "length": 1
+      }
+    ]
   },
-  // Level 10: Master Linked Boss
   {
-    id: 10,
-    nameAr: '🔥 تحدي الخبراء الخماسي',
-    nameEn: '🔥 Master Linked Boss',
-    difficulty: 'صعب جداً',
-    difficultyEn: 'Very Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 1,
-    arrows: [
-      { id: '10-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '10-2', gridX: 3, gridY: 1, direction: 'right', color: 'lime', length: 2 },
-      { id: '10-3', gridX: 2, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '10-4', gridX: 1, gridY: 5, direction: 'down', color: 'purple', length: 1 },
-      { id: '10-5', gridX: 3, gridY: 6, direction: 'left', color: 'pink', length: 1 },
-      { id: '10-6', gridX: 5, gridY: 3, direction: 'down', color: 'orange', length: 2 },
-      { id: '10-7', gridX: 6, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '10-8', gridX: 7, gridY: 4, direction: 'down', color: 'lime', length: 2 },
-      { id: '10-9', gridX: 8, gridY: 2, direction: 'left', color: 'purple', length: 2 },
-      { id: '10-10', gridX: 10, gridY: 1, direction: 'left', color: 'pink', length: 2 },
-      { id: '10-11', gridX: 12, gridY: 1, direction: 'up', color: 'orange', length: 1 },
-      { id: '10-12', gridX: 10, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '10-13', gridX: 12, gridY: 4, direction: 'down', color: 'purple', length: 2 },
-      { id: '10-14', gridX: 13, gridY: 6, direction: 'right', color: 'pink', length: 1 },
-      { id: '10-15', gridX: 10, gridY: 6, direction: 'left', color: 'cyan', length: 1 },
-    ],
+    "id": 10,
+    "nameAr": "🔥 تحدي الخبراء الخماسي",
+    "nameEn": "🔥 Master Linked Boss",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "10-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "10-2",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "10-3",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "10-4",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "down",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "10-5",
+        "gridX": 3,
+        "gridY": 6,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "10-6",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "10-7",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "10-8",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "down",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "10-9",
+        "gridX": 8,
+        "gridY": 2,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "10-10",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "10-11",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "up",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "10-12",
+        "gridX": 10,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "10-13",
+        "gridX": 12,
+        "gridY": 4,
+        "direction": "up",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "10-14",
+        "gridX": 13,
+        "gridY": 6,
+        "direction": "right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "10-15",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "left",
+        "color": "cyan",
+        "length": 1
+      }
+    ]
   },
-  // Level 11: Spiders Web Grid
   {
-    id: 11,
-    nameAr: 'شبكة التشابك الخماسي',
-    nameEn: 'Spiders Web Grid',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 12, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '11-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '11-2', gridX: 3, gridY: 1, direction: 'left', color: 'lime', length: 2 },
-      { id: '11-3', gridX: 5, gridY: 1, direction: 'left', color: 'yellow', length: 2 },
-      { id: '11-4', gridX: 3, gridY: 3, direction: 'up', color: 'purple', length: 2 },
-      { id: '11-5', gridX: 1, gridY: 4, direction: 'right', color: 'pink', length: 2 },
-      { id: '11-6', gridX: 4, gridY: 4, direction: 'down', color: 'orange', length: 2 },
-      { id: '11-7', gridX: 7, gridY: 1, direction: 'right', color: 'cyan', length: 2 },
-      { id: '11-8', gridX: 10, gridY: 1, direction: 'down', color: 'lime', length: 2 },
-      { id: '11-9', gridX: 7, gridY: 4, direction: 'left', color: 'yellow', length: 2 },
-      { id: '11-10', gridX: 10, gridY: 5, direction: 'up', color: 'purple', length: 2 },
-      { id: '11-11', gridX: 6, gridY: 6, direction: 'down', color: 'pink', length: 2 },
-      { id: '11-12', gridX: 2, gridY: 6, direction: 'left', color: 'orange', length: 1 },
-    ],
+    "id": 11,
+    "nameAr": "شبكة التشابك الخماسي",
+    "nameEn": "Spiders Web Grid",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "11-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "11-2",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "11-3",
+        "gridX": 5,
+        "gridY": 1,
+        "direction": "left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "11-4",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "up",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "11-5",
+        "gridX": 1,
+        "gridY": 4,
+        "direction": "right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "11-6",
+        "gridX": 4,
+        "gridY": 4,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "11-7",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "11-8",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "down",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "11-9",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "11-10",
+        "gridX": 10,
+        "gridY": 5,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "11-11",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "down",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "11-12",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "left",
+        "color": "orange",
+        "length": 1
+      }
+    ]
   },
-  // Level 12: Grand Intersecting Trap
   {
-    id: 12,
-    nameAr: 'الفخ المتقاطع الكبير',
-    nameEn: 'Grand Intersecting Trap',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 13, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '12-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '12-2', gridX: 2, gridY: 2, direction: 'right', color: 'lime', length: 2 },
-      { id: '12-3', gridX: 5, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
-      { id: '12-4', gridX: 5, gridY: 4, direction: 'left', color: 'purple', length: 2 },
-      { id: '12-5', gridX: 2, gridY: 4, direction: 'up', color: 'pink', length: 1 },
-      { id: '12-6', gridX: 1, gridY: 6, direction: 'down', color: 'orange', length: 1 },
-      { id: '12-7', gridX: 4, gridY: 6, direction: 'right', color: 'cyan', length: 2 },
-      { id: '12-8', gridX: 7, gridY: 2, direction: 'right', color: 'lime', length: 2 },
-      { id: '12-9', gridX: 10, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
-      { id: '12-10', gridX: 10, gridY: 4, direction: 'right', color: 'purple', length: 2 },
-      { id: '12-11', gridX: 8, gridY: 5, direction: 'up', color: 'pink', length: 2 },
-      { id: '12-12', gridX: 7, gridY: 6, direction: 'left', color: 'orange', length: 2 },
-      { id: '12-13', gridX: 12, gridY: 6, direction: 'down', color: 'cyan', length: 1 },
-    ],
+    "id": 12,
+    "nameAr": "الفخ المتقاطع الكبير",
+    "nameEn": "Grand Intersecting Trap",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 13,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "12-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "12-2",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "12-3",
+        "gridX": 5,
+        "gridY": 1,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "12-4",
+        "gridX": 5,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "12-5",
+        "gridX": 2,
+        "gridY": 4,
+        "direction": "down",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "12-6",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "down",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "12-7",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "12-8",
+        "gridX": 7,
+        "gridY": 2,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "12-9",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "12-10",
+        "gridX": 10,
+        "gridY": 4,
+        "direction": "right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "12-11",
+        "gridX": 8,
+        "gridY": 5,
+        "direction": "up",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "12-12",
+        "gridX": 7,
+        "gridY": 6,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "12-13",
+        "gridX": 12,
+        "gridY": 6,
+        "direction": "down",
+        "color": "cyan",
+        "length": 1
+      }
+    ]
   },
-  // Level 13: Dual Fortress
   {
-    id: 13,
-    nameAr: 'القلعة المزدوجة',
-    nameEn: 'Dual Fortress',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 13, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '13-1', gridX: 1, gridY: 1, direction: 'left', color: 'cyan', length: 1 },
-      { id: '13-2', gridX: 4, gridY: 1, direction: 'up', color: 'lime', length: 2 },
-      { id: '13-3', gridX: 2, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '13-4', gridX: 5, gridY: 3, direction: 'down', color: 'purple', length: 2 },
-      { id: '13-5', gridX: 1, gridY: 5, direction: 'down', color: 'pink', length: 1 },
-      { id: '13-6', gridX: 3, gridY: 5, direction: 'left', color: 'orange', length: 2 },
-      { id: '13-7', gridX: 5, gridY: 6, direction: 'right', color: 'cyan', length: 1 },
-      { id: '13-8', gridX: 7, gridY: 1, direction: 'up', color: 'lime', length: 1 },
-      { id: '13-9', gridX: 9, gridY: 1, direction: 'right', color: 'yellow', length: 2 },
-      { id: '13-10', gridX: 12, gridY: 1, direction: 'down', color: 'purple', length: 2 },
-      { id: '13-11', gridX: 9, gridY: 4, direction: 'left', color: 'pink', length: 2 },
-      { id: '13-12', gridX: 12, gridY: 4, direction: 'up', color: 'orange', length: 2 },
-      { id: '13-13', gridX: 7, gridY: 5, direction: 'down', color: 'cyan', length: 2 },
-      { id: '13-14', gridX: 10, gridY: 6, direction: 'right', color: 'lime', length: 2 },
-    ],
+    "id": 13,
+    "nameAr": "القلعة المزدوجة",
+    "nameEn": "Dual Fortress",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 13,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "13-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "down",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "13-2",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "13-3",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "13-4",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "13-5",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "down",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "13-6",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "down",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "13-7",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "13-8",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "up",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "13-9",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "13-10",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "13-11",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "left",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "13-12",
+        "gridX": 12,
+        "gridY": 4,
+        "direction": "right",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "13-13",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "down",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "13-14",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      }
+    ]
   },
-  // Level 14: Triple Knot Maze
   {
-    id: 14,
-    nameAr: 'متاهة العقد الثلاثية',
-    nameEn: 'Triple Knot Maze',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '14-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '14-2', gridX: 3, gridY: 1, direction: 'left', color: 'lime', length: 2 },
-      { id: '14-3', gridX: 1, gridY: 3, direction: 'down', color: 'yellow', length: 1 },
-      { id: '14-4', gridX: 3, gridY: 3, direction: 'right', color: 'purple', length: 2 },
-      { id: '14-5', gridX: 6, gridY: 2, direction: 'down', color: 'pink', length: 2 },
-      { id: '14-6', gridX: 6, gridY: 5, direction: 'left', color: 'orange', length: 2 },
-      { id: '14-7', gridX: 2, gridY: 5, direction: 'up', color: 'cyan', length: 1 },
-      { id: '14-8', gridX: 4, gridY: 6, direction: 'down', color: 'lime', length: 1 },
-      { id: '14-9', gridX: 8, gridY: 1, direction: 'up', color: 'yellow', length: 1 },
-      { id: '14-10', gridX: 10, gridY: 1, direction: 'right', color: 'purple', length: 2 },
-      { id: '14-11', gridX: 13, gridY: 1, direction: 'down', color: 'pink', length: 2 },
-      { id: '14-12', gridX: 10, gridY: 4, direction: 'left', color: 'orange', length: 2 },
-      { id: '14-13', gridX: 13, gridY: 4, direction: 'up', color: 'cyan', length: 2 },
-      { id: '14-14', gridX: 9, gridY: 6, direction: 'down', color: 'lime', length: 1 },
-      { id: '14-15', gridX: 11, gridY: 6, direction: 'right', color: 'yellow', length: 2 },
-    ],
+    "id": 14,
+    "nameAr": "متاهة العقد الثلاثية",
+    "nameEn": "Triple Knot Maze",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "14-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "14-2",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "14-3",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "down",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "14-4",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "14-5",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "down",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "14-6",
+        "gridX": 6,
+        "gridY": 5,
+        "direction": "left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "14-7",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "down",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "14-8",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "down",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "14-9",
+        "gridX": 8,
+        "gridY": 1,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "14-10",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "14-11",
+        "gridX": 13,
+        "gridY": 1,
+        "direction": "up",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "14-12",
+        "gridX": 10,
+        "gridY": 4,
+        "direction": "left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "14-13",
+        "gridX": 13,
+        "gridY": 4,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "14-14",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "down",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "14-15",
+        "gridX": 11,
+        "gridY": 6,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      }
+    ]
   },
-  // Level 15: Genius Quintet Boss
   {
-    id: 15,
-    nameAr: '🔥 تحدي العباقرة الخماسي',
-    nameEn: '🔥 Genius Quintet Boss',
-    difficulty: 'صعب جداً',
-    difficultyEn: 'Very Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 1,
-    arrows: [
-      { id: '15-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '15-2', gridX: 4, gridY: 1, direction: 'left', color: 'lime', length: 2 },
-      { id: '15-3', gridX: 1, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '15-4', gridX: 4, gridY: 3, direction: 'down', color: 'purple', length: 2 },
-      { id: '15-5', gridX: 2, gridY: 6, direction: 'left', color: 'pink', length: 1 },
-      { id: '15-6', gridX: 4, gridY: 6, direction: 'down', color: 'orange', length: 1 },
-      { id: '15-7', gridX: 6, gridY: 2, direction: 'up', color: 'cyan', length: 2 },
-      { id: '15-8', gridX: 7, gridY: 5, direction: 'down', color: 'lime', length: 2 },
-      { id: '15-9', gridX: 6, gridY: 6, direction: 'left', color: 'yellow', length: 1 },
-      { id: '15-10', gridX: 9, gridY: 1, direction: 'right', color: 'purple', length: 2 },
-      { id: '15-11', gridX: 12, gridY: 1, direction: 'up', color: 'pink', length: 1 },
-      { id: '15-12', gridX: 9, gridY: 3, direction: 'down', color: 'orange', length: 2 },
-      { id: '15-13', gridX: 12, gridY: 3, direction: 'right', color: 'cyan', length: 2 },
-      { id: '15-14', gridX: 10, gridY: 6, direction: 'up', color: 'lime', length: 2 },
-      { id: '15-15', gridX: 13, gridY: 6, direction: 'down', color: 'yellow', length: 1 },
-      { id: '15-16', gridX: 8, gridY: 4, direction: 'left', color: 'purple', length: 1 },
-    ],
+    "id": 15,
+    "nameAr": "🔥 تحدي العباقرة الخماسي",
+    "nameEn": "🔥 Genius Quintet Boss",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "15-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "15-2",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "15-3",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "15-4",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "15-5",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "15-6",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "down",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "15-7",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "15-8",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "down",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "15-9",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "left",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "15-10",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "15-11",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "15-12",
+        "gridX": 9,
+        "gridY": 3,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "15-13",
+        "gridX": 12,
+        "gridY": 3,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "15-14",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "15-15",
+        "gridX": 13,
+        "gridY": 6,
+        "direction": "down",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "15-16",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 1
+      }
+    ]
   },
-  // Level 16: Diamond Maze
   {
-    id: 16,
-    nameAr: 'المتاهة الماسية',
-    nameEn: 'Diamond Maze',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 13, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '16-1', gridX: 2, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '16-2', gridX: 5, gridY: 1, direction: 'left', color: 'lime', length: 2 },
-      { id: '16-3', gridX: 2, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '16-4', gridX: 5, gridY: 3, direction: 'down', color: 'purple', length: 2 },
-      { id: '16-5', gridX: 1, gridY: 5, direction: 'left', color: 'pink', length: 1 },
-      { id: '16-6', gridX: 4, gridY: 5, direction: 'up', color: 'orange', length: 1 },
-      { id: '16-7', gridX: 3, gridY: 6, direction: 'down', color: 'cyan', length: 1 },
-      { id: '16-8', gridX: 7, gridY: 2, direction: 'up', color: 'lime', length: 2 },
-      { id: '16-9', gridX: 10, gridY: 1, direction: 'left', color: 'yellow', length: 2 },
-      { id: '16-10', gridX: 10, gridY: 4, direction: 'up', color: 'purple', length: 2 },
-      { id: '16-11', gridX: 7, gridY: 4, direction: 'right', color: 'pink', length: 2 },
-      { id: '16-12', gridX: 9, gridY: 6, direction: 'down', color: 'orange', length: 1 },
-      { id: '16-13', gridX: 12, gridY: 6, direction: 'right', color: 'cyan', length: 1 },
-    ],
+    "id": 16,
+    "nameAr": "المتاهة الماسية",
+    "nameEn": "Diamond Maze",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 13,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "16-1",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "16-2",
+        "gridX": 5,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "16-3",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "16-4",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "16-5",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "16-6",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "up",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "16-7",
+        "gridX": 3,
+        "gridY": 6,
+        "direction": "down",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "16-8",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "16-9",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "16-10",
+        "gridX": 10,
+        "gridY": 3,
+        "direction": "up",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "16-11",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "16-12",
+        "gridX": 11,
+        "gridY": 5,
+        "direction": "right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "16-13",
+        "gridX": 8,
+        "gridY": 5,
+        "direction": "up",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "16-14",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "down",
+        "color": "cyan",
+        "length": 1
+      }
+    ]
   },
-  // Level 17: Serpent Spiral
   {
-    id: 17,
-    nameAr: 'شبكة الثعبان الحلزوني',
-    nameEn: 'Serpent Spiral',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '17-1', gridX: 1, gridY: 1, direction: 'left', color: 'cyan', length: 1 },
-      { id: '17-2', gridX: 4, gridY: 1, direction: 'up', color: 'lime', length: 2 },
-      { id: '17-3', gridX: 2, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '17-4', gridX: 5, gridY: 3, direction: 'down', color: 'purple', length: 2 },
-      { id: '17-5', gridX: 1, gridY: 5, direction: 'down', color: 'pink', length: 1 },
-      { id: '17-6', gridX: 3, gridY: 5, direction: 'left', color: 'orange', length: 2 },
-      { id: '17-7', gridX: 6, gridY: 2, direction: 'up', color: 'cyan', length: 1 },
-      { id: '17-8', gridX: 7, gridY: 4, direction: 'right', color: 'lime', length: 2 },
-      { id: '17-9', gridX: 10, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
-      { id: '17-10', gridX: 10, gridY: 4, direction: 'left', color: 'purple', length: 2 },
-      { id: '17-11', gridX: 13, gridY: 1, direction: 'right', color: 'pink', length: 1 },
-      { id: '17-12', gridX: 13, gridY: 3, direction: 'down', color: 'orange', length: 2 },
-      { id: '17-13', gridX: 8, gridY: 6, direction: 'left', color: 'cyan', length: 2 },
-      { id: '17-14', gridX: 11, gridY: 6, direction: 'down', color: 'lime', length: 1 },
-    ],
+    "id": 17,
+    "nameAr": "شبكة الثعبان الحلزوني",
+    "nameEn": "Serpent Spiral",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "17-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "17-2",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "17-3",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "17-4",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "17-5",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "down",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "17-6",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "17-7",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "17-8",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "17-9",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "17-10",
+        "gridX": 10,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "17-11",
+        "gridX": 13,
+        "gridY": 1,
+        "direction": "right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "17-12",
+        "gridX": 13,
+        "gridY": 3,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "17-13",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "17-14",
+        "gridX": 11,
+        "gridY": 6,
+        "direction": "down",
+        "color": "lime",
+        "length": 1
+      }
+    ]
   },
-  // Level 18: Cross Wheels
   {
-    id: 18,
-    nameAr: 'متاهة العجلات المتقاطعة',
-    nameEn: 'Cross Wheels',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '18-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '18-2', gridX: 3, gridY: 1, direction: 'left', color: 'lime', length: 2 },
-      { id: '18-3', gridX: 1, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '18-4', gridX: 4, gridY: 3, direction: 'down', color: 'purple', length: 2 },
-      { id: '18-5', gridX: 2, gridY: 5, direction: 'down', color: 'pink', length: 1 },
-      { id: '18-6', gridX: 5, gridY: 5, direction: 'right', color: 'orange', length: 2 },
-      { id: '18-7', gridX: 7, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '18-8', gridX: 9, gridY: 1, direction: 'right', color: 'lime', length: 2 },
-      { id: '18-9', gridX: 12, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
-      { id: '18-10', gridX: 9, gridY: 4, direction: 'left', color: 'purple', length: 2 },
-      { id: '18-11', gridX: 12, gridY: 4, direction: 'up', color: 'pink', length: 2 },
-      { id: '18-12', gridX: 8, gridY: 6, direction: 'left', color: 'orange', length: 2 },
-      { id: '18-13', gridX: 11, gridY: 6, direction: 'down', color: 'cyan', length: 1 },
-      { id: '18-14', gridX: 13, gridY: 6, direction: 'right', color: 'lime', length: 1 },
-    ],
+    "id": 18,
+    "nameAr": "متاهة العجلات المتقاطعة",
+    "nameEn": "Cross Wheels",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "18-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "18-2",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "18-3",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "18-4",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "18-5",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "down",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "18-6",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "18-7",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "18-8",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "18-9",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "18-10",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "18-11",
+        "gridX": 12,
+        "gridY": 4,
+        "direction": "down",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "18-12",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "18-13",
+        "gridX": 11,
+        "gridY": 6,
+        "direction": "down",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "18-14",
+        "gridX": 13,
+        "gridY": 6,
+        "direction": "right",
+        "color": "lime",
+        "length": 1
+      }
+    ]
   },
-  // Level 19: Tempest Weave
   {
-    id: 19,
-    nameAr: 'نسيج العواصف الملونة',
-    nameEn: 'Tempest Weave',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '19-1', gridX: 1, gridY: 1, direction: 'left', color: 'cyan', length: 1 },
-      { id: '19-2', gridX: 4, gridY: 1, direction: 'up', color: 'lime', length: 2 },
-      { id: '19-3', gridX: 2, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '19-4', gridX: 5, gridY: 3, direction: 'down', color: 'purple', length: 2 },
-      { id: '19-5', gridX: 1, gridY: 5, direction: 'up', color: 'pink', length: 1 },
-      { id: '19-6', gridX: 4, gridY: 5, direction: 'left', color: 'orange', length: 2 },
-      { id: '19-7', gridX: 6, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '19-8', gridX: 7, gridY: 3, direction: 'right', color: 'lime', length: 2 },
-      { id: '19-9', gridX: 10, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
-      { id: '19-10', gridX: 10, gridY: 4, direction: 'left', color: 'purple', length: 2 },
-      { id: '19-11', gridX: 13, gridY: 1, direction: 'right', color: 'pink', length: 1 },
-      { id: '19-12', gridX: 13, gridY: 3, direction: 'down', color: 'orange', length: 2 },
-      { id: '19-13', gridX: 7, gridY: 6, direction: 'down', color: 'cyan', length: 1 },
-      { id: '19-14', gridX: 10, gridY: 6, direction: 'left', color: 'lime', length: 2 },
-      { id: '19-15', gridX: 13, gridY: 6, direction: 'right', color: 'yellow', length: 1 },
-    ],
+    "id": 19,
+    "nameAr": "نسيج العواصف الملونة",
+    "nameEn": "Tempest Weave",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "19-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "19-2",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "19-3",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "19-4",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "19-5",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "19-6",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "19-7",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "19-8",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "19-9",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "19-10",
+        "gridX": 10,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "19-11",
+        "gridX": 13,
+        "gridY": 1,
+        "direction": "right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "19-12",
+        "gridX": 13,
+        "gridY": 3,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "19-13",
+        "gridX": 7,
+        "gridY": 6,
+        "direction": "down",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "19-14",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "19-15",
+        "gridX": 13,
+        "gridY": 6,
+        "direction": "right",
+        "color": "yellow",
+        "length": 1
+      }
+    ]
   },
-  // Level 20: Legendary Pinnacle Boss
   {
-    id: 20,
-    nameAr: '🔥 المتاهة الأسطورية العشرين',
-    nameEn: '🔥 Legendary Pinnacle Boss',
-    difficulty: 'صعب جداً',
-    difficultyEn: 'Very Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 1,
-    arrows: [
-      { id: '20-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '20-2', gridX: 4, gridY: 1, direction: 'left', color: 'lime', length: 2 },
-      { id: '20-3', gridX: 1, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '20-4', gridX: 4, gridY: 3, direction: 'down', color: 'purple', length: 2 },
-      { id: '20-5', gridX: 2, gridY: 5, direction: 'left', color: 'pink', length: 1 },
-      { id: '20-6', gridX: 4, gridY: 5, direction: 'down', color: 'orange', length: 1 },
-      { id: '20-7', gridX: 6, gridY: 2, direction: 'up', color: 'cyan', length: 2 },
-      { id: '20-8', gridX: 7, gridY: 5, direction: 'down', color: 'lime', length: 2 },
-      { id: '20-9', gridX: 6, gridY: 6, direction: 'left', color: 'yellow', length: 1 },
-      { id: '20-10', gridX: 9, gridY: 1, direction: 'right', color: 'purple', length: 2 },
-      { id: '20-11', gridX: 12, gridY: 1, direction: 'up', color: 'pink', length: 1 },
-      { id: '20-12', gridX: 9, gridY: 3, direction: 'down', color: 'orange', length: 2 },
-      { id: '20-13', gridX: 12, gridY: 3, direction: 'right', color: 'cyan', length: 2 },
-      { id: '20-14', gridX: 10, gridY: 6, direction: 'up', color: 'lime', length: 2 },
-      { id: '20-15', gridX: 13, gridY: 6, direction: 'down', color: 'yellow', length: 1 },
-      { id: '20-16', gridX: 8, gridY: 4, direction: 'left', color: 'purple', length: 1 },
-    ],
+    "id": 20,
+    "nameAr": "🔥 المتاهة الأسطورية العشرين",
+    "nameEn": "🔥 Legendary Pinnacle Boss",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "20-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "20-2",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "20-3",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "20-4",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "20-5",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "20-6",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "down",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "20-7",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "20-8",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "down",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "20-9",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "left",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "20-10",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "20-11",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "20-12",
+        "gridX": 9,
+        "gridY": 3,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "20-13",
+        "gridX": 12,
+        "gridY": 3,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "20-14",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "20-15",
+        "gridX": 13,
+        "gridY": 6,
+        "direction": "down",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "20-16",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 1
+      }
+    ]
   },
-  // Level 21: Infinity Spiral
   {
-    id: 21,
-    nameAr: 'متاهة اللانهاية الحلزونية',
-    nameEn: 'Infinity Spiral',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '21-1', gridX: 2, gridY: 1, direction: 'right', color: 'cyan', length: 2 },
-      { id: '21-2', gridX: 5, gridY: 1, direction: 'down', color: 'lime', length: 2 },
-      { id: '21-3', gridX: 5, gridY: 4, direction: 'left', color: 'yellow', length: 2 },
-      { id: '21-4', gridX: 2, gridY: 4, direction: 'up', color: 'purple', length: 2 },
-      { id: '21-5', gridX: 1, gridY: 6, direction: 'right', color: 'pink', length: 2 },
-      { id: '21-6', gridX: 4, gridY: 6, direction: 'down', color: 'orange', length: 1 },
-      { id: '21-7', gridX: 7, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '21-8', gridX: 9, gridY: 2, direction: 'right', color: 'lime', length: 2 },
-      { id: '21-9', gridX: 12, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
-      { id: '21-10', gridX: 12, gridY: 4, direction: 'left', color: 'purple', length: 2 },
-      { id: '21-11', gridX: 9, gridY: 4, direction: 'up', color: 'pink', length: 2 },
-      { id: '21-12', gridX: 8, gridY: 6, direction: 'left', color: 'orange', length: 2 },
-      { id: '21-13', gridX: 11, gridY: 6, direction: 'down', color: 'cyan', length: 1 },
-    ],
+    "id": 21,
+    "nameAr": "متاهة اللانهاية الحلزونية",
+    "nameEn": "Infinity Spiral",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "21-1",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "21-2",
+        "gridX": 5,
+        "gridY": 1,
+        "direction": "down",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "21-3",
+        "gridX": 5,
+        "gridY": 4,
+        "direction": "left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "21-4",
+        "gridX": 2,
+        "gridY": 4,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "21-5",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "21-6",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "down",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "21-7",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "21-8",
+        "gridX": 9,
+        "gridY": 2,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "21-9",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "21-10",
+        "gridX": 12,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "21-11",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "left",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "21-12",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "21-13",
+        "gridX": 11,
+        "gridY": 6,
+        "direction": "down",
+        "color": "cyan",
+        "length": 1
+      }
+    ]
   },
-  // Level 22: Quantum Grid lock
   {
-    id: 22,
-    nameAr: 'قفل الشبكة الكمومية',
-    nameEn: 'Quantum Gridlock',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '22-1', gridX: 1, gridY: 1, direction: 'left', color: 'cyan', length: 1 },
-      { id: '22-2', gridX: 3, gridY: 1, direction: 'up', color: 'lime', length: 2 },
-      { id: '22-3', gridX: 1, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '22-4', gridX: 4, gridY: 3, direction: 'down', color: 'purple', length: 2 },
-      { id: '22-5', gridX: 2, gridY: 5, direction: 'left', color: 'pink', length: 1 },
-      { id: '22-6', gridX: 5, gridY: 5, direction: 'down', color: 'orange', length: 2 },
-      { id: '22-7', gridX: 7, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '22-8', gridX: 9, gridY: 1, direction: 'right', color: 'lime', length: 2 },
-      { id: '22-9', gridX: 12, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
-      { id: '22-10', gridX: 9, gridY: 4, direction: 'left', color: 'purple', length: 2 },
-      { id: '22-11', gridX: 12, gridY: 4, direction: 'up', color: 'pink', length: 2 },
-      { id: '22-12', gridX: 8, gridY: 6, direction: 'down', color: 'orange', length: 1 },
-      { id: '22-13', gridX: 10, gridY: 6, direction: 'left', color: 'cyan', length: 2 },
-      { id: '22-14', gridX: 13, gridY: 6, direction: 'right', color: 'lime', length: 1 },
-    ],
+    "id": 22,
+    "nameAr": "قفل الشبكة الكمومية",
+    "nameEn": "Quantum Gridlock",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "22-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "down",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "22-2",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "22-3",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "22-4",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "22-5",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "22-6",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "22-7",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "22-8",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "22-9",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "22-10",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "22-11",
+        "gridX": 12,
+        "gridY": 4,
+        "direction": "up",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "22-12",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "down",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "22-13",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "22-14",
+        "gridX": 13,
+        "gridY": 6,
+        "direction": "right",
+        "color": "lime",
+        "length": 1
+      }
+    ]
   },
-  // Level 23: Galactic Cluster
   {
-    id: 23,
-    nameAr: 'العناقيد المجرة المشتركة',
-    nameEn: 'Galactic Cluster',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '23-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '23-2', gridX: 4, gridY: 1, direction: 'left', color: 'lime', length: 2 },
-      { id: '23-3', gridX: 2, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '23-4', gridX: 5, gridY: 3, direction: 'down', color: 'purple', length: 2 },
-      { id: '23-5', gridX: 1, gridY: 5, direction: 'up', color: 'pink', length: 1 },
-      { id: '23-6', gridX: 4, gridY: 5, direction: 'left', color: 'orange', length: 2 },
-      { id: '23-7', gridX: 6, gridY: 2, direction: 'up', color: 'cyan', length: 2 },
-      { id: '23-8', gridX: 7, gridY: 4, direction: 'down', color: 'lime', length: 2 },
-      { id: '23-9', gridX: 9, gridY: 1, direction: 'right', color: 'yellow', length: 2 },
-      { id: '23-10', gridX: 12, gridY: 1, direction: 'down', color: 'purple', length: 2 },
-      { id: '23-11', gridX: 9, gridY: 4, direction: 'left', color: 'pink', length: 2 },
-      { id: '23-12', gridX: 12, gridY: 4, direction: 'up', color: 'orange', length: 2 },
-      { id: '23-13', gridX: 9, gridY: 6, direction: 'down', color: 'cyan', length: 1 },
-      { id: '23-14', gridX: 12, gridY: 6, direction: 'right', color: 'lime', length: 1 },
-    ],
+    "id": 23,
+    "nameAr": "العناقيد المجرة المشتركة",
+    "nameEn": "Galactic Cluster",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "23-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "23-2",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "23-3",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "23-4",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "23-5",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "23-6",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "23-7",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "23-8",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "down",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "23-9",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "23-10",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "23-11",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "left",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "23-12",
+        "gridX": 12,
+        "gridY": 4,
+        "direction": "left",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "23-13",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "23-14",
+        "gridX": 12,
+        "gridY": 6,
+        "direction": "right",
+        "color": "lime",
+        "length": 1
+      }
+    ]
   },
-  // Level 24: Cyclone Labyrinth
   {
-    id: 24,
-    nameAr: 'متاهة الإعصار الدوار',
-    nameEn: 'Cyclone Labyrinth',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '24-1', gridX: 1, gridY: 1, direction: 'left', color: 'cyan', length: 1 },
-      { id: '24-2', gridX: 3, gridY: 1, direction: 'up', color: 'lime', length: 2 },
-      { id: '24-3', gridX: 1, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '24-4', gridX: 4, gridY: 3, direction: 'down', color: 'purple', length: 2 },
-      { id: '24-5', gridX: 2, gridY: 5, direction: 'left', color: 'pink', length: 1 },
-      { id: '24-6', gridX: 5, gridY: 5, direction: 'down', color: 'orange', length: 2 },
-      { id: '24-7', gridX: 7, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '24-8', gridX: 8, gridY: 3, direction: 'right', color: 'lime', length: 2 },
-      { id: '24-9', gridX: 11, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
-      { id: '24-10', gridX: 11, gridY: 4, direction: 'left', color: 'purple', length: 2 },
-      { id: '24-11', gridX: 13, gridY: 1, direction: 'up', color: 'pink', length: 1 },
-      { id: '24-12', gridX: 13, gridY: 3, direction: 'down', color: 'orange', length: 2 },
-      { id: '24-13', gridX: 8, gridY: 6, direction: 'left', color: 'cyan', length: 2 },
-      { id: '24-14', gridX: 11, gridY: 6, direction: 'down', color: 'lime', length: 1 },
-      { id: '24-15', gridX: 13, gridY: 6, direction: 'right', color: 'yellow', length: 1 },
-    ],
+    "id": 24,
+    "nameAr": "متاهة الإعصار الدوار",
+    "nameEn": "Cyclone Labyrinth",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "24-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "24-2",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "24-3",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "24-4",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "24-5",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "24-6",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "24-7",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "24-8",
+        "gridX": 8,
+        "gridY": 3,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "24-9",
+        "gridX": 11,
+        "gridY": 1,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "24-10",
+        "gridX": 11,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "24-11",
+        "gridX": 13,
+        "gridY": 1,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "24-12",
+        "gridX": 13,
+        "gridY": 3,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "24-13",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "24-14",
+        "gridX": 11,
+        "gridY": 6,
+        "direction": "down",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "24-15",
+        "gridX": 13,
+        "gridY": 6,
+        "direction": "right",
+        "color": "yellow",
+        "length": 1
+      }
+    ]
   },
-  // Level 25: Master Overlord Boss (1 Life Only!)
   {
-    id: 25,
-    nameAr: '🔥 تحدي السكون المطلق ٢٥',
-    nameEn: '🔥 Master Overlord Boss',
-    difficulty: 'صعب جداً',
-    difficultyEn: 'Very Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 1,
-    arrows: [
-      { id: '25-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '25-2', gridX: 4, gridY: 1, direction: 'left', color: 'lime', length: 2 },
-      { id: '25-3', gridX: 1, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '25-4', gridX: 4, gridY: 3, direction: 'down', color: 'purple', length: 2 },
-      { id: '25-5', gridX: 2, gridY: 5, direction: 'left', color: 'pink', length: 1 },
-      { id: '25-6', gridX: 4, gridY: 5, direction: 'down', color: 'orange', length: 1 },
-      { id: '25-7', gridX: 6, gridY: 2, direction: 'up', color: 'cyan', length: 2 },
-      { id: '25-8', gridX: 7, gridY: 5, direction: 'down', color: 'lime', length: 2 },
-      { id: '25-9', gridX: 6, gridY: 6, direction: 'left', color: 'yellow', length: 1 },
-      { id: '25-10', gridX: 9, gridY: 1, direction: 'right', color: 'purple', length: 2 },
-      { id: '25-11', gridX: 12, gridY: 1, direction: 'up', color: 'pink', length: 1 },
-      { id: '25-12', gridX: 9, gridY: 3, direction: 'down', color: 'orange', length: 2 },
-      { id: '25-13', gridX: 12, gridY: 3, direction: 'right', color: 'cyan', length: 2 },
-      { id: '25-14', gridX: 10, gridY: 6, direction: 'up', color: 'lime', length: 2 },
-      { id: '25-15', gridX: 13, gridY: 6, direction: 'down', color: 'yellow', length: 1 },
-      { id: '25-16', gridX: 8, gridY: 4, direction: 'left', color: 'purple', length: 1 },
-      { id: '25-17', gridX: 11, gridY: 5, direction: 'right', color: 'orange', length: 1 },
-    ],
+    "id": 25,
+    "nameAr": "🔥 تحدي السكون المطلق ٢٥",
+    "nameEn": "🔥 Master Overlord Boss",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "25-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "25-2",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "25-3",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "25-4",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "25-5",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "25-6",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "down",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "25-7",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "25-8",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "down",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "25-9",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "left",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "25-10",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "25-11",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "25-12",
+        "gridX": 9,
+        "gridY": 3,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "25-13",
+        "gridX": 12,
+        "gridY": 3,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "25-14",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "25-15",
+        "gridX": 13,
+        "gridY": 6,
+        "direction": "down",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "25-16",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "25-17",
+        "gridX": 11,
+        "gridY": 5,
+        "direction": "right",
+        "color": "orange",
+        "length": 1
+      }
+    ]
   },
-  // Level 26: Hypercube Fortress
   {
-    id: 26,
-    nameAr: 'قلعة المكعب الفائق',
-    nameEn: 'Hypercube Fortress',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '26-1', gridX: 1, gridY: 1, direction: 'left', color: 'cyan', length: 1 },
-      { id: '26-2', gridX: 4, gridY: 1, direction: 'up', color: 'lime', length: 2 },
-      { id: '26-3', gridX: 2, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '26-4', gridX: 5, gridY: 3, direction: 'down', color: 'purple', length: 2 },
-      { id: '26-5', gridX: 1, gridY: 5, direction: 'down', color: 'pink', length: 1 },
-      { id: '26-6', gridX: 3, gridY: 5, direction: 'left', color: 'orange', length: 2 },
-      { id: '26-7', gridX: 6, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '26-8', gridX: 7, gridY: 3, direction: 'right', color: 'lime', length: 2 },
-      { id: '26-9', gridX: 10, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
-      { id: '26-10', gridX: 10, gridY: 4, direction: 'left', color: 'purple', length: 2 },
-      { id: '26-11', gridX: 13, gridY: 1, direction: 'right', color: 'pink', length: 1 },
-      { id: '26-12', gridX: 13, gridY: 3, direction: 'down', color: 'orange', length: 2 },
-      { id: '26-13', gridX: 8, gridY: 6, direction: 'left', color: 'cyan', length: 2 },
-      { id: '26-14', gridX: 11, gridY: 6, direction: 'down', color: 'lime', length: 1 },
-    ],
+    "id": 26,
+    "nameAr": "قلعة المكعب الفائق",
+    "nameEn": "Hypercube Fortress",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "26-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "26-2",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "26-3",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "26-4",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "26-5",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "down",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "26-6",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "26-7",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "26-8",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "26-9",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "26-10",
+        "gridX": 10,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "26-11",
+        "gridX": 13,
+        "gridY": 1,
+        "direction": "right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "26-12",
+        "gridX": 13,
+        "gridY": 3,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "26-13",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "26-14",
+        "gridX": 11,
+        "gridY": 6,
+        "direction": "down",
+        "color": "lime",
+        "length": 1
+      }
+    ]
   },
-  // Level 27: Starlight Nexus
   {
-    id: 27,
-    nameAr: 'نواة ضوء النجوم',
-    nameEn: 'Starlight Nexus',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '27-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '27-2', gridX: 3, gridY: 1, direction: 'left', color: 'lime', length: 2 },
-      { id: '27-3', gridX: 1, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '27-4', gridX: 4, gridY: 3, direction: 'down', color: 'purple', length: 2 },
-      { id: '27-5', gridX: 2, gridY: 5, direction: 'down', color: 'pink', length: 1 },
-      { id: '27-6', gridX: 5, gridY: 5, direction: 'right', color: 'orange', length: 2 },
-      { id: '27-7', gridX: 7, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '27-8', gridX: 9, gridY: 1, direction: 'right', color: 'lime', length: 2 },
-      { id: '27-9', gridX: 12, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
-      { id: '27-10', gridX: 9, gridY: 4, direction: 'left', color: 'purple', length: 2 },
-      { id: '27-11', gridX: 12, gridY: 4, direction: 'up', color: 'pink', length: 2 },
-      { id: '27-12', gridX: 8, gridY: 6, direction: 'left', color: 'orange', length: 2 },
-      { id: '27-13', gridX: 11, gridY: 6, direction: 'down', color: 'cyan', length: 1 },
-    ],
+    "id": 27,
+    "nameAr": "نواة ضوء النجوم",
+    "nameEn": "Starlight Nexus",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "27-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "27-2",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "27-3",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "27-4",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "27-5",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "down",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "27-6",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "right",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "27-7",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "27-8",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "27-9",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "27-10",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "up",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "27-11",
+        "gridX": 12,
+        "gridY": 4,
+        "direction": "up",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "27-12",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "27-13",
+        "gridX": 11,
+        "gridY": 6,
+        "direction": "down",
+        "color": "cyan",
+        "length": 1
+      }
+    ]
   },
-  // Level 28: Prismatic Vortex
   {
-    id: 28,
-    nameAr: 'دوامة منشور الألوان',
-    nameEn: 'Prismatic Vortex',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '28-1', gridX: 1, gridY: 1, direction: 'left', color: 'cyan', length: 1 },
-      { id: '28-2', gridX: 4, gridY: 1, direction: 'up', color: 'lime', length: 2 },
-      { id: '28-3', gridX: 2, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '28-4', gridX: 5, gridY: 3, direction: 'down', color: 'purple', length: 2 },
-      { id: '28-5', gridX: 1, gridY: 5, direction: 'up', color: 'pink', length: 1 },
-      { id: '28-6', gridX: 4, gridY: 5, direction: 'left', color: 'orange', length: 2 },
-      { id: '28-7', gridX: 6, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '28-8', gridX: 7, gridY: 3, direction: 'right', color: 'lime', length: 2 },
-      { id: '28-9', gridX: 10, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
-      { id: '28-10', gridX: 10, gridY: 4, direction: 'left', color: 'purple', length: 2 },
-      { id: '28-11', gridX: 13, gridY: 1, direction: 'right', color: 'pink', length: 1 },
-      { id: '28-12', gridX: 13, gridY: 3, direction: 'down', color: 'orange', length: 2 },
-      { id: '28-13', gridX: 7, gridY: 6, direction: 'down', color: 'cyan', length: 1 },
-      { id: '28-14', gridX: 10, gridY: 6, direction: 'left', color: 'lime', length: 2 },
-    ],
+    "id": 28,
+    "nameAr": "دوامة منشور الألوان",
+    "nameEn": "Prismatic Vortex",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "28-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "28-2",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "28-3",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "28-4",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "28-5",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "28-6",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "28-7",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "28-8",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "28-9",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "28-10",
+        "gridX": 10,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "28-11",
+        "gridX": 13,
+        "gridY": 1,
+        "direction": "right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "28-12",
+        "gridX": 13,
+        "gridY": 3,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "28-13",
+        "gridX": 7,
+        "gridY": 6,
+        "direction": "down",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "28-14",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      }
+    ]
   },
-  // Level 29: Titan Crossway
   {
-    id: 29,
-    nameAr: 'تقاطع التيتان العظيم',
-    nameEn: 'Titan Crossway',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 3,
-    arrows: [
-      { id: '29-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '29-2', gridX: 3, gridY: 1, direction: 'left', color: 'lime', length: 2 },
-      { id: '29-3', gridX: 1, gridY: 3, direction: 'down', color: 'yellow', length: 1 },
-      { id: '29-4', gridX: 3, gridY: 3, direction: 'right', color: 'purple', length: 2 },
-      { id: '29-5', gridX: 6, gridY: 2, direction: 'down', color: 'pink', length: 2 },
-      { id: '29-6', gridX: 6, gridY: 5, direction: 'left', color: 'orange', length: 2 },
-      { id: '29-7', gridX: 2, gridY: 5, direction: 'up', color: 'cyan', length: 1 },
-      { id: '29-8', gridX: 4, gridY: 6, direction: 'down', color: 'lime', length: 1 },
-      { id: '29-9', gridX: 8, gridY: 1, direction: 'up', color: 'yellow', length: 1 },
-      { id: '29-10', gridX: 10, gridY: 1, direction: 'right', color: 'purple', length: 2 },
-      { id: '29-11', gridX: 13, gridY: 1, direction: 'down', color: 'pink', length: 2 },
-      { id: '29-12', gridX: 10, gridY: 4, direction: 'left', color: 'orange', length: 2 },
-      { id: '29-13', gridX: 13, gridY: 4, direction: 'up', color: 'cyan', length: 2 },
-      { id: '29-14', gridX: 9, gridY: 6, direction: 'down', color: 'lime', length: 1 },
-      { id: '29-15', gridX: 11, gridY: 6, direction: 'right', color: 'yellow', length: 2 },
-    ],
+    "id": 29,
+    "nameAr": "تقاطع التيتان العظيم",
+    "nameEn": "Titan Crossway",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "29-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "29-2",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "29-3",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "down",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "29-4",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "29-5",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "down",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "29-6",
+        "gridX": 6,
+        "gridY": 5,
+        "direction": "left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "29-7",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "29-8",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "down",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "29-9",
+        "gridX": 8,
+        "gridY": 1,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "29-10",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "29-11",
+        "gridX": 13,
+        "gridY": 1,
+        "direction": "down",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "29-12",
+        "gridX": 10,
+        "gridY": 4,
+        "direction": "left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "29-13",
+        "gridX": 13,
+        "gridY": 4,
+        "direction": "down",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "29-14",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "right",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "29-15",
+        "gridX": 11,
+        "gridY": 6,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      }
+    ]
   },
-  // Level 30: Grand Emperor Boss (1 Life Only!)
   {
-    id: 30,
-    nameAr: '🔥 تحدي الإمبراطور الأخير ٣٠',
-    nameEn: '🔥 Grand Emperor Boss',
-    difficulty: 'صعب جداً',
-    difficultyEn: 'Very Hard',
-    gridSize: { cols: 14, rows: 8 },
-    maxDrops: 1,
-    arrows: [
-      { id: '30-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '30-2', gridX: 4, gridY: 1, direction: 'left', color: 'lime', length: 2 },
-      { id: '30-3', gridX: 1, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-      { id: '30-4', gridX: 4, gridY: 3, direction: 'down', color: 'purple', length: 2 },
-      { id: '30-5', gridX: 2, gridY: 5, direction: 'left', color: 'pink', length: 1 },
-      { id: '30-6', gridX: 4, gridY: 5, direction: 'down', color: 'orange', length: 1 },
-      { id: '30-7', gridX: 6, gridY: 2, direction: 'up', color: 'cyan', length: 2 },
-      { id: '30-8', gridX: 7, gridY: 5, direction: 'down', color: 'lime', length: 2 },
-      { id: '30-9', gridX: 6, gridY: 6, direction: 'left', color: 'yellow', length: 1 },
-      { id: '30-10', gridX: 9, gridY: 1, direction: 'right', color: 'purple', length: 2 },
-      { id: '30-11', gridX: 12, gridY: 1, direction: 'up', color: 'pink', length: 1 },
-      { id: '30-12', gridX: 9, gridY: 3, direction: 'down', color: 'orange', length: 2 },
-      { id: '30-13', gridX: 12, gridY: 3, direction: 'right', color: 'cyan', length: 2 },
-      { id: '30-14', gridX: 10, gridY: 6, direction: 'up', color: 'lime', length: 2 },
-      { id: '30-15', gridX: 13, gridY: 6, direction: 'down', color: 'yellow', length: 1 },
-      { id: '30-16', gridX: 8, gridY: 4, direction: 'left', color: 'purple', length: 1 },
-      { id: '30-17', gridX: 11, gridY: 5, direction: 'right', color: 'orange', length: 1 },
-    ],
-  },
+    "id": 30,
+    "nameAr": "🔥 تحدي الإمبراطور الأخير ٣٠",
+    "nameEn": "🔥 Grand Emperor Boss",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "30-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "30-2",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "30-3",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "30-4",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "30-5",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "30-6",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "down",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "30-7",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "30-8",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "down",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "30-9",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "left",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "30-10",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "30-11",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "30-12",
+        "gridX": 9,
+        "gridY": 3,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "30-13",
+        "gridX": 12,
+        "gridY": 3,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "30-14",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "30-15",
+        "gridX": 13,
+        "gridY": 6,
+        "direction": "down",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "30-16",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "30-17",
+        "gridX": 11,
+        "gridY": 5,
+        "direction": "right",
+        "color": "orange",
+        "length": 1
+      }
+    ]
+  }
 ];
 
 // Procedurally generate a level that is 100% guaranteed solvable with zero overlaps
