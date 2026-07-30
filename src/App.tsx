@@ -12,38 +12,16 @@ import { Sparkles, HelpCircle, RefreshCw } from 'lucide-react';
 
 const LOCAL_STORAGE_KEY = 'arrow_escape_game_data_v1';
 
+// Helper to compute highest unlocked level based on strictly completed levels with stars
+const computeUnlockedLevel = (starsMap: Record<number, number>): number => {
+  let lvl = 1;
+  while (starsMap[lvl] && starsMap[lvl] > 0) {
+    lvl++;
+  }
+  return lvl;
+};
+
 export default function App() {
-  // Game persistent state - initialized directly from localStorage with fallback to level 1
-  const [currentLevelId, setCurrentLevelId] = useState<number>(() => {
-    try {
-      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (typeof parsed.currentLevelId === 'number' && parsed.currentLevelId >= 1) {
-          return parsed.currentLevelId;
-        }
-      }
-    } catch (e) {
-      console.error(e);
-    }
-    return 1;
-  });
-
-  const [unlockedLevel, setUnlockedLevel] = useState<number>(() => {
-    try {
-      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (typeof parsed.unlockedLevel === 'number' && parsed.unlockedLevel >= 1) {
-          return parsed.unlockedLevel;
-        }
-      }
-    } catch (e) {
-      console.error(e);
-    }
-    return 1;
-  });
-
   const [starsPerLevel, setStarsPerLevel] = useState<Record<number, number>>(() => {
     try {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -57,6 +35,33 @@ export default function App() {
       console.error(e);
     }
     return {};
+  });
+
+  const [unlockedLevel, setUnlockedLevel] = useState<number>(() => {
+    return computeUnlockedLevel(starsPerLevel);
+  });
+
+  // Keep unlockedLevel strictly aligned with starsPerLevel
+  useEffect(() => {
+    const computed = computeUnlockedLevel(starsPerLevel);
+    setUnlockedLevel(computed);
+  }, [starsPerLevel]);
+
+  // Game persistent state - initialized directly from localStorage with fallback to current highest playable level
+  const [currentLevelId, setCurrentLevelId] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.currentLevelId === 'number' && parsed.currentLevelId >= 1) {
+          const maxPlayable = computeUnlockedLevel(parsed.starsPerLevel || {});
+          return Math.min(parsed.currentLevelId, maxPlayable);
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 1;
   });
 
   const [coins, setCoins] = useState<number>(() => {
@@ -284,16 +289,19 @@ export default function App() {
 
     setLastCoinsEarned(pointsForRun);
 
-    setStarsPerLevel((prev) => ({
-      ...prev,
+    const updatedStars = {
+      ...starsPerLevel,
       [currentLevelId]: newStars,
-    }));
+    };
+
+    setStarsPerLevel(updatedStars);
 
     if (coinsReward > 0) {
       setCoins((prev) => prev + coinsReward);
     }
 
-    setUnlockedLevel((prev) => Math.max(prev, currentLevelId + 1));
+    const nextUnlocked = computeUnlockedLevel(updatedStars);
+    setUnlockedLevel(nextUnlocked);
 
     setShowVictoryModal(true);
   };
@@ -301,7 +309,6 @@ export default function App() {
   const handleNextLevel = () => {
     setShowVictoryModal(false);
     const nextId = currentLevelId + 1;
-    setUnlockedLevel((prev) => Math.max(prev, nextId));
     setCurrentLevelId(nextId);
   };
 
