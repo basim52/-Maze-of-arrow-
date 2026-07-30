@@ -300,7 +300,9 @@ export default function App() {
 
   const handleNextLevel = () => {
     setShowVictoryModal(false);
-    setCurrentLevelId((prev) => prev + 1);
+    const nextId = currentLevelId + 1;
+    setUnlockedLevel((prev) => Math.max(prev, nextId));
+    setCurrentLevelId(nextId);
   };
 
   const handleRestartLevel = () => {

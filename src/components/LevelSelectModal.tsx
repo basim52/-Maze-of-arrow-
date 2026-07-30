@@ -36,7 +36,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
               {isAr ? `اختيار المستوى (١ - ${TOTAL_LEVELS})` : `Select Level (1 - ${TOTAL_LEVELS})`}
             </h2>
             <p className="text-xs text-slate-500 font-bold mt-0.5">
-              {isAr ? 'جميع المراحل متاحة للعب والانتقال' : 'All levels available to play'}
+              {isAr ? 'افتح المراحل بالتتابع عند الفوز' : 'Unlock levels sequentially by winning'}
             </p>
           </div>
           <button
@@ -53,7 +53,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
         {/* Scrollable Levels Grid */}
         <div className="flex-1 overflow-y-auto pr-1 grid grid-cols-5 gap-3 p-1">
           {levelIds.map((id) => {
-            const isUnlocked = true; // Show and enable all 100 levels
+            const isUnlocked = id <= unlockedLevel;
             const isCurrent = id === currentLevel;
             const isBossLevel = id % 5 === 0;
             const stars = starsPerLevel[id] || 0;
@@ -62,16 +62,19 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
             return (
               <button
                 key={id}
+                disabled={!isUnlocked}
                 onClick={() => {
                   soundManager.playClick();
                   onSelectLevel(id);
                 }}
-                className={`relative flex flex-col items-center justify-center p-2.5 rounded-2xl border-2 transition-all duration-200 aspect-square cursor-pointer ${
+                className={`relative flex flex-col items-center justify-center p-2.5 rounded-2xl border-2 transition-all duration-200 aspect-square ${
                   isCurrent
                     ? 'bg-gradient-to-tr from-sky-400 to-blue-500 text-white border-sky-300 shadow-md scale-105'
-                    : isBossLevel
-                    ? 'bg-gradient-to-tr from-rose-50 to-amber-50 text-slate-800 border-rose-300 hover:border-rose-400 hover:scale-105 shadow-sm'
-                    : 'bg-gradient-to-tr from-sky-50 to-white text-slate-700 border-sky-100 hover:border-sky-300 hover:scale-105 shadow-sm'
+                    : isUnlocked
+                    ? isBossLevel
+                      ? 'bg-gradient-to-tr from-rose-50 to-amber-50 text-slate-800 border-rose-300 hover:border-rose-400 hover:scale-105 shadow-sm cursor-pointer'
+                      : 'bg-gradient-to-tr from-sky-50 to-white text-slate-700 border-sky-100 hover:border-sky-300 hover:scale-105 shadow-sm cursor-pointer'
+                    : 'bg-slate-100 text-slate-400 border-slate-200 opacity-60 cursor-not-allowed'
                 }`}
               >
                 {isBossLevel && (
@@ -80,26 +83,35 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                   </span>
                 )}
 
-                <span className={`text-base font-black ${isBossLevel && !isCurrent ? 'text-rose-600' : ''}`}>
-                  {id}
-                </span>
+                {isUnlocked ? (
+                  <>
+                    <span className={`text-base font-black ${isBossLevel && !isCurrent ? 'text-rose-600' : ''}`}>
+                      {id}
+                    </span>
 
-                {/* Stars indicator */}
-                <div className="flex items-center gap-0.5 mt-1">
-                  {[1, 2, 3].map((starIdx) => (
-                    <Star
-                      key={starIdx}
-                      className={`w-3 h-3 ${
-                        starIdx <= stars
-                          ? 'text-amber-400 fill-amber-400'
-                          : 'text-slate-300 fill-slate-200'
-                      }`}
-                    />
-                  ))}
-                </div>
+                    {/* Stars indicator */}
+                    <div className="flex items-center gap-0.5 mt-1">
+                      {[1, 2, 3].map((starIdx) => (
+                        <Star
+                          key={starIdx}
+                          className={`w-3 h-3 ${
+                            starIdx <= stars
+                              ? 'text-amber-400 fill-amber-400'
+                              : 'text-slate-300 fill-slate-200'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex flex-col items-center justify-center gap-0.5">
+                    <span className="text-xs font-bold text-slate-400">{id}</span>
+                    <Lock className="w-4 h-4 text-slate-400" />
+                  </div>
+                )}
 
                 {/* Handcrafted difficulty badge */}
-                {handcrafted && (
+                {handcrafted && isUnlocked && (
                   <span className="absolute -top-1.5 -left-1 text-[8px] px-1 py-0.5 rounded-full bg-amber-400 text-white font-black shadow-xs">
                     {handcrafted.difficulty}
                   </span>
