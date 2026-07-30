@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Arrow, Direction, ThemeSkin } from '../types';
 import { DIRECTION_VECTORS, canArrowEscape } from '../utils/levelGenerator';
 import { soundManager } from '../utils/sound';
+import { RainStrikeOverlay, RainItem } from './RainStrikeOverlay';
 
 interface ArrowMazeBoardProps {
   arrows: Arrow[];
@@ -13,6 +14,7 @@ interface ArrowMazeBoardProps {
   isCompleted: boolean;
   isHammerActive?: boolean;
   onUseHammer?: (arrowId: string) => void;
+  rainItems?: RainItem[];
 }
 
 // Color palette matching user's screenshot exact vibrant smooth pastel jelly 3D colors
@@ -323,6 +325,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
   isCompleted,
   isHammerActive,
   onUseHammer,
+  rainItems = [],
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [bumpingArrowId, setBumpingArrowId] = useState<string | null>(null);
@@ -451,6 +454,9 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
               height: `${gridRows * tileSize}px`,
             }}
           >
+            {/* Rain Powerup Strike Overlay */}
+            <RainStrikeOverlay rainItems={rainItems} tileSize={tileSize} />
+
             {/* Background Ghost Track Arrows */}
             {arrows.map((arrow) => {
               const left = arrow.gridX * tileSize;
