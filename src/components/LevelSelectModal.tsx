@@ -22,8 +22,8 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
 }) => {
   const isAr = language === 'ar';
 
-  // Display all 100 levels (50 handcrafted + 50 generated)
-  const TOTAL_LEVELS = 100;
+  // Display all levels dynamically (min 100, expanding as player progresses)
+  const TOTAL_LEVELS = Math.max(100, unlockedLevel, currentLevel + 5);
   const levelIds = Array.from({ length: TOTAL_LEVELS }, (_, i) => i + 1);
 
   return (
@@ -33,10 +33,10 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
         <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
           <div>
             <h2 className="text-xl font-black text-slate-800">
-              {isAr ? 'اختيار المستوى (١ - ١٠٠)' : 'Select Level (1 - 100)'}
+              {isAr ? `اختيار المستوى (١ - ${TOTAL_LEVELS})` : `Select Level (1 - ${TOTAL_LEVELS})`}
             </h2>
             <p className="text-xs text-slate-500 font-bold mt-0.5">
-              {isAr ? 'جميع المراحل مائة مرحلة متاحة' : 'All 100 levels available'}
+              {isAr ? 'جميع المراحل متاحة للعب والانتقال' : 'All levels available to play'}
             </p>
           </div>
           <button

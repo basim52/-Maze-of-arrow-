@@ -120,7 +120,9 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({
             }}
             className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-black text-lg shadow-[0_6px_20px_rgba(16,185,129,0.3)] flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-98 transition-all cursor-pointer"
           >
-            <span>{isAr ? 'المستوى التالي' : 'Next Level'}</span>
+            <span>
+              {isAr ? `المستوى التالي (${levelNumber + 1})` : `Next Level (${levelNumber + 1})`}
+            </span>
             <ArrowRight className={`w-5 h-5 ${isAr ? 'rotate-180' : ''}`} />
           </button>
 
