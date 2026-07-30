@@ -11,6 +11,8 @@ interface ArrowMazeBoardProps {
   onArrowBlocked: (arrowId: string, blockerId: string) => void;
   selectedSkin?: ThemeSkin;
   isCompleted: boolean;
+  isHammerActive?: boolean;
+  onUseHammer?: (arrowId: string) => void;
 }
 
 // Color palette matching user's screenshot exact vibrant smooth pastel jelly 3D colors
@@ -237,9 +239,12 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
   onArrowEscaped,
   onArrowBlocked,
   isCompleted,
+  isHammerActive,
+  onUseHammer,
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [bumpingArrowId, setBumpingArrowId] = useState<string | null>(null);
+  const [smashingArrowId, setSmashingArrowId] = useState<string | null>(null);
   const [flyingArrows, setFlyingArrows] = useState<Record<string, { x: number; y: number }>>({});
   const [tileSize, setTileSize] = useState<number>(52);
 
@@ -267,10 +272,21 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
   useEffect(() => {
     setBumpingArrowId(null);
     setFlyingArrows({});
+    setSmashingArrowId(null);
   }, [arrows.length, gridCols, gridRows]);
 
   const handleArrowClick = (arrow: Arrow) => {
-    if (arrow.isEscaped || flyingArrows[arrow.id] || isCompleted) return;
+    if (arrow.isEscaped || flyingArrows[arrow.id] || isCompleted || smashingArrowId) return;
+
+    if (isHammerActive && onUseHammer) {
+      soundManager.playSmash();
+      setSmashingArrowId(arrow.id);
+      setTimeout(() => {
+        onUseHammer(arrow.id);
+        setSmashingArrowId(null);
+      }, 300);
+      return;
+    }
 
     soundManager.playClick();
 
@@ -360,6 +376,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
               if (arrow.isEscaped) return null;
 
               const isBumping = bumpingArrowId === arrow.id;
+              const isSmashing = smashingArrowId === arrow.id;
               const flyOffset = flyingArrows[arrow.id];
 
               const left = arrow.gridX * tileSize;
@@ -369,21 +386,36 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
                 <div
                   key={arrow.id}
                   onClick={() => handleArrowClick(arrow)}
-                  className="absolute transition-transform ease-out cursor-pointer z-10 touch-manipulation"
+                  className={`absolute transition-all ease-out cursor-pointer z-10 touch-manipulation ${
+                    isHammerActive ? 'hover:scale-110 active:scale-90 animate-pulse' : ''
+                  }`}
                   style={{
                     left: `${left}px`,
                     top: `${top}px`,
                     width: `${tileSize}px`,
                     height: `${tileSize}px`,
-                    transform: flyOffset
+                    transform: isSmashing
+                      ? 'scale(0) rotate(180deg)'
+                      : flyOffset
                       ? `translate(${flyOffset.x}px, ${flyOffset.y}px) scale(1.1)`
                       : isBumping
                       ? `scale(1.08)`
                       : 'translate(0, 0)',
-                    transitionDuration: flyOffset ? '350ms' : isBumping ? '150ms' : '200ms',
-                    zIndex: flyOffset ? 50 : 10,
+                    opacity: isSmashing ? 0 : 1,
+                    transitionDuration: isSmashing ? '300ms' : flyOffset ? '350ms' : isBumping ? '150ms' : '200ms',
+                    zIndex: isSmashing ? 60 : flyOffset ? 50 : 10,
                   }}
                 >
+                  {isSmashing && (
+                    <div className="absolute inset-0 flex items-center justify-center text-3xl animate-ping z-50">
+                      💥
+                    </div>
+                  )}
+                  {isHammerActive && (
+                    <div className="absolute -top-2 -right-2 bg-amber-500 text-white text-[10px] font-black rounded-full w-5 h-5 flex items-center justify-center shadow-md border border-white z-30">
+                      🔨
+                    </div>
+                  )}
                   <Render3DArrowSVG
                     arrow={arrow}
                     isBumping={isBumping}

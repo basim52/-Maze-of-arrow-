@@ -124,6 +124,23 @@ export default function App() {
     return ['jelly'];
   });
 
+  const [hammers, setHammers] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.hammers === 'number') {
+          return parsed.hammers;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 1; // 1 free starter hammer
+  });
+
+  const [isHammerActive, setIsHammerActive] = useState<boolean>(false);
+
   // Modals state
   const [showVictoryModal, setShowVictoryModal] = useState<boolean>(false);
   const [showLevelSelectModal, setShowLevelSelectModal] = useState<boolean>(false);
@@ -153,12 +170,13 @@ export default function App() {
         language,
         selectedSkin,
         unlockedSkins,
+        hammers,
       };
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
     } catch (e) {
       console.error(e);
     }
-  }, [currentLevelId, unlockedLevel, starsPerLevel, coins, soundEnabled, language, selectedSkin, unlockedSkins]);
+  }, [currentLevelId, unlockedLevel, starsPerLevel, coins, soundEnabled, language, selectedSkin, unlockedSkins, hammers]);
 
   // Load level data whenever currentLevelId changes
   useEffect(() => {
@@ -168,7 +186,45 @@ export default function App() {
     setDrops(lvl.maxDrops || 3);
     setEscapedCount(0);
     setShowVictoryModal(false);
+    setIsHammerActive(false);
   }, [currentLevelId]);
+
+  // Hammer tool actions
+  const handleToggleHammer = () => {
+    const isAr = language === 'ar';
+    soundManager.playClick();
+    if (isHammerActive) {
+      setIsHammerActive(false);
+      triggerToast(isAr ? 'تم إلغاء وضع المطرقة' : 'Hammer mode canceled');
+      return;
+    }
+
+    if (hammers <= 0) {
+      triggerToast(isAr ? 'لا تملك مطرقة! يمكنك شراؤها بـ 300 نقطة 🛒' : 'No hammers! Buy for 300 coins 🛒');
+      setShowShopModal(true);
+      return;
+    }
+
+    setIsHammerActive(true);
+    triggerToast(isAr ? 'انقر على أي سهم لكسره بالمطرقة! 🔨' : 'Click any arrow to smash! 🔨');
+  };
+
+  const handleUseHammer = (arrowId: string) => {
+    const isAr = language === 'ar';
+    setHammers((prev) => Math.max(0, prev - 1));
+    setIsHammerActive(false);
+    triggerToast(isAr ? 'تم كسر السهم بالمطرقة بنجاح! 🔨💥' : 'Arrow smashed with hammer! 🔨💥');
+    handleArrowEscaped(arrowId);
+  };
+
+  const handleBuyHammer = (cost: number) => {
+    const isAr = language === 'ar';
+    if (coins >= cost) {
+      setCoins((prev) => prev - cost);
+      setHammers((prev) => prev + 1);
+      triggerToast(isAr ? 'تم شراء مطرقة بنجاح! 🔨' : 'Hammer purchased! 🔨');
+    }
+  };
 
   // Toast notification timer
   const triggerToast = (msg: string) => {
@@ -286,6 +342,21 @@ export default function App() {
 
       {/* Main Interactive 3D Arrow Board Stage */}
       <main className="flex-1 flex flex-col items-center justify-center relative w-full px-2">
+        {/* Active Hammer Mode Banner */}
+        {isHammerActive && (
+          <div className="mb-2 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white font-black text-xs px-4 py-2 rounded-2xl shadow-lg flex items-center gap-2 animate-bounce">
+            <span className="text-base">🔨</span>
+            <span>{isAr ? 'وضع المطرقة مفعل: انقر على أي سهم لكسره!' : 'Hammer Mode Active: Click any arrow to smash!'}</span>
+            <button
+              onClick={() => setIsHammerActive(false)}
+              className="mr-2 bg-white/20 hover:bg-white/30 text-white px-2 py-0.5 rounded-full text-[10px] font-bold cursor-pointer"
+            >
+              {isAr ? 'إلغاء' : 'Cancel'}
+            </button>
+          </div>
+        )}
+
+        {/* Board */}
         <ArrowMazeBoard
           arrows={arrows}
           gridCols={activeLevel.gridSize.cols}
@@ -294,7 +365,41 @@ export default function App() {
           onArrowBlocked={handleArrowBlocked}
           selectedSkin={selectedSkin}
           isCompleted={escapedCount === totalArrowsCount}
+          isHammerActive={isHammerActive}
+          onUseHammer={handleUseHammer}
         />
+
+        {/* In-Game Action Bar Dock */}
+        <div className="flex items-center justify-center gap-3 mt-2 mb-1 z-20">
+          <button
+            id="btn-hammer-tool"
+            onClick={handleToggleHammer}
+            className={`px-4 py-2 rounded-2xl border-2 font-black text-xs flex items-center gap-2 shadow-sm transition-all cursor-pointer ${
+              isHammerActive
+                ? 'bg-amber-500 text-white border-amber-300 ring-4 ring-amber-300/40 scale-105 animate-pulse'
+                : 'bg-gradient-to-r from-amber-50 via-yellow-50 to-orange-50 border-amber-200 text-amber-900 hover:border-amber-300 hover:scale-105 active:scale-95'
+            }`}
+            title={isAr ? 'استخدام المطرقة لكسر سهم' : 'Use Hammer to break an arrow'}
+          >
+            <span className="text-lg">🔨</span>
+            <span>{isAr ? 'المطرقة' : 'Hammer'}</span>
+            <span className="bg-amber-200/90 text-amber-950 font-extrabold text-[11px] px-2 py-0.5 rounded-full border border-amber-300">
+              {hammers}
+            </span>
+          </button>
+
+          <button
+            id="btn-restart-game"
+            onClick={() => {
+              soundManager.playClick();
+              handleRestartLevel();
+            }}
+            className="px-3.5 py-2 rounded-2xl border-2 border-slate-200 bg-white text-slate-700 hover:bg-slate-50 font-extrabold text-xs flex items-center gap-1.5 shadow-xs hover:scale-105 active:scale-95 cursor-pointer"
+          >
+            <RefreshCw className="w-3.5 h-3.5 text-slate-500" />
+            <span>{isAr ? 'إعادة' : 'Reset'}</span>
+          </button>
+        </div>
       </main>
 
       {/* Bottom Footer Description matching user prompt & screenshot details */}
@@ -359,6 +464,7 @@ export default function App() {
       {showShopModal && (
         <ShopModal
           coins={coins}
+          hammers={hammers}
           selectedSkin={selectedSkin}
           unlockedSkins={unlockedSkins}
           language={language}
@@ -368,6 +474,7 @@ export default function App() {
             setUnlockedSkins((prev) => [...prev, skin]);
             setSelectedSkin(skin);
           }}
+          onBuyHammer={handleBuyHammer}
           onClose={() => setShowShopModal(false)}
         />
       )}

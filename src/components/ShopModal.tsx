@@ -5,11 +5,13 @@ import { soundManager } from '../utils/sound';
 
 interface ShopModalProps {
   coins: number;
+  hammers: number;
   selectedSkin: ThemeSkin;
   unlockedSkins: ThemeSkin[];
   language: 'ar' | 'en';
   onSelectSkin: (skin: ThemeSkin) => void;
   onUnlockSkin: (skin: ThemeSkin, cost: number) => void;
+  onBuyHammer: (cost: number) => void;
   onClose: () => void;
 }
 
@@ -59,23 +61,26 @@ const SKINS: SkinItem[] = [
 
 export const ShopModal: React.FC<ShopModalProps> = ({
   coins,
+  hammers,
   selectedSkin,
   unlockedSkins,
   language,
   onSelectSkin,
   onUnlockSkin,
+  onBuyHammer,
   onClose,
 }) => {
   const isAr = language === 'ar';
+  const canAffordHammer = coins >= 300;
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
-      <div className="w-full max-w-sm bg-white rounded-3xl p-6 shadow-2xl border-2 border-slate-100 flex flex-col relative animate-scale-up">
+      <div className="w-full max-w-sm bg-white rounded-3xl p-5 sm:p-6 shadow-2xl border-2 border-slate-100 flex flex-col relative animate-scale-up max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
           <div className="flex items-center gap-2">
             <h2 className="text-xl font-black text-slate-800">
-              {isAr ? 'متجر الأسهم' : 'Arrow Shop'}
+              {isAr ? 'متجر الألعاب' : 'Game Shop'}
             </h2>
             <div className="flex items-center gap-1 text-xs font-black bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full border border-amber-200">
               <Sparkles className="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
@@ -93,8 +98,62 @@ export const ShopModal: React.FC<ShopModalProps> = ({
           </button>
         </div>
 
-        {/* Skins List */}
-        <div className="flex flex-col gap-3">
+        {/* Hammer Power-Up Section */}
+        <div className="mb-5">
+          <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider mb-2.5">
+            {isAr ? 'الأدوات والمساعدات' : 'Tools & Power-ups'}
+          </h3>
+          <div className="p-4 rounded-2xl border-2 border-amber-300 bg-gradient-to-br from-amber-50/80 via-yellow-50/50 to-orange-50/30 flex items-center justify-between shadow-xs">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-400 to-orange-500 flex items-center justify-center text-2xl shadow-md transform -rotate-6">
+                🔨
+              </div>
+              <div className="flex flex-col">
+                <span className="font-black text-slate-800 text-sm flex items-center gap-1.5">
+                  {isAr ? 'المطرقة السحرية' : 'Magic Hammer'}
+                  <span className="bg-amber-200 text-amber-900 text-[10px] px-2 py-0.5 rounded-full font-extrabold">
+                    {isAr ? `تكسر سهم 1` : `Breaks 1 Arrow`}
+                  </span>
+                </span>
+                <span className="text-[11px] font-bold text-slate-500 mt-0.5">
+                  {isAr ? `تكسر أي سهم تكتفي به` : `Breaks any arrow on board`}
+                </span>
+                <span className="text-xs font-black text-amber-700 mt-1 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-amber-500 fill-amber-400" />
+                  300 {isAr ? 'نقطة' : 'Coins'}
+                  <span className="text-slate-400 mx-1">•</span>
+                  <span className="text-slate-600 font-extrabold">
+                    {isAr ? `تملك: ${hammers}` : `Owned: ${hammers}`}
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <button
+              disabled={!canAffordHammer}
+              onClick={() => {
+                soundManager.playClick();
+                if (canAffordHammer) {
+                  onBuyHammer(300);
+                }
+              }}
+              className={`px-3.5 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-xs ${
+                canAffordHammer
+                  ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:scale-105 active:scale-95 shadow-amber-200'
+                  : 'bg-slate-200 text-slate-400 cursor-not-allowed opacity-70'
+              }`}
+            >
+              <span>{isAr ? 'شراء' : 'Buy'}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Skins List Section */}
+        <div>
+          <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider mb-2.5">
+            {isAr ? 'مظاهر الأسهم' : 'Arrow Skins'}
+          </h3>
+          <div className="flex flex-col gap-2.5">
           {SKINS.map((skin) => {
             const isUnlocked = unlockedSkins.includes(skin.id);
             const isSelected = selectedSkin === skin.id;
@@ -173,6 +232,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
               </div>
             );
           })}
+          </div>
         </div>
       </div>
     </div>

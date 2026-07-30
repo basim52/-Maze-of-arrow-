@@ -152,6 +152,34 @@ class SoundManager {
     }
   }
 
+  // Smash sound for Hammer power-up
+  public playSmash() {
+    if (!this.enabled) return;
+    this.initCtx();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(220, now);
+      osc.frequency.exponentialRampToValueAtTime(30, now + 0.18);
+
+      gain.gain.setValueAtTime(0.45, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.18);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   // Victory Fanfare sound when level cleared
   public playVictory() {
     if (!this.enabled) return;
