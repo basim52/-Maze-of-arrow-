@@ -145,6 +145,7 @@ const Render3DArrowSVG: React.FC<{
 }> = ({ arrow, isBumping, isFlying, tileSize }) => {
   const theme = COLOR_THEMES[arrow.color] || COLOR_THEMES.cyan;
   const isDouble = arrow.isDouble || arrow.type === 'double';
+  const isBomb = arrow.isBomb || arrow.type === 'bomb';
 
   const rotationDegrees: Record<Direction, number> = {
     up: -90,
@@ -237,20 +238,20 @@ const Render3DArrowSVG: React.FC<{
       >
         <defs>
           <linearGradient id={`grad-${arrow.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor={theme.highlight} stopOpacity="0.95" />
-            <stop offset="30%" stopColor={theme.gradientStart} />
-            <stop offset="100%" stopColor={theme.gradientEnd} />
+            <stop offset="0%" stopColor={isBomb ? '#FDE047' : theme.highlight} stopOpacity="0.95" />
+            <stop offset="30%" stopColor={isBomb ? '#F97316' : theme.gradientStart} />
+            <stop offset="100%" stopColor={isBomb ? '#DC2626' : theme.gradientEnd} />
           </linearGradient>
 
           <filter id={`shadow-${arrow.id}`} x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy={s(3)} stdDeviation={s(2)} floodColor={theme.border} floodOpacity="0.4" />
+            <feDropShadow dx="0" dy={s(3)} stdDeviation={s(2)} floodColor={isBomb ? '#991B1B' : theme.border} floodOpacity="0.4" />
           </filter>
         </defs>
 
         {/* 3D Bottom Bevel Shadow Layer */}
         <path
           d={shadowPath}
-          fill={theme.border}
+          fill={isBomb ? '#991B1B' : theme.border}
           opacity="0.5"
           transform={`translate(0, ${s(3.5)})`}
         />
@@ -259,7 +260,7 @@ const Render3DArrowSVG: React.FC<{
         <path
           d={bodyPath}
           fill={`url(#grad-${arrow.id})`}
-          stroke={theme.border}
+          stroke={isBomb ? '#7F1D1D' : theme.border}
           strokeWidth={Math.max(1.2, s(2.2))}
           strokeLinejoin="round"
           strokeLinecap="round"
@@ -291,6 +292,21 @@ const Render3DArrowSVG: React.FC<{
             className="select-none pointer-events-none drop-shadow-md"
           >
             ↔
+          </text>
+        )}
+
+        {/* Bomb Arrow Badge Icon in the center */}
+        {isBomb && (
+          <text
+            x={totalWidth / 2}
+            y={cy + s(5)}
+            textAnchor="middle"
+            fill="white"
+            fontSize={s(15)}
+            fontWeight="900"
+            className="select-none pointer-events-none drop-shadow-md animate-pulse"
+          >
+            💣
           </text>
         )}
       </svg>
@@ -357,6 +373,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
     soundManager.playClick();
 
     const { canEscape, blocker, escapeDirection } = canArrowEscape(arrow, arrows, gridCols, gridRows);
+    const isBomb = arrow.isBomb || arrow.type === 'bomb';
 
     if (canEscape) {
       soundManager.playPop();
@@ -382,7 +399,16 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
       setBumpingArrowId(arrow.id);
 
       if (blocker) {
-        onArrowBlocked(arrow.id, blocker.id);
+        if (isBomb) {
+          soundManager.playSmash();
+          setSmashingArrowId(blocker.id);
+          setTimeout(() => {
+            onArrowEscaped(blocker.id);
+            setSmashingArrowId(null);
+          }, 300);
+        } else {
+          onArrowBlocked(arrow.id, blocker.id);
+        }
       }
 
       setTimeout(() => {

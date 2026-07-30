@@ -222,7 +222,7 @@ export default function App() {
     }
 
     if (hammers <= 0) {
-      triggerToast(isAr ? 'لا تملك مطرقة! يمكنك شراؤها بـ 300 نقطة 🛒' : 'No hammers! Buy for 300 coins 🛒');
+      triggerToast(isAr ? 'لا تملك مطرقة! يمكنك شراؤها بـ 75 نقطة 🛒' : 'No hammers! Buy for 75 coins 🛒');
       setShowShopModal(true);
       return;
     }
@@ -262,7 +262,7 @@ export default function App() {
     soundManager.playClick();
 
     if (thunders <= 0) {
-      triggerToast(isAr ? 'لا تملك رعد! يمكنك شراؤه بـ 400 نقطة 🛒' : 'No thunder! Buy for 400 coins 🛒');
+      triggerToast(isAr ? 'لا تملك رعد! يمكنك شراؤه بـ 155 نقطة 🛒' : 'No thunder! Buy for 155 coins 🛒');
       setShowShopModal(true);
       return;
     }
@@ -477,7 +477,7 @@ export default function App() {
             id="btn-thunder-tool"
             onClick={handleUseLightning}
             className="px-3.5 sm:px-4 py-2 rounded-2xl border-2 border-sky-300 bg-gradient-to-r from-sky-50 via-cyan-50 to-blue-50 text-sky-900 hover:border-sky-400 font-black text-xs flex items-center gap-1.5 shadow-xs hover:scale-105 active:scale-95 cursor-pointer transition-all"
-            title={isAr ? 'استخدام ضربة الرعد لكسر 3 أسهم عشوائية (400 نقطة)' : 'Use Lightning to break 3 random arrows (400 coins)'}
+            title={isAr ? 'استخدام ضربة الرعد لكسر 3 أسهم عشوائية (155 نقطة)' : 'Use Lightning to break 3 random arrows (155 coins)'}
           >
             <span className="text-lg">⚡</span>
             <span>{isAr ? 'رعد' : 'Thunder'}</span>

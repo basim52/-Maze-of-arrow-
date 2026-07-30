@@ -75,8 +75,8 @@ export const ShopModal: React.FC<ShopModalProps> = ({
   onClose,
 }) => {
   const isAr = language === 'ar';
-  const canAffordHammer = coins >= 300;
-  const canAffordThunder = coins >= 400;
+  const canAffordHammer = coins >= 75;
+  const canAffordThunder = coins >= 155;
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
@@ -127,7 +127,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                 </span>
                 <span className="text-xs font-black text-sky-700 mt-1 flex items-center gap-1">
                   <Sparkles className="w-3 h-3 text-amber-500 fill-amber-400" />
-                  400 {isAr ? 'نقطة' : 'Coins'}
+                  155 {isAr ? 'نقطة' : 'Coins'}
                   <span className="text-slate-400 mx-1">•</span>
                   <span className="text-slate-600 font-extrabold">
                     {isAr ? `تملك: ${thunders}` : `Owned: ${thunders}`}
@@ -141,7 +141,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
               onClick={() => {
                 soundManager.playClick();
                 if (canAffordThunder) {
-                  onBuyThunder(400);
+                  onBuyThunder(155);
                 }
               }}
               className={`px-3.5 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-xs ${
@@ -149,7 +149,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                   ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white hover:scale-105 active:scale-95 shadow-sky-200'
                   : 'bg-slate-200 text-slate-400 cursor-not-allowed opacity-70'
               }`}
-              title={isAr ? 'شراء رعد بـ 400 نقطة' : 'Buy Lightning Bolt for 400 coins'}
+              title={isAr ? 'شراء رعد بـ 155 نقطة' : 'Buy Lightning Bolt for 155 coins'}
             >
               <span>{isAr ? 'شراء (+1)' : 'Buy (+1)'}</span>
             </button>
@@ -173,7 +173,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                 </span>
                 <span className="text-xs font-black text-amber-700 mt-1 flex items-center gap-1">
                   <Sparkles className="w-3 h-3 text-amber-500 fill-amber-400" />
-                  300 {isAr ? 'نقطة' : 'Coins'}
+                  75 {isAr ? 'نقطة' : 'Coins'}
                   <span className="text-slate-400 mx-1">•</span>
                   <span className="text-slate-600 font-extrabold">
                     {isAr ? `تملك: ${hammers}` : `Owned: ${hammers}`}
@@ -187,7 +187,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
               onClick={() => {
                 soundManager.playClick();
                 if (canAffordHammer) {
-                  onBuyHammer(300);
+                  onBuyHammer(75);
                 }
               }}
               className={`px-3.5 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-xs ${
@@ -195,7 +195,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                   ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:scale-105 active:scale-95 shadow-amber-200'
                   : 'bg-slate-200 text-slate-400 cursor-not-allowed opacity-70'
               }`}
-              title={isAr ? 'يمكنك شراء المطرقة عدة مرات' : 'Buy multiple hammers'}
+              title={isAr ? 'شراء مطرقة بـ 75 نقطة' : 'Buy Magic Hammer for 75 coins'}
             >
               <span>{isAr ? 'شراء (+1)' : 'Buy (+1)'}</span>
             </button>

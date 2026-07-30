@@ -5398,7 +5398,8 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
       const dir = directions[Math.floor(Math.random() * directions.length)];
       const color = COLORS[Math.floor(Math.random() * COLORS.length)];
       const len = Math.random() > 0.6 ? 2 : 1;
-      const isDouble = levelNumber >= 6 && Math.random() < 0.2;
+      const isBomb = levelNumber >= 8 && Math.random() < 0.15;
+      const isDouble = !isBomb && levelNumber >= 6 && Math.random() < 0.2;
 
       const candidate: Arrow = {
         id: `gen-${levelNumber}-${arrows.length}-${Math.random().toString(36).substring(2, 7)}`,
@@ -5407,7 +5408,7 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
         direction: dir,
         color: color,
         length: len,
-        ...(isDouble ? { type: 'double', isDouble: true } : {}),
+        ...(isBomb ? { type: 'bomb', isBomb: true } : isDouble ? { type: 'double', isDouble: true } : {}),
       };
 
       const testLevel: Level = {
