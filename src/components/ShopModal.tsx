@@ -8,6 +8,7 @@ interface ShopModalProps {
   hammers: number;
   thunders: number;
   creams: number;
+  chocolates: number;
   selectedSkin: ThemeSkin;
   unlockedSkins: ThemeSkin[];
   language: 'ar' | 'en';
@@ -16,6 +17,7 @@ interface ShopModalProps {
   onBuyHammer: (cost: number) => void;
   onBuyThunder: (cost: number) => void;
   onBuyCream: (cost: number) => void;
+  onBuyChocolate: (cost: number) => void;
   onBuyBundle: (cost: number) => void;
   onClose: () => void;
 }
@@ -69,6 +71,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
   hammers,
   thunders,
   creams,
+  chocolates,
   selectedSkin,
   unlockedSkins,
   language,
@@ -77,12 +80,14 @@ export const ShopModal: React.FC<ShopModalProps> = ({
   onBuyHammer,
   onBuyThunder,
   onBuyCream,
+  onBuyChocolate,
   onBuyBundle,
   onClose,
 }) => {
   const isAr = language === 'ar';
   const canAffordBundle = coins >= 255;
   const canAffordHammer = coins >= 45;
+  const canAffordChocolate = coins >= 55;
   const canAffordThunder = coins >= 95;
   const canAffordCream = coins >= 129;
 
@@ -213,6 +218,52 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                   : 'bg-slate-200 text-slate-400 cursor-not-allowed opacity-70'
               }`}
               title={isAr ? 'شراء رعد بـ 95 نقطة' : 'Buy Lightning Bolt for 95 coins'}
+            >
+              <span>{isAr ? 'شراء (+1)' : 'Buy (+1)'}</span>
+            </button>
+          </div>
+
+          {/* Chocolate Item (55 coins) */}
+          <div className="p-3.5 rounded-2xl border-2 border-amber-700/40 bg-gradient-to-br from-amber-900/10 via-amber-800/10 to-amber-700/20 flex items-center justify-between shadow-xs">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-700 via-amber-800 to-yellow-900 flex items-center justify-center text-2xl shadow-md transform -rotate-3 border border-amber-600/40">
+                🍫
+              </div>
+              <div className="flex flex-col">
+                <span className="font-black text-slate-800 text-sm flex items-center gap-1.5">
+                  {isAr ? 'الشوكولاتة السحرية 🍫' : 'Magic Chocolate 🍫'}
+                  <span className="bg-amber-800/20 text-amber-900 text-[10px] px-2 py-0.5 rounded-full font-extrabold border border-amber-700/30">
+                    {isAr ? `تزيل 2 أسهم` : `Removes 2 Arrows`}
+                  </span>
+                </span>
+                <span className="text-[11px] font-bold text-slate-500 mt-0.5">
+                  {isAr ? `تزيل 2 أسهم عشوائية فوراً` : `Removes 2 random arrows at once`}
+                </span>
+                <span className="text-xs font-black text-amber-800 mt-1 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-amber-500 fill-amber-400" />
+                  55 {isAr ? 'نقطة' : 'Coins'}
+                  <span className="text-slate-400 mx-1">•</span>
+                  <span className="text-slate-600 font-extrabold">
+                    {isAr ? `تملك: ${chocolates}` : `Owned: ${chocolates}`}
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <button
+              disabled={!canAffordChocolate}
+              onClick={() => {
+                soundManager.playClick();
+                if (canAffordChocolate) {
+                  onBuyChocolate(55);
+                }
+              }}
+              className={`px-3.5 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-xs ${
+                canAffordChocolate
+                  ? 'bg-gradient-to-r from-amber-700 via-amber-800 to-yellow-900 text-white hover:scale-105 active:scale-95 shadow-amber-700/30'
+                  : 'bg-slate-200 text-slate-400 cursor-not-allowed opacity-70'
+              }`}
+              title={isAr ? 'شراء شوكولاتة بـ 55 نقطة' : 'Buy Chocolate for 55 coins'}
             >
               <span>{isAr ? 'شراء (+1)' : 'Buy (+1)'}</span>
             </button>

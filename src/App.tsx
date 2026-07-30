@@ -175,6 +175,21 @@ export default function App() {
     return 1; // 1 free starter cream
   });
 
+  const [chocolates, setChocolates] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.chocolates === 'number') {
+          return parsed.chocolates;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 1; // 1 free starter chocolate bar
+  });
+
   const [isHammerActive, setIsHammerActive] = useState<boolean>(false);
   const [lastCoinsEarned, setLastCoinsEarned] = useState<number>(10);
 
@@ -226,12 +241,13 @@ export default function App() {
         hammers,
         thunders,
         creams,
+        chocolates,
       };
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
     } catch (e) {
       console.error(e);
     }
-  }, [currentLevelId, unlockedLevel, starsPerLevel, coins, soundEnabled, language, selectedSkin, unlockedSkins, hammers, thunders, creams]);
+  }, [currentLevelId, unlockedLevel, starsPerLevel, coins, soundEnabled, language, selectedSkin, unlockedSkins, hammers, thunders, creams, chocolates]);
 
   // Load level data whenever currentLevelId changes
   useEffect(() => {
@@ -319,6 +335,15 @@ export default function App() {
     }
   };
 
+  const handleBuyChocolate = (cost: number) => {
+    const isAr = language === 'ar';
+    if (coins >= cost) {
+      setCoins((prev) => prev - cost);
+      setChocolates((prev) => prev + 1);
+      triggerToast(isAr ? 'تم شراء الشوكولاتة السحرية بنجاح! 🍫' : 'Magic Chocolate purchased! 🍫');
+    }
+  };
+
   const handleBuyBundle = (cost: number) => {
     const isAr = language === 'ar';
     if (coins >= cost) {
@@ -328,6 +353,61 @@ export default function App() {
       setThunders((prev) => prev + 1);
       triggerToast(isAr ? 'تم شراء بكج الأدوات الشامل بنجاح! 🍦🔨⚡' : 'Mega Power-Up Bundle purchased! 🍦🔨⚡');
     }
+  };
+
+  const handleUseChocolate = () => {
+    const isAr = language === 'ar';
+    soundManager.playClick();
+
+    if (chocolates <= 0) {
+      triggerToast(isAr ? 'لا تملك شوكولاتة! يمكنك شراؤها بـ 55 نقطة 🛒' : 'No chocolate! Buy for 55 coins 🛒');
+      setShowShopModal(true);
+      return;
+    }
+
+    const unescaped = arrows.filter((a) => !a.isEscaped);
+    if (unescaped.length === 0) return;
+
+    soundManager.playSmash();
+
+    // Select up to 2 random unescaped arrows to remove
+    const shuffled = [...unescaped].sort(() => 0.5 - Math.random());
+    const selectedToSmash = shuffled.slice(0, 2);
+    const smashedIds = new Set(selectedToSmash.map((a) => a.id));
+
+    const estimatedTile = Math.max(24, Math.min(54, Math.floor((Math.min(window.innerWidth, 460) - 32) / activeLevel.gridSize.cols)));
+    const chocoRainItems: RainItem[] = selectedToSmash.map((arrow, idx) => ({
+      id: `choco-rain-${arrow.id}-${Date.now()}`,
+      type: 'chocolate',
+      x: arrow.gridX * estimatedTile + estimatedTile / 2,
+      y: arrow.gridY * estimatedTile + estimatedTile / 2,
+      delay: idx * 70,
+    }));
+    setRainItems(chocoRainItems);
+
+    setChocolates((prev) => Math.max(0, prev - 1));
+    triggerToast(
+      isAr
+        ? `🍫 تساقط مطر الشوكولاتة لإزالة ${smashedIds.size} أسهم!`
+        : `🍫 Chocolate rain removed ${smashedIds.size} arrows!`
+    );
+
+    setTimeout(() => {
+      setArrows((prev) => {
+        const next = prev.map((a) => (smashedIds.has(a.id) ? { ...a, isEscaped: true } : a));
+        const remaining = next.filter((a) => !a.isEscaped).length;
+        const newEscapedCount = next.length - remaining;
+        setEscapedCount(newEscapedCount);
+
+        if (remaining === 0) {
+          setTimeout(() => {
+            handleLevelCompleted();
+          }, 400);
+        }
+        return next;
+      });
+      setRainItems([]);
+    }, 450);
   };
 
   const handleUseLightning = () => {
@@ -661,12 +741,12 @@ export default function App() {
             />
 
             {/* In-Game Action Bar Dock */}
-            <div className="flex items-center justify-center gap-1.5 sm:gap-2.5 my-1 z-20">
+            <div className="flex items-center justify-center gap-1.5 sm:gap-2 my-1 z-20 flex-wrap">
               {/* Cream Power-Up Button (129 coins in shop) */}
               <button
                 id="btn-cream-tool"
                 onClick={handleUseCream}
-                className="px-2.5 sm:px-3.5 py-1.5 rounded-2xl border-2 border-pink-300 bg-gradient-to-r from-pink-50 via-rose-50 to-amber-50 text-pink-900 hover:border-pink-400 font-black text-[11px] sm:text-xs flex items-center gap-1 shadow-xs hover:scale-105 active:scale-95 cursor-pointer transition-all"
+                className="px-2 sm:px-3 py-1.5 rounded-2xl border-2 border-pink-300 bg-gradient-to-r from-pink-50 via-rose-50 to-amber-50 text-pink-900 hover:border-pink-400 font-black text-[11px] sm:text-xs flex items-center gap-1 shadow-xs hover:scale-105 active:scale-95 cursor-pointer transition-all"
                 title={isAr ? 'استخدام الكريمة لإزالة 5 أسهم عشوائية (129 نقطة)' : 'Use Cream to remove 5 random arrows (129 coins)'}
               >
                 <span className="text-base sm:text-lg">🍦</span>
@@ -676,11 +756,25 @@ export default function App() {
                 </span>
               </button>
 
+              {/* Chocolate Power-Up Button (55 coins in shop) */}
+              <button
+                id="btn-choco-tool"
+                onClick={handleUseChocolate}
+                className="px-2 sm:px-3 py-1.5 rounded-2xl border-2 border-amber-800/40 bg-gradient-to-r from-amber-900/10 via-amber-800/20 to-yellow-900/20 text-amber-950 hover:border-amber-700 font-black text-[11px] sm:text-xs flex items-center gap-1 shadow-xs hover:scale-105 active:scale-95 cursor-pointer transition-all"
+                title={isAr ? 'استخدام الشوكولاتة لإزالة سهمين عشوائيين (55 نقطة)' : 'Use Chocolate to remove 2 random arrows (55 coins)'}
+              >
+                <span className="text-base sm:text-lg">🍫</span>
+                <span>{isAr ? 'شوكولاتة' : 'Chocolate'}</span>
+                <span className="bg-amber-800/20 text-amber-950 font-extrabold text-[10px] sm:text-[11px] px-1.5 sm:px-2 py-0.5 rounded-full border border-amber-700/30">
+                  {chocolates}
+                </span>
+              </button>
+
               {/* Thunder Power-Up Button (95 coins in shop) */}
               <button
                 id="btn-thunder-tool"
                 onClick={handleUseLightning}
-                className="px-2.5 sm:px-3.5 py-1.5 rounded-2xl border-2 border-sky-300 bg-gradient-to-r from-sky-50 via-cyan-50 to-blue-50 text-sky-900 hover:border-sky-400 font-black text-[11px] sm:text-xs flex items-center gap-1 shadow-xs hover:scale-105 active:scale-95 cursor-pointer transition-all"
+                className="px-2 sm:px-3 py-1.5 rounded-2xl border-2 border-sky-300 bg-gradient-to-r from-sky-50 via-cyan-50 to-blue-50 text-sky-900 hover:border-sky-400 font-black text-[11px] sm:text-xs flex items-center gap-1 shadow-xs hover:scale-105 active:scale-95 cursor-pointer transition-all"
                 title={isAr ? 'استخدام ضربة الرعد لكسر 3 أسهم عشوائية (95 نقطة)' : 'Use Lightning to break 3 random arrows (95 coins)'}
               >
                 <span className="text-base sm:text-lg">⚡</span>
@@ -694,7 +788,7 @@ export default function App() {
               <button
                 id="btn-hammer-tool"
                 onClick={handleToggleHammer}
-                className={`px-2.5 sm:px-3.5 py-1.5 rounded-2xl border-2 font-black text-[11px] sm:text-xs flex items-center gap-1 shadow-xs transition-all cursor-pointer ${
+                className={`px-2 sm:px-3 py-1.5 rounded-2xl border-2 font-black text-[11px] sm:text-xs flex items-center gap-1 shadow-xs transition-all cursor-pointer ${
                   isHammerActive
                     ? 'bg-amber-500 text-white border-amber-300 ring-4 ring-amber-300/40 scale-105 animate-pulse'
                     : 'bg-gradient-to-r from-amber-50 via-yellow-50 to-orange-50 border-amber-200 text-amber-900 hover:border-amber-300 hover:scale-105 active:scale-95'
@@ -795,6 +889,7 @@ export default function App() {
           hammers={hammers}
           thunders={thunders}
           creams={creams}
+          chocolates={chocolates}
           selectedSkin={selectedSkin}
           unlockedSkins={unlockedSkins}
           language={language}
@@ -807,6 +902,7 @@ export default function App() {
           onBuyHammer={handleBuyHammer}
           onBuyThunder={handleBuyThunder}
           onBuyCream={handleBuyCream}
+          onBuyChocolate={handleBuyChocolate}
           onBuyBundle={handleBuyBundle}
           onClose={() => setShowShopModal(false)}
         />
