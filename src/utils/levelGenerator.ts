@@ -212,7 +212,7 @@ export const HANDCRAFTED_LEVELS: Level[] = [
     arrows: [
       // Left Wing Cluster (Cyan, Lime, Yellow)
       { id: '5-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
-      { id: '5-2', gridX: 3, gridY: 1, direction: 'right', color: 'lime', length: 2 },
+      { id: '5-2', gridX: 4, gridY: 1, direction: 'left', color: 'lime', length: 2 },
       { id: '5-3', gridX: 1, gridY: 3, direction: 'right', color: 'cyan', length: 2 },
       { id: '5-4', gridX: 2, gridY: 5, direction: 'down', color: 'lime', length: 1 },
       { id: '5-5', gridX: 4, gridY: 5, direction: 'down', color: 'yellow', length: 2 },
@@ -226,11 +226,11 @@ export const HANDCRAFTED_LEVELS: Level[] = [
 
       // Right Wing Cluster (Purple, Pink, Orange)
       { id: '5-11', gridX: 12, gridY: 1, direction: 'up', color: 'purple', length: 1 },
-      { id: '5-12', gridX: 10, gridY: 1, direction: 'left', color: 'pink', length: 2 },
+      { id: '5-12', gridX: 9, gridY: 1, direction: 'right', color: 'pink', length: 2 },
       { id: '5-13', gridX: 12, gridY: 3, direction: 'right', color: 'purple', length: 2 },
       { id: '5-14', gridX: 11, gridY: 5, direction: 'down', color: 'pink', length: 1 },
       { id: '5-15', gridX: 9, gridY: 5, direction: 'down', color: 'orange', length: 2 },
-      { id: '5-16', gridX: 9, gridY: 3, direction: 'left', color: 'purple', length: 1 },
+      { id: '5-16', gridX: 9, gridY: 3, direction: 'up', color: 'purple', length: 1 },
       { id: '5-17', gridX: 10, gridY: 2, direction: 'up', color: 'pink', length: 1 },
       { id: '5-18', gridX: 11, gridY: 4, direction: 'right', color: 'purple', length: 1 },
     ],
@@ -266,16 +266,17 @@ export const HANDCRAFTED_LEVELS: Level[] = [
     gridSize: { cols: 10, rows: 7 },
     maxDrops: 3,
     arrows: [
-      { id: '7-1', gridX: 1, gridY: 1, direction: 'right', color: 'cyan', length: 2 },
-      { id: '7-2', gridX: 4, gridY: 1, direction: 'down', color: 'lime', length: 2 },
-      { id: '7-3', gridX: 4, gridY: 4, direction: 'left', color: 'yellow', length: 2 },
-      { id: '7-4', gridX: 1, gridY: 4, direction: 'up', color: 'purple', length: 1 },
-      { id: '7-5', gridX: 6, gridY: 1, direction: 'right', color: 'pink', length: 2 },
-      { id: '7-6', gridX: 9, gridY: 1, direction: 'down', color: 'orange', length: 2 },
-      { id: '7-7', gridX: 8, gridY: 4, direction: 'down', color: 'cyan', length: 2 },
-      { id: '7-8', gridX: 6, gridY: 4, direction: 'left', color: 'lime', length: 1 },
-      { id: '7-9', gridX: 2, gridY: 5, direction: 'down', color: 'yellow', length: 1 },
-      { id: '7-10', gridX: 5, gridY: 5, direction: 'right', color: 'purple', length: 1 },
+      { id: '7-1', gridX: 1, gridY: 1, direction: 'left', color: 'cyan', length: 1 },
+      { id: '7-2', gridX: 4, gridY: 1, direction: 'up', color: 'lime', length: 2 },
+      { id: '7-3', gridX: 1, gridY: 3, direction: 'up', color: 'purple', length: 1 },
+      { id: '7-4', gridX: 3, gridY: 3, direction: 'left', color: 'yellow', length: 2 },
+      { id: '7-5', gridX: 4, gridY: 4, direction: 'down', color: 'pink', length: 2 },
+      { id: '7-6', gridX: 6, gridY: 1, direction: 'right', color: 'orange', length: 2 },
+      { id: '7-7', gridX: 9, gridY: 1, direction: 'down', color: 'cyan', length: 2 },
+      { id: '7-8', gridX: 8, gridY: 4, direction: 'up', color: 'lime', length: 2 },
+      { id: '7-9', gridX: 6, gridY: 4, direction: 'left', color: 'yellow', length: 1 },
+      { id: '7-10', gridX: 2, gridY: 5, direction: 'down', color: 'purple', length: 1 },
+      { id: '7-11', gridX: 5, gridY: 5, direction: 'right', color: 'pink', length: 1 },
     ],
   },
   // Level 8: Spiral Maze
@@ -289,16 +290,16 @@ export const HANDCRAFTED_LEVELS: Level[] = [
     maxDrops: 3,
     arrows: [
       { id: '8-1', gridX: 2, gridY: 1, direction: 'up', color: 'lime', length: 1 },
-      { id: '8-2', gridX: 3, gridY: 2, direction: 'right', color: 'cyan', length: 2 },
-      { id: '8-3', gridX: 6, gridY: 2, direction: 'down', color: 'yellow', length: 2 },
-      { id: '8-4', gridX: 6, gridY: 5, direction: 'left', color: 'purple', length: 2 },
-      { id: '8-5', gridX: 3, gridY: 5, direction: 'up', color: 'pink', length: 2 },
-      { id: '8-6', gridX: 4, gridY: 3, direction: 'right', color: 'orange', length: 1 },
+      { id: '8-2', gridX: 3, gridY: 2, direction: 'left', color: 'cyan', length: 2 },
+      { id: '8-3', gridX: 6, gridY: 2, direction: 'up', color: 'yellow', length: 2 },
+      { id: '8-4', gridX: 6, gridY: 5, direction: 'down', color: 'purple', length: 2 },
+      { id: '8-5', gridX: 3, gridY: 5, direction: 'left', color: 'pink', length: 2 },
+      { id: '8-6', gridX: 4, gridY: 3, direction: 'up', color: 'orange', length: 1 },
       { id: '8-7', gridX: 1, gridY: 3, direction: 'left', color: 'cyan', length: 1 },
       { id: '8-8', gridX: 8, gridY: 2, direction: 'up', color: 'lime', length: 1 },
       { id: '8-9', gridX: 9, gridY: 4, direction: 'right', color: 'yellow', length: 2 },
       { id: '8-10', gridX: 8, gridY: 6, direction: 'down', color: 'purple', length: 1 },
-      { id: '8-11', gridX: 5, gridY: 6, direction: 'left', color: 'pink', length: 2 },
+      { id: '8-11', gridX: 5, gridY: 6, direction: 'down', color: 'pink', length: 2 },
       { id: '8-12', gridX: 2, gridY: 6, direction: 'down', color: 'orange', length: 1 },
     ],
   },
@@ -367,7 +368,9 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
   const targetCount = Math.min(6 + Math.floor(levelNumber * 1.2), 20);
   const directions: Direction[] = ['up', 'down', 'left', 'right'];
 
-  for (let attempt = 0; attempt < 15; attempt++) {
+  let bestCandidate: Level | null = null;
+
+  for (let attempt = 0; attempt < 30; attempt++) {
     const arrows: Arrow[] = [];
     let innerAttempts = 0;
 
@@ -380,7 +383,7 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
       const len = Math.random() > 0.6 ? 2 : 1;
 
       const candidate: Arrow = {
-        id: `gen-${levelNumber}-${arrows.length}-${Date.now()}-${Math.random()}`,
+        id: `gen-${levelNumber}-${arrows.length}-${Math.random().toString(36).substring(2, 7)}`,
         gridX: gx,
         gridY: gy,
         direction: dir,
@@ -392,8 +395,8 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
         id: levelNumber,
         nameAr: `المستوى ${levelNumber}`,
         nameEn: `Level ${levelNumber}`,
-        difficulty: 'متوسط',
-        difficultyEn: 'Medium',
+        difficulty: levelNumber <= 3 ? 'سهل' : levelNumber <= 8 ? 'متوسط' : 'صعب',
+        difficultyEn: levelNumber <= 3 ? 'Easy' : levelNumber <= 8 ? 'Medium' : 'Hard',
         gridSize: { cols, rows },
         maxDrops: 3,
         arrows: [...arrows, candidate],
@@ -418,15 +421,38 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
     if (arrows.length >= 4 && isLevelSolvable(candidateLevel)) {
       return candidateLevel;
     }
+
+    if (!bestCandidate || (candidateLevel.arrows.length > bestCandidate.arrows.length && isLevelSolvable(candidateLevel))) {
+      bestCandidate = candidateLevel;
+    }
   }
 
-  return HANDCRAFTED_LEVELS[0];
+  if (bestCandidate && bestCandidate.arrows.length >= 3) {
+    return bestCandidate;
+  }
+
+  // Guaranteed fallback template with ID = levelNumber
+  const templateIdx = (levelNumber - 1) % HANDCRAFTED_LEVELS.length;
+  const baseLevel = HANDCRAFTED_LEVELS[templateIdx];
+  return {
+    ...baseLevel,
+    id: levelNumber,
+    nameAr: `المستوى ${levelNumber}`,
+    nameEn: `Level ${levelNumber}`,
+    arrows: baseLevel.arrows.map((a, idx) => ({
+      ...a,
+      id: `gen-fb-${levelNumber}-${idx}`,
+    })),
+  };
 }
 
 export function getLevel(id: number): Level {
   const handcrafted = HANDCRAFTED_LEVELS.find((l) => l.id === id);
-  if (handcrafted && isLevelSolvable(handcrafted)) {
-    return handcrafted;
+  if (handcrafted) {
+    return {
+      ...handcrafted,
+      arrows: handcrafted.arrows.map((a) => ({ ...a })),
+    };
   }
   return generateRandomSolvableLevel(id);
 }
