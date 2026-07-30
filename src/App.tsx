@@ -273,16 +273,20 @@ export default function App() {
 
   // Victory Handler
   const handleLevelCompleted = () => {
-    // Check if level was already completed previously
-    const isAlreadyCleared = (starsPerLevel[currentLevelId] || 0) > 0;
-    const coinsReward = isAlreadyCleared ? 0 : 10;
-    setLastCoinsEarned(coinsReward);
-
     const starsEarned = drops === 3 ? 3 : drops === 2 ? 2 : 1;
+    const pointsPerStar = 9;
+    const pointsForRun = starsEarned * pointsPerStar; // 9 points per star
+
+    const prevStars = starsPerLevel[currentLevelId] || 0;
+    const newStars = Math.max(prevStars, starsEarned);
+    const addedStars = newStars - prevStars;
+    const coinsReward = addedStars * pointsPerStar;
+
+    setLastCoinsEarned(pointsForRun);
 
     setStarsPerLevel((prev) => ({
       ...prev,
-      [currentLevelId]: Math.max(prev[currentLevelId] || 0, starsEarned),
+      [currentLevelId]: newStars,
     }));
 
     if (coinsReward > 0) {
