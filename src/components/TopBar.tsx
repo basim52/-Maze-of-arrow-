@@ -110,6 +110,11 @@ export const TopBar: React.FC<TopBarProps> = ({
       <div className="w-full flex items-center justify-between gap-2.5 sm:gap-4 max-w-lg px-1 sm:px-2">
         {/* Water Drop Icons (2 Filled Cyan drops + 1 Translucent Gray drop matching screenshot) */}
         <div className="flex items-center gap-1 sm:gap-2">
+          {maxDrops === 1 && (
+            <span className="text-[10px] sm:text-xs font-black bg-gradient-to-r from-rose-500 to-amber-500 text-white px-2 py-0.5 rounded-full shadow-xs animate-pulse tracking-wide">
+              {isAr ? 'فرصة واحدة ⚡' : '1 Chance ⚡'}
+            </span>
+          )}
           {Array.from({ length: maxDrops }).map((_, idx) => {
             const isActive = idx < drops;
             return (

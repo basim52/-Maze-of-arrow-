@@ -203,12 +203,12 @@ export const HANDCRAFTED_LEVELS: Level[] = [
   // Level 5: Intricate Glasses / Butterfly Wing Maze (Perfectly Spaced & 100% Solvable!)
   {
     id: 5,
-    nameAr: 'متاهة النظارة الأنيقة',
-    nameEn: 'Glasses Butterfly Maze',
+    nameAr: '🔥 متاهة النظارة الخماسية',
+    nameEn: '🔥 Glasses Butterfly Boss',
     difficulty: 'صعب جداً',
     difficultyEn: 'Very Hard',
     gridSize: { cols: 14, rows: 7 },
-    maxDrops: 3,
+    maxDrops: 1,
     arrows: [
       // Left Wing Cluster (Cyan, Lime, Yellow)
       { id: '5-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
@@ -328,15 +328,15 @@ export const HANDCRAFTED_LEVELS: Level[] = [
       { id: '9-13', gridX: 9, gridY: 5, direction: 'right', color: 'yellow', length: 1 },
     ],
   },
-  // Level 10: Master Linked Maze
+  // Level 10: Master Linked Boss
   {
     id: 10,
-    nameAr: 'متاهة الخبراء المترابطة',
-    nameEn: 'Master Linked Maze',
-    difficulty: 'خبير',
-    difficultyEn: 'Expert',
+    nameAr: '🔥 تحدي الخبراء الخماسي',
+    nameEn: '🔥 Master Linked Boss',
+    difficulty: 'صعب جداً',
+    difficultyEn: 'Very Hard',
     gridSize: { cols: 14, rows: 8 },
-    maxDrops: 3,
+    maxDrops: 1,
     arrows: [
       { id: '10-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
       { id: '10-2', gridX: 3, gridY: 1, direction: 'right', color: 'lime', length: 2 },
@@ -465,7 +465,7 @@ export const HANDCRAFTED_LEVELS: Level[] = [
     difficulty: 'صعب جداً',
     difficultyEn: 'Very Hard',
     gridSize: { cols: 14, rows: 8 },
-    maxDrops: 3,
+    maxDrops: 1,
     arrows: [
       { id: '15-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
       { id: '15-2', gridX: 4, gridY: 1, direction: 'left', color: 'lime', length: 2 },
@@ -592,12 +592,12 @@ export const HANDCRAFTED_LEVELS: Level[] = [
   // Level 20: Legendary Pinnacle Boss
   {
     id: 20,
-    nameAr: '🔥 المتاهة الأسطورية النهاية',
+    nameAr: '🔥 المتاهة الأسطورية العشرين',
     nameEn: '🔥 Legendary Pinnacle Boss',
     difficulty: 'صعب جداً',
     difficultyEn: 'Very Hard',
     gridSize: { cols: 14, rows: 8 },
-    maxDrops: 3,
+    maxDrops: 1,
     arrows: [
       { id: '20-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
       { id: '20-2', gridX: 4, gridY: 1, direction: 'left', color: 'lime', length: 2 },
@@ -617,23 +617,290 @@ export const HANDCRAFTED_LEVELS: Level[] = [
       { id: '20-16', gridX: 8, gridY: 4, direction: 'left', color: 'purple', length: 1 },
     ],
   },
+  // Level 21: Infinity Spiral
+  {
+    id: 21,
+    nameAr: 'متاهة اللانهاية الحلزونية',
+    nameEn: 'Infinity Spiral',
+    difficulty: 'صعب',
+    difficultyEn: 'Hard',
+    gridSize: { cols: 14, rows: 8 },
+    maxDrops: 3,
+    arrows: [
+      { id: '21-1', gridX: 2, gridY: 1, direction: 'right', color: 'cyan', length: 2 },
+      { id: '21-2', gridX: 5, gridY: 1, direction: 'down', color: 'lime', length: 2 },
+      { id: '21-3', gridX: 5, gridY: 4, direction: 'left', color: 'yellow', length: 2 },
+      { id: '21-4', gridX: 2, gridY: 4, direction: 'up', color: 'purple', length: 2 },
+      { id: '21-5', gridX: 1, gridY: 6, direction: 'right', color: 'pink', length: 2 },
+      { id: '21-6', gridX: 4, gridY: 6, direction: 'down', color: 'orange', length: 1 },
+      { id: '21-7', gridX: 7, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
+      { id: '21-8', gridX: 9, gridY: 2, direction: 'right', color: 'lime', length: 2 },
+      { id: '21-9', gridX: 12, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
+      { id: '21-10', gridX: 12, gridY: 4, direction: 'left', color: 'purple', length: 2 },
+      { id: '21-11', gridX: 9, gridY: 4, direction: 'up', color: 'pink', length: 2 },
+      { id: '21-12', gridX: 8, gridY: 6, direction: 'left', color: 'orange', length: 2 },
+      { id: '21-13', gridX: 11, gridY: 6, direction: 'down', color: 'cyan', length: 1 },
+    ],
+  },
+  // Level 22: Quantum Grid lock
+  {
+    id: 22,
+    nameAr: 'قفل الشبكة الكمومية',
+    nameEn: 'Quantum Gridlock',
+    difficulty: 'صعب',
+    difficultyEn: 'Hard',
+    gridSize: { cols: 14, rows: 8 },
+    maxDrops: 3,
+    arrows: [
+      { id: '22-1', gridX: 1, gridY: 1, direction: 'left', color: 'cyan', length: 1 },
+      { id: '22-2', gridX: 3, gridY: 1, direction: 'up', color: 'lime', length: 2 },
+      { id: '22-3', gridX: 1, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
+      { id: '22-4', gridX: 4, gridY: 3, direction: 'down', color: 'purple', length: 2 },
+      { id: '22-5', gridX: 2, gridY: 5, direction: 'left', color: 'pink', length: 1 },
+      { id: '22-6', gridX: 5, gridY: 5, direction: 'down', color: 'orange', length: 2 },
+      { id: '22-7', gridX: 7, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
+      { id: '22-8', gridX: 9, gridY: 1, direction: 'right', color: 'lime', length: 2 },
+      { id: '22-9', gridX: 12, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
+      { id: '22-10', gridX: 9, gridY: 4, direction: 'left', color: 'purple', length: 2 },
+      { id: '22-11', gridX: 12, gridY: 4, direction: 'up', color: 'pink', length: 2 },
+      { id: '22-12', gridX: 8, gridY: 6, direction: 'down', color: 'orange', length: 1 },
+      { id: '22-13', gridX: 10, gridY: 6, direction: 'left', color: 'cyan', length: 2 },
+      { id: '22-14', gridX: 13, gridY: 6, direction: 'right', color: 'lime', length: 1 },
+    ],
+  },
+  // Level 23: Galactic Cluster
+  {
+    id: 23,
+    nameAr: 'العناقيد المجرة المشتركة',
+    nameEn: 'Galactic Cluster',
+    difficulty: 'صعب',
+    difficultyEn: 'Hard',
+    gridSize: { cols: 14, rows: 8 },
+    maxDrops: 3,
+    arrows: [
+      { id: '23-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
+      { id: '23-2', gridX: 4, gridY: 1, direction: 'left', color: 'lime', length: 2 },
+      { id: '23-3', gridX: 2, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
+      { id: '23-4', gridX: 5, gridY: 3, direction: 'down', color: 'purple', length: 2 },
+      { id: '23-5', gridX: 1, gridY: 5, direction: 'up', color: 'pink', length: 1 },
+      { id: '23-6', gridX: 4, gridY: 5, direction: 'left', color: 'orange', length: 2 },
+      { id: '23-7', gridX: 6, gridY: 2, direction: 'up', color: 'cyan', length: 2 },
+      { id: '23-8', gridX: 7, gridY: 4, direction: 'down', color: 'lime', length: 2 },
+      { id: '23-9', gridX: 9, gridY: 1, direction: 'right', color: 'yellow', length: 2 },
+      { id: '23-10', gridX: 12, gridY: 1, direction: 'down', color: 'purple', length: 2 },
+      { id: '23-11', gridX: 9, gridY: 4, direction: 'left', color: 'pink', length: 2 },
+      { id: '23-12', gridX: 12, gridY: 4, direction: 'up', color: 'orange', length: 2 },
+      { id: '23-13', gridX: 9, gridY: 6, direction: 'down', color: 'cyan', length: 1 },
+      { id: '23-14', gridX: 12, gridY: 6, direction: 'right', color: 'lime', length: 1 },
+    ],
+  },
+  // Level 24: Cyclone Labyrinth
+  {
+    id: 24,
+    nameAr: 'متاهة الإعصار الدوار',
+    nameEn: 'Cyclone Labyrinth',
+    difficulty: 'صعب',
+    difficultyEn: 'Hard',
+    gridSize: { cols: 14, rows: 8 },
+    maxDrops: 3,
+    arrows: [
+      { id: '24-1', gridX: 1, gridY: 1, direction: 'left', color: 'cyan', length: 1 },
+      { id: '24-2', gridX: 3, gridY: 1, direction: 'up', color: 'lime', length: 2 },
+      { id: '24-3', gridX: 1, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
+      { id: '24-4', gridX: 4, gridY: 3, direction: 'down', color: 'purple', length: 2 },
+      { id: '24-5', gridX: 2, gridY: 5, direction: 'left', color: 'pink', length: 1 },
+      { id: '24-6', gridX: 5, gridY: 5, direction: 'down', color: 'orange', length: 2 },
+      { id: '24-7', gridX: 7, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
+      { id: '24-8', gridX: 8, gridY: 3, direction: 'right', color: 'lime', length: 2 },
+      { id: '24-9', gridX: 11, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
+      { id: '24-10', gridX: 11, gridY: 4, direction: 'left', color: 'purple', length: 2 },
+      { id: '24-11', gridX: 13, gridY: 1, direction: 'up', color: 'pink', length: 1 },
+      { id: '24-12', gridX: 13, gridY: 3, direction: 'down', color: 'orange', length: 2 },
+      { id: '24-13', gridX: 8, gridY: 6, direction: 'left', color: 'cyan', length: 2 },
+      { id: '24-14', gridX: 11, gridY: 6, direction: 'down', color: 'lime', length: 1 },
+      { id: '24-15', gridX: 13, gridY: 6, direction: 'right', color: 'yellow', length: 1 },
+    ],
+  },
+  // Level 25: Master Overlord Boss (1 Life Only!)
+  {
+    id: 25,
+    nameAr: '🔥 تحدي السكون المطلق ٢٥',
+    nameEn: '🔥 Master Overlord Boss',
+    difficulty: 'صعب جداً',
+    difficultyEn: 'Very Hard',
+    gridSize: { cols: 14, rows: 8 },
+    maxDrops: 1,
+    arrows: [
+      { id: '25-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
+      { id: '25-2', gridX: 4, gridY: 1, direction: 'left', color: 'lime', length: 2 },
+      { id: '25-3', gridX: 1, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
+      { id: '25-4', gridX: 4, gridY: 3, direction: 'down', color: 'purple', length: 2 },
+      { id: '25-5', gridX: 2, gridY: 5, direction: 'left', color: 'pink', length: 1 },
+      { id: '25-6', gridX: 4, gridY: 5, direction: 'down', color: 'orange', length: 1 },
+      { id: '25-7', gridX: 6, gridY: 2, direction: 'up', color: 'cyan', length: 2 },
+      { id: '25-8', gridX: 7, gridY: 5, direction: 'down', color: 'lime', length: 2 },
+      { id: '25-9', gridX: 6, gridY: 6, direction: 'left', color: 'yellow', length: 1 },
+      { id: '25-10', gridX: 9, gridY: 1, direction: 'right', color: 'purple', length: 2 },
+      { id: '25-11', gridX: 12, gridY: 1, direction: 'up', color: 'pink', length: 1 },
+      { id: '25-12', gridX: 9, gridY: 3, direction: 'down', color: 'orange', length: 2 },
+      { id: '25-13', gridX: 12, gridY: 3, direction: 'right', color: 'cyan', length: 2 },
+      { id: '25-14', gridX: 10, gridY: 6, direction: 'up', color: 'lime', length: 2 },
+      { id: '25-15', gridX: 13, gridY: 6, direction: 'down', color: 'yellow', length: 1 },
+      { id: '25-16', gridX: 8, gridY: 4, direction: 'left', color: 'purple', length: 1 },
+      { id: '25-17', gridX: 11, gridY: 5, direction: 'right', color: 'orange', length: 1 },
+    ],
+  },
+  // Level 26: Hypercube Fortress
+  {
+    id: 26,
+    nameAr: 'قلعة المكعب الفائق',
+    nameEn: 'Hypercube Fortress',
+    difficulty: 'صعب',
+    difficultyEn: 'Hard',
+    gridSize: { cols: 14, rows: 8 },
+    maxDrops: 3,
+    arrows: [
+      { id: '26-1', gridX: 1, gridY: 1, direction: 'left', color: 'cyan', length: 1 },
+      { id: '26-2', gridX: 4, gridY: 1, direction: 'up', color: 'lime', length: 2 },
+      { id: '26-3', gridX: 2, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
+      { id: '26-4', gridX: 5, gridY: 3, direction: 'down', color: 'purple', length: 2 },
+      { id: '26-5', gridX: 1, gridY: 5, direction: 'down', color: 'pink', length: 1 },
+      { id: '26-6', gridX: 3, gridY: 5, direction: 'left', color: 'orange', length: 2 },
+      { id: '26-7', gridX: 6, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
+      { id: '26-8', gridX: 7, gridY: 3, direction: 'right', color: 'lime', length: 2 },
+      { id: '26-9', gridX: 10, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
+      { id: '26-10', gridX: 10, gridY: 4, direction: 'left', color: 'purple', length: 2 },
+      { id: '26-11', gridX: 13, gridY: 1, direction: 'right', color: 'pink', length: 1 },
+      { id: '26-12', gridX: 13, gridY: 3, direction: 'down', color: 'orange', length: 2 },
+      { id: '26-13', gridX: 8, gridY: 6, direction: 'left', color: 'cyan', length: 2 },
+      { id: '26-14', gridX: 11, gridY: 6, direction: 'down', color: 'lime', length: 1 },
+    ],
+  },
+  // Level 27: Starlight Nexus
+  {
+    id: 27,
+    nameAr: 'نواة ضوء النجوم',
+    nameEn: 'Starlight Nexus',
+    difficulty: 'صعب',
+    difficultyEn: 'Hard',
+    gridSize: { cols: 14, rows: 8 },
+    maxDrops: 3,
+    arrows: [
+      { id: '27-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
+      { id: '27-2', gridX: 3, gridY: 1, direction: 'left', color: 'lime', length: 2 },
+      { id: '27-3', gridX: 1, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
+      { id: '27-4', gridX: 4, gridY: 3, direction: 'down', color: 'purple', length: 2 },
+      { id: '27-5', gridX: 2, gridY: 5, direction: 'down', color: 'pink', length: 1 },
+      { id: '27-6', gridX: 5, gridY: 5, direction: 'right', color: 'orange', length: 2 },
+      { id: '27-7', gridX: 7, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
+      { id: '27-8', gridX: 9, gridY: 1, direction: 'right', color: 'lime', length: 2 },
+      { id: '27-9', gridX: 12, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
+      { id: '27-10', gridX: 9, gridY: 4, direction: 'left', color: 'purple', length: 2 },
+      { id: '27-11', gridX: 12, gridY: 4, direction: 'up', color: 'pink', length: 2 },
+      { id: '27-12', gridX: 8, gridY: 6, direction: 'left', color: 'orange', length: 2 },
+      { id: '27-13', gridX: 11, gridY: 6, direction: 'down', color: 'cyan', length: 1 },
+    ],
+  },
+  // Level 28: Prismatic Vortex
+  {
+    id: 28,
+    nameAr: 'دوامة منشور الألوان',
+    nameEn: 'Prismatic Vortex',
+    difficulty: 'صعب',
+    difficultyEn: 'Hard',
+    gridSize: { cols: 14, rows: 8 },
+    maxDrops: 3,
+    arrows: [
+      { id: '28-1', gridX: 1, gridY: 1, direction: 'left', color: 'cyan', length: 1 },
+      { id: '28-2', gridX: 4, gridY: 1, direction: 'up', color: 'lime', length: 2 },
+      { id: '28-3', gridX: 2, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
+      { id: '28-4', gridX: 5, gridY: 3, direction: 'down', color: 'purple', length: 2 },
+      { id: '28-5', gridX: 1, gridY: 5, direction: 'up', color: 'pink', length: 1 },
+      { id: '28-6', gridX: 4, gridY: 5, direction: 'left', color: 'orange', length: 2 },
+      { id: '28-7', gridX: 6, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
+      { id: '28-8', gridX: 7, gridY: 3, direction: 'right', color: 'lime', length: 2 },
+      { id: '28-9', gridX: 10, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
+      { id: '28-10', gridX: 10, gridY: 4, direction: 'left', color: 'purple', length: 2 },
+      { id: '28-11', gridX: 13, gridY: 1, direction: 'right', color: 'pink', length: 1 },
+      { id: '28-12', gridX: 13, gridY: 3, direction: 'down', color: 'orange', length: 2 },
+      { id: '28-13', gridX: 7, gridY: 6, direction: 'down', color: 'cyan', length: 1 },
+      { id: '28-14', gridX: 10, gridY: 6, direction: 'left', color: 'lime', length: 2 },
+    ],
+  },
+  // Level 29: Titan Crossway
+  {
+    id: 29,
+    nameAr: 'تقاطع التيتان العظيم',
+    nameEn: 'Titan Crossway',
+    difficulty: 'صعب',
+    difficultyEn: 'Hard',
+    gridSize: { cols: 14, rows: 8 },
+    maxDrops: 3,
+    arrows: [
+      { id: '29-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
+      { id: '29-2', gridX: 3, gridY: 1, direction: 'left', color: 'lime', length: 2 },
+      { id: '29-3', gridX: 1, gridY: 3, direction: 'down', color: 'yellow', length: 1 },
+      { id: '29-4', gridX: 3, gridY: 3, direction: 'right', color: 'purple', length: 2 },
+      { id: '29-5', gridX: 6, gridY: 2, direction: 'down', color: 'pink', length: 2 },
+      { id: '29-6', gridX: 6, gridY: 5, direction: 'left', color: 'orange', length: 2 },
+      { id: '29-7', gridX: 2, gridY: 5, direction: 'up', color: 'cyan', length: 1 },
+      { id: '29-8', gridX: 4, gridY: 6, direction: 'down', color: 'lime', length: 1 },
+      { id: '29-9', gridX: 8, gridY: 1, direction: 'up', color: 'yellow', length: 1 },
+      { id: '29-10', gridX: 10, gridY: 1, direction: 'right', color: 'purple', length: 2 },
+      { id: '29-11', gridX: 13, gridY: 1, direction: 'down', color: 'pink', length: 2 },
+      { id: '29-12', gridX: 10, gridY: 4, direction: 'left', color: 'orange', length: 2 },
+      { id: '29-13', gridX: 13, gridY: 4, direction: 'up', color: 'cyan', length: 2 },
+      { id: '29-14', gridX: 9, gridY: 6, direction: 'down', color: 'lime', length: 1 },
+      { id: '29-15', gridX: 11, gridY: 6, direction: 'right', color: 'yellow', length: 2 },
+    ],
+  },
+  // Level 30: Grand Emperor Boss (1 Life Only!)
+  {
+    id: 30,
+    nameAr: '🔥 تحدي الإمبراطور الأخير ٣٠',
+    nameEn: '🔥 Grand Emperor Boss',
+    difficulty: 'صعب جداً',
+    difficultyEn: 'Very Hard',
+    gridSize: { cols: 14, rows: 8 },
+    maxDrops: 1,
+    arrows: [
+      { id: '30-1', gridX: 1, gridY: 1, direction: 'up', color: 'cyan', length: 1 },
+      { id: '30-2', gridX: 4, gridY: 1, direction: 'left', color: 'lime', length: 2 },
+      { id: '30-3', gridX: 1, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
+      { id: '30-4', gridX: 4, gridY: 3, direction: 'down', color: 'purple', length: 2 },
+      { id: '30-5', gridX: 2, gridY: 5, direction: 'left', color: 'pink', length: 1 },
+      { id: '30-6', gridX: 4, gridY: 5, direction: 'down', color: 'orange', length: 1 },
+      { id: '30-7', gridX: 6, gridY: 2, direction: 'up', color: 'cyan', length: 2 },
+      { id: '30-8', gridX: 7, gridY: 5, direction: 'down', color: 'lime', length: 2 },
+      { id: '30-9', gridX: 6, gridY: 6, direction: 'left', color: 'yellow', length: 1 },
+      { id: '30-10', gridX: 9, gridY: 1, direction: 'right', color: 'purple', length: 2 },
+      { id: '30-11', gridX: 12, gridY: 1, direction: 'up', color: 'pink', length: 1 },
+      { id: '30-12', gridX: 9, gridY: 3, direction: 'down', color: 'orange', length: 2 },
+      { id: '30-13', gridX: 12, gridY: 3, direction: 'right', color: 'cyan', length: 2 },
+      { id: '30-14', gridX: 10, gridY: 6, direction: 'up', color: 'lime', length: 2 },
+      { id: '30-15', gridX: 13, gridY: 6, direction: 'down', color: 'yellow', length: 1 },
+      { id: '30-16', gridX: 8, gridY: 4, direction: 'left', color: 'purple', length: 1 },
+      { id: '30-17', gridX: 11, gridY: 5, direction: 'right', color: 'orange', length: 1 },
+    ],
+  },
 ];
 
 // Procedurally generate a level that is 100% guaranteed solvable with zero overlaps
 export function generateRandomSolvableLevel(levelNumber: number): Level {
   const isEvery5th = levelNumber % 5 === 0;
-  const isHard = levelNumber > 15 || isEvery5th;
-  const isMedium = levelNumber > 8;
+  const isHard = levelNumber > 10 || isEvery5th;
+  const isMedium = levelNumber > 5;
 
   const cols = isEvery5th ? 14 : isHard ? 14 : isMedium ? 10 : 8;
   const rows = isEvery5th ? 8 : isHard ? 8 : isMedium ? 7 : 6;
 
   const targetCount = isEvery5th
-    ? Math.min(12 + Math.floor(levelNumber * 0.5), 22)
-    : Math.min(6 + Math.floor(levelNumber * 1.2), 20);
+    ? Math.min(14 + Math.floor(levelNumber * 0.4), 24)
+    : Math.min(6 + Math.floor(levelNumber * 1.1), 22);
 
   const diffAr = isEvery5th ? 'صعب جداً' : levelNumber <= 3 ? 'سهل' : levelNumber <= 8 ? 'متوسط' : 'صعب';
   const diffEn = isEvery5th ? 'Very Hard' : levelNumber <= 3 ? 'Easy' : levelNumber <= 8 ? 'Medium' : 'Hard';
+  const maxDrops = isEvery5th ? 1 : 3;
 
   const directions: Direction[] = ['up', 'down', 'left', 'right'];
 
@@ -662,12 +929,12 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
 
       const testLevel: Level = {
         id: levelNumber,
-        nameAr: isEvery5th ? `المستوى ${levelNumber} 🔥 (تحدي)'` : `المستوى ${levelNumber}`,
-        nameEn: isEvery5th ? `Level ${levelNumber} 🔥 (Boss)` : `Level ${levelNumber}`,
+        nameAr: isEvery5th ? `المستوى ${levelNumber} 🔥` : `المستوى ${levelNumber}`,
+        nameEn: isEvery5th ? `Level ${levelNumber} 🔥` : `Level ${levelNumber}`,
         difficulty: diffAr,
         difficultyEn: diffEn,
         gridSize: { cols, rows },
-        maxDrops: 3,
+        maxDrops,
         arrows: [...arrows, candidate],
       };
 
@@ -683,7 +950,7 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
       difficulty: diffAr,
       difficultyEn: diffEn,
       gridSize: { cols, rows },
-      maxDrops: 3,
+      maxDrops,
       arrows,
     };
 
@@ -710,6 +977,7 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
     nameEn: isEvery5th ? `Level ${levelNumber} 🔥` : `Level ${levelNumber}`,
     difficulty: diffAr,
     difficultyEn: diffEn,
+    maxDrops,
     arrows: baseLevel.arrows.map((a, idx) => ({
       ...a,
       id: `gen-fb-${levelNumber}-${idx}`,
@@ -718,13 +986,30 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
 }
 
 export function getLevel(id: number): Level {
+  const isEvery5th = id % 5 === 0;
   const handcrafted = HANDCRAFTED_LEVELS.find((l) => l.id === id);
+  let level: Level;
+
   if (handcrafted) {
-    return {
+    level = {
       ...handcrafted,
       arrows: handcrafted.arrows.map((a) => ({ ...a })),
     };
+  } else {
+    level = generateRandomSolvableLevel(id);
   }
-  return generateRandomSolvableLevel(id);
+
+  // Enforce 1 life (maxDrops: 1) on every 5th level or Very Hard levels
+  if (isEvery5th || level.difficulty === 'صعب جداً') {
+    level.maxDrops = 1;
+    level.difficulty = 'صعب جداً';
+    level.difficultyEn = 'Very Hard';
+    if (!level.nameAr.includes('🔥')) {
+      level.nameAr = `${level.nameAr} 🔥`;
+    }
+  }
+
+  return level;
 }
+
 
