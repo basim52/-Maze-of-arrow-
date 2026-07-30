@@ -5160,6 +5160,208 @@ export const HANDCRAFTED_LEVELS: Level[] = [
         "length": 1
       }
     ]
+  },
+  {
+    "id": 41,
+    "nameAr": "المستوى ٤١ - ممر المزدوج",
+    "nameEn": "Level 41 - Double Corridor",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": { "cols": 12, "rows": 7 },
+    "maxDrops": 3,
+    "arrows": [
+      { "id": "41-1", "gridX": 2, "gridY": 2, "direction": "right", "color": "cyan", "length": 2, "type": "double" },
+      { "id": "41-2", "gridX": 5, "gridY": 1, "direction": "down", "color": "lime", "length": 2 },
+      { "id": "41-3", "gridX": 6, "gridY": 4, "direction": "up", "color": "yellow", "length": 1 },
+      { "id": "41-4", "gridX": 8, "gridY": 2, "direction": "left", "color": "purple", "length": 2 },
+      { "id": "41-5", "gridX": 1, "gridY": 5, "direction": "right", "color": "pink", "length": 1 },
+      { "id": "41-6", "gridX": 3, "gridY": 4, "direction": "up-right", "color": "orange", "length": 1 },
+      { "id": "41-7", "gridX": 9, "gridY": 5, "direction": "up", "color": "cyan", "length": 1 },
+      { "id": "41-8", "gridX": 10, "gridY": 1, "direction": "down", "color": "lime", "length": 2 }
+    ]
+  },
+  {
+    "id": 42,
+    "nameAr": "المستوى ٤٢ - متاهة النجمة",
+    "nameEn": "Level 42 - Star Maze",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": { "cols": 12, "rows": 7 },
+    "maxDrops": 3,
+    "arrows": [
+      { "id": "42-1", "gridX": 4, "gridY": 3, "direction": "up-left", "color": "cyan", "length": 1 },
+      { "id": "42-2", "gridX": 7, "gridY": 3, "direction": "up-right", "color": "purple", "length": 1 },
+      { "id": "42-3", "gridX": 4, "gridY": 4, "direction": "down-left", "color": "yellow", "length": 1 },
+      { "id": "42-4", "gridX": 7, "gridY": 4, "direction": "down-right", "color": "lime", "length": 1 },
+      { "id": "42-5", "gridX": 5, "gridY": 1, "direction": "down", "color": "pink", "length": 1, "type": "double" },
+      { "id": "42-6", "gridX": 6, "gridY": 6, "direction": "up", "color": "orange", "length": 1 },
+      { "id": "42-7", "gridX": 1, "gridY": 3, "direction": "left", "color": "cyan", "length": 2 },
+      { "id": "42-8", "gridX": 10, "gridY": 3, "direction": "right", "color": "lime", "length": 2 }
+    ]
+  },
+  {
+    "id": 43,
+    "nameAr": "المستوى ٤٣ - شبكة البلورات",
+    "nameEn": "Level 43 - Crystal Lattice",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": { "cols": 12, "rows": 8 },
+    "maxDrops": 3,
+    "arrows": [
+      { "id": "43-1", "gridX": 2, "gridY": 2, "direction": "down", "color": "cyan", "length": 2 },
+      { "id": "43-2", "gridX": 3, "gridY": 5, "direction": "right", "color": "lime", "length": 2, "type": "double" },
+      { "id": "43-3", "gridX": 6, "gridY": 2, "direction": "up-right", "color": "yellow", "length": 1 },
+      { "id": "43-4", "gridX": 8, "gridY": 3, "direction": "down-left", "color": "purple", "length": 1 },
+      { "id": "43-5", "gridX": 9, "gridY": 6, "direction": "up", "color": "pink", "length": 2 },
+      { "id": "43-6", "gridX": 5, "gridY": 1, "direction": "right", "color": "orange", "length": 2 },
+      { "id": "43-7", "gridX": 1, "gridY": 6, "direction": "up", "color": "cyan", "length": 1 },
+      { "id": "43-8", "gridX": 10, "gridY": 1, "direction": "down", "color": "lime", "length": 1 }
+    ]
+  },
+  {
+    "id": 44,
+    "nameAr": "المستوى ٤٤ - الأفق المائل",
+    "nameEn": "Level 44 - Oblique Horizon",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": { "cols": 14, "rows": 8 },
+    "maxDrops": 3,
+    "arrows": [
+      { "id": "44-1", "gridX": 3, "gridY": 2, "direction": "up-right", "color": "cyan", "length": 1 },
+      { "id": "44-2", "gridX": 5, "gridY": 4, "direction": "down-right", "color": "lime", "length": 1 },
+      { "id": "44-3", "gridX": 7, "gridY": 2, "direction": "up-left", "color": "yellow", "length": 1 },
+      { "id": "44-4", "gridX": 9, "gridY": 5, "direction": "down-left", "color": "purple", "length": 1 },
+      { "id": "44-5", "gridX": 2, "gridY": 6, "direction": "right", "color": "pink", "length": 2, "type": "double" },
+      { "id": "44-6", "gridX": 11, "gridY": 2, "direction": "left", "color": "orange", "length": 2 },
+      { "id": "44-7", "gridX": 6, "gridY": 6, "direction": "up", "color": "cyan", "length": 2 },
+      { "id": "44-8", "gridX": 1, "gridY": 2, "direction": "down", "color": "lime", "length": 1 },
+      { "id": "44-9", "gridX": 12, "gridY": 6, "direction": "up", "color": "purple", "length": 1 }
+    ]
+  },
+  {
+    "id": 45,
+    "nameAr": "🔥 تحدي البركان ٤٥",
+    "nameEn": "🔥 Volcano Core Challenge 45",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": { "cols": 14, "rows": 8 },
+    "maxDrops": 1,
+    "arrows": [
+      { "id": "45-1", "gridX": 4, "gridY": 2, "direction": "right", "color": "cyan", "length": 2, "type": "double" },
+      { "id": "45-2", "gridX": 7, "gridY": 2, "direction": "down", "color": "lime", "length": 2 },
+      { "id": "45-3", "gridX": 7, "gridY": 5, "direction": "left", "color": "yellow", "length": 2 },
+      { "id": "45-4", "gridX": 4, "gridY": 5, "direction": "up", "color": "purple", "length": 2 },
+      { "id": "45-5", "gridX": 2, "gridY": 3, "direction": "up-right", "color": "pink", "length": 1, "type": "double" },
+      { "id": "45-6", "gridX": 9, "gridY": 3, "direction": "down-right", "color": "orange", "length": 1 },
+      { "id": "45-7", "gridX": 9, "gridY": 6, "direction": "up-left", "color": "cyan", "length": 1 },
+      { "id": "45-8", "gridX": 2, "gridY": 6, "direction": "down-left", "color": "lime", "length": 1 },
+      { "id": "45-9", "gridX": 11, "gridY": 1, "direction": "down", "color": "purple", "length": 2 },
+      { "id": "45-10", "gridX": 1, "gridY": 1, "direction": "right", "color": "yellow", "length": 1 }
+    ]
+  },
+  {
+    "id": 46,
+    "nameAr": "المستوى ٤٦ - عقدة التنين",
+    "nameEn": "Level 46 - Dragon Knot",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": { "cols": 14, "rows": 8 },
+    "maxDrops": 3,
+    "arrows": [
+      { "id": "46-1", "gridX": 2, "gridY": 2, "direction": "right", "color": "cyan", "length": 2 },
+      { "id": "46-2", "gridX": 5, "gridY": 2, "direction": "down", "color": "lime", "length": 1, "type": "double" },
+      { "id": "46-3", "gridX": 5, "gridY": 4, "direction": "right", "color": "yellow", "length": 2 },
+      { "id": "46-4", "gridX": 8, "gridY": 4, "direction": "up", "color": "purple", "length": 2 },
+      { "id": "46-5", "gridX": 8, "gridY": 1, "direction": "right", "color": "pink", "length": 1 },
+      { "id": "46-6", "gridX": 10, "gridY": 1, "direction": "down", "color": "orange", "length": 2 },
+      { "id": "46-7", "gridX": 10, "gridY": 4, "direction": "right", "color": "cyan", "length": 2 },
+      { "id": "46-8", "gridX": 12, "gridY": 6, "direction": "up", "color": "lime", "length": 1 },
+      { "id": "46-9", "gridX": 1, "gridY": 6, "direction": "up-right", "color": "purple", "length": 1 },
+      { "id": "46-10", "gridX": 3, "gridY": 5, "direction": "up", "color": "yellow", "length": 1 }
+    ]
+  },
+  {
+    "id": 47,
+    "nameAr": "المستوى ٤٧ - مروحة الرياح",
+    "nameEn": "Level 47 - Windmill Spiral",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": { "cols": 14, "rows": 8 },
+    "maxDrops": 3,
+    "arrows": [
+      { "id": "47-1", "gridX": 6, "gridY": 2, "direction": "up", "color": "cyan", "length": 2 },
+      { "id": "47-2", "gridX": 8, "gridY": 3, "direction": "right", "color": "lime", "length": 2 },
+      { "id": "47-3", "gridX": 7, "gridY": 5, "direction": "down", "color": "yellow", "length": 2 },
+      { "id": "47-4", "gridX": 5, "gridY": 4, "direction": "left", "color": "purple", "length": 2 },
+      { "id": "47-5", "gridX": 6, "gridY": 3, "direction": "up-right", "color": "pink", "length": 1, "type": "double" },
+      { "id": "47-6", "gridX": 2, "gridY": 1, "direction": "right", "color": "orange", "length": 2 },
+      { "id": "47-7", "gridX": 11, "gridY": 6, "direction": "left", "color": "cyan", "length": 2 },
+      { "id": "47-8", "gridX": 1, "gridY": 6, "direction": "up", "color": "lime", "length": 2 },
+      { "id": "47-9", "gridX": 12, "gridY": 1, "direction": "down", "color": "purple", "length": 2 }
+    ]
+  },
+  {
+    "id": 48,
+    "nameAr": "المستوى ٤٨ - الممر المزدوج المعقد",
+    "nameEn": "Level 48 - Complex Dual Path",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": { "cols": 14, "rows": 8 },
+    "maxDrops": 3,
+    "arrows": [
+      { "id": "48-1", "gridX": 2, "gridY": 3, "direction": "right", "color": "cyan", "length": 2, "type": "double" },
+      { "id": "48-2", "gridX": 5, "gridY": 1, "direction": "down", "color": "lime", "length": 2 },
+      { "id": "48-3", "gridX": 6, "gridY": 5, "direction": "up", "color": "yellow", "length": 2, "type": "double" },
+      { "id": "48-4", "gridX": 8, "gridY": 2, "direction": "right", "color": "purple", "length": 2 },
+      { "id": "48-5", "gridX": 11, "gridY": 1, "direction": "down", "color": "pink", "length": 2 },
+      { "id": "48-6", "gridX": 9, "gridY": 5, "direction": "left", "color": "orange", "length": 2 },
+      { "id": "48-7", "gridX": 1, "gridY": 6, "direction": "up-right", "color": "cyan", "length": 1 },
+      { "id": "48-8", "gridX": 12, "gridY": 6, "direction": "up-left", "color": "lime", "length": 1 },
+      { "id": "48-9", "gridX": 4, "gridY": 6, "direction": "right", "color": "purple", "length": 1 }
+    ]
+  },
+  {
+    "id": 49,
+    "nameAr": "المستوى ٤٩ - بوابة المتاهة",
+    "nameEn": "Level 49 - Gatekeeper Maze",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": { "cols": 14, "rows": 8 },
+    "maxDrops": 3,
+    "arrows": [
+      { "id": "49-1", "gridX": 3, "gridY": 2, "direction": "down", "color": "cyan", "length": 2 },
+      { "id": "49-2", "gridX": 4, "gridY": 5, "direction": "right", "color": "lime", "length": 2 },
+      { "id": "49-3", "gridX": 7, "gridY": 3, "direction": "up", "color": "yellow", "length": 2, "type": "double" },
+      { "id": "49-4", "gridX": 8, "gridY": 1, "direction": "right", "color": "purple", "length": 2 },
+      { "id": "49-5", "gridX": 11, "gridY": 2, "direction": "down", "color": "pink", "length": 2 },
+      { "id": "49-6", "gridX": 10, "gridY": 6, "direction": "left", "color": "orange", "length": 2 },
+      { "id": "49-7", "gridX": 2, "gridY": 1, "direction": "right", "color": "cyan", "length": 1 },
+      { "id": "49-8", "gridX": 1, "gridY": 5, "direction": "up-right", "color": "lime", "length": 1 },
+      { "id": "49-9", "gridX": 12, "gridY": 5, "direction": "up-left", "color": "purple", "length": 1 },
+      { "id": "49-10", "gridX": 6, "gridY": 6, "direction": "up", "color": "yellow", "length": 1 }
+    ]
+  },
+  {
+    "id": 50,
+    "nameAr": "🔥 التحدي الأسطوري ٥٠",
+    "nameEn": "🔥 Legendary Ultimate Boss 50",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": { "cols": 14, "rows": 8 },
+    "maxDrops": 1,
+    "arrows": [
+      { "id": "50-1", "gridX": 2, "gridY": 2, "direction": "right", "color": "cyan", "length": 2 },
+      { "id": "50-2", "gridX": 5, "gridY": 1, "direction": "down", "color": "lime", "length": 2 },
+      { "id": "50-3", "gridX": 5, "gridY": 4, "direction": "right", "color": "yellow", "length": 2, "type": "double" },
+      { "id": "50-4", "gridX": 8, "gridY": 2, "direction": "down", "color": "purple", "length": 2 },
+      { "id": "50-5", "gridX": 9, "gridY": 5, "direction": "right", "color": "pink", "length": 2 },
+      { "id": "50-6", "gridX": 12, "gridY": 3, "direction": "up", "color": "orange", "length": 2 },
+      { "id": "50-7", "gridX": 11, "gridY": 1, "direction": "left", "color": "cyan", "length": 2 },
+      { "id": "50-8", "gridX": 1, "gridY": 6, "direction": "up-right", "color": "lime", "length": 1 },
+      { "id": "50-9", "gridX": 3, "gridY": 6, "direction": "up", "color": "purple", "length": 1 },
+      { "id": "50-10", "gridX": 7, "gridY": 6, "direction": "up-left", "color": "yellow", "length": 1 },
+      { "id": "50-11", "gridX": 10, "gridY": 6, "direction": "up", "color": "pink", "length": 1 }
+    ]
   }
 ];
 
@@ -5180,11 +5382,11 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
   const diffEn = isEvery5th ? 'Very Hard' : levelNumber <= 3 ? 'Easy' : levelNumber <= 8 ? 'Medium' : 'Hard';
   const maxDrops = isEvery5th ? 1 : 3;
 
-  const directions: Direction[] = ['up', 'down', 'left', 'right'];
+  const directions: Direction[] = ['up', 'down', 'left', 'right', 'up-left', 'up-right', 'down-left', 'down-right'];
 
   let bestCandidate: Level | null = null;
 
-  for (let attempt = 0; attempt < 30; attempt++) {
+  for (let attempt = 0; attempt < 40; attempt++) {
     const arrows: Arrow[] = [];
     let innerAttempts = 0;
 
@@ -5195,6 +5397,7 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
       const dir = directions[Math.floor(Math.random() * directions.length)];
       const color = COLORS[Math.floor(Math.random() * COLORS.length)];
       const len = Math.random() > 0.6 ? 2 : 1;
+      const isDouble = levelNumber >= 6 && Math.random() < 0.2;
 
       const candidate: Arrow = {
         id: `gen-${levelNumber}-${arrows.length}-${Math.random().toString(36).substring(2, 7)}`,
@@ -5203,6 +5406,7 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
         direction: dir,
         color: color,
         length: len,
+        ...(isDouble ? { type: 'double', isDouble: true } : {}),
       };
 
       const testLevel: Level = {
