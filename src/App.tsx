@@ -534,8 +534,8 @@ export default function App() {
     if (escapedArrow) {
       if (escapedArrow.isStar || escapedArrow.type === 'star') {
         const isAr = language === 'ar';
-        setCoins((prev) => prev + 25);
-        triggerToast(isAr ? '🌟 سهم النجمة الذهبية منحك +25 نقطة!' : '🌟 Star Arrow granted +25 coins!');
+        setCoins((prev) => prev + 3);
+        triggerToast(isAr ? '🌟 سهم النجمة الذهبية منحك +3 نقاط!' : '🌟 Star Arrow granted +3 coins!');
       } else if (escapedArrow.isGhost || escapedArrow.type === 'ghost') {
         const isAr = language === 'ar';
         triggerToast(isAr ? '👻 سهم الشبح اخترق العوائق وهرب ببراعة!' : '👻 Ghost Arrow phased through obstacles!');
