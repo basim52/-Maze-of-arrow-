@@ -57,6 +57,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
             const isCurrent = id === currentLevel;
             const isHammerLevel = HAMMER_REQUIRED_LEVEL_IDS.includes(id);
             const isBossLevel = id % 5 === 0 && !isHammerLevel;
+            const isStarLevel = id % 4 === 0 && !isHammerLevel && !isBossLevel;
             const stars = starsPerLevel[id] || 0;
             const handcrafted = HANDCRAFTED_LEVELS.find((l) => l.id === id);
 
@@ -88,6 +89,11 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                 {isBossLevel && (
                   <span className="absolute -top-1.5 -right-1.5 text-xs bg-rose-500 text-white font-black px-1.5 py-0.5 rounded-full shadow-xs border border-white">
                     🔥
+                  </span>
+                )}
+                {isStarLevel && (
+                  <span className="absolute -top-1.5 -right-1.5 text-xs bg-amber-400 text-slate-900 font-black px-1.5 py-0.5 rounded-full shadow-xs border border-white" title={isAr ? 'مرحلة السهم الذهبي المحنك' : 'Golden Star Arrow Level'}>
+                    🌟
                   </span>
                 )}
 

@@ -5408,7 +5408,8 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
       const len = Math.random() > 0.6 ? 2 : 1;
       const isBomb = levelNumber >= 8 && Math.random() < 0.12;
       const isGhost = !isBomb && levelNumber >= 4 && Math.random() < 0.16;
-      const isStar = !isBomb && !isGhost && Math.random() < 0.18;
+      const isStarForce = levelNumber % 4 === 0 && !arrows.some((a) => a.isStar || a.type === 'star');
+      const isStar = !isBomb && !isGhost && (isStarForce || Math.random() < 0.18);
       const isDouble = !isBomb && !isGhost && !isStar && levelNumber >= 6 && Math.random() < 0.20;
 
       const candidate: Arrow = {
@@ -5851,22 +5852,22 @@ export function createHammerRequiredLevel(levelNumber: number): Level {
 }
 
 export function getLevel(id: number): Level {
+  let level: Level;
   if (HAMMER_REQUIRED_LEVEL_IDS.includes(id)) {
-    return createHammerRequiredLevel(id);
+    level = createHammerRequiredLevel(id);
+  } else {
+    const handcrafted = HANDCRAFTED_LEVELS.find((l) => l.id === id);
+    if (handcrafted) {
+      level = {
+        ...handcrafted,
+        arrows: handcrafted.arrows.map((a) => ({ ...a })),
+      };
+    } else {
+      level = generateRandomSolvableLevel(id);
+    }
   }
 
   const isEvery5th = id % 5 === 0;
-  const handcrafted = HANDCRAFTED_LEVELS.find((l) => l.id === id);
-  let level: Level;
-
-  if (handcrafted) {
-    level = {
-      ...handcrafted,
-      arrows: handcrafted.arrows.map((a) => ({ ...a })),
-    };
-  } else {
-    level = generateRandomSolvableLevel(id);
-  }
 
   // Enforce 1 life (maxDrops: 1) on every 5th level or Very Hard levels
   if (isEvery5th || level.difficulty === 'صعب جداً') {
@@ -5875,6 +5876,29 @@ export function getLevel(id: number): Level {
     level.difficultyEn = 'Very Hard';
     if (!level.nameAr.includes('🔥') && !level.nameAr.includes('🔨')) {
       level.nameAr = `${level.nameAr} 🔥`;
+    }
+  }
+
+  // Every 4th level (id % 4 === 0) has a guaranteed Golden Star Arrow 🌟 (سهم ذهبي محنك)
+  if (id % 4 === 0) {
+    const hasStar = level.arrows.some((a) => a.isStar || a.type === 'star');
+    if (!hasStar && level.arrows.length > 0) {
+      // Find an arrow that isn't bomb or ghost, or default to the first arrow
+      const normalIdx = level.arrows.findIndex((a) => !a.isBomb && !a.isGhost);
+      const targetIdx = normalIdx >= 0 ? normalIdx : 0;
+      level.arrows[targetIdx] = {
+        ...level.arrows[targetIdx],
+        type: 'star',
+        isStar: true,
+        isBomb: false,
+        isGhost: false,
+      };
+    }
+    if (!level.nameAr.includes('🌟')) {
+      level.nameAr = `🌟 ${level.nameAr}`;
+    }
+    if (!level.nameEn.includes('🌟')) {
+      level.nameEn = `🌟 ${level.nameEn}`;
     }
   }
 
