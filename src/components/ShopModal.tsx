@@ -142,8 +142,9 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                   ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:scale-105 active:scale-95 shadow-amber-200'
                   : 'bg-slate-200 text-slate-400 cursor-not-allowed opacity-70'
               }`}
+              title={isAr ? 'يمكنك شراء المطرقة عدة مرات' : 'Buy multiple hammers'}
             >
-              <span>{isAr ? 'شراء' : 'Buy'}</span>
+              <span>{isAr ? 'شراء (+1)' : 'Buy (+1)'}</span>
             </button>
           </div>
         </div>

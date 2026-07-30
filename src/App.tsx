@@ -140,6 +140,7 @@ export default function App() {
   });
 
   const [isHammerActive, setIsHammerActive] = useState<boolean>(false);
+  const [lastCoinsEarned, setLastCoinsEarned] = useState<number>(10);
 
   // Modals state
   const [showVictoryModal, setShowVictoryModal] = useState<boolean>(false);
@@ -272,17 +273,21 @@ export default function App() {
 
   // Victory Handler
   const handleLevelCompleted = () => {
-    const total = activeLevel.arrows.length;
-    // Calculate 1 to 3 stars based on drops remaining
+    // Check if level was already completed previously
+    const isAlreadyCleared = (starsPerLevel[currentLevelId] || 0) > 0;
+    const coinsReward = isAlreadyCleared ? 0 : 10;
+    setLastCoinsEarned(coinsReward);
+
     const starsEarned = drops === 3 ? 3 : drops === 2 ? 2 : 1;
-    const coinsReward = starsEarned * 10;
 
     setStarsPerLevel((prev) => ({
       ...prev,
       [currentLevelId]: Math.max(prev[currentLevelId] || 0, starsEarned),
     }));
 
-    setCoins((prev) => prev + coinsReward);
+    if (coinsReward > 0) {
+      setCoins((prev) => prev + coinsReward);
+    }
 
     setUnlockedLevel((prev) => Math.max(prev, currentLevelId + 1));
 
@@ -308,8 +313,12 @@ export default function App() {
   return (
     <div
       dir={isAr ? 'rtl' : 'ltr'}
-      className="min-h-screen bg-[#FBFBFB] text-slate-800 font-sans flex flex-col justify-between selection:bg-sky-200 overflow-x-hidden antialiased"
+      className="min-h-screen bg-gradient-to-b from-sky-50/70 via-slate-50 to-amber-50/40 text-slate-800 font-sans flex flex-col justify-between selection:bg-sky-200 overflow-x-hidden antialiased relative"
     >
+      {/* Background Decorative Ambient Spheres */}
+      <div className="absolute top-10 left-10 w-72 h-72 bg-sky-200/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-72 h-72 bg-amber-200/30 rounded-full blur-3xl pointer-events-none" />
+
       {/* Top Bar Header */}
       <TopBar
         levelNumber={activeLevel.id}
@@ -414,7 +423,7 @@ export default function App() {
         <VictoryModal
           levelNumber={currentLevelId}
           stars={starsPerLevel[currentLevelId] || 3}
-          coinsEarned={(starsPerLevel[currentLevelId] || 3) * 10}
+          coinsEarned={lastCoinsEarned}
           language={language}
           onNextLevel={handleNextLevel}
           onReplay={handleRestartLevel}

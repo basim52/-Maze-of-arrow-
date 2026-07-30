@@ -101,7 +101,12 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({
           </span>
           <div className="flex items-center gap-1.5 text-base font-black text-amber-600">
             <Sparkles className="w-5 h-5 text-amber-500 fill-amber-400" />
-            +{coinsEarned}
+            <span>+{coinsEarned}</span>
+            {coinsEarned === 0 && (
+              <span className="text-[11px] font-bold text-slate-400 mr-1">
+                ({isAr ? 'مكتملة سابقاً' : 'Replay'})
+              </span>
+            )}
           </div>
         </div>
 

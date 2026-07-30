@@ -333,12 +333,24 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
       {/* Off-White Stage matching screenshot clean ivory background */}
       <div className="relative w-full max-w-4xl flex items-center justify-center">
         <div
-          className="relative bg-white/45 backdrop-blur-xs rounded-3xl p-2 sm:p-6 flex items-center justify-center transition-all duration-300 border border-slate-200/50 shadow-xs"
+          className={`relative bg-gradient-to-b from-slate-50/80 via-white/70 to-slate-100/80 backdrop-blur-md rounded-3xl p-2 sm:p-5 flex items-center justify-center transition-all duration-300 border-2 ${
+            isHammerActive ? 'border-amber-400 ring-4 ring-amber-300/30 shadow-amber-100' : 'border-slate-200/80 shadow-md'
+          }`}
           style={{
             minHeight: `${gridRows * tileSize + 32}px`,
             width: '100%',
           }}
         >
+          {/* Subtle Grid Dot Pattern Canvas Background */}
+          <div
+            className="absolute inset-0 rounded-3xl pointer-events-none opacity-40"
+            style={{
+              backgroundImage: `radial-gradient(#94a3b8 1px, transparent 1px)`,
+              backgroundSize: `${tileSize}px ${tileSize}px`,
+              backgroundPosition: `${tileSize / 2}px ${tileSize / 2}px`,
+            }}
+          />
+
           {/* Grid Container */}
           <div
             className="relative"
@@ -386,8 +398,8 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
                 <div
                   key={arrow.id}
                   onClick={() => handleArrowClick(arrow)}
-                  className={`absolute transition-all ease-out cursor-pointer z-10 touch-manipulation ${
-                    isHammerActive ? 'hover:scale-110 active:scale-90 animate-pulse' : ''
+                  className={`absolute transition-all ease-out cursor-pointer z-10 touch-manipulation group ${
+                    isHammerActive ? 'hover:scale-110 active:scale-95' : ''
                   }`}
                   style={{
                     left: `${left}px`,
@@ -397,7 +409,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
                     transform: isSmashing
                       ? 'scale(0) rotate(180deg)'
                       : flyOffset
-                      ? `translate(${flyOffset.x}px, ${flyOffset.y}px) scale(1.1)`
+                      ? `translate(${flyOffset.x}px, ${flyOffset.y}px) scale(1.15)`
                       : isBumping
                       ? `scale(1.08)`
                       : 'translate(0, 0)',
@@ -406,16 +418,23 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
                     zIndex: isSmashing ? 60 : flyOffset ? 50 : 10,
                   }}
                 >
+                  {/* Smash Particle Explosion Overlay */}
                   {isSmashing && (
-                    <div className="absolute inset-0 flex items-center justify-center text-3xl animate-ping z-50">
-                      💥
+                    <div className="absolute inset-0 flex items-center justify-center z-50 pointer-events-none">
+                      <span className="text-4xl animate-ping">💥</span>
+                      <span className="absolute text-2xl animate-bounce text-amber-500 font-black">🔨</span>
                     </div>
                   )}
+
+                  {/* Hammer Reticle target glow in hammer mode */}
                   {isHammerActive && (
-                    <div className="absolute -top-2 -right-2 bg-amber-500 text-white text-[10px] font-black rounded-full w-5 h-5 flex items-center justify-center shadow-md border border-white z-30">
-                      🔨
+                    <div className="absolute inset-0 rounded-2xl border-2 border-dashed border-amber-500 bg-amber-400/20 group-hover:bg-amber-400/40 group-hover:border-solid transition-all flex items-center justify-center z-30 pointer-events-none shadow-xs animate-pulse">
+                      <span className="text-sm font-black text-amber-900 bg-amber-300/90 px-1.5 py-0.5 rounded-md shadow-2xs">
+                        🔨
+                      </span>
                     </div>
                   )}
+
                   <Render3DArrowSVG
                     arrow={arrow}
                     isBumping={isBumping}

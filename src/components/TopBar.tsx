@@ -45,10 +45,10 @@ export const TopBar: React.FC<TopBarProps> = ({
   const percentText = isAr ? `${toArabicDigits(Math.round(progressPercent))}%` : `${Math.round(progressPercent)}%`;
 
   return (
-    <header className="w-full max-w-2xl mx-auto px-3 sm:px-4 pt-3 sm:pt-5 pb-2 flex flex-col items-center select-none">
-      {/* Top Header Row: Centered Level Title & Top Right Icons */}
-      <div className="w-full grid grid-cols-3 items-center mb-2.5 sm:mb-4">
-        {/* Left Side: Level Select / Restart (Or empty to preserve balance) */}
+    <header className="w-full max-w-2xl mx-auto px-3 sm:px-4 pt-3 sm:pt-4 pb-1.5 flex flex-col items-center select-none">
+      {/* Top Header Row: Coins/Hammers Stat Pill + Centered Level Title + Quick Action Icons */}
+      <div className="w-full grid grid-cols-3 items-center mb-2.5 sm:mb-3">
+        {/* Left Side: Level Select Grid button & Floating Stat Pill */}
         <div className="flex items-center gap-1.5 sm:gap-2 justify-start">
           <button
             id="btn-level-select"
@@ -56,38 +56,63 @@ export const TopBar: React.FC<TopBarProps> = ({
               soundManager.playClick();
               onOpenLevelSelect();
             }}
-            className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-white/90 border border-slate-200/80 shadow-xs flex items-center justify-center text-sky-500 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-white/90 border border-slate-200/80 shadow-sm flex items-center justify-center text-sky-500 hover:scale-105 active:scale-95 transition-all cursor-pointer hover:shadow-sky-100"
             title={isAr ? 'قائمة المستويات' : 'Levels List'}
           >
-            <Grid className="w-4 h-4 sm:w-5 sm:h-5" />
+            <Grid className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
+          </button>
+
+          {/* Coins Pill Badge */}
+          <button
+            onClick={() => {
+              soundManager.playClick();
+              onOpenShop();
+            }}
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 text-white font-black text-xs shadow-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer border border-amber-300/40"
+            title={isAr ? 'متجر النقاط والمساعدات' : 'Coins & Tools Shop'}
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-200 fill-amber-100 animate-pulse" />
+            <span>{isAr ? toArabicDigits(coins) : coins}</span>
           </button>
         </div>
 
-        {/* Center: Title & Subtitle exact match to screenshot */}
-        <div className="flex flex-col items-center justify-center">
-          <h1 className="text-2xl sm:text-3xl font-black text-sky-400 drop-shadow-[0_2px_4px_rgba(56,189,248,0.25)] tracking-wide">
+        {/* Center: Level Title & Subtitle Badge */}
+        <div className="flex flex-col items-center justify-center text-center">
+          <h1 className="text-2xl sm:text-3xl font-black text-sky-500 drop-shadow-[0_2px_8px_rgba(56,189,248,0.3)] tracking-tight">
             {levelText}
           </h1>
-          <span className="text-sm sm:text-lg font-black text-rose-500 tracking-wider -mt-0.5">
+          <span className="text-xs sm:text-sm font-black text-rose-500 tracking-wider bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-100 -mt-0.5 shadow-2xs">
             {isAr ? difficultyAr : difficultyEn}
           </span>
         </div>
 
-        {/* Right Side: Palette + 'A' icon & Settings gear (matching screenshot!) */}
-        <div className="flex items-center justify-end gap-1.5 sm:gap-2.5">
-          {/* Palette Button with 'A' badge */}
+        {/* Right Side: Palette + Settings gear */}
+        <div className="flex items-center justify-end gap-1.5 sm:gap-2">
+          {/* Mobile Coins Button */}
+          <button
+            onClick={() => {
+              soundManager.playClick();
+              onOpenShop();
+            }}
+            className="sm:hidden flex items-center gap-1 px-2 py-1 rounded-xl bg-amber-500 text-white font-black text-[11px] shadow-xs cursor-pointer border border-amber-300/40"
+          >
+            <Sparkles className="w-3 h-3 text-amber-200 fill-amber-100" />
+            <span>{isAr ? toArabicDigits(coins) : coins}</span>
+          </button>
+
+          {/* Palette Button with Shop badge */}
           <button
             id="btn-shop"
             onClick={() => {
               soundManager.playClick();
               onOpenShop();
             }}
-            className="relative w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-amber-50 border-2 border-amber-200 shadow-xs flex items-center justify-center text-amber-700 hover:scale-105 active:scale-95 transition-all cursor-pointer"
-            title={isAr ? 'متجر الألوان' : 'Color Shop'}
+            className="relative w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-amber-50 to-orange-50 border-2 border-amber-200 shadow-sm flex items-center justify-center text-amber-700 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            title={isAr ? 'المتجر' : 'Shop'}
           >
-            <Palette className="w-4 h-4 sm:w-6 sm:h-6 text-amber-500 fill-amber-300" />
-            <span className="absolute -bottom-1 -right-1 bg-sky-500 text-white text-[9px] sm:text-[10px] font-black px-1 rounded-full border border-white">
-              A
+            <Palette className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500 fill-amber-300" />
+            <span className="absolute -top-1 -right-1 bg-amber-500 text-white text-[9px] font-black px-1.5 py-0.2 rounded-full border border-white shadow-2xs">
+              ★
             </span>
           </button>
 
@@ -98,10 +123,10 @@ export const TopBar: React.FC<TopBarProps> = ({
               soundManager.playClick();
               onOpenSettings();
             }}
-            className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-purple-50 border-2 border-purple-200 shadow-xs flex items-center justify-center text-purple-600 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-purple-50 border-2 border-purple-200 shadow-sm flex items-center justify-center text-purple-600 hover:scale-105 active:scale-95 transition-all cursor-pointer"
             title={isAr ? 'الإعدادات' : 'Settings'}
           >
-            <Settings className="w-4 h-4 sm:w-6 sm:h-6 text-purple-400" />
+            <Settings className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500" />
           </button>
         </div>
       </div>
