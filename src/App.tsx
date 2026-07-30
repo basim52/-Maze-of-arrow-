@@ -13,16 +13,116 @@ import { Sparkles, HelpCircle, RefreshCw } from 'lucide-react';
 const LOCAL_STORAGE_KEY = 'arrow_escape_game_data_v1';
 
 export default function App() {
-  // Game persistent state
-  const [currentLevelId, setCurrentLevelId] = useState<number>(5); // Start on Level 5 as in user request & screenshot!
-  const [unlockedLevel, setUnlockedLevel] = useState<number>(5);
-  const [starsPerLevel, setStarsPerLevel] = useState<Record<number, number>>({ 1: 3, 2: 3, 3: 3, 4: 2 });
-  const [coins, setCoins] = useState<number>(45);
+  // Game persistent state - initialized directly from localStorage with fallback to level 1
+  const [currentLevelId, setCurrentLevelId] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.currentLevelId === 'number' && parsed.currentLevelId >= 1) {
+          return parsed.currentLevelId;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 1;
+  });
+
+  const [unlockedLevel, setUnlockedLevel] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.unlockedLevel === 'number' && parsed.unlockedLevel >= 1) {
+          return parsed.unlockedLevel;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 1;
+  });
+
+  const [starsPerLevel, setStarsPerLevel] = useState<Record<number, number>>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.starsPerLevel && typeof parsed.starsPerLevel === 'object') {
+          return parsed.starsPerLevel;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return {};
+  });
+
+  const [coins, setCoins] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.coins === 'number') {
+          return parsed.coins;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 0;
+  });
+
   const [drops, setDrops] = useState<number>(3);
-  const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
-  const [language, setLanguage] = useState<'ar' | 'en'>('ar');
-  const [selectedSkin, setSelectedSkin] = useState<ThemeSkin>('jelly');
-  const [unlockedSkins, setUnlockedSkins] = useState<ThemeSkin[]>(['jelly']);
+
+  const [soundEnabled, setSoundEnabled] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.soundEnabled === 'boolean') {
+          return parsed.soundEnabled;
+        }
+      }
+    } catch (e) {}
+    return true;
+  });
+
+  const [language, setLanguage] = useState<'ar' | 'en'>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.language === 'ar' || parsed.language === 'en') {
+          return parsed.language;
+        }
+      }
+    } catch (e) {}
+    return 'ar';
+  });
+
+  const [selectedSkin, setSelectedSkin] = useState<ThemeSkin>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.selectedSkin) return parsed.selectedSkin;
+      }
+    } catch (e) {}
+    return 'jelly';
+  });
+
+  const [unlockedSkins, setUnlockedSkins] = useState<ThemeSkin[]>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed.unlockedSkins)) return parsed.unlockedSkins;
+      }
+    } catch (e) {}
+    return ['jelly'];
+  });
 
   // Modals state
   const [showVictoryModal, setShowVictoryModal] = useState<boolean>(false);
@@ -30,34 +130,16 @@ export default function App() {
   const [showSettingsModal, setShowSettingsModal] = useState<boolean>(false);
   const [showShopModal, setShowShopModal] = useState<boolean>(false);
 
-  // Active Level State
-  const [activeLevel, setActiveLevel] = useState<Level>(() => getLevel(5));
+  // Active Level State initialized lazily from currentLevelId
+  const [activeLevel, setActiveLevel] = useState<Level>(() => getLevel(currentLevelId));
   const [arrows, setArrows] = useState<Arrow[]>([]);
   const [escapedCount, setEscapedCount] = useState<number>(0);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Load saved state on mount
+  // Configure sound manager on mount
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed.currentLevelId) setCurrentLevelId(parsed.currentLevelId);
-        if (parsed.unlockedLevel) setUnlockedLevel(parsed.unlockedLevel);
-        if (parsed.starsPerLevel) setStarsPerLevel(parsed.starsPerLevel);
-        if (typeof parsed.coins === 'number') setCoins(parsed.coins);
-        if (typeof parsed.soundEnabled === 'boolean') {
-          setSoundEnabled(parsed.soundEnabled);
-          soundManager.setEnabled(parsed.soundEnabled);
-        }
-        if (parsed.language) setLanguage(parsed.language);
-        if (parsed.selectedSkin) setSelectedSkin(parsed.selectedSkin);
-        if (parsed.unlockedSkins) setUnlockedSkins(parsed.unlockedSkins);
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }, []);
+    soundManager.setEnabled(soundEnabled);
+  }, [soundEnabled]);
 
   // Save state to localStorage
   useEffect(() => {
