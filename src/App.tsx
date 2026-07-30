@@ -159,6 +159,21 @@ export default function App() {
     return 1; // 1 free starter thunder bolt
   });
 
+  const [creams, setCreams] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.creams === 'number') {
+          return parsed.creams;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 1; // 1 free starter cream
+  });
+
   const [isHammerActive, setIsHammerActive] = useState<boolean>(false);
   const [lastCoinsEarned, setLastCoinsEarned] = useState<number>(10);
 
@@ -193,12 +208,13 @@ export default function App() {
         unlockedSkins,
         hammers,
         thunders,
+        creams,
       };
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
     } catch (e) {
       console.error(e);
     }
-  }, [currentLevelId, unlockedLevel, starsPerLevel, coins, soundEnabled, language, selectedSkin, unlockedSkins, hammers, thunders]);
+  }, [currentLevelId, unlockedLevel, starsPerLevel, coins, soundEnabled, language, selectedSkin, unlockedSkins, hammers, thunders, creams]);
 
   // Load level data whenever currentLevelId changes
   useEffect(() => {
@@ -222,7 +238,7 @@ export default function App() {
     }
 
     if (hammers <= 0) {
-      triggerToast(isAr ? 'لا تملك مطرقة! يمكنك شراؤها بـ 75 نقطة 🛒' : 'No hammers! Buy for 75 coins 🛒');
+      triggerToast(isAr ? 'لا تملك مطرقة! يمكنك شراؤها بـ 45 نقطة 🛒' : 'No hammers! Buy for 45 coins 🛒');
       setShowShopModal(true);
       return;
     }
@@ -257,12 +273,21 @@ export default function App() {
     }
   };
 
+  const handleBuyCream = (cost: number) => {
+    const isAr = language === 'ar';
+    if (coins >= cost) {
+      setCoins((prev) => prev - cost);
+      setCreams((prev) => prev + 1);
+      triggerToast(isAr ? 'تم شراء كريمة سحرية بنجاح! 🍦' : 'Magic Cream purchased! 🍦');
+    }
+  };
+
   const handleUseLightning = () => {
     const isAr = language === 'ar';
     soundManager.playClick();
 
     if (thunders <= 0) {
-      triggerToast(isAr ? 'لا تملك رعد! يمكنك شراؤه بـ 155 نقطة 🛒' : 'No thunder! Buy for 155 coins 🛒');
+      triggerToast(isAr ? 'لا تملك رعد! يمكنك شراؤه بـ 95 نقطة 🛒' : 'No thunder! Buy for 95 coins 🛒');
       setShowShopModal(true);
       return;
     }
@@ -282,6 +307,48 @@ export default function App() {
       isAr
         ? `⚡ أصاب الرعد ${smashedIds.size} أسهم ودمرها بنجاح!`
         : `⚡ Thunder struck ${smashedIds.size} arrows!`
+    );
+
+    setArrows((prev) => {
+      const next = prev.map((a) => (smashedIds.has(a.id) ? { ...a, isEscaped: true } : a));
+      const remaining = next.filter((a) => !a.isEscaped).length;
+      const newEscapedCount = next.length - remaining;
+      setEscapedCount(newEscapedCount);
+
+      if (remaining === 0) {
+        setTimeout(() => {
+          handleLevelCompleted();
+        }, 400);
+      }
+      return next;
+    });
+  };
+
+  const handleUseCream = () => {
+    const isAr = language === 'ar';
+    soundManager.playClick();
+
+    if (creams <= 0) {
+      triggerToast(isAr ? 'لا تملك كريمة! يمكنك شراؤها بـ 129 نقطة 🛒' : 'No cream! Buy for 129 coins 🛒');
+      setShowShopModal(true);
+      return;
+    }
+
+    const unescaped = arrows.filter((a) => !a.isEscaped);
+    if (unescaped.length === 0) return;
+
+    soundManager.playSmash();
+
+    // Select up to 5 random unescaped arrows to clear
+    const shuffled = [...unescaped].sort(() => 0.5 - Math.random());
+    const selectedToSmash = shuffled.slice(0, 5);
+    const smashedIds = new Set(selectedToSmash.map((a) => a.id));
+
+    setCreams((prev) => Math.max(0, prev - 1));
+    triggerToast(
+      isAr
+        ? `🍦 تم إزالة ${smashedIds.size} أسهم بواسطة الكريمة السحرية!`
+        : `🍦 Cream removed ${smashedIds.size} arrows!`
     );
 
     setArrows((prev) => {
@@ -472,12 +539,26 @@ export default function App() {
 
         {/* In-Game Action Bar Dock */}
         <div className="flex items-center justify-center gap-2 sm:gap-3 mt-2 mb-1 z-20">
-          {/* Thunder Power-Up Button (400 coins in shop) */}
+          {/* Cream Power-Up Button (129 coins in shop) */}
+          <button
+            id="btn-cream-tool"
+            onClick={handleUseCream}
+            className="px-3 sm:px-4 py-2 rounded-2xl border-2 border-pink-300 bg-gradient-to-r from-pink-50 via-rose-50 to-amber-50 text-pink-900 hover:border-pink-400 font-black text-xs flex items-center gap-1.5 shadow-xs hover:scale-105 active:scale-95 cursor-pointer transition-all"
+            title={isAr ? 'استخدام الكريمة لإزالة 5 أسهم عشوائية (129 نقطة)' : 'Use Cream to remove 5 random arrows (129 coins)'}
+          >
+            <span className="text-lg">🍦</span>
+            <span>{isAr ? 'كريمة' : 'Cream'}</span>
+            <span className="bg-pink-200/90 text-pink-950 font-extrabold text-[11px] px-2 py-0.5 rounded-full border border-pink-300">
+              {creams}
+            </span>
+          </button>
+
+          {/* Thunder Power-Up Button (95 coins in shop) */}
           <button
             id="btn-thunder-tool"
             onClick={handleUseLightning}
             className="px-3.5 sm:px-4 py-2 rounded-2xl border-2 border-sky-300 bg-gradient-to-r from-sky-50 via-cyan-50 to-blue-50 text-sky-900 hover:border-sky-400 font-black text-xs flex items-center gap-1.5 shadow-xs hover:scale-105 active:scale-95 cursor-pointer transition-all"
-            title={isAr ? 'استخدام ضربة الرعد لكسر 3 أسهم عشوائية (155 نقطة)' : 'Use Lightning to break 3 random arrows (155 coins)'}
+            title={isAr ? 'استخدام ضربة الرعد لكسر 3 أسهم عشوائية (95 نقطة)' : 'Use Lightning to break 3 random arrows (95 coins)'}
           >
             <span className="text-lg">⚡</span>
             <span>{isAr ? 'رعد' : 'Thunder'}</span>
@@ -486,7 +567,7 @@ export default function App() {
             </span>
           </button>
 
-          {/* Magic Hammer Power-Up Button (300 coins in shop) */}
+          {/* Magic Hammer Power-Up Button (45 coins in shop) */}
           <button
             id="btn-hammer-tool"
             onClick={handleToggleHammer}
@@ -583,6 +664,7 @@ export default function App() {
           coins={coins}
           hammers={hammers}
           thunders={thunders}
+          creams={creams}
           selectedSkin={selectedSkin}
           unlockedSkins={unlockedSkins}
           language={language}
@@ -594,6 +676,7 @@ export default function App() {
           }}
           onBuyHammer={handleBuyHammer}
           onBuyThunder={handleBuyThunder}
+          onBuyCream={handleBuyCream}
           onClose={() => setShowShopModal(false)}
         />
       )}

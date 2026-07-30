@@ -5473,27 +5473,283 @@ export const HAMMER_REQUIRED_LEVEL_IDS = [45, 52, 60, 68, 77, 85, 93, 100, 108, 
 
 export function createHammerRequiredLevel(levelNumber: number): Level {
   const isEvery5th = levelNumber % 5 === 0;
-  const cols = 14;
-  const rows = 8;
   const maxDrops = isEvery5th ? 1 : 3;
 
-  const deadlockArrows: Arrow[] = [
-    { id: `${levelNumber}-h1`, gridX: 4, gridY: 2, direction: 'right', color: 'cyan', length: 2 },
-    { id: `${levelNumber}-h2`, gridX: 6, gridY: 2, direction: 'down', color: 'lime', length: 2 },
-    { id: `${levelNumber}-h3`, gridX: 6, gridY: 4, direction: 'left', color: 'yellow', length: 2 },
-    { id: `${levelNumber}-h4`, gridX: 4, gridY: 4, direction: 'up', color: 'purple', length: 2 },
-    { id: `${levelNumber}-h5`, gridX: 2, gridY: 1, direction: 'right', color: 'pink', length: 2, type: 'double' },
-    { id: `${levelNumber}-h6`, gridX: 9, gridY: 1, direction: 'left', color: 'orange', length: 2 },
-    { id: `${levelNumber}-h7`, gridX: 9, gridY: 5, direction: 'down', color: 'cyan', length: 2 },
-    { id: `${levelNumber}-h8`, gridX: 2, gridY: 6, direction: 'up-right', color: 'lime', length: 1 },
-    { id: `${levelNumber}-h9`, gridX: 11, gridY: 6, direction: 'left', color: 'purple', length: 2 },
-    { id: `${levelNumber}-h10`, gridX: 1, gridY: 3, direction: 'down', color: 'yellow', length: 2 },
-  ];
+  let cols = 14;
+  let rows = 8;
+  let nameAr = `🔨 قفل المطرقة والرعد ${levelNumber}`;
+  let nameEn = `🔨 Hammer & Thunder Lock ${levelNumber}`;
+  let deadlockArrows: Arrow[] = [];
+
+  switch (levelNumber) {
+    case 45:
+      cols = 10;
+      rows = 7;
+      nameAr = `🔨 45 - الحلقة الفولاذية`;
+      nameEn = `🔨 45 - Steel Ring Lock`;
+      deadlockArrows = [
+        { id: '45-h1', gridX: 4, gridY: 2, direction: 'right', color: 'cyan', length: 2 },
+        { id: '45-h2', gridX: 6, gridY: 2, direction: 'down', color: 'lime', length: 2 },
+        { id: '45-h3', gridX: 6, gridY: 4, direction: 'left', color: 'yellow', length: 2 },
+        { id: '45-h4', gridX: 4, gridY: 4, direction: 'up', color: 'purple', length: 2 },
+        { id: '45-h5', gridX: 2, gridY: 1, direction: 'right', color: 'pink', length: 2, type: 'double', isDouble: true },
+        { id: '45-h6', gridX: 7, gridY: 1, direction: 'left', color: 'orange', length: 2 },
+        { id: '45-h7', gridX: 7, gridY: 5, direction: 'down', color: 'cyan', length: 2 },
+        { id: '45-h8', gridX: 1, gridY: 5, direction: 'right', color: 'lime', length: 2 },
+        { id: '45-h9', gridX: 4, gridY: 5, direction: 'up', color: 'purple', length: 1 },
+      ];
+      break;
+
+    case 52:
+      cols = 12;
+      rows = 8;
+      nameAr = `🔨 52 - الأقفال المزدوجة`;
+      nameEn = `🔨 52 - Twin Steel Deadlocks`;
+      deadlockArrows = [
+        // Ring 1 left
+        { id: '52-1', gridX: 2, gridY: 2, direction: 'right', color: 'pink', length: 2 },
+        { id: '52-2', gridX: 4, gridY: 2, direction: 'down', color: 'orange', length: 2 },
+        { id: '52-3', gridX: 4, gridY: 4, direction: 'left', color: 'cyan', length: 2 },
+        { id: '52-4', gridX: 2, gridY: 4, direction: 'up', color: 'lime', length: 2 },
+        // Ring 2 right
+        { id: '52-5', gridX: 7, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
+        { id: '52-6', gridX: 9, gridY: 3, direction: 'down', color: 'purple', length: 2 },
+        { id: '52-7', gridX: 9, gridY: 5, direction: 'left', color: 'pink', length: 2 },
+        { id: '52-8', gridX: 7, gridY: 5, direction: 'up', color: 'orange', length: 2 },
+        // Connecting outer blockades
+        { id: '52-9', gridX: 5, gridY: 1, direction: 'down', color: 'cyan', length: 2, type: 'bomb', isBomb: true },
+        { id: '52-10', gridX: 1, gridY: 6, direction: 'right', color: 'lime', length: 3 },
+        { id: '52-11', gridX: 10, gridY: 1, direction: 'left', color: 'yellow', length: 2 },
+      ];
+      break;
+
+    case 60:
+      cols = 12;
+      rows = 8;
+      nameAr = `🔨 60 - حصن الألغام الفولاذي`;
+      nameEn = `🔨 60 - Steel Bomb Citadel`;
+      deadlockArrows = [
+        // Bomb deadlock center
+        { id: '60-b1', gridX: 5, gridY: 3, direction: 'right', color: 'orange', length: 2, type: 'bomb', isBomb: true },
+        { id: '60-b2', gridX: 7, gridY: 3, direction: 'left', color: 'pink', length: 2, type: 'bomb', isBomb: true },
+        { id: '60-1', gridX: 4, gridY: 1, direction: 'down', color: 'purple', length: 3 },
+        { id: '60-2', gridX: 8, gridY: 1, direction: 'down', color: 'lime', length: 3 },
+        { id: '60-3', gridX: 3, gridY: 5, direction: 'right', color: 'cyan', length: 2 },
+        { id: '60-4', gridX: 7, gridY: 5, direction: 'left', color: 'yellow', length: 2 },
+        { id: '60-5', gridX: 1, gridY: 3, direction: 'right', color: 'pink', length: 3, type: 'double', isDouble: true },
+        { id: '60-6', gridX: 10, gridY: 3, direction: 'left', color: 'orange', length: 2 },
+        { id: '60-7', gridX: 6, gridY: 6, direction: 'up', color: 'purple', length: 2 },
+      ];
+      break;
+
+    case 68:
+      cols = 13;
+      rows = 9;
+      nameAr = `🔨 68 - الميدان الفولاذي المتقاطع`;
+      nameEn = `🔨 68 - Crossed Steel Arena`;
+      deadlockArrows = [
+        // Center cross deadlock
+        { id: '68-1', gridX: 5, gridY: 3, direction: 'right', color: 'lime', length: 2 },
+        { id: '68-2', gridX: 7, gridY: 3, direction: 'down', color: 'cyan', length: 2 },
+        { id: '68-3', gridX: 7, gridY: 5, direction: 'left', color: 'purple', length: 2 },
+        { id: '68-4', gridX: 5, gridY: 5, direction: 'up', color: 'pink', length: 2 },
+        // Corner traps
+        { id: '68-5', gridX: 2, gridY: 1, direction: 'down-right', color: 'yellow', length: 1 },
+        { id: '68-6', gridX: 10, gridY: 1, direction: 'down-left', color: 'orange', length: 1 },
+        { id: '68-7', gridX: 2, gridY: 7, direction: 'up-right', color: 'cyan', length: 1 },
+        { id: '68-8', gridX: 10, gridY: 7, direction: 'up-left', color: 'lime', length: 1 },
+        { id: '68-9', gridX: 1, gridY: 4, direction: 'right', color: 'purple', length: 3, type: 'double', isDouble: true },
+        { id: '68-10', gridX: 11, gridY: 4, direction: 'left', color: 'pink', length: 2 },
+      ];
+      break;
+
+    case 77:
+      cols = 11;
+      rows = 10;
+      nameAr = `🔨 77 - برج الفولاذ الشاهق`;
+      nameEn = `🔨 77 - Tall Steel Tower`;
+      deadlockArrows = [
+        // Top loop
+        { id: '77-1', gridX: 4, gridY: 1, direction: 'right', color: 'cyan', length: 2 },
+        { id: '77-2', gridX: 6, gridY: 1, direction: 'down', color: 'lime', length: 2 },
+        { id: '77-3', gridX: 6, gridY: 3, direction: 'left', color: 'yellow', length: 2 },
+        { id: '77-4', gridX: 4, gridY: 3, direction: 'up', color: 'purple', length: 2 },
+        // Bottom loop
+        { id: '77-5', gridX: 4, gridY: 6, direction: 'right', color: 'pink', length: 2 },
+        { id: '77-6', gridX: 6, gridY: 6, direction: 'down', color: 'orange', length: 2 },
+        { id: '77-7', gridX: 6, gridY: 8, direction: 'left', color: 'cyan', length: 2 },
+        { id: '77-8', gridX: 4, gridY: 8, direction: 'up', color: 'lime', length: 2 },
+        // Connecting pillar
+        { id: '77-9', gridX: 2, gridY: 4, direction: 'down', color: 'yellow', length: 3, type: 'bomb', isBomb: true },
+        { id: '77-10', gridX: 8, gridY: 4, direction: 'up', color: 'purple', length: 3 },
+        { id: '77-11', gridX: 1, gridY: 2, direction: 'right', color: 'pink', length: 2 },
+        { id: '77-12', gridX: 9, gridY: 7, direction: 'left', color: 'orange', length: 2 },
+      ];
+      break;
+
+    case 85:
+      cols = 14;
+      rows = 9;
+      nameAr = `🔨 85 - الحلزون الفولاذي`;
+      nameEn = `🔨 85 - Steel Spiral Labyrinth`;
+      deadlockArrows = [
+        // Spiral outer to inner
+        { id: '85-1', gridX: 3, gridY: 2, direction: 'right', color: 'purple', length: 3 },
+        { id: '85-2', gridX: 8, gridY: 2, direction: 'down', color: 'cyan', length: 3 },
+        { id: '85-3', gridX: 8, gridY: 6, direction: 'left', color: 'lime', length: 3 },
+        { id: '85-4', gridX: 3, gridY: 6, direction: 'up', color: 'yellow', length: 3 },
+        // Central deadlock core
+        { id: '85-5', gridX: 5, gridY: 4, direction: 'right', color: 'pink', length: 2, type: 'double', isDouble: true },
+        { id: '85-6', gridX: 7, gridY: 4, direction: 'left', color: 'orange', length: 2, type: 'bomb', isBomb: true },
+        { id: '85-7', gridX: 1, gridY: 4, direction: 'right', color: 'purple', length: 2 },
+        { id: '85-8', gridX: 11, gridY: 4, direction: 'left', color: 'cyan', length: 2 },
+        { id: '85-9', gridX: 6, gridY: 1, direction: 'down', color: 'lime', length: 2 },
+        { id: '85-10', gridX: 6, gridY: 7, direction: 'up', color: 'yellow', length: 2 },
+      ];
+      break;
+
+    case 93:
+      cols = 15;
+      rows = 9;
+      nameAr = `🔨 93 - الروابط الفولاذية المزدوجة`;
+      nameEn = `🔨 93 - Double-Headed Steel Links`;
+      deadlockArrows = [
+        { id: '93-1', gridX: 3, gridY: 3, direction: 'right', color: 'cyan', length: 2, type: 'double', isDouble: true },
+        { id: '93-2', gridX: 6, gridY: 3, direction: 'down', color: 'lime', length: 2, type: 'double', isDouble: true },
+        { id: '93-3', gridX: 6, gridY: 6, direction: 'left', color: 'yellow', length: 2 },
+        { id: '93-4', gridX: 3, gridY: 6, direction: 'up', color: 'purple', length: 2 },
+        { id: '93-5', gridX: 9, gridY: 2, direction: 'right', color: 'pink', length: 2 },
+        { id: '93-6', gridX: 11, gridY: 2, direction: 'down', color: 'orange', length: 2, type: 'bomb', isBomb: true },
+        { id: '93-7', gridX: 11, gridY: 5, direction: 'left', color: 'cyan', length: 2 },
+        { id: '93-8', gridX: 9, gridY: 5, direction: 'up', color: 'lime', length: 2 },
+        { id: '93-9', gridX: 1, gridY: 4, direction: 'right', color: 'purple', length: 3 },
+        { id: '93-10', gridX: 13, gridY: 4, direction: 'left', color: 'yellow', length: 2 },
+        { id: '93-11', gridX: 7, gridY: 1, direction: 'down', color: 'pink', length: 2 },
+        { id: '93-12', gridX: 7, gridY: 7, direction: 'up', color: 'orange', length: 2 },
+      ];
+      break;
+
+    case 100:
+      cols = 16;
+      rows = 10;
+      nameAr = `🔨 100 - العملاق الفولاذي المئوي`;
+      nameEn = `🔨 100 - Century Steel Titan`;
+      deadlockArrows = [
+        { id: '100-1', gridX: 4, gridY: 3, direction: 'right', color: 'orange', length: 3, type: 'bomb', isBomb: true },
+        { id: '100-2', gridX: 8, gridY: 3, direction: 'down', color: 'purple', length: 2 },
+        { id: '100-3', gridX: 8, gridY: 6, direction: 'left', color: 'cyan', length: 3, type: 'double', isDouble: true },
+        { id: '100-4', gridX: 4, gridY: 6, direction: 'up', color: 'lime', length: 2 },
+        { id: '100-5', gridX: 11, gridY: 3, direction: 'down', color: 'pink', length: 3 },
+        { id: '100-6', gridX: 11, gridY: 7, direction: 'left', color: 'yellow', length: 3 },
+        { id: '100-7', gridX: 2, gridY: 1, direction: 'right', color: 'cyan', length: 3 },
+        { id: '100-8', gridX: 13, gridY: 1, direction: 'left', color: 'lime', length: 2 },
+        { id: '100-9', gridX: 2, gridY: 8, direction: 'up', color: 'purple', length: 2 },
+        { id: '100-10', gridX: 14, gridY: 8, direction: 'left', color: 'orange', length: 2 },
+        { id: '100-11', gridX: 6, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
+        { id: '100-12', gridX: 9, gridY: 8, direction: 'up', color: 'pink', length: 2 },
+      ];
+      break;
+
+    case 108:
+      cols = 13;
+      rows = 8;
+      nameAr = `🔨 108 - بركان الفولاذ الملتهب`;
+      nameEn = `🔨 108 - Volcanic Steel Cavern`;
+      deadlockArrows = [
+        { id: '108-1', gridX: 3, gridY: 2, direction: 'right', color: 'orange', length: 2, type: 'bomb', isBomb: true },
+        { id: '108-2', gridX: 6, gridY: 2, direction: 'down', color: 'pink', length: 2 },
+        { id: '108-3', gridX: 6, gridY: 5, direction: 'left', color: 'yellow', length: 2, type: 'bomb', isBomb: true },
+        { id: '108-4', gridX: 3, gridY: 5, direction: 'up', color: 'purple', length: 2 },
+        { id: '108-5', gridX: 8, gridY: 2, direction: 'right', color: 'lime', length: 2 },
+        { id: '108-6', gridX: 10, gridY: 2, direction: 'down', color: 'cyan', length: 2 },
+        { id: '108-7', gridX: 10, gridY: 5, direction: 'left', color: 'orange', length: 2 },
+        { id: '108-8', gridX: 8, gridY: 5, direction: 'up', color: 'pink', length: 2 },
+        { id: '108-9', gridX: 1, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
+        { id: '108-10', gridX: 11, gridY: 3, direction: 'left', color: 'purple', length: 2 },
+      ];
+      break;
+
+    case 115:
+      cols = 14;
+      rows = 9;
+      nameAr = `🔨 115 - الشبكة الفولاذية الكونية`;
+      nameEn = `🔨 115 - Cosmic Steel Web`;
+      deadlockArrows = [
+        { id: '115-1', gridX: 4, gridY: 2, direction: 'down-right', color: 'cyan', length: 1 },
+        { id: '115-2', gridX: 7, gridY: 2, direction: 'down-left', color: 'lime', length: 1 },
+        { id: '115-3', gridX: 7, gridY: 5, direction: 'up-left', color: 'purple', length: 1 },
+        { id: '115-4', gridX: 4, gridY: 5, direction: 'up-right', color: 'pink', length: 1 },
+        { id: '115-5', gridX: 2, gridY: 3, direction: 'right', color: 'yellow', length: 3, type: 'double', isDouble: true },
+        { id: '115-6', gridX: 9, gridY: 3, direction: 'left', color: 'orange', length: 3 },
+        { id: '115-7', gridX: 5, gridY: 1, direction: 'down', color: 'cyan', length: 2 },
+        { id: '115-8', gridX: 6, gridY: 7, direction: 'up', color: 'lime', length: 2 },
+        { id: '115-9', gridX: 11, gridY: 1, direction: 'down', color: 'purple', length: 3, type: 'bomb', isBomb: true },
+        { id: '115-10', gridX: 1, gridY: 6, direction: 'right', color: 'pink', length: 2 },
+      ];
+      break;
+
+    case 122:
+      cols = 15;
+      rows = 10;
+      nameAr = `🔨 122 - متاهة الصاعقة الفولاذية`;
+      nameEn = `🔨 122 - Lightning Steel Maze`;
+      deadlockArrows = [
+        { id: '122-1', gridX: 3, gridY: 2, direction: 'right', color: 'lime', length: 2 },
+        { id: '122-2', gridX: 6, gridY: 2, direction: 'down', color: 'cyan', length: 2 },
+        { id: '122-3', gridX: 6, gridY: 5, direction: 'left', color: 'pink', length: 2, type: 'double', isDouble: true },
+        { id: '122-4', gridX: 3, gridY: 5, direction: 'up', color: 'purple', length: 2 },
+        { id: '122-5', gridX: 9, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
+        { id: '122-6', gridX: 12, gridY: 3, direction: 'down', color: 'orange', length: 2, type: 'bomb', isBomb: true },
+        { id: '122-7', gridX: 12, gridY: 6, direction: 'left', color: 'cyan', length: 2 },
+        { id: '122-8', gridX: 9, gridY: 6, direction: 'up', color: 'lime', length: 2 },
+        { id: '122-9', gridX: 1, gridY: 4, direction: 'right', color: 'purple', length: 2 },
+        { id: '122-10', gridX: 13, gridY: 4, direction: 'left', color: 'pink', length: 2 },
+        { id: '122-11', gridX: 7, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
+        { id: '122-12', gridX: 8, gridY: 8, direction: 'up', color: 'orange', length: 2 },
+      ];
+      break;
+
+    case 125:
+      cols = 16;
+      rows = 10;
+      nameAr = `🔨 125 - عرش الفولاذ الأخير 🔥`;
+      nameEn = `🔨 125 - Final Steel Throne 🔥`;
+      deadlockArrows = [
+        { id: '125-1', gridX: 5, gridY: 2, direction: 'right', color: 'cyan', length: 2, type: 'bomb', isBomb: true },
+        { id: '125-2', gridX: 8, gridY: 2, direction: 'down', color: 'lime', length: 2, type: 'double', isDouble: true },
+        { id: '125-3', gridX: 8, gridY: 5, direction: 'left', color: 'purple', length: 2, type: 'bomb', isBomb: true },
+        { id: '125-4', gridX: 5, gridY: 5, direction: 'up', color: 'pink', length: 2, type: 'double', isDouble: true },
+        { id: '125-5', gridX: 11, gridY: 2, direction: 'right', color: 'yellow', length: 2 },
+        { id: '125-6', gridX: 14, gridY: 2, direction: 'down', color: 'orange', length: 3 },
+        { id: '125-7', gridX: 14, gridY: 6, direction: 'left', color: 'cyan', length: 2 },
+        { id: '125-8', gridX: 11, gridY: 6, direction: 'up', color: 'lime', length: 3 },
+        { id: '125-9', gridX: 2, gridY: 4, direction: 'right', color: 'purple', length: 3 },
+        { id: '125-10', gridX: 1, gridY: 1, direction: 'down', color: 'pink', length: 3 },
+        { id: '125-11', gridX: 1, gridY: 8, direction: 'right', color: 'orange', length: 3 },
+        { id: '125-12', gridX: 9, gridY: 8, direction: 'up', color: 'yellow', length: 2 },
+      ];
+      break;
+
+    default:
+      cols = 12 + (levelNumber % 5);
+      rows = 8 + (levelNumber % 3);
+      nameAr = `🔨 🏰 قفل الفولاذ الخارق ${levelNumber}`;
+      nameEn = `🔨 🏰 Steel Fortress Lock ${levelNumber}`;
+      deadlockArrows = [
+        { id: `${levelNumber}-d1`, gridX: 3, gridY: 2, direction: 'right', color: 'cyan', length: 2 },
+        { id: `${levelNumber}-d2`, gridX: 5, gridY: 2, direction: 'down', color: 'lime', length: 2 },
+        { id: `${levelNumber}-d3`, gridX: 5, gridY: 4, direction: 'left', color: 'yellow', length: 2 },
+        { id: `${levelNumber}-d4`, gridX: 3, gridY: 4, direction: 'up', color: 'purple', length: 2 },
+        { id: `${levelNumber}-d5`, gridX: 8, gridY: 3, direction: 'left', color: 'pink', length: 2, type: 'double', isDouble: true },
+        { id: `${levelNumber}-d6`, gridX: 1, gridY: 3, direction: 'right', color: 'orange', length: 2, type: 'bomb', isBomb: true },
+      ];
+      break;
+  }
 
   return {
     id: levelNumber,
-    nameAr: `🔨 قفل المطرقة والرعد ${levelNumber}`,
-    nameEn: `🔨 Hammer & Thunder Lock ${levelNumber}`,
+    nameAr,
+    nameEn,
     difficulty: 'صعب جداً',
     difficultyEn: 'Very Hard',
     gridSize: { cols, rows },

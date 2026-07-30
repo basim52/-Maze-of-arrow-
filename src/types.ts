@@ -46,4 +46,5 @@ export interface PlayerStats {
   language: 'ar' | 'en';
   hammers: number;
   thunders: number;
+  creams: number;
 }
