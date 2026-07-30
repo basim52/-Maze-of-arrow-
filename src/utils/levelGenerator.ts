@@ -205,8 +205,8 @@ export const HANDCRAFTED_LEVELS: Level[] = [
     id: 5,
     nameAr: 'متاهة النظارة الأنيقة',
     nameEn: 'Glasses Butterfly Maze',
-    difficulty: 'صعب',
-    difficultyEn: 'Hard',
+    difficulty: 'صعب جداً',
+    difficultyEn: 'Very Hard',
     gridSize: { cols: 14, rows: 7 },
     maxDrops: 3,
     arrows: [
@@ -359,13 +359,20 @@ export const HANDCRAFTED_LEVELS: Level[] = [
 
 // Procedurally generate a level that is 100% guaranteed solvable with zero overlaps
 export function generateRandomSolvableLevel(levelNumber: number): Level {
-  const isHard = levelNumber > 15;
+  const isEvery5th = levelNumber % 5 === 0;
+  const isHard = levelNumber > 15 || isEvery5th;
   const isMedium = levelNumber > 8;
 
-  const cols = isHard ? 14 : isMedium ? 10 : 8;
-  const rows = isHard ? 8 : isMedium ? 7 : 6;
+  const cols = isEvery5th ? 14 : isHard ? 14 : isMedium ? 10 : 8;
+  const rows = isEvery5th ? 8 : isHard ? 8 : isMedium ? 7 : 6;
 
-  const targetCount = Math.min(6 + Math.floor(levelNumber * 1.2), 20);
+  const targetCount = isEvery5th
+    ? Math.min(12 + Math.floor(levelNumber * 0.5), 22)
+    : Math.min(6 + Math.floor(levelNumber * 1.2), 20);
+
+  const diffAr = isEvery5th ? 'صعب جداً' : levelNumber <= 3 ? 'سهل' : levelNumber <= 8 ? 'متوسط' : 'صعب';
+  const diffEn = isEvery5th ? 'Very Hard' : levelNumber <= 3 ? 'Easy' : levelNumber <= 8 ? 'Medium' : 'Hard';
+
   const directions: Direction[] = ['up', 'down', 'left', 'right'];
 
   let bestCandidate: Level | null = null;
@@ -393,10 +400,10 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
 
       const testLevel: Level = {
         id: levelNumber,
-        nameAr: `المستوى ${levelNumber}`,
-        nameEn: `Level ${levelNumber}`,
-        difficulty: levelNumber <= 3 ? 'سهل' : levelNumber <= 8 ? 'متوسط' : 'صعب',
-        difficultyEn: levelNumber <= 3 ? 'Easy' : levelNumber <= 8 ? 'Medium' : 'Hard',
+        nameAr: isEvery5th ? `المستوى ${levelNumber} 🔥 (تحدي)'` : `المستوى ${levelNumber}`,
+        nameEn: isEvery5th ? `Level ${levelNumber} 🔥 (Boss)` : `Level ${levelNumber}`,
+        difficulty: diffAr,
+        difficultyEn: diffEn,
         gridSize: { cols, rows },
         maxDrops: 3,
         arrows: [...arrows, candidate],
@@ -409,10 +416,10 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
 
     const candidateLevel: Level = {
       id: levelNumber,
-      nameAr: `المستوى ${levelNumber}`,
-      nameEn: `Level ${levelNumber}`,
-      difficulty: levelNumber <= 3 ? 'سهل' : levelNumber <= 8 ? 'متوسط' : 'صعب',
-      difficultyEn: levelNumber <= 3 ? 'Easy' : levelNumber <= 8 ? 'Medium' : 'Hard',
+      nameAr: isEvery5th ? `المستوى ${levelNumber} 🔥` : `المستوى ${levelNumber}`,
+      nameEn: isEvery5th ? `Level ${levelNumber} 🔥` : `Level ${levelNumber}`,
+      difficulty: diffAr,
+      difficultyEn: diffEn,
       gridSize: { cols, rows },
       maxDrops: 3,
       arrows,
@@ -437,8 +444,10 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
   return {
     ...baseLevel,
     id: levelNumber,
-    nameAr: `المستوى ${levelNumber}`,
-    nameEn: `Level ${levelNumber}`,
+    nameAr: isEvery5th ? `المستوى ${levelNumber} 🔥` : `المستوى ${levelNumber}`,
+    nameEn: isEvery5th ? `Level ${levelNumber} 🔥` : `Level ${levelNumber}`,
+    difficulty: diffAr,
+    difficultyEn: diffEn,
     arrows: baseLevel.arrows.map((a, idx) => ({
       ...a,
       id: `gen-fb-${levelNumber}-${idx}`,

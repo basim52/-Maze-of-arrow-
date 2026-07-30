@@ -50,6 +50,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
           {levelIds.map((id) => {
             const isUnlocked = id <= unlockedLevel;
             const isCurrent = id === currentLevel;
+            const isBossLevel = id % 5 === 0;
             const stars = starsPerLevel[id] || 0;
             const handcrafted = HANDCRAFTED_LEVELS.find((l) => l.id === id);
 
@@ -65,13 +66,22 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                   isCurrent
                     ? 'bg-gradient-to-tr from-sky-400 to-blue-500 text-white border-sky-300 shadow-md scale-105'
                     : isUnlocked
-                    ? 'bg-gradient-to-tr from-sky-50 to-white text-slate-700 border-sky-100 hover:border-sky-300 hover:scale-105 shadow-sm'
+                    ? isBossLevel
+                      ? 'bg-gradient-to-tr from-rose-50 to-amber-50 text-slate-800 border-rose-300 hover:border-rose-400 hover:scale-105 shadow-sm'
+                      : 'bg-gradient-to-tr from-sky-50 to-white text-slate-700 border-sky-100 hover:border-sky-300 hover:scale-105 shadow-sm'
                     : 'bg-slate-100 text-slate-400 border-slate-200 opacity-60 cursor-not-allowed'
                 }`}
               >
+                {isBossLevel && (
+                  <span className="absolute -top-1.5 -right-1.5 text-xs bg-rose-500 text-white font-black px-1.5 py-0.5 rounded-full shadow-xs border border-white">
+                    🔥
+                  </span>
+                )}
                 {isUnlocked ? (
                   <>
-                    <span className="text-base font-black">{id}</span>
+                    <span className={`text-base font-black ${isBossLevel && !isCurrent ? 'text-rose-600' : ''}`}>
+                      {id}
+                    </span>
                     {/* Stars indicator */}
                     <div className="flex items-center gap-0.5 mt-1">
                       {[1, 2, 3].map((starIdx) => (
