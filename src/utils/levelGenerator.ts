@@ -3666,6 +3666,1458 @@ export const HANDCRAFTED_LEVELS: Level[] = [
         "length": 1
       }
     ]
+  },
+  {
+    "id": 31,
+    "nameAr": "متاهة درب التبانة",
+    "nameEn": "Milky Way Labyrinth",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "31-1",
+        "gridX": 11,
+        "gridY": 4,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "31-2",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "31-3",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "left",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "31-4",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "up",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "31-5",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "31-6",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "left",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "31-7",
+        "gridX": 11,
+        "gridY": 5,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "31-8",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "31-9",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "31-10",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "down",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "31-11",
+        "gridX": 11,
+        "gridY": 2,
+        "direction": "right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "31-12",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "up",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "31-13",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "31-14",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "nameAr": "نسيج الكريستال المتألق",
+    "nameEn": "Shining Crystal Weave",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "32-1",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "32-2",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "32-3",
+        "gridX": 8,
+        "gridY": 2,
+        "direction": "right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "32-4",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "32-5",
+        "gridX": 8,
+        "gridY": 5,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "32-6",
+        "gridX": 7,
+        "gridY": 2,
+        "direction": "down",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "32-7",
+        "gridX": 10,
+        "gridY": 2,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "32-8",
+        "gridX": 11,
+        "gridY": 3,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "32-9",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "32-10",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "32-11",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "32-12",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "up",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "32-13",
+        "gridX": 11,
+        "gridY": 5,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "32-14",
+        "gridX": 5,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "32-15",
+        "gridX": 8,
+        "gridY": 1,
+        "direction": "left",
+        "color": "yellow",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "nameAr": "شبكة الليزر الكمية",
+    "nameEn": "Quantum Laser Net",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "33-1",
+        "gridX": 8,
+        "gridY": 5,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "33-2",
+        "gridX": 10,
+        "gridY": 3,
+        "direction": "down",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "33-3",
+        "gridX": 5,
+        "gridY": 4,
+        "direction": "right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "33-4",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "33-5",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "33-6",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "down",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "33-7",
+        "gridX": 1,
+        "gridY": 2,
+        "direction": "down",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "33-8",
+        "gridX": 8,
+        "gridY": 2,
+        "direction": "down",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "33-9",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "up",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "33-10",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "33-11",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "left",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "33-12",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "33-13",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "33-14",
+        "gridX": 9,
+        "gridY": 3,
+        "direction": "right",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "33-15",
+        "gridX": 12,
+        "gridY": 6,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "nameAr": "حلقة الأفق البعيد",
+    "nameEn": "Far Horizon Loop",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "34-1",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "34-2",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "34-3",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "34-4",
+        "gridX": 12,
+        "gridY": 6,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "34-5",
+        "gridX": 6,
+        "gridY": 5,
+        "direction": "left",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "34-6",
+        "gridX": 12,
+        "gridY": 3,
+        "direction": "up",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "34-7",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "34-8",
+        "gridX": 7,
+        "gridY": 6,
+        "direction": "left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "34-9",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "34-10",
+        "gridX": 11,
+        "gridY": 5,
+        "direction": "up",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "34-11",
+        "gridX": 10,
+        "gridY": 5,
+        "direction": "down",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "34-12",
+        "gridX": 11,
+        "gridY": 2,
+        "direction": "up",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "34-13",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "34-14",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "34-15",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "down",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "34-16",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "nameAr": "🔥 تحدي البركان الخماسي ٣٥",
+    "nameEn": "🔥 Volcano Master Boss",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "35-1",
+        "gridX": 11,
+        "gridY": 4,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "35-2",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "35-3",
+        "gridX": 12,
+        "gridY": 6,
+        "direction": "left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "35-4",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "35-5",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "up",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "35-6",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "left",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "35-7",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "down",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "35-8",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "35-9",
+        "gridX": 6,
+        "gridY": 5,
+        "direction": "left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "35-10",
+        "gridX": 8,
+        "gridY": 5,
+        "direction": "right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "35-11",
+        "gridX": 4,
+        "gridY": 4,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "35-12",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "up",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "35-13",
+        "gridX": 8,
+        "gridY": 3,
+        "direction": "left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "35-14",
+        "gridX": 11,
+        "gridY": 1,
+        "direction": "right",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "35-15",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "35-16",
+        "gridX": 12,
+        "gridY": 5,
+        "direction": "right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "35-17",
+        "gridX": 6,
+        "gridY": 3,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "nameAr": "سديم العواصف المضيئة",
+    "nameEn": "Luminous Nebula",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "36-1",
+        "gridX": 5,
+        "gridY": 1,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "36-2",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "36-3",
+        "gridX": 11,
+        "gridY": 1,
+        "direction": "right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "36-4",
+        "gridX": 6,
+        "gridY": 5,
+        "direction": "right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "36-5",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "down",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "36-6",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "left",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "36-7",
+        "gridX": 1,
+        "gridY": 4,
+        "direction": "left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "36-8",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "36-9",
+        "gridX": 9,
+        "gridY": 3,
+        "direction": "left",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "36-10",
+        "gridX": 11,
+        "gridY": 5,
+        "direction": "right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "36-11",
+        "gridX": 8,
+        "gridY": 1,
+        "direction": "up",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "36-12",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "up",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "36-13",
+        "gridX": 6,
+        "gridY": 4,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "36-14",
+        "gridX": 6,
+        "gridY": 3,
+        "direction": "up",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "36-15",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "36-16",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "36-17",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "nameAr": "قلعة التاج الملكي",
+    "nameEn": "Royal Crown Citadel",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "37-1",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "37-2",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "right",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "37-3",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "37-4",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "left",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "37-5",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "up",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "37-6",
+        "gridX": 12,
+        "gridY": 5,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "37-7",
+        "gridX": 12,
+        "gridY": 2,
+        "direction": "down",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "37-8",
+        "gridX": 8,
+        "gridY": 1,
+        "direction": "down",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "37-9",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "37-10",
+        "gridX": 6,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "37-11",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "37-12",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "37-13",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "down",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "37-14",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "37-15",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "37-16",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "37-17",
+        "gridX": 11,
+        "gridY": 5,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "nameAr": "متاهة المدار الحلزوني",
+    "nameEn": "Orbital Spiral Maze",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "38-1",
+        "gridX": 7,
+        "gridY": 6,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "38-2",
+        "gridX": 7,
+        "gridY": 2,
+        "direction": "up",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "38-3",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "38-4",
+        "gridX": 8,
+        "gridY": 2,
+        "direction": "right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "38-5",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "38-6",
+        "gridX": 9,
+        "gridY": 3,
+        "direction": "right",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "38-7",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "38-8",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "38-9",
+        "gridX": 11,
+        "gridY": 1,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "38-10",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "up",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "38-11",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "38-12",
+        "gridX": 12,
+        "gridY": 2,
+        "direction": "up",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "38-13",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "38-14",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "38-15",
+        "gridX": 8,
+        "gridY": 5,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "38-16",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "38-17",
+        "gridX": 6,
+        "gridY": 4,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "38-18",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "right",
+        "color": "orange",
+        "length": 1
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "nameAr": "تقاطع المجرات العملاقة",
+    "nameEn": "Giant Galaxy Junction",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "39-1",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "39-2",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "up",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "39-3",
+        "gridX": 4,
+        "gridY": 2,
+        "direction": "up",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "39-4",
+        "gridX": 10,
+        "gridY": 5,
+        "direction": "up",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "39-5",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "39-6",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "left",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "39-7",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "39-8",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "39-9",
+        "gridX": 7,
+        "gridY": 6,
+        "direction": "left",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "39-10",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "39-11",
+        "gridX": 12,
+        "gridY": 6,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "39-12",
+        "gridX": 1,
+        "gridY": 2,
+        "direction": "down",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "39-13",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "39-14",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "down",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "39-15",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "39-16",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "left",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "39-17",
+        "gridX": 6,
+        "gridY": 4,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "39-18",
+        "gridX": 8,
+        "gridY": 1,
+        "direction": "right",
+        "color": "orange",
+        "length": 1
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "nameAr": "🔥 تحدي السحابة الخارقة ٤٠",
+    "nameEn": "🔥 Supercloud Emperor Boss",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "40-1",
+        "gridX": 3,
+        "gridY": 6,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "40-2",
+        "gridX": 8,
+        "gridY": 5,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "40-3",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "40-4",
+        "gridX": 7,
+        "gridY": 2,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "40-5",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "down",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "40-6",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "right",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "40-7",
+        "gridX": 1,
+        "gridY": 4,
+        "direction": "left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "40-8",
+        "gridX": 12,
+        "gridY": 2,
+        "direction": "right",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "40-9",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "40-10",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "down",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "40-11",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "40-12",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "up",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "40-13",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "40-14",
+        "gridX": 9,
+        "gridY": 2,
+        "direction": "up",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "40-15",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "40-16",
+        "gridX": 6,
+        "gridY": 4,
+        "direction": "down",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "40-17",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "right",
+        "color": "pink",
+        "length": 1
+      }
+    ]
   }
 ];
 
