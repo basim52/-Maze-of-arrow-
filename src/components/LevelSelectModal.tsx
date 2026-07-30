@@ -22,8 +22,8 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
 }) => {
   const isAr = language === 'ar';
 
-  // We display levels 1 to 20 (or more)
-  const totalLevelsCount = Math.max(20, unlockedLevel + 4);
+  // We display levels 1 to 30 (or more as unlocked)
+  const totalLevelsCount = Math.max(30, unlockedLevel + 4);
   const levelIds = Array.from({ length: totalLevelsCount }, (_, i) => i + 1);
 
   return (
