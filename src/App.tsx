@@ -144,6 +144,21 @@ export default function App() {
     return 1; // 1 free starter hammer
   });
 
+  const [thunders, setThunders] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.thunders === 'number') {
+          return parsed.thunders;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 1; // 1 free starter thunder bolt
+  });
+
   const [isHammerActive, setIsHammerActive] = useState<boolean>(false);
   const [lastCoinsEarned, setLastCoinsEarned] = useState<number>(10);
 
@@ -177,12 +192,13 @@ export default function App() {
         selectedSkin,
         unlockedSkins,
         hammers,
+        thunders,
       };
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
     } catch (e) {
       console.error(e);
     }
-  }, [currentLevelId, unlockedLevel, starsPerLevel, coins, soundEnabled, language, selectedSkin, unlockedSkins, hammers]);
+  }, [currentLevelId, unlockedLevel, starsPerLevel, coins, soundEnabled, language, selectedSkin, unlockedSkins, hammers, thunders]);
 
   // Load level data whenever currentLevelId changes
   useEffect(() => {
@@ -230,6 +246,57 @@ export default function App() {
       setHammers((prev) => prev + 1);
       triggerToast(isAr ? 'تم شراء مطرقة بنجاح! 🔨' : 'Hammer purchased! 🔨');
     }
+  };
+
+  const handleBuyThunder = (cost: number) => {
+    const isAr = language === 'ar';
+    if (coins >= cost) {
+      setCoins((prev) => prev - cost);
+      setThunders((prev) => prev + 1);
+      triggerToast(isAr ? 'تم شراء ضربة رعد بنجاح! ⚡' : 'Thunder Strike purchased! ⚡');
+    }
+  };
+
+  const handleUseLightning = () => {
+    const isAr = language === 'ar';
+    soundManager.playClick();
+
+    if (thunders <= 0) {
+      triggerToast(isAr ? 'لا تملك رعد! يمكنك شراؤه بـ 400 نقطة 🛒' : 'No thunder! Buy for 400 coins 🛒');
+      setShowShopModal(true);
+      return;
+    }
+
+    const unescaped = arrows.filter((a) => !a.isEscaped);
+    if (unescaped.length === 0) return;
+
+    soundManager.playThunder();
+
+    // Select up to 3 random unescaped arrows to destroy
+    const shuffled = [...unescaped].sort(() => 0.5 - Math.random());
+    const selectedToSmash = shuffled.slice(0, 3);
+    const smashedIds = new Set(selectedToSmash.map((a) => a.id));
+
+    setThunders((prev) => Math.max(0, prev - 1));
+    triggerToast(
+      isAr
+        ? `⚡ أصاب الرعد ${smashedIds.size} أسهم ودمرها بنجاح!`
+        : `⚡ Thunder struck ${smashedIds.size} arrows!`
+    );
+
+    setArrows((prev) => {
+      const next = prev.map((a) => (smashedIds.has(a.id) ? { ...a, isEscaped: true } : a));
+      const remaining = next.filter((a) => !a.isEscaped).length;
+      const newEscapedCount = next.length - remaining;
+      setEscapedCount(newEscapedCount);
+
+      if (remaining === 0) {
+        setTimeout(() => {
+          handleLevelCompleted();
+        }, 400);
+      }
+      return next;
+    });
   };
 
   // Toast notification timer
@@ -364,6 +431,18 @@ export default function App() {
 
       {/* Main Interactive 3D Arrow Board Stage */}
       <main className="flex-1 flex flex-col items-center justify-center relative w-full px-2">
+        {/* Steel Lock Level Banner for Hammer/Thunder required levels */}
+        {activeLevel.requiresHammer && !isHammerActive && (
+          <div className="mb-2 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white font-black text-xs px-4 py-2 rounded-2xl shadow-md flex items-center gap-2 animate-pulse">
+            <span className="text-base">🔨⚡</span>
+            <span>
+              {isAr
+                ? 'مرحلة قفل فولاذي! استخدم المطرقة 🔨 أو الرعد ⚡ لكسر العقدة المستحيلة'
+                : 'Steel Lock Level! Use Hammer 🔨 or Thunder ⚡ to break the impossible deadlock loop'}
+            </span>
+          </div>
+        )}
+
         {/* Active Hammer Mode Banner */}
         {isHammerActive && (
           <div className="mb-2 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white font-black text-xs px-4 py-2 rounded-2xl shadow-lg flex items-center gap-2 animate-bounce">
@@ -392,11 +471,26 @@ export default function App() {
         />
 
         {/* In-Game Action Bar Dock */}
-        <div className="flex items-center justify-center gap-3 mt-2 mb-1 z-20">
+        <div className="flex items-center justify-center gap-2 sm:gap-3 mt-2 mb-1 z-20">
+          {/* Thunder Power-Up Button (400 coins in shop) */}
+          <button
+            id="btn-thunder-tool"
+            onClick={handleUseLightning}
+            className="px-3.5 sm:px-4 py-2 rounded-2xl border-2 border-sky-300 bg-gradient-to-r from-sky-50 via-cyan-50 to-blue-50 text-sky-900 hover:border-sky-400 font-black text-xs flex items-center gap-1.5 shadow-xs hover:scale-105 active:scale-95 cursor-pointer transition-all"
+            title={isAr ? 'استخدام ضربة الرعد لكسر 3 أسهم عشوائية (400 نقطة)' : 'Use Lightning to break 3 random arrows (400 coins)'}
+          >
+            <span className="text-lg">⚡</span>
+            <span>{isAr ? 'رعد' : 'Thunder'}</span>
+            <span className="bg-sky-200/90 text-sky-950 font-extrabold text-[11px] px-2 py-0.5 rounded-full border border-sky-300">
+              {thunders}
+            </span>
+          </button>
+
+          {/* Magic Hammer Power-Up Button (300 coins in shop) */}
           <button
             id="btn-hammer-tool"
             onClick={handleToggleHammer}
-            className={`px-4 py-2 rounded-2xl border-2 font-black text-xs flex items-center gap-2 shadow-sm transition-all cursor-pointer ${
+            className={`px-3.5 sm:px-4 py-2 rounded-2xl border-2 font-black text-xs flex items-center gap-1.5 shadow-xs transition-all cursor-pointer ${
               isHammerActive
                 ? 'bg-amber-500 text-white border-amber-300 ring-4 ring-amber-300/40 scale-105 animate-pulse'
                 : 'bg-gradient-to-r from-amber-50 via-yellow-50 to-orange-50 border-amber-200 text-amber-900 hover:border-amber-300 hover:scale-105 active:scale-95'
@@ -410,13 +504,14 @@ export default function App() {
             </span>
           </button>
 
+          {/* Reset Level Button */}
           <button
             id="btn-restart-game"
             onClick={() => {
               soundManager.playClick();
               handleRestartLevel();
             }}
-            className="px-3.5 py-2 rounded-2xl border-2 border-slate-200 bg-white text-slate-700 hover:bg-slate-50 font-extrabold text-xs flex items-center gap-1.5 shadow-xs hover:scale-105 active:scale-95 cursor-pointer"
+            className="px-3 py-2 rounded-2xl border-2 border-slate-200 bg-white text-slate-700 hover:bg-slate-50 font-extrabold text-xs flex items-center gap-1.5 shadow-xs hover:scale-105 active:scale-95 cursor-pointer"
           >
             <RefreshCw className="w-3.5 h-3.5 text-slate-500" />
             <span>{isAr ? 'إعادة' : 'Reset'}</span>
@@ -487,6 +582,7 @@ export default function App() {
         <ShopModal
           coins={coins}
           hammers={hammers}
+          thunders={thunders}
           selectedSkin={selectedSkin}
           unlockedSkins={unlockedSkins}
           language={language}
@@ -497,6 +593,7 @@ export default function App() {
             setSelectedSkin(skin);
           }}
           onBuyHammer={handleBuyHammer}
+          onBuyThunder={handleBuyThunder}
           onClose={() => setShowShopModal(false)}
         />
       )}

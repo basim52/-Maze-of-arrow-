@@ -5240,23 +5240,24 @@ export const HANDCRAFTED_LEVELS: Level[] = [
   },
   {
     "id": 45,
-    "nameAr": "🔥 تحدي البركان ٤٥",
-    "nameEn": "🔥 Volcano Core Challenge 45",
+    "nameAr": "🔨 قفل المطرقة والرعد ٤٥",
+    "nameEn": "🔨 Hammer & Thunder Lock 45",
     "difficulty": "صعب جداً",
     "difficultyEn": "Very Hard",
     "gridSize": { "cols": 14, "rows": 8 },
     "maxDrops": 1,
+    "requiresHammer": true,
     "arrows": [
-      { "id": "45-1", "gridX": 4, "gridY": 2, "direction": "right", "color": "cyan", "length": 2, "type": "double" },
-      { "id": "45-2", "gridX": 7, "gridY": 2, "direction": "down", "color": "lime", "length": 2 },
-      { "id": "45-3", "gridX": 7, "gridY": 5, "direction": "left", "color": "yellow", "length": 2 },
-      { "id": "45-4", "gridX": 4, "gridY": 5, "direction": "up", "color": "purple", "length": 2 },
-      { "id": "45-5", "gridX": 2, "gridY": 3, "direction": "up-right", "color": "pink", "length": 1, "type": "double" },
-      { "id": "45-6", "gridX": 9, "gridY": 3, "direction": "down-right", "color": "orange", "length": 1 },
-      { "id": "45-7", "gridX": 9, "gridY": 6, "direction": "up-left", "color": "cyan", "length": 1 },
-      { "id": "45-8", "gridX": 2, "gridY": 6, "direction": "down-left", "color": "lime", "length": 1 },
-      { "id": "45-9", "gridX": 11, "gridY": 1, "direction": "down", "color": "purple", "length": 2 },
-      { "id": "45-10", "gridX": 1, "gridY": 1, "direction": "right", "color": "yellow", "length": 1 }
+      { "id": "45-1", "gridX": 4, "gridY": 2, "direction": "right", "color": "cyan", "length": 2 },
+      { "id": "45-2", "gridX": 6, "gridY": 2, "direction": "down", "color": "lime", "length": 2 },
+      { "id": "45-3", "gridX": 6, "gridY": 4, "direction": "left", "color": "yellow", "length": 2 },
+      { "id": "45-4", "gridX": 4, "gridY": 4, "direction": "up", "color": "purple", "length": 2 },
+      { "id": "45-5", "gridX": 2, "gridY": 1, "direction": "right", "color": "pink", "length": 2, "type": "double" },
+      { "id": "45-6", "gridX": 9, "gridY": 1, "direction": "left", "color": "orange", "length": 2 },
+      { "id": "45-7", "gridX": 9, "gridY": 5, "direction": "down", "color": "cyan", "length": 2 },
+      { "id": "45-8", "gridX": 2, "gridY": 6, "direction": "up-right", "color": "lime", "length": 1 },
+      { "id": "45-9", "gridX": 11, "gridY": 6, "direction": "left", "color": "purple", "length": 2 },
+      { "id": "45-10", "gridX": 1, "gridY": 3, "direction": "down", "color": "yellow", "length": 2 }
     ]
   },
   {
@@ -5467,7 +5468,45 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
   };
 }
 
+export const HAMMER_REQUIRED_LEVEL_IDS = [45, 52, 60, 68, 77, 85, 93, 100];
+
+export function createHammerRequiredLevel(levelNumber: number): Level {
+  const isEvery5th = levelNumber % 5 === 0;
+  const cols = 14;
+  const rows = 8;
+  const maxDrops = isEvery5th ? 1 : 3;
+
+  const deadlockArrows: Arrow[] = [
+    { id: `${levelNumber}-h1`, gridX: 4, gridY: 2, direction: 'right', color: 'cyan', length: 2 },
+    { id: `${levelNumber}-h2`, gridX: 6, gridY: 2, direction: 'down', color: 'lime', length: 2 },
+    { id: `${levelNumber}-h3`, gridX: 6, gridY: 4, direction: 'left', color: 'yellow', length: 2 },
+    { id: `${levelNumber}-h4`, gridX: 4, gridY: 4, direction: 'up', color: 'purple', length: 2 },
+    { id: `${levelNumber}-h5`, gridX: 2, gridY: 1, direction: 'right', color: 'pink', length: 2, type: 'double' },
+    { id: `${levelNumber}-h6`, gridX: 9, gridY: 1, direction: 'left', color: 'orange', length: 2 },
+    { id: `${levelNumber}-h7`, gridX: 9, gridY: 5, direction: 'down', color: 'cyan', length: 2 },
+    { id: `${levelNumber}-h8`, gridX: 2, gridY: 6, direction: 'up-right', color: 'lime', length: 1 },
+    { id: `${levelNumber}-h9`, gridX: 11, gridY: 6, direction: 'left', color: 'purple', length: 2 },
+    { id: `${levelNumber}-h10`, gridX: 1, gridY: 3, direction: 'down', color: 'yellow', length: 2 },
+  ];
+
+  return {
+    id: levelNumber,
+    nameAr: `🔨 قفل المطرقة والرعد ${levelNumber}`,
+    nameEn: `🔨 Hammer & Thunder Lock ${levelNumber}`,
+    difficulty: 'صعب جداً',
+    difficultyEn: 'Very Hard',
+    gridSize: { cols, rows },
+    maxDrops,
+    requiresHammer: true,
+    arrows: deadlockArrows,
+  };
+}
+
 export function getLevel(id: number): Level {
+  if (HAMMER_REQUIRED_LEVEL_IDS.includes(id)) {
+    return createHammerRequiredLevel(id);
+  }
+
   const isEvery5th = id % 5 === 0;
   const handcrafted = HANDCRAFTED_LEVELS.find((l) => l.id === id);
   let level: Level;
@@ -5486,7 +5525,7 @@ export function getLevel(id: number): Level {
     level.maxDrops = 1;
     level.difficulty = 'صعب جداً';
     level.difficultyEn = 'Very Hard';
-    if (!level.nameAr.includes('🔥')) {
+    if (!level.nameAr.includes('🔥') && !level.nameAr.includes('🔨')) {
       level.nameAr = `${level.nameAr} 🔥`;
     }
   }

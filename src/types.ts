@@ -28,6 +28,7 @@ export interface Level {
   gridSize: { cols: number; rows: number };
   arrows: Arrow[];
   maxDrops: number;
+  requiresHammer?: boolean;
 }
 
 export type ThemeSkin = 'candy' | 'jelly' | 'neon' | 'cyber';
@@ -42,4 +43,6 @@ export interface PlayerStats {
   unlockedSkins: ThemeSkin[];
   soundEnabled: boolean;
   language: 'ar' | 'en';
+  hammers: number;
+  thunders: number;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { X, Lock, Star } from 'lucide-react';
 import { soundManager } from '../utils/sound';
-import { HANDCRAFTED_LEVELS } from '../utils/levelGenerator';
+import { HANDCRAFTED_LEVELS, HAMMER_REQUIRED_LEVEL_IDS } from '../utils/levelGenerator';
 
 interface LevelSelectModalProps {
   unlockedLevel: number;
@@ -55,7 +55,8 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
           {levelIds.map((id) => {
             const isUnlocked = id <= unlockedLevel;
             const isCurrent = id === currentLevel;
-            const isBossLevel = id % 5 === 0;
+            const isHammerLevel = HAMMER_REQUIRED_LEVEL_IDS.includes(id);
+            const isBossLevel = id % 5 === 0 && !isHammerLevel;
             const stars = starsPerLevel[id] || 0;
             const handcrafted = HANDCRAFTED_LEVELS.find((l) => l.id === id);
 
@@ -71,12 +72,19 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                   isCurrent
                     ? 'bg-gradient-to-tr from-sky-400 to-blue-500 text-white border-sky-300 shadow-md scale-105'
                     : isUnlocked
-                    ? isBossLevel
+                    ? isHammerLevel
+                      ? 'bg-gradient-to-tr from-amber-100 via-orange-50 to-amber-50 text-slate-900 border-amber-300 hover:border-amber-400 hover:scale-105 shadow-sm cursor-pointer'
+                      : isBossLevel
                       ? 'bg-gradient-to-tr from-rose-50 to-amber-50 text-slate-800 border-rose-300 hover:border-rose-400 hover:scale-105 shadow-sm cursor-pointer'
                       : 'bg-gradient-to-tr from-sky-50 to-white text-slate-700 border-sky-100 hover:border-sky-300 hover:scale-105 shadow-sm cursor-pointer'
                     : 'bg-slate-100 text-slate-400 border-slate-200 opacity-60 cursor-not-allowed'
                 }`}
               >
+                {isHammerLevel && (
+                  <span className="absolute -top-1.5 -right-1.5 text-xs bg-amber-500 text-white font-black px-1.5 py-0.5 rounded-full shadow-xs border border-white" title={isAr ? 'مرحلة تتطلب مطرقة أو رعد' : 'Hammer / Lightning required'}>
+                    🔨
+                  </span>
+                )}
                 {isBossLevel && (
                   <span className="absolute -top-1.5 -right-1.5 text-xs bg-rose-500 text-white font-black px-1.5 py-0.5 rounded-full shadow-xs border border-white">
                     🔥

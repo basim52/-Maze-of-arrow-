@@ -6,12 +6,14 @@ import { soundManager } from '../utils/sound';
 interface ShopModalProps {
   coins: number;
   hammers: number;
+  thunders: number;
   selectedSkin: ThemeSkin;
   unlockedSkins: ThemeSkin[];
   language: 'ar' | 'en';
   onSelectSkin: (skin: ThemeSkin) => void;
   onUnlockSkin: (skin: ThemeSkin, cost: number) => void;
   onBuyHammer: (cost: number) => void;
+  onBuyThunder: (cost: number) => void;
   onClose: () => void;
 }
 
@@ -62,16 +64,19 @@ const SKINS: SkinItem[] = [
 export const ShopModal: React.FC<ShopModalProps> = ({
   coins,
   hammers,
+  thunders,
   selectedSkin,
   unlockedSkins,
   language,
   onSelectSkin,
   onUnlockSkin,
   onBuyHammer,
+  onBuyThunder,
   onClose,
 }) => {
   const isAr = language === 'ar';
   const canAffordHammer = coins >= 300;
+  const canAffordThunder = coins >= 400;
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
@@ -98,12 +103,60 @@ export const ShopModal: React.FC<ShopModalProps> = ({
           </button>
         </div>
 
-        {/* Hammer Power-Up Section */}
-        <div className="mb-5">
-          <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider mb-2.5">
+        {/* Tools & Power-Ups Section */}
+        <div className="mb-5 flex flex-col gap-3">
+          <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider">
             {isAr ? 'الأدوات والمساعدات' : 'Tools & Power-ups'}
           </h3>
-          <div className="p-4 rounded-2xl border-2 border-amber-300 bg-gradient-to-br from-amber-50/80 via-yellow-50/50 to-orange-50/30 flex items-center justify-between shadow-xs">
+
+          {/* Lightning / Thunder Item (400 coins) */}
+          <div className="p-3.5 rounded-2xl border-2 border-sky-300 bg-gradient-to-br from-sky-50/90 via-cyan-50/60 to-blue-50/40 flex items-center justify-between shadow-xs">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-400 via-sky-500 to-blue-600 flex items-center justify-center text-2xl shadow-md transform rotate-6">
+                ⚡
+              </div>
+              <div className="flex flex-col">
+                <span className="font-black text-slate-800 text-sm flex items-center gap-1.5">
+                  {isAr ? 'ضربة الرعد ⚡' : 'Thunder Strike ⚡'}
+                  <span className="bg-sky-200 text-sky-900 text-[10px] px-2 py-0.5 rounded-full font-extrabold">
+                    {isAr ? `تكسر 3 أسهم` : `Breaks 3 Arrows`}
+                  </span>
+                </span>
+                <span className="text-[11px] font-bold text-slate-500 mt-0.5">
+                  {isAr ? `تكسر 3 أسهم عشوائية فوراً` : `Breaks 3 random arrows at once`}
+                </span>
+                <span className="text-xs font-black text-sky-700 mt-1 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-amber-500 fill-amber-400" />
+                  400 {isAr ? 'نقطة' : 'Coins'}
+                  <span className="text-slate-400 mx-1">•</span>
+                  <span className="text-slate-600 font-extrabold">
+                    {isAr ? `تملك: ${thunders}` : `Owned: ${thunders}`}
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <button
+              disabled={!canAffordThunder}
+              onClick={() => {
+                soundManager.playClick();
+                if (canAffordThunder) {
+                  onBuyThunder(400);
+                }
+              }}
+              className={`px-3.5 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-xs ${
+                canAffordThunder
+                  ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white hover:scale-105 active:scale-95 shadow-sky-200'
+                  : 'bg-slate-200 text-slate-400 cursor-not-allowed opacity-70'
+              }`}
+              title={isAr ? 'شراء رعد بـ 400 نقطة' : 'Buy Lightning Bolt for 400 coins'}
+            >
+              <span>{isAr ? 'شراء (+1)' : 'Buy (+1)'}</span>
+            </button>
+          </div>
+
+          {/* Hammer Item (300 coins) */}
+          <div className="p-3.5 rounded-2xl border-2 border-amber-300 bg-gradient-to-br from-amber-50/80 via-yellow-50/50 to-orange-50/30 flex items-center justify-between shadow-xs">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-400 to-orange-500 flex items-center justify-center text-2xl shadow-md transform -rotate-6">
                 🔨
@@ -116,7 +169,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                   </span>
                 </span>
                 <span className="text-[11px] font-bold text-slate-500 mt-0.5">
-                  {isAr ? `تكسر أي سهم تكتفي به` : `Breaks any arrow on board`}
+                  {isAr ? `تكسر أي سهم تحدده` : `Breaks any arrow on board`}
                 </span>
                 <span className="text-xs font-black text-amber-700 mt-1 flex items-center gap-1">
                   <Sparkles className="w-3 h-3 text-amber-500 fill-amber-400" />
