@@ -1723,8 +1723,8 @@ export const HANDCRAFTED_LEVELS: Level[] = [
   },
   {
     "id": 16,
-    "nameAr": "المتاهة الماسية",
-    "nameEn": "Diamond Maze",
+    "nameAr": "المتاهة الماسية النظيفة",
+    "nameEn": "Clean Diamond Maze",
     "difficulty": "صعب",
     "difficultyEn": "Hard",
     "gridSize": {
@@ -1735,115 +1735,99 @@ export const HANDCRAFTED_LEVELS: Level[] = [
     "arrows": [
       {
         "id": "16-1",
-        "gridX": 2,
+        "gridX": 1,
         "gridY": 1,
-        "direction": "up",
+        "direction": "left",
         "color": "cyan",
         "length": 1
       },
       {
         "id": "16-2",
-        "gridX": 5,
+        "gridX": 11,
         "gridY": 1,
-        "direction": "left",
-        "color": "lime",
-        "length": 2
+        "direction": "right",
+        "color": "cyan",
+        "length": 1
       },
       {
         "id": "16-3",
-        "gridX": 2,
-        "gridY": 3,
-        "direction": "right",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "down",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "16-4",
+        "gridX": 11,
+        "gridY": 6,
+        "direction": "down",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "16-5",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "up",
         "color": "yellow",
         "length": 2
       },
       {
-        "id": "16-4",
-        "gridX": 5,
-        "gridY": 3,
-        "direction": "down",
-        "color": "purple",
-        "length": 2
-      },
-      {
-        "id": "16-5",
-        "gridX": 1,
-        "gridY": 5,
-        "direction": "left",
-        "color": "pink",
-        "length": 1
-      },
-      {
         "id": "16-6",
-        "gridX": 4,
-        "gridY": 5,
+        "gridX": 9,
+        "gridY": 2,
         "direction": "up",
-        "color": "orange",
-        "length": 1
+        "color": "yellow",
+        "length": 2
       },
       {
         "id": "16-7",
         "gridX": 3,
-        "gridY": 6,
-        "direction": "down",
-        "color": "cyan",
-        "length": 1
+        "gridY": 5,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
       },
       {
         "id": "16-8",
-        "gridX": 10,
-        "gridY": 1,
-        "direction": "up",
-        "color": "cyan",
-        "length": 1
+        "gridX": 9,
+        "gridY": 5,
+        "direction": "right",
+        "color": "purple",
+        "length": 2
       },
       {
         "id": "16-9",
-        "gridX": 7,
+        "gridX": 6,
         "gridY": 1,
-        "direction": "right",
-        "color": "lime",
-        "length": 2
+        "direction": "up",
+        "color": "pink",
+        "length": 1
       },
       {
         "id": "16-10",
-        "gridX": 10,
+        "gridX": 5,
         "gridY": 3,
-        "direction": "up",
-        "color": "yellow",
-        "length": 2
+        "direction": "left",
+        "color": "orange",
+        "length": 1
       },
       {
         "id": "16-11",
         "gridX": 7,
         "gridY": 3,
-        "direction": "down",
-        "color": "purple",
-        "length": 2
-      },
-      {
-        "id": "16-12",
-        "gridX": 11,
-        "gridY": 5,
         "direction": "right",
-        "color": "pink",
-        "length": 1
-      },
-      {
-        "id": "16-13",
-        "gridX": 8,
-        "gridY": 5,
-        "direction": "up",
         "color": "orange",
         "length": 1
       },
       {
-        "id": "16-14",
-        "gridX": 9,
-        "gridY": 6,
+        "id": "16-12",
+        "gridX": 6,
+        "gridY": 5,
         "direction": "down",
         "color": "cyan",
-        "length": 1
+        "length": 2
       }
     ]
   },
