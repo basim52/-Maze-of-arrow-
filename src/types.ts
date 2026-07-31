@@ -1,4 +1,16 @@
-export type Direction = 'up' | 'down' | 'left' | 'right' | 'up-left' | 'up-right' | 'down-left' | 'down-right';
+export type Direction =
+  | 'up'
+  | 'down'
+  | 'left'
+  | 'right'
+  | 'up-left'
+  | 'up-right'
+  | 'down-left'
+  | 'down-right'
+  | 'slight-up-right'
+  | 'slight-up-left'
+  | 'slight-down-right'
+  | 'slight-down-left';
 
 export type ArrowColor = 'cyan' | 'lime' | 'yellow' | 'purple' | 'pink' | 'orange';
 

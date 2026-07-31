@@ -88,6 +88,10 @@ const RenderGhostTrackSVG: React.FC<{ direction: Direction; length: number; tile
     'up-right': -45,
     'down-left': 135,
     'down-right': 45,
+    'slight-up-right': -22.5,
+    'slight-up-left': -157.5,
+    'slight-down-right': 22.5,
+    'slight-down-left': 157.5,
   };
 
   const angle = rotationDegrees[direction];
@@ -160,6 +164,10 @@ const Render3DArrowSVG: React.FC<{
     'up-right': -45,
     'down-left': 135,
     'down-right': 45,
+    'slight-up-right': -22.5,
+    'slight-up-left': -157.5,
+    'slight-down-right': 22.5,
+    'slight-down-left': 157.5,
   };
 
   const angle = rotationDegrees[arrow.direction];
@@ -434,15 +442,15 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
   useEffect(() => {
     const updateTileSize = () => {
       if (!containerRef.current) return;
-      const availableWidth = containerRef.current.clientWidth - 8;
-      const availableHeight = window.innerHeight - 105;
+      const availableWidth = containerRef.current.clientWidth - 28;
+      const availableHeight = window.innerHeight - 125;
 
       const maxTileW = Math.floor(availableWidth / gridCols);
       const maxTileH = Math.floor(availableHeight / gridRows);
 
       const optimal = Math.min(maxTileW, maxTileH);
-      // Clamp between 30 and 100 for enlarged, ultra-clear board scale
-      const clamped = Math.max(30, Math.min(100, optimal));
+      // Clamp between 28 and 90 for enlarged, ultra-clear board scale
+      const clamped = Math.max(28, Math.min(90, optimal));
       setTileSize(clamped);
     };
 
@@ -525,7 +533,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
       {/* Off-White Stage matching screenshot clean ivory background */}
       <div className="relative w-full max-w-5xl flex items-center justify-center">
         <div
-          className={`relative bg-gradient-to-b from-slate-50/80 via-white/70 to-slate-100/80 backdrop-blur-md rounded-3xl p-2 sm:p-6 flex items-center justify-center transition-all duration-300 border-2 ${
+          className={`relative bg-gradient-to-b from-slate-50/80 via-white/70 to-slate-100/80 backdrop-blur-md rounded-3xl p-4 sm:p-6 flex items-center justify-center transition-all duration-300 border-2 overflow-hidden ${
             isHammerActive ? 'border-amber-400 ring-4 ring-amber-300/30 shadow-amber-100' : 'border-slate-200/80 shadow-md'
           }`}
           style={{

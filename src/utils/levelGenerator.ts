@@ -9,6 +9,10 @@ export const DIRECTION_VECTORS: Record<Direction, { x: number; y: number }> = {
   'up-right': { x: 1, y: -1 },
   'down-left': { x: -1, y: 1 },
   'down-right': { x: 1, y: 1 },
+  'slight-up-right': { x: 2, y: -1 },
+  'slight-up-left': { x: -2, y: -1 },
+  'slight-down-right': { x: 2, y: 1 },
+  'slight-down-left': { x: -2, y: 1 },
 };
 
 export const OPPOSITE_DIRECTIONS: Record<Direction, Direction> = {
@@ -20,6 +24,10 @@ export const OPPOSITE_DIRECTIONS: Record<Direction, Direction> = {
   'up-right': 'down-left',
   'down-left': 'up-right',
   'down-right': 'up-left',
+  'slight-up-right': 'slight-down-left',
+  'slight-up-left': 'slight-down-right',
+  'slight-down-right': 'slight-up-left',
+  'slight-down-left': 'slight-up-right',
 };
 
 // Check if all cells occupied by an arrow are strictly within grid bounds
@@ -5397,7 +5405,20 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
   const diffEn = isEvery5th ? 'Very Hard' : levelNumber <= 3 ? 'Easy' : levelNumber <= 8 ? 'Medium' : 'Hard';
   const maxDrops = isEvery5th ? 1 : 3;
 
-  const directions: Direction[] = ['up', 'down', 'left', 'right', 'up-left', 'up-right', 'down-left', 'down-right'];
+  const directions: Direction[] = [
+    'up',
+    'down',
+    'left',
+    'right',
+    'up-left',
+    'up-right',
+    'down-left',
+    'down-right',
+    'slight-up-right',
+    'slight-up-left',
+    'slight-down-right',
+    'slight-down-left',
+  ];
 
   let bestCandidate: Level | null = null;
 
@@ -5544,7 +5565,20 @@ export function createMonsterBossLevel(levelNumber: number): Level {
   const rows = 8;
   const targetCount = 18;
 
-  const directions: Direction[] = ['up', 'down', 'left', 'right', 'up-left', 'up-right', 'down-left', 'down-right'];
+  const directions: Direction[] = [
+    'up',
+    'down',
+    'left',
+    'right',
+    'up-left',
+    'up-right',
+    'down-left',
+    'down-right',
+    'slight-up-right',
+    'slight-up-left',
+    'slight-down-right',
+    'slight-down-left',
+  ];
 
   for (let attempt = 0; attempt < 200; attempt++) {
     const arrows: Arrow[] = [];
