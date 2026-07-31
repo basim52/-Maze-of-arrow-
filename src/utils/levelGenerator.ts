@@ -5394,8 +5394,8 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
   const isHard = levelNumber > 10 || isEvery5th;
   const isMedium = levelNumber > 5;
 
-  const cols = isEvery5th ? 14 : isHard ? 14 : isMedium ? 10 : 8;
-  const rows = isEvery5th ? 8 : isHard ? 8 : isMedium ? 7 : 6;
+  const cols = isEvery5th ? 11 : isHard ? 11 : isMedium ? 10 : 8;
+  const rows = isEvery5th ? 10 : isHard ? 10 : isMedium ? 9 : 8;
 
   const targetCount = isEvery5th
     ? Math.min(14 + Math.floor(levelNumber * 0.4), 24)

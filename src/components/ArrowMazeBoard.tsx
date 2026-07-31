@@ -442,21 +442,28 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
   useEffect(() => {
     const updateTileSize = () => {
       if (!containerRef.current) return;
-      const availableWidth = containerRef.current.clientWidth - 16;
-      const availableHeight = window.innerHeight - 85;
+      const rect = containerRef.current.getBoundingClientRect();
+      const availW = Math.max(260, rect.width - 24);
+      // Use available container height or calculate based on viewport
+      const availH = Math.max(280, (window.innerHeight - 180));
 
-      const maxTileW = Math.floor(availableWidth / gridCols);
-      const maxTileH = Math.floor(availableHeight / gridRows);
+      const maxTileW = Math.floor(availW / gridCols);
+      const maxTileH = Math.floor(availH / gridRows);
 
+      // Strict rule: tile size must NEVER cause grid width to exceed container width
       const optimal = Math.min(maxTileW, maxTileH);
-      // Clamp between 28 and 110 for maximum expanded clear board scaling
-      const clamped = Math.max(28, Math.min(110, optimal));
+      const clamped = Math.max(16, Math.min(95, optimal));
       setTileSize(clamped);
     };
 
     updateTileSize();
+    const observer = new ResizeObserver(() => updateTileSize());
+    if (containerRef.current) observer.observe(containerRef.current);
     window.addEventListener('resize', updateTileSize);
-    return () => window.removeEventListener('resize', updateTileSize);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', updateTileSize);
+    };
   }, [gridCols, gridRows]);
 
   useEffect(() => {
@@ -528,17 +535,18 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
   return (
     <div
       ref={containerRef}
-      className="w-full flex-1 flex flex-col items-center justify-center relative my-0.5 px-0.5 sm:px-1 overflow-hidden select-none"
+      className="w-full flex-1 flex flex-col items-center justify-center relative my-0.5 px-0.5 sm:px-1 overflow-hidden select-none min-h-[280px]"
     >
       {/* Off-White Stage matching screenshot clean ivory background */}
-      <div className="relative w-full max-w-5xl flex items-center justify-center">
+      <div className="relative w-full flex-1 flex items-center justify-center">
         <div
-          className={`relative bg-gradient-to-b from-slate-50/80 via-white/70 to-slate-100/80 backdrop-blur-md rounded-3xl p-2 sm:p-4 flex items-center justify-center transition-all duration-300 border-2 overflow-hidden ${
-            isHammerActive ? 'border-amber-400 ring-4 ring-amber-300/30 shadow-amber-100' : 'border-slate-200/80 shadow-md'
+          className={`relative bg-gradient-to-b from-slate-50/90 via-white/85 to-slate-100/90 backdrop-blur-md rounded-3xl p-2.5 sm:p-4 flex items-center justify-center transition-all duration-300 border-2 overflow-hidden shadow-lg ${
+            isHammerActive ? 'border-amber-400 ring-4 ring-amber-300/30 shadow-amber-100' : 'border-slate-200/80'
           }`}
           style={{
-            minHeight: `${gridRows * tileSize + 32}px`,
-            width: '100%',
+            width: `${gridCols * tileSize + 20}px`,
+            height: `${gridRows * tileSize + 20}px`,
+            maxWidth: '100%',
           }}
         >
           {/* Subtle Grid Dot Pattern Canvas Background */}
