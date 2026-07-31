@@ -595,7 +595,7 @@ export default function App() {
   const handleLevelCompleted = () => {
     const starsEarned = drops === 3 ? 3 : drops === 2 ? 2 : 1;
     const pointsPerStar = 11;
-    const survivalStarsBonus = drops * 4; // Every survival star gives 4 points
+    const survivalStarsBonus = drops * 3; // Every survival star gives 3 points
     const pointsForRun = starsEarned * pointsPerStar + survivalStarsBonus;
 
     const prevStars = starsPerLevel[currentLevelId] || 0;
