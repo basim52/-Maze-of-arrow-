@@ -355,6 +355,16 @@ export default function App() {
     }
   };
 
+  const handleBuyCakeBundle = (cost: number) => {
+    const isAr = language === 'ar';
+    if (coins >= cost) {
+      setCoins((prev) => prev - cost);
+      setChocolates((prev) => prev + 1);
+      setCreams((prev) => prev + 1);
+      triggerToast(isAr ? 'تم شراء بكج الكيك بنجاح! 🎂 (🍫+🍦)' : 'Cake Bundle purchased! 🎂 (🍫+🍦)');
+    }
+  };
+
   const handleUseChocolate = () => {
     const isAr = language === 'ar';
     soundManager.playClick();
@@ -534,8 +544,13 @@ export default function App() {
     if (escapedArrow) {
       if (escapedArrow.isStar || escapedArrow.type === 'star') {
         const isAr = language === 'ar';
-        setCoins((prev) => prev + 3);
-        triggerToast(isAr ? '🌟 سهم النجمة الذهبية منحك +3 نقاط!' : '🌟 Star Arrow granted +3 coins!');
+        const isAlreadyCompleted = (starsPerLevel[currentLevelId] || 0) > 0;
+        if (!isAlreadyCompleted) {
+          setCoins((prev) => prev + 3);
+          triggerToast(isAr ? '🌟 سهم النجمة الذهبية منحك +3 نقاط!' : '🌟 Star Arrow granted +3 coins!');
+        } else {
+          triggerToast(isAr ? '🌟 هذه المرحلة مكتملة سابقاً (لا نقاط نجمة إضافية)' : '🌟 Previously completed level (No extra star coins)');
+        }
       } else if (escapedArrow.isGhost || escapedArrow.type === 'ghost') {
         const isAr = language === 'ar';
         triggerToast(isAr ? '👻 سهم الشبح اخترق العوائق وهرب ببراعة!' : '👻 Ghost Arrow phased through obstacles!');
@@ -904,6 +919,7 @@ export default function App() {
           onBuyCream={handleBuyCream}
           onBuyChocolate={handleBuyChocolate}
           onBuyBundle={handleBuyBundle}
+          onBuyCakeBundle={handleBuyCakeBundle}
           onClose={() => setShowShopModal(false)}
         />
       )}

@@ -19,6 +19,7 @@ interface ShopModalProps {
   onBuyCream: (cost: number) => void;
   onBuyChocolate: (cost: number) => void;
   onBuyBundle: (cost: number) => void;
+  onBuyCakeBundle: (cost: number) => void;
   onClose: () => void;
 }
 
@@ -82,10 +83,12 @@ export const ShopModal: React.FC<ShopModalProps> = ({
   onBuyCream,
   onBuyChocolate,
   onBuyBundle,
+  onBuyCakeBundle,
   onClose,
 }) => {
   const isAr = language === 'ar';
   const canAffordBundle = coins >= 255;
+  const canAffordCakeBundle = coins >= 170;
   const canAffordHammer = coins >= 45;
   const canAffordChocolate = coins >= 55;
   const canAffordThunder = coins >= 95;
@@ -171,6 +174,63 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                     : 'bg-slate-200 text-slate-400 cursor-not-allowed opacity-70'
                 }`}
                 title={isAr ? 'شراء بكج الأدوات بـ 255 نقطة' : 'Buy Power-Up Bundle for 255 coins'}
+              >
+                <span>{isAr ? 'شراء البكج' : 'Buy Bundle'}</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Cake Bundle (Chocolate + Cream) (170 coins) */}
+          <div className="p-4 rounded-2xl border-2 border-pink-400/80 bg-gradient-to-r from-pink-50 via-rose-50 to-amber-50 flex flex-col gap-2.5 shadow-md relative overflow-hidden">
+            <div className="absolute -right-4 -top-4 w-16 h-16 bg-pink-300/30 rounded-full blur-lg pointer-events-none" />
+            
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5 bg-gradient-to-r from-pink-600 to-amber-800 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-xs">
+                <span>🎂</span>
+                <span>{isAr ? 'بكج الكيك الحلو' : 'Delicious Cake Bundle'}</span>
+              </div>
+              <span className="text-[10px] font-extrabold text-pink-900 bg-pink-200/80 px-2 py-0.5 rounded-full border border-pink-300">
+                {isAr ? 'توفير 14 نقطة!' : 'Save 14 coins!'}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-800 via-pink-500 to-rose-400 flex items-center justify-center text-xl shadow-md gap-0.5 border border-pink-300">
+                  <span>🍫</span>
+                  <span>🍦</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-black text-slate-900 text-xs sm:text-sm flex items-center gap-1">
+                    {isAr ? 'بكج الكيك 🎂' : 'Cake Bundle 🎂'}
+                    <span className="bg-pink-100 text-pink-800 text-[9px] px-1.5 py-0.2 rounded-full font-black">
+                      {isAr ? 'إزالة 7 أسهم!' : 'Removes 7 Arrows!'}
+                    </span>
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-600 mt-0.5">
+                    {isAr ? '1x شوكولاتة 🍫 + 1x كريمة 🍦' : '1x Chocolate 🍫 + 1x Cream 🍦'}
+                  </span>
+                  <span className="text-xs font-black text-pink-700 mt-1 flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 text-amber-500 fill-amber-400" />
+                    170 {isAr ? 'نقطة' : 'Coins'}
+                  </span>
+                </div>
+              </div>
+
+              <button
+                disabled={!canAffordCakeBundle}
+                onClick={() => {
+                  soundManager.playClick();
+                  if (canAffordCakeBundle) {
+                    onBuyCakeBundle(170);
+                  }
+                }}
+                className={`px-3 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-xs ${
+                  canAffordCakeBundle
+                    ? 'bg-gradient-to-r from-pink-600 via-rose-600 to-amber-700 text-white hover:scale-105 active:scale-95 shadow-pink-300'
+                    : 'bg-slate-200 text-slate-400 cursor-not-allowed opacity-70'
+                }`}
+                title={isAr ? 'شراء بكج الكيك بـ 170 نقطة' : 'Buy Cake Bundle for 170 coins'}
               >
                 <span>{isAr ? 'شراء البكج' : 'Buy Bundle'}</span>
               </button>
