@@ -442,15 +442,15 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
   useEffect(() => {
     const updateTileSize = () => {
       if (!containerRef.current) return;
-      const availableWidth = containerRef.current.clientWidth - 28;
-      const availableHeight = window.innerHeight - 125;
+      const availableWidth = containerRef.current.clientWidth - 16;
+      const availableHeight = window.innerHeight - 85;
 
       const maxTileW = Math.floor(availableWidth / gridCols);
       const maxTileH = Math.floor(availableHeight / gridRows);
 
       const optimal = Math.min(maxTileW, maxTileH);
-      // Clamp between 28 and 90 for enlarged, ultra-clear board scale
-      const clamped = Math.max(28, Math.min(90, optimal));
+      // Clamp between 28 and 110 for maximum expanded clear board scaling
+      const clamped = Math.max(28, Math.min(110, optimal));
       setTileSize(clamped);
     };
 
@@ -528,12 +528,12 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
   return (
     <div
       ref={containerRef}
-      className="w-full flex-1 flex flex-col items-center justify-center relative my-2 px-1 sm:px-2 overflow-hidden select-none"
+      className="w-full flex-1 flex flex-col items-center justify-center relative my-0.5 px-0.5 sm:px-1 overflow-hidden select-none"
     >
       {/* Off-White Stage matching screenshot clean ivory background */}
       <div className="relative w-full max-w-5xl flex items-center justify-center">
         <div
-          className={`relative bg-gradient-to-b from-slate-50/80 via-white/70 to-slate-100/80 backdrop-blur-md rounded-3xl p-4 sm:p-6 flex items-center justify-center transition-all duration-300 border-2 overflow-hidden ${
+          className={`relative bg-gradient-to-b from-slate-50/80 via-white/70 to-slate-100/80 backdrop-blur-md rounded-3xl p-2 sm:p-4 flex items-center justify-center transition-all duration-300 border-2 overflow-hidden ${
             isHammerActive ? 'border-amber-400 ring-4 ring-amber-300/30 shadow-amber-100' : 'border-slate-200/80 shadow-md'
           }`}
           style={{
