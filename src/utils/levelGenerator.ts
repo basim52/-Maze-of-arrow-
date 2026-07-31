@@ -22,6 +22,12 @@ export const OPPOSITE_DIRECTIONS: Record<Direction, Direction> = {
   'down-right': 'up-left',
 };
 
+// Check if all cells occupied by an arrow are strictly within grid bounds
+export function isArrowInBounds(arrow: Arrow, cols: number = 16, rows: number = 10): boolean {
+  const cells = getArrowOccupiedCells(arrow);
+  return cells.every((c) => c.x >= 0 && c.x < cols && c.y >= 0 && c.y < rows);
+}
+
 // Get all grid cells occupied by an arrow
 export function getArrowOccupiedCells(arrow: Arrow): { x: number; y: number }[] {
   if (arrow.cells && arrow.cells.length > 0) {
@@ -5430,6 +5436,10 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
           : {}),
       };
 
+      if (!isArrowInBounds(candidate, cols, rows)) {
+        continue;
+      }
+
       const testLevel: Level = {
         id: levelNumber,
         nameAr: isEvery5th ? `المستوى ${levelNumber} 🔥` : `المستوى ${levelNumber}`,
@@ -5488,16 +5498,31 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
   };
 }
 
-export const HAMMER_REQUIRED_LEVEL_IDS = [45, 52, 60, 68, 77, 85, 93, 100, 108, 115, 122, 125, 140, 160, 180, 200];
-export const MONSTER_BOSS_LEVEL_IDS = [69, 150, 158, 173];
+export const HAMMER_REQUIRED_LEVEL_IDS = [45, 52, 60, 68, 77, 93, 100, 108, 115, 122, 125, 140, 160, 180, 200];
+export const MONSTER_BOSS_LEVEL_IDS = [55, 69, 85, 105, 120, 138, 150, 158, 173, 188, 200];
 
 export function createMonsterBossLevel(levelNumber: number): Level {
-  let nameAr = `👹🔥 مرحلة الوحش الخارقة ${levelNumber}`;
-  let nameEn = `👹🔥 Monster Boss Level ${levelNumber}`;
+  let nameAr = `👹🔥 ${levelNumber} - مرحلة الوحش الخارقة`;
+  let nameEn = `👹🔥 ${levelNumber} - Monster Boss Level`;
 
-  if (levelNumber === 69) {
+  if (levelNumber === 55) {
+    nameAr = `👹🔥 55 - مرحلة الوحش: غابة الوحوش الكاسرة`;
+    nameEn = `👹🔥 55 - Monster Boss: Fierce Beast Forest`;
+  } else if (levelNumber === 69) {
     nameAr = `👹🔥 69 - مرحلة الوحش: عرش التنين الشرس`;
     nameEn = `👹🔥 69 - Monster Boss: Fierce Dragon Throne`;
+  } else if (levelNumber === 85) {
+    nameAr = `👹🔥 85 - مرحلة الوحش: ممر النار المجهول`;
+    nameEn = `👹🔥 85 - Monster Boss: Unknown Fire Pass`;
+  } else if (levelNumber === 105) {
+    nameAr = `👹🔥 105 - مرحلة الوحش: مقبرة الأسهم المظلمة`;
+    nameEn = `👹🔥 105 - Monster Boss: Dark Arrow Graveyard`;
+  } else if (levelNumber === 120) {
+    nameAr = `👹🔥 120 - مرحلة الوحش: متاهة الشياطين`;
+    nameEn = `👹🔥 120 - Monster Boss: Demon Labyrinth`;
+  } else if (levelNumber === 138) {
+    nameAr = `👹🔥 138 - مرحلة الوحش: كوكب الجحيم الأسطوري`;
+    nameEn = `👹🔥 138 - Monster Boss: Mythic Hell Planet`;
   } else if (levelNumber === 150) {
     nameAr = `👹🔥 150 - مرحلة الوحش: قلعة ملك الأشباح`;
     nameEn = `👹🔥 150 - Monster Boss: Ghost King Citadel`;
@@ -5507,25 +5532,31 @@ export function createMonsterBossLevel(levelNumber: number): Level {
   } else if (levelNumber === 173) {
     nameAr = `👹🔥 173 - مرحلة الوحش: التحدي الخارق المستحيل`;
     nameEn = `👹🔥 173 - Monster Boss: Ultimate Impossible Pinnacle`;
+  } else if (levelNumber === 188) {
+    nameAr = `👹🔥 188 - مرحلة الوحش: عرش الأسطورة المظلمة`;
+    nameEn = `👹🔥 188 - Monster Boss: Dark Legend Throne`;
+  } else if (levelNumber === 200) {
+    nameAr = `👹🔥 200 - مرحلة الوحش النهائية: سيد الأسهم الأخير`;
+    nameEn = `👹🔥 200 - Monster Boss Final: Ultimate Arrow Master`;
   }
 
-  const cols = 16;
-  const rows = 10;
-  const targetCount = 22; // Very dense, extremely challenging layout
+  const cols = 12;
+  const rows = 8;
+  const targetCount = 18;
 
   const directions: Direction[] = ['up', 'down', 'left', 'right', 'up-left', 'up-right', 'down-left', 'down-right'];
 
-  for (let attempt = 0; attempt < 100; attempt++) {
+  for (let attempt = 0; attempt < 200; attempt++) {
     const arrows: Arrow[] = [];
     let innerAttempts = 0;
 
-    while (arrows.length < targetCount && innerAttempts < 500) {
+    while (arrows.length < targetCount && innerAttempts < 600) {
       innerAttempts++;
-      const gx = Math.floor(Math.random() * (cols - 2)) + 1;
-      const gy = Math.floor(Math.random() * (rows - 2)) + 1;
+      const gx = Math.floor(Math.random() * cols);
+      const gy = Math.floor(Math.random() * rows);
       const dir = directions[Math.floor(Math.random() * directions.length)];
       const color = COLORS[Math.floor(Math.random() * COLORS.length)];
-      const len = Math.random() > 0.5 ? 2 : 1;
+      const len = Math.random() > 0.6 ? 2 : 1;
 
       const isBomb = Math.random() < 0.16;
       const isGhost = !isBomb && Math.random() < 0.22;
@@ -5549,6 +5580,10 @@ export function createMonsterBossLevel(levelNumber: number): Level {
           ? { type: 'double', isDouble: true }
           : {}),
       };
+
+      if (!isArrowInBounds(candidate, cols, rows)) {
+        continue;
+      }
 
       const testLevel: Level = {
         id: levelNumber,
@@ -5577,13 +5612,14 @@ export function createMonsterBossLevel(levelNumber: number): Level {
       arrows,
     };
 
-    if (arrows.length >= 16 && isLevelSolvable(candidateLevel)) {
+    if (arrows.length >= 14 && isLevelSolvable(candidateLevel)) {
       return candidateLevel;
     }
   }
 
   // Fallback
   const fallback = generateRandomSolvableLevel(levelNumber);
+  const boundedArrows = fallback.arrows.filter((a) => isArrowInBounds(a, cols, rows));
   return {
     ...fallback,
     id: levelNumber,
@@ -5592,7 +5628,8 @@ export function createMonsterBossLevel(levelNumber: number): Level {
     difficulty: 'صعب جداً جداً',
     difficultyEn: 'Extremely Hard',
     maxDrops: 1,
-    gridSize: { cols: 16, rows: 10 },
+    gridSize: { cols, rows },
+    arrows: boundedArrows,
   };
 }
 

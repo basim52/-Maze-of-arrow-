@@ -546,8 +546,8 @@ export default function App() {
         const isAr = language === 'ar';
         const isAlreadyCompleted = (starsPerLevel[currentLevelId] || 0) > 0;
         if (!isAlreadyCompleted) {
-          setCoins((prev) => prev + 3);
-          triggerToast(isAr ? '🌟 سهم النجمة الذهبية منحك +3 نقاط!' : '🌟 Star Arrow granted +3 coins!');
+          setCoins((prev) => prev + 5);
+          triggerToast(isAr ? '🌟 سهم النجمة الذهبية منحك +5 نقاط!' : '🌟 Star Arrow granted +5 coins!');
         } else {
           triggerToast(isAr ? '🌟 هذه المرحلة مكتملة سابقاً (لا نقاط نجمة إضافية)' : '🌟 Previously completed level (No extra star coins)');
         }
@@ -573,19 +573,19 @@ export default function App() {
     });
   };
 
-  // Handle Arrow Blocked move (takes 1 drop life if penalty)
+  // Handle Arrow Blocked move (takes 1 survival star life if penalty)
   const handleArrowBlocked = (arrowId: string, blockerId: string) => {
     const isAr = language === 'ar';
-    triggerToast(isAr ? 'احترس! السهم مسدود من اتجاهه' : 'Blocked! Another arrow is in front');
 
     setDrops((prev) => {
       const nextDrops = Math.max(0, prev - 1);
       if (nextDrops === 0) {
-        // Option to reset level or refill drops
-        triggerToast(isAr ? 'نفذت المحاولات! جرب ثانية' : 'Out of drops! Restarting level');
+        triggerToast(isAr ? 'نفذت نجوم البقاء! أعِد المحاولة ⭐' : 'Out of Survival Stars! Restarting level ⭐');
         setTimeout(() => {
           handleRestartLevel();
         }, 1200);
+      } else {
+        triggerToast(isAr ? 'احترس! فقدت نجمة بقاء ⭐' : 'Watch out! Lost 1 Survival Star ⭐');
       }
       return nextDrops;
     });
@@ -595,12 +595,13 @@ export default function App() {
   const handleLevelCompleted = () => {
     const starsEarned = drops === 3 ? 3 : drops === 2 ? 2 : 1;
     const pointsPerStar = 11;
-    const pointsForRun = starsEarned * pointsPerStar; // 11 points per star
+    const survivalStarsBonus = drops * 4; // Every survival star gives 4 points
+    const pointsForRun = starsEarned * pointsPerStar + survivalStarsBonus;
 
     const prevStars = starsPerLevel[currentLevelId] || 0;
     const newStars = Math.max(prevStars, starsEarned);
     const addedStars = newStars - prevStars;
-    const coinsReward = addedStars * pointsPerStar;
+    const coinsReward = addedStars * pointsPerStar + survivalStarsBonus;
 
     setLastCoinsEarned(pointsForRun);
 
@@ -869,6 +870,7 @@ export default function App() {
           levelNumber={currentLevelId}
           stars={starsPerLevel[currentLevelId] || 3}
           coinsEarned={lastCoinsEarned}
+          dropsCount={drops}
           language={language}
           onNextLevel={handleNextLevel}
           onReplay={handleRestartLevel}

@@ -137,11 +137,12 @@ export const TopBar: React.FC<TopBarProps> = ({
 
       {/* Second Row: Drops (Water drops) & Rainbow Star Progress Bar */}
       <div className="w-full flex items-center justify-between gap-2.5 sm:gap-4 max-w-lg px-1 sm:px-2">
-        {/* Water Drop Icons (2 Filled Cyan drops + 1 Translucent Gray drop matching screenshot) */}
-        <div className="flex items-center gap-1 sm:gap-2">
+        {/* Survival Star Icons (نجوم البقاء) */}
+        <div className="flex items-center gap-1 sm:gap-2" title={isAr ? 'نجوم البقاء (الفرص المتبقية)' : 'Survival Stars (Lives remaining)'}>
           {maxDrops === 1 && (
-            <span className="text-[10px] sm:text-xs font-black bg-gradient-to-r from-rose-500 to-amber-500 text-white px-2 py-0.5 rounded-full shadow-xs animate-pulse tracking-wide">
-              {isAr ? 'فرصة واحدة ⚡' : '1 Chance ⚡'}
+            <span className="text-[10px] sm:text-xs font-black bg-gradient-to-r from-amber-500 via-orange-500 to-rose-600 text-white px-2.5 py-0.5 rounded-full shadow-xs animate-pulse tracking-wide flex items-center gap-1">
+              <span>⭐</span>
+              <span>{isAr ? 'نجمة بقاء واحدة ⚡' : '1 Survival Star ⚡'}</span>
             </span>
           )}
           {Array.from({ length: maxDrops }).map((_, idx) => {
@@ -151,8 +152,8 @@ export const TopBar: React.FC<TopBarProps> = ({
                 key={idx}
                 className={`transition-all duration-300 transform ${
                   isActive
-                    ? 'scale-100 drop-shadow-[0_4px_10px_rgba(56,189,248,0.45)]'
-                    : 'scale-95 opacity-40 grayscale'
+                    ? 'scale-100 drop-shadow-[0_4px_12px_rgba(251,191,36,0.6)]'
+                    : 'scale-95 opacity-35 grayscale'
                 }`}
               >
                 <svg
@@ -162,30 +163,32 @@ export const TopBar: React.FC<TopBarProps> = ({
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M16 3C16 3 6 15 6 21C6 26.5228 10.4772 31 16 31C21.5228 31 26 26.5228 26 21C26 15 16 3 16 3Z"
-                    fill={isActive ? 'url(#waterDropGrad)' : '#CBD5E1'}
-                    stroke={isActive ? '#0284C7' : '#94A3B8'}
+                    d="M16 2L19.8 10.2L28.8 11.2L22.1 17.2L23.9 26.1L16 21.6L8.1 26.1L9.9 17.2L3.2 11.2L12.2 10.2L16 2Z"
+                    fill={isActive ? 'url(#survivalStarGrad)' : '#CBD5E1'}
+                    stroke={isActive ? '#D97706' : '#94A3B8'}
                     strokeWidth="1.5"
+                    strokeLinejoin="round"
                   />
-                  {/* Highlight sheen on drop */}
+                  {/* Highlight sheen on star */}
                   <path
-                    d="M12 16C10.5 18 10 20.5 10.5 23"
+                    d="M16 5.5L18.5 11L24 11.7L19.8 15.5"
                     stroke="white"
-                    strokeWidth="2"
+                    strokeWidth="1.5"
                     strokeLinecap="round"
-                    opacity={isActive ? '0.85' : '0.4'}
+                    opacity={isActive ? '0.9' : '0.4'}
                   />
                   <defs>
                     <linearGradient
-                      id="waterDropGrad"
-                      x1="6"
-                      y1="3"
-                      x2="26"
-                      y2="31"
+                      id="survivalStarGrad"
+                      x1="3"
+                      y1="2"
+                      x2="28"
+                      y2="26"
                       gradientUnits="userSpaceOnUse"
                     >
-                      <stop stopColor="#38BDF8" />
-                      <stop offset="1" stopColor="#0284C7" />
+                      <stop stopColor="#FDE047" />
+                      <stop offset="0.5" stopColor="#F59E0B" />
+                      <stop offset="1" stopColor="#D97706" />
                     </linearGradient>
                   </defs>
                 </svg>

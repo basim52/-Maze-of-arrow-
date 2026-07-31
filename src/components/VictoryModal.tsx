@@ -7,6 +7,7 @@ interface VictoryModalProps {
   levelNumber: number;
   stars: number; // 1 to 3 stars
   coinsEarned: number;
+  dropsCount?: number;
   language: 'ar' | 'en';
   onNextLevel: () => void;
   onReplay: () => void;
@@ -17,6 +18,7 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({
   levelNumber,
   stars,
   coinsEarned,
+  dropsCount = 0,
   language,
   onNextLevel,
   onReplay,
@@ -95,19 +97,27 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({
         </div>
 
         {/* Reward Coins */}
-        <div className="w-full bg-amber-50 border border-amber-200/80 rounded-2xl p-3 mb-6 flex items-center justify-between px-4">
-          <span className="text-sm font-bold text-amber-800">
-            {isAr ? 'المكافأة المكتسبة:' : 'Coins Earned:'}
-          </span>
-          <div className="flex items-center gap-1.5 text-base font-black text-amber-600">
-            <Sparkles className="w-5 h-5 text-amber-500 fill-amber-400" />
-            <span>+{coinsEarned}</span>
-            {coinsEarned === 0 && (
-              <span className="text-[11px] font-bold text-slate-400 mr-1">
-                ({isAr ? 'مكتملة سابقاً' : 'Replay'})
-              </span>
-            )}
+        <div className="w-full bg-amber-50 border border-amber-200/80 rounded-2xl p-3 mb-6 flex flex-col gap-1 px-4">
+          <div className="flex items-center justify-between w-full">
+            <span className="text-sm font-bold text-amber-800">
+              {isAr ? 'المكافأة المكتسبة:' : 'Coins Earned:'}
+            </span>
+            <div className="flex items-center gap-1.5 text-base font-black text-amber-600">
+              <Sparkles className="w-5 h-5 text-amber-500 fill-amber-400" />
+              <span>+{coinsEarned}</span>
+              {coinsEarned === 0 && (
+                <span className="text-[11px] font-bold text-slate-400 mr-1">
+                  ({isAr ? 'مكتملة سابقاً' : 'Replay'})
+                </span>
+              )}
+            </div>
           </div>
+          {dropsCount > 0 && (
+            <div className="text-[11px] font-bold text-amber-700 flex items-center justify-end gap-1 pt-0.5 border-t border-amber-200/50">
+              <span>⭐</span>
+              <span>{isAr ? `تتضمن +${dropsCount * 4} نقاط (${dropsCount} نجوم بقاء × 4)` : `Includes +${dropsCount * 4} coins (${dropsCount} Survival Stars × 4)`}</span>
+            </div>
+          )}
         </div>
 
         {/* Actions */}
