@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Arrow, Level, ThemeSkin } from './types';
-import { getLevel, MONSTER_BOSS_LEVEL_IDS } from './utils/levelGenerator';
+import { getLevel, getGalaxyLevel, MONSTER_BOSS_LEVEL_IDS } from './utils/levelGenerator';
 import { soundManager } from './utils/sound';
 import { TopBar } from './components/TopBar';
 import { ArrowMazeBoard } from './components/ArrowMazeBoard';
@@ -191,8 +191,110 @@ export default function App() {
     return 1; // 1 free starter chocolate bar
   });
 
+  const [spaceCoins, setSpaceCoins] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.spaceCoins === 'number') {
+          return parsed.spaceCoins;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 0;
+  });
+
+  const [tomatoes, setTomatoes] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.tomatoes === 'number') {
+          return parsed.tomatoes;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 0;
+  });
+
+  const [spaceCreams, setSpaceCreams] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.spaceCreams === 'number') {
+          return parsed.spaceCreams;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 0;
+  });
+
+  const [gameMode, setGameMode] = useState<'main' | 'galaxy'>('main');
+
+  const [currentGalaxyLevelId, setCurrentGalaxyLevelId] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.currentGalaxyLevelId === 'number' && parsed.currentGalaxyLevelId >= 1) {
+          return parsed.currentGalaxyLevelId;
+        }
+      }
+    } catch (e) {}
+    return 1;
+  });
+
+  const [unlockedGalaxyLevel, setUnlockedGalaxyLevel] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.unlockedGalaxyLevel === 'number' && parsed.unlockedGalaxyLevel >= 1) {
+          return parsed.unlockedGalaxyLevel;
+        }
+      }
+    } catch (e) {}
+    return 1;
+  });
+
+  const [starsPerGalaxyLevel, setStarsPerGalaxyLevel] = useState<Record<number, number>>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.starsPerGalaxyLevel && typeof parsed.starsPerGalaxyLevel === 'object') {
+          return parsed.starsPerGalaxyLevel;
+        }
+      }
+    } catch (e) {}
+    return {};
+  });
+
+  const [isEventUnlocked, setIsEventUnlocked] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem('arrow_event_unlocked');
+      if (saved === 'true') return true;
+      const gameSaved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (gameSaved) {
+        const parsed = JSON.parse(gameSaved);
+        if (parsed.isEventUnlocked) return true;
+      }
+    } catch (e) {}
+    return false;
+  });
+
+  const [levelSelectTab, setLevelSelectTab] = useState<'main' | 'galaxy'>('main');
+
   const [isHammerActive, setIsHammerActive] = useState<boolean>(false);
   const [lastCoinsEarned, setLastCoinsEarned] = useState<number>(10);
+  const [spaceCoinsEarned, setSpaceCoinsEarned] = useState<number>(0);
 
   // Modals state
   const [showVictoryModal, setShowVictoryModal] = useState<boolean>(false);
@@ -217,8 +319,10 @@ export default function App() {
     return () => clearInterval(timer);
   }, []);
 
-  // Active Level State initialized lazily from currentLevelId
-  const [activeLevel, setActiveLevel] = useState<Level>(() => getLevel(currentLevelId));
+  // Active Level State initialized lazily
+  const [activeLevel, setActiveLevel] = useState<Level>(() =>
+    gameMode === 'galaxy' ? getGalaxyLevel(currentGalaxyLevelId) : getLevel(currentLevelId)
+  );
   const [arrows, setArrows] = useState<Arrow[]>([]);
   const [escapedCount, setEscapedCount] = useState<number>(0);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -235,7 +339,14 @@ export default function App() {
         currentLevelId,
         unlockedLevel,
         starsPerLevel,
+        currentGalaxyLevelId,
+        unlockedGalaxyLevel,
+        starsPerGalaxyLevel,
+        isEventUnlocked,
         coins,
+        spaceCoins,
+        tomatoes,
+        spaceCreams,
         soundEnabled,
         language,
         selectedSkin,
@@ -246,21 +357,45 @@ export default function App() {
         chocolates,
       };
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+      if (isEventUnlocked) {
+        localStorage.setItem('arrow_event_unlocked', 'true');
+      }
     } catch (e) {
       console.error(e);
     }
-  }, [currentLevelId, unlockedLevel, starsPerLevel, coins, soundEnabled, language, selectedSkin, unlockedSkins, hammers, thunders, creams, chocolates]);
+  }, [
+    currentLevelId,
+    unlockedLevel,
+    starsPerLevel,
+    currentGalaxyLevelId,
+    unlockedGalaxyLevel,
+    starsPerGalaxyLevel,
+    isEventUnlocked,
+    coins,
+    spaceCoins,
+    tomatoes,
+    spaceCreams,
+    soundEnabled,
+    language,
+    selectedSkin,
+    unlockedSkins,
+    hammers,
+    thunders,
+    creams,
+    chocolates,
+  ]);
 
-  // Load level data whenever currentLevelId changes
+  // Load level data whenever level or mode changes
   useEffect(() => {
-    const lvl = getLevel(currentLevelId);
+    const lvl = gameMode === 'galaxy' ? getGalaxyLevel(currentGalaxyLevelId) : getLevel(currentLevelId);
     setActiveLevel(lvl);
     setArrows(lvl.arrows.map((a) => ({ ...a, isEscaped: false })));
     setDrops(lvl.maxDrops || 3);
     setEscapedCount(0);
     setShowVictoryModal(false);
     setIsHammerActive(false);
-  }, [currentLevelId]);
+    setSpaceCoinsEarned(0);
+  }, [currentLevelId, currentGalaxyLevelId, gameMode]);
 
   // Hammer tool actions
   const handleToggleHammer = () => {
@@ -343,6 +478,24 @@ export default function App() {
       setCoins((prev) => prev - cost);
       setChocolates((prev) => prev + 1);
       triggerToast(isAr ? 'تم شراء الشوكولاتة السحرية بنجاح! 🍫' : 'Magic Chocolate purchased! 🍫');
+    }
+  };
+
+  const handleBuyTomato = (cost: number) => {
+    const isAr = language === 'ar';
+    if (spaceCoins >= cost) {
+      setSpaceCoins((prev) => prev - cost);
+      setTomatoes((prev) => prev + 1);
+      triggerToast(isAr ? 'تم شراء طماطة الفضاء بنجاح! 🍅🚀' : 'Space Tomato purchased! 🍅🚀');
+    }
+  };
+
+  const handleBuySpaceCream = (cost: number) => {
+    const isAr = language === 'ar';
+    if (spaceCoins >= cost) {
+      setSpaceCoins((prev) => prev - cost);
+      setSpaceCreams((prev) => prev + 1);
+      triggerToast(isAr ? 'تم شراء الكريمة الفضائية بنجاح! 🌌🍦' : 'Cosmic Space Cream purchased! 🌌🍦');
     }
   };
 
@@ -532,6 +685,116 @@ export default function App() {
     }, 480);
   };
 
+  const handleUseTomato = () => {
+    const isAr = language === 'ar';
+    soundManager.playClick();
+
+    if (tomatoes <= 0) {
+      triggerToast(isAr ? 'لا تملك طماطة! يمكنك شراؤها بـ 10 عملات فضاء 🌌' : 'No tomatoes! Buy for 10 space coins 🌌');
+      setShowShopModal(true);
+      return;
+    }
+
+    const unescaped = arrows.filter((a) => !a.isEscaped);
+    if (unescaped.length === 0) return;
+
+    soundManager.playSmash();
+
+    // Select up to 6 random unescaped arrows to remove (Tomato deletes 6 arrows)
+    const shuffled = [...unescaped].sort(() => 0.5 - Math.random());
+    const selectedToSmash = shuffled.slice(0, 6);
+    const smashedIds = new Set(selectedToSmash.map((a) => a.id));
+
+    const estimatedTile = Math.max(24, Math.min(54, Math.floor((Math.min(window.innerWidth, 460) - 32) / activeLevel.gridSize.cols)));
+    const tomatoRainItems: RainItem[] = selectedToSmash.map((arrow, idx) => ({
+      id: `tomato-rain-${arrow.id}-${Date.now()}`,
+      type: 'tomato',
+      x: arrow.gridX * estimatedTile + estimatedTile / 2,
+      y: arrow.gridY * estimatedTile + estimatedTile / 2,
+      delay: idx * 50,
+    }));
+    setRainItems(tomatoRainItems);
+
+    setTomatoes((prev) => Math.max(0, prev - 1));
+    triggerToast(
+      isAr
+        ? `🍅 تساقط مطر الطماطة لإزالة ${smashedIds.size} أسهم!`
+        : `🍅 Tomato rain deleted ${smashedIds.size} arrows!`
+    );
+
+    setTimeout(() => {
+      setArrows((prev) => {
+        const next = prev.map((a) => (smashedIds.has(a.id) ? { ...a, isEscaped: true } : a));
+        const remaining = next.filter((a) => !a.isEscaped).length;
+        const newEscapedCount = next.length - remaining;
+        setEscapedCount(newEscapedCount);
+
+        if (remaining === 0) {
+          setTimeout(() => {
+            handleLevelCompleted();
+          }, 400);
+        }
+        return next;
+      });
+      setRainItems([]);
+    }, 500);
+  };
+
+  const handleUseSpaceCream = () => {
+    const isAr = language === 'ar';
+    soundManager.playClick();
+
+    if (spaceCreams <= 0) {
+      triggerToast(isAr ? 'لا تملك كريمة فضائية! يمكنك شراؤها بـ 20 عملة فضاء 🌌' : 'No space cream! Buy for 20 space coins 🌌');
+      setShowShopModal(true);
+      return;
+    }
+
+    const unescaped = arrows.filter((a) => !a.isEscaped);
+    if (unescaped.length === 0) return;
+
+    soundManager.playSmash();
+
+    // Select up to 7 random unescaped arrows to remove (Space Cream deletes 7 arrows)
+    const shuffled = [...unescaped].sort(() => 0.5 - Math.random());
+    const selectedToSmash = shuffled.slice(0, 7);
+    const smashedIds = new Set(selectedToSmash.map((a) => a.id));
+
+    const estimatedTile = Math.max(24, Math.min(54, Math.floor((Math.min(window.innerWidth, 460) - 32) / activeLevel.gridSize.cols)));
+    const spaceCreamRainItems: RainItem[] = selectedToSmash.map((arrow, idx) => ({
+      id: `spacecream-rain-${arrow.id}-${Date.now()}`,
+      type: 'spaceCream',
+      x: arrow.gridX * estimatedTile + estimatedTile / 2,
+      y: arrow.gridY * estimatedTile + estimatedTile / 2,
+      delay: idx * 50,
+    }));
+    setRainItems(spaceCreamRainItems);
+
+    setSpaceCreams((prev) => Math.max(0, prev - 1));
+    triggerToast(
+      isAr
+        ? `🌌🍦 تساقط مطر الكريمة الفضائية لإزالة ${smashedIds.size} أسهم!`
+        : `🌌🍦 Space Cream rain deleted ${smashedIds.size} arrows!`
+    );
+
+    setTimeout(() => {
+      setArrows((prev) => {
+        const next = prev.map((a) => (smashedIds.has(a.id) ? { ...a, isEscaped: true } : a));
+        const remaining = next.filter((a) => !a.isEscaped).length;
+        const newEscapedCount = next.length - remaining;
+        setEscapedCount(newEscapedCount);
+
+        if (remaining === 0) {
+          setTimeout(() => {
+            handleLevelCompleted();
+          }, 400);
+        }
+        return next;
+      });
+      setRainItems([]);
+    }, 500);
+  };
+
   // Toast notification timer
   const triggerToast = (msg: string) => {
     setToastMessage(msg);
@@ -593,37 +856,115 @@ export default function App() {
     });
   };
 
+  // Event Levels Handlers
+  const handleOpenEventLevels = () => {
+    const isAr = language === 'ar';
+    soundManager.playClick();
+    if (!isEventUnlocked) {
+      if (coins >= 200) {
+        setCoins((prev) => prev - 200);
+        setIsEventUnlocked(true);
+        localStorage.setItem('arrow_event_unlocked', 'true');
+        triggerToast(isAr ? 'تم فتح مراحل الأحداث الفضائية بنجاح! 🌌🚀 (خصم 200 نقطة)' : 'Event Levels unlocked! 🌌🚀 (200 pts)');
+        setLevelSelectTab('galaxy');
+        setShowLevelSelectModal(true);
+      } else {
+        triggerToast(isAr ? `عفواً، فتح مراحل الأحداث يتطلب 200 نقطة! 🪙 (رصيدك الحالي: ${coins})` : `Requires 200 points! (Current: ${coins})`);
+        setLevelSelectTab('galaxy');
+        setShowLevelSelectModal(true);
+      }
+    } else {
+      setLevelSelectTab('galaxy');
+      setShowLevelSelectModal(true);
+    }
+  };
+
+  const handleUnlockEventInModal = () => {
+    const isAr = language === 'ar';
+    if (coins >= 200) {
+      setCoins((prev) => prev - 200);
+      setIsEventUnlocked(true);
+      localStorage.setItem('arrow_event_unlocked', 'true');
+      triggerToast(isAr ? 'تم فتح مراحل الأحداث الفضائية بنجاح! 🌌🚀 (خصم 200 نقطة)' : 'Event Levels unlocked! 🌌🚀 (200 pts)');
+    } else {
+      triggerToast(isAr ? `نقاطك لا تكفي! تحتاج 200 نقطة 🪙 (رصيدك الحالي: ${coins})` : `Not enough points! Requires 200 pts (Current: ${coins})`);
+    }
+  };
+
+  const handleSelectMainLevel = (levelId: number) => {
+    setGameMode('main');
+    setCurrentLevelId(levelId);
+    setShowLevelSelectModal(false);
+  };
+
+  const handleSelectGalaxyLevel = (galaxyId: number) => {
+    setGameMode('galaxy');
+    setCurrentGalaxyLevelId(galaxyId);
+    setShowLevelSelectModal(false);
+  };
+
   // Victory Handler
   const handleLevelCompleted = () => {
+    const isAr = language === 'ar';
     const starsEarned = drops === 3 ? 3 : drops === 2 ? 2 : 1;
-    const pointsForRun = drops * 4; // Every survival star gives 4 points (no 11-point star bonus)
-
-    const prevStars = starsPerLevel[currentLevelId] || 0;
-    const newStars = Math.max(prevStars, starsEarned);
+    const pointsForRun = drops * 4; // Every survival star gives 4 points
 
     setLastCoinsEarned(pointsForRun);
 
-    const updatedStars = {
-      ...starsPerLevel,
-      [currentLevelId]: newStars,
-    };
-
-    setStarsPerLevel(updatedStars);
-
-    if (pointsForRun > 0) {
-      setCoins((prev) => prev + pointsForRun);
+    // Space Coins Reward: 10% chance to earn 2 to 5 space coins on level completion
+    let spaceEarned = 0;
+    if (Math.random() < 0.10) {
+      spaceEarned = Math.floor(Math.random() * 4) + 2; // 2 to 5 coins
+      setSpaceCoins((prev) => prev + spaceEarned);
+      triggerToast(
+        isAr
+          ? `🌌 حظ فلكي! ربحت +${spaceEarned} عملات فضاء! 🚀`
+          : `🌌 Space reward! +${spaceEarned} Space Coins won! 🚀`
+      );
     }
+    setSpaceCoinsEarned(spaceEarned);
 
-    const nextUnlocked = computeUnlockedLevel(updatedStars);
-    setUnlockedLevel(nextUnlocked);
+    if (gameMode === 'galaxy') {
+      const prevGalaxyStars = starsPerGalaxyLevel[currentGalaxyLevelId] || 0;
+      const newGalaxyStars = Math.max(prevGalaxyStars, starsEarned);
+      const updatedGalaxyStars = {
+        ...starsPerGalaxyLevel,
+        [currentGalaxyLevelId]: newGalaxyStars,
+      };
+      setStarsPerGalaxyLevel(updatedGalaxyStars);
+      setUnlockedGalaxyLevel((prev) => Math.max(prev, currentGalaxyLevelId + 1));
+      if (pointsForRun > 0) {
+        setCoins((prev) => prev + pointsForRun);
+      }
+    } else {
+      const prevStars = starsPerLevel[currentLevelId] || 0;
+      const newStars = Math.max(prevStars, starsEarned);
+      const updatedStars = {
+        ...starsPerLevel,
+        [currentLevelId]: newStars,
+      };
+      setStarsPerLevel(updatedStars);
+
+      if (pointsForRun > 0) {
+        setCoins((prev) => prev + pointsForRun);
+      }
+
+      const nextUnlocked = computeUnlockedLevel(updatedStars);
+      setUnlockedLevel(nextUnlocked);
+    }
 
     setShowVictoryModal(true);
   };
 
   const handleNextLevel = () => {
     setShowVictoryModal(false);
-    const nextId = currentLevelId + 1;
-    setCurrentLevelId(nextId);
+    if (gameMode === 'galaxy') {
+      const nextId = Math.min(25, currentGalaxyLevelId + 1);
+      setCurrentGalaxyLevelId(nextId);
+    } else {
+      const nextId = currentLevelId + 1;
+      setCurrentLevelId(nextId);
+    }
   };
 
   const handleRestartLevel = () => {
@@ -649,7 +990,11 @@ export default function App() {
       </div>
 
       {/* Mobile Phone Application Frame (واجهة تطبيق) */}
-      <div className="w-full max-w-[460px] sm:max-w-[480px] h-screen sm:h-[94vh] sm:max-h-[900px] bg-gradient-to-b from-sky-50/90 via-white to-slate-100/95 sm:rounded-[46px] border-0 sm:border-[8px] sm:border-slate-800/90 shadow-[0_25px_70px_rgba(0,0,0,0.6)] flex flex-col relative overflow-hidden backdrop-blur-md">
+      <div className={`w-full max-w-[460px] sm:max-w-[480px] h-screen sm:h-[94vh] sm:max-h-[900px] sm:rounded-[46px] border-0 sm:border-[8px] sm:border-slate-800/90 shadow-[0_25px_70px_rgba(0,0,0,0.6)] flex flex-col relative overflow-hidden backdrop-blur-md transition-colors duration-500 ${
+        gameMode === 'galaxy'
+          ? 'bg-gradient-to-b from-slate-950 via-purple-950/95 to-indigo-950 text-white'
+          : 'bg-gradient-to-b from-sky-50/90 via-white to-slate-100/95 text-slate-800'
+      }`}>
         
         {/* Mobile Top Status Bar */}
         <div className="w-full bg-slate-900 text-white px-5 py-2 flex items-center justify-between text-xs font-semibold z-40 shrink-0 select-none shadow-sm">
@@ -666,17 +1011,23 @@ export default function App() {
         </div>
 
         {/* App Top Title Bar */}
-        <div className="w-full bg-gradient-to-r from-sky-600 via-sky-500 to-blue-600 px-4 py-1.5 flex items-center justify-between text-white shadow-md z-30 shrink-0 select-none">
+        <div className={`w-full px-4 py-1.5 flex items-center justify-between text-white shadow-md z-30 shrink-0 select-none ${
+          gameMode === 'galaxy'
+            ? 'bg-gradient-to-r from-purple-700 via-indigo-600 to-pink-600'
+            : 'bg-gradient-to-r from-sky-600 via-sky-500 to-blue-600'
+        }`}>
           <div className="flex items-center gap-2">
             <div className="w-6.5 h-6.5 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-xs shadow-inner font-bold">
-              🎯
+              {gameMode === 'galaxy' ? '🌌' : '🎯'}
             </div>
             <span className="font-black text-xs sm:text-sm tracking-wide">
-              {isAr ? 'هروب الأسهم - تطبيق الألغاز' : 'Arrow Escape App'}
+              {gameMode === 'galaxy'
+                ? isAr ? `مراحل الأحداث - المجرة ${activeLevel.id}` : `Galaxy Level ${activeLevel.id}`
+                : isAr ? 'هروب الأسهم - تطبيق الألغاز' : 'Arrow Escape App'}
             </span>
           </div>
           <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-full font-black border border-white/30 text-amber-200">
-            PRO v2.5
+            {gameMode === 'galaxy' ? 'GALAXY SPACE 🚀' : 'PRO v2.5'}
           </span>
         </div>
 
@@ -694,7 +1045,12 @@ export default function App() {
             soundEnabled={soundEnabled}
             coins={coins}
             onOpenSettings={() => setShowSettingsModal(true)}
-            onOpenLevelSelect={() => setShowLevelSelectModal(true)}
+            onOpenLevelSelect={() => {
+              setLevelSelectTab(gameMode);
+              setShowLevelSelectModal(true);
+            }}
+            onOpenEventLevels={handleOpenEventLevels}
+            isEventUnlocked={isEventUnlocked}
             onOpenShop={() => setShowShopModal(true)}
             onToggleSound={() => {
               const next = !soundEnabled;
@@ -773,6 +1129,20 @@ export default function App() {
 
             {/* In-Game Action Bar Dock */}
             <div className="flex items-center justify-center gap-2 my-1 z-20 flex-wrap">
+              {/* Open Shop Button */}
+              <button
+                id="btn-open-shop"
+                onClick={() => {
+                  soundManager.playClick();
+                  setShowShopModal(true);
+                }}
+                className="px-3.5 py-2 rounded-2xl border-2 border-purple-400 bg-gradient-to-r from-purple-600 via-indigo-600 to-slate-900 text-white font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md hover:scale-105 active:scale-95 cursor-pointer transition-all"
+                title={isAr ? 'فتح متجر الألعاب والجلكسي' : 'Open Game & Galaxy Shop'}
+              >
+                <span className="text-lg">🛒</span>
+                <span>{isAr ? 'المتجر' : 'Shop'}</span>
+              </button>
+
               {/* My Inventory / Bag Button */}
               <button
                 id="btn-inventory"
@@ -780,13 +1150,13 @@ export default function App() {
                   soundManager.playClick();
                   setShowInventoryModal(true);
                 }}
-                className="px-4 py-2 rounded-2xl border-2 border-amber-400 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 font-black text-xs sm:text-sm flex items-center gap-2 shadow-md hover:scale-105 active:scale-95 cursor-pointer transition-all"
+                className="px-3.5 py-2 rounded-2xl border-2 border-amber-400 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md hover:scale-105 active:scale-95 cursor-pointer transition-all"
                 title={isAr ? 'عرض ممتلكاتك وأدواتك واستخدامها' : 'View and use your inventory & tools'}
               >
-                <span className="text-lg sm:text-xl">🎒</span>
-                <span>{isAr ? 'حقيبة الأدوات والممتلكات' : 'My Bag & Tools'}</span>
-                <span className="bg-amber-950 text-amber-200 font-extrabold text-xs px-2 py-0.5 rounded-full shadow-inner">
-                  {creams + chocolates + thunders + hammers}
+                <span className="text-lg">🎒</span>
+                <span>{isAr ? 'الحقيبة' : 'Bag'}</span>
+                <span className="bg-amber-950 text-amber-200 font-extrabold text-[11px] px-1.5 py-0.2 rounded-full shadow-inner">
+                  {creams + chocolates + thunders + hammers + tomatoes + spaceCreams}
                 </span>
               </button>
 
@@ -820,7 +1190,7 @@ export default function App() {
           {/* Bottom Footer */}
           <footer className="w-full max-w-2xl mx-auto px-2 pb-1 text-center text-slate-400 text-[10px] sm:text-xs font-medium leading-tight select-none shrink-0">
             <p dir="rtl">
-              تطبيق الألغاز - ألوان زاهية وناعمة، ومؤثرات مطرية ساحرة (🍦 ⚡ 🔨)
+              تطبيق الألغاز - ألوان زاهية وناعمة، ومؤثرات مطرية ساحرة (🍦 ⚡ 🔨 🍅 🌌)
             </p>
           </footer>
         </div>
@@ -834,15 +1204,21 @@ export default function App() {
       {/* Modals & Overlays */}
       {showVictoryModal && (
         <VictoryModal
-          levelNumber={currentLevelId}
-          stars={starsPerLevel[currentLevelId] || 3}
+          levelNumber={gameMode === 'galaxy' ? currentGalaxyLevelId : currentLevelId}
+          stars={
+            gameMode === 'galaxy'
+              ? starsPerGalaxyLevel[currentGalaxyLevelId] || 3
+              : starsPerLevel[currentLevelId] || 3
+          }
           coinsEarned={lastCoinsEarned}
+          spaceCoinsEarned={spaceCoinsEarned}
           dropsCount={drops}
           language={language}
           onNextLevel={handleNextLevel}
           onReplay={handleRestartLevel}
           onLevelSelect={() => {
             setShowVictoryModal(false);
+            setLevelSelectTab(gameMode);
             setShowLevelSelectModal(true);
           }}
         />
@@ -853,11 +1229,17 @@ export default function App() {
           unlockedLevel={unlockedLevel}
           currentLevel={currentLevelId}
           starsPerLevel={starsPerLevel}
+          unlockedGalaxyLevel={unlockedGalaxyLevel}
+          currentGalaxyLevel={currentGalaxyLevelId}
+          starsPerGalaxyLevel={starsPerGalaxyLevel}
+          isEventUnlocked={isEventUnlocked}
+          gameMode={gameMode}
+          initialTab={levelSelectTab}
+          coins={coins}
           language={language}
-          onSelectLevel={(id) => {
-            setCurrentLevelId(id);
-            setShowLevelSelectModal(false);
-          }}
+          onSelectMainLevel={handleSelectMainLevel}
+          onSelectGalaxyLevel={handleSelectGalaxyLevel}
+          onUnlockEvent={handleUnlockEventInModal}
           onClose={() => setShowLevelSelectModal(false)}
         />
       )}
@@ -878,6 +1260,9 @@ export default function App() {
             setUnlockedLevel(1);
             setStarsPerLevel({});
             setCoins(0);
+            setSpaceCoins(0);
+            setTomatoes(0);
+            setSpaceCreams(0);
             setShowSettingsModal(false);
           }}
           onClose={() => setShowSettingsModal(false)}
@@ -887,6 +1272,9 @@ export default function App() {
       {showShopModal && (
         <ShopModal
           coins={coins}
+          spaceCoins={spaceCoins}
+          tomatoes={tomatoes}
+          spaceCreams={spaceCreams}
           hammers={hammers}
           thunders={thunders}
           creams={creams}
@@ -904,6 +1292,8 @@ export default function App() {
           onBuyThunder={handleBuyThunder}
           onBuyCream={handleBuyCream}
           onBuyChocolate={handleBuyChocolate}
+          onBuyTomato={handleBuyTomato}
+          onBuySpaceCream={handleBuySpaceCream}
           onBuyBundle={handleBuyBundle}
           onBuyCakeBundle={handleBuyCakeBundle}
           onClose={() => setShowShopModal(false)}
@@ -913,6 +1303,9 @@ export default function App() {
       {showInventoryModal && (
         <InventoryModal
           coins={coins}
+          spaceCoins={spaceCoins}
+          tomatoes={tomatoes}
+          spaceCreams={spaceCreams}
           hammers={hammers}
           thunders={thunders}
           creams={creams}
@@ -923,6 +1316,8 @@ export default function App() {
           onUseCream={handleUseCream}
           onUseChocolate={handleUseChocolate}
           onUseThunder={handleUseLightning}
+          onUseTomato={handleUseTomato}
+          onUseSpaceCream={handleUseSpaceCream}
           onToggleHammer={handleToggleHammer}
           onSelectSkin={(skin) => setSelectedSkin(skin)}
           onOpenShop={() => {

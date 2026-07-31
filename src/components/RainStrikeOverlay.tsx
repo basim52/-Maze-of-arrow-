@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface RainItem {
   id: string;
-  type: 'cream' | 'thunder' | 'hammer' | 'chocolate';
+  type: 'cream' | 'thunder' | 'hammer' | 'chocolate' | 'tomato' | 'spaceCream';
   x: number; // Center X coordinate in pixels
   y: number; // Center Y coordinate in pixels
   delay: number; // Delay in ms before starting drop
@@ -23,15 +23,15 @@ export const RainStrikeOverlay: React.FC<RainStrikeOverlayProps> = ({ rainItems,
         const isThunder = item.type === 'thunder';
         const isHammer = item.type === 'hammer';
         const isChocolate = item.type === 'chocolate';
+        const isTomato = item.type === 'tomato';
+        const isSpaceCream = item.type === 'spaceCream';
 
         return (
           <React.Fragment key={item.id}>
-            {/* Falling Droplet / Bolt / Hammer / Chocolate */}
+            {/* Falling Droplet / Bolt / Hammer / Chocolate / Tomato / Space Cream */}
             <div
               className={`absolute flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2 ${
-                isCream
-                  ? 'animate-rain-fall'
-                  : isThunder
+                isThunder
                   ? 'animate-thunder-strike'
                   : isHammer
                   ? 'animate-hammer-rain'
@@ -56,6 +56,17 @@ export const RainStrikeOverlay: React.FC<RainStrikeOverlayProps> = ({ rainItems,
                 </div>
               )}
 
+              {isSpaceCream && (
+                <div className="relative flex flex-col items-center">
+                  {/* Space Cream Rain drop icon */}
+                  <span className="text-4xl sm:text-5xl filter drop-shadow-[0_0_15px_rgba(168,85,247,0.9)] transform rotate-12 animate-pulse">
+                    🌌🍦
+                  </span>
+                  {/* Trailing cosmic tail */}
+                  <div className="w-3 h-20 bg-gradient-to-t from-purple-500 via-indigo-400 to-transparent rounded-full -mt-2 opacity-90 blur-[1px]" />
+                </div>
+              )}
+
               {isChocolate && (
                 <div className="relative flex flex-col items-center">
                   {/* Chocolate drop icon */}
@@ -64,6 +75,17 @@ export const RainStrikeOverlay: React.FC<RainStrikeOverlayProps> = ({ rainItems,
                   </span>
                   {/* Trailing chocolate tail */}
                   <div className="w-2.5 h-16 bg-gradient-to-t from-amber-800 via-amber-700 to-transparent rounded-full -mt-2 opacity-85 blur-[1px]" />
+                </div>
+              )}
+
+              {isTomato && (
+                <div className="relative flex flex-col items-center">
+                  {/* Tomato drop icon */}
+                  <span className="text-4xl sm:text-5xl filter drop-shadow-[0_6px_10px_rgba(225,29,72,0.8)] transform rotate-12">
+                    🍅
+                  </span>
+                  {/* Trailing tomato tail */}
+                  <div className="w-2.5 h-16 bg-gradient-to-t from-rose-600 via-red-500 to-transparent rounded-full -mt-2 opacity-85 blur-[1px]" />
                 </div>
               )}
 
@@ -103,8 +125,12 @@ export const RainStrikeOverlay: React.FC<RainStrikeOverlayProps> = ({ rainItems,
                 className={`w-full h-full rounded-full border-4 animate-splat-ring ${
                   isCream
                     ? 'border-pink-400 bg-pink-200/40'
+                    : isSpaceCream
+                    ? 'border-purple-400 bg-purple-900/50'
                     : isChocolate
                     ? 'border-amber-700 bg-amber-900/40'
+                    : isTomato
+                    ? 'border-rose-500 bg-rose-200/50'
                     : isThunder
                     ? 'border-cyan-400 bg-cyan-200/40'
                     : 'border-amber-400 bg-amber-200/40'
@@ -123,7 +149,9 @@ export const RainStrikeOverlay: React.FC<RainStrikeOverlayProps> = ({ rainItems,
                 }}
               >
                 {isCream && '💥🍦'}
+                {isSpaceCream && '💥🌌🍦'}
                 {isChocolate && '💥🍫'}
+                {isTomato && '💥🍅'}
                 {isThunder && '⚡💥'}
                 {isHammer && '🔨💥'}
               </div>

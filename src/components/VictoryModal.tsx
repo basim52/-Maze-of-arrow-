@@ -7,6 +7,7 @@ interface VictoryModalProps {
   levelNumber: number;
   stars: number; // 1 to 3 stars
   coinsEarned: number;
+  spaceCoinsEarned?: number;
   dropsCount?: number;
   language: 'ar' | 'en';
   onNextLevel: () => void;
@@ -18,6 +19,7 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({
   levelNumber,
   stars,
   coinsEarned,
+  spaceCoinsEarned = 0,
   dropsCount = 0,
   language,
   onNextLevel,
@@ -97,7 +99,7 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({
         </div>
 
         {/* Reward Coins */}
-        <div className="w-full bg-amber-50 border border-amber-200/80 rounded-2xl p-3 mb-6 flex flex-col gap-1 px-4">
+        <div className="w-full bg-amber-50 border border-amber-200/80 rounded-2xl p-3 mb-4 flex flex-col gap-1 px-4">
           <div className="flex items-center justify-between w-full">
             <span className="text-sm font-bold text-amber-800">
               {isAr ? 'المكافأة المكتسبة:' : 'Coins Earned:'}
@@ -119,6 +121,26 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({
             </div>
           )}
         </div>
+
+        {/* Galaxy Event Bonus (15% Chance Trigger) */}
+        {spaceCoinsEarned > 0 && (
+          <div className="w-full bg-gradient-to-r from-purple-900 via-indigo-900 to-slate-900 border-2 border-purple-400/80 rounded-2xl p-3 mb-5 flex items-center justify-between px-3.5 shadow-lg text-white animate-bounce">
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">🌌</span>
+              <div className="text-right">
+                <span className="text-xs font-black text-amber-300 block">
+                  {isAr ? 'حدث الجلكسي والفضائيات! 🚀' : 'Galaxy Event Reward! 🚀'}
+                </span>
+                <span className="text-[10px] text-purple-200 font-semibold">
+                  {isAr ? 'مكافأة حظ استثنائية (15%)' : 'Lucky 15% Bonus Chance'}
+                </span>
+              </div>
+            </div>
+            <span className="bg-purple-600 text-amber-300 font-black text-xs px-2.5 py-1 rounded-full border border-purple-400 flex items-center gap-1">
+              🚀 +{spaceCoinsEarned} {isAr ? 'عملة فضاء' : 'Space Coins'}
+            </span>
+          </div>
+        )}
 
         {/* Actions */}
         <div className="w-full flex flex-col gap-2.5">

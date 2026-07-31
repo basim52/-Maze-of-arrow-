@@ -13,6 +13,8 @@ interface TopBarProps {
   soundEnabled: boolean;
   onOpenSettings: () => void;
   onOpenLevelSelect: () => void;
+  onOpenEventLevels: () => void;
+  isEventUnlocked?: boolean;
   onOpenShop: () => void;
   onToggleSound: () => void;
   onRestartLevel: () => void;
@@ -35,6 +37,8 @@ export const TopBar: React.FC<TopBarProps> = ({
   language,
   onOpenSettings,
   onOpenLevelSelect,
+  onOpenEventLevels,
+  isEventUnlocked = false,
   onOpenShop,
   onToggleSound,
   onRestartLevel,
@@ -48,7 +52,7 @@ export const TopBar: React.FC<TopBarProps> = ({
     <header className="w-full max-w-2xl mx-auto px-3 sm:px-4 pt-3 sm:pt-4 pb-1.5 flex flex-col items-center select-none">
       {/* Top Header Row: Coins/Hammers Stat Pill + Centered Level Title + Quick Action Icons */}
       <div className="w-full grid grid-cols-3 items-center mb-2.5 sm:mb-3">
-        {/* Left Side: Level Select Grid button & Floating Stat Pill */}
+        {/* Left Side: Level Select Grid button & Event Levels button & Floating Stat Pill */}
         <div className="flex items-center gap-1.5 sm:gap-2 justify-start">
           <button
             id="btn-level-select"
@@ -56,10 +60,38 @@ export const TopBar: React.FC<TopBarProps> = ({
               soundManager.playClick();
               onOpenLevelSelect();
             }}
-            className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-white/90 border border-slate-200/80 shadow-sm flex items-center justify-center text-sky-500 hover:scale-105 active:scale-95 transition-all cursor-pointer hover:shadow-sky-100"
-            title={isAr ? 'قائمة المستويات' : 'Levels List'}
+            className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-white/90 border border-slate-200/80 shadow-sm flex items-center justify-center text-sky-500 hover:scale-105 active:scale-95 transition-all cursor-pointer hover:shadow-sky-100 shrink-0"
+            title={isAr ? 'قائمة المستويات الرئيسية' : 'Main Levels List'}
           >
             <Grid className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
+          </button>
+
+          {/* Event Levels Button (زر مراحل الأحداث - 200 نقطة) */}
+          <button
+            id="btn-event-levels"
+            onClick={() => {
+              soundManager.playClick();
+              onOpenEventLevels();
+            }}
+            className={`w-9 h-9 sm:w-11 sm:h-11 rounded-2xl border flex items-center justify-center relative shadow-sm hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0 ${
+              isEventUnlocked
+                ? 'bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 text-white border-purple-300/80 shadow-purple-900/30'
+                : 'bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-slate-950 border-amber-300 shadow-amber-900/40 animate-pulse'
+            }`}
+            title={
+              isAr
+                ? isEventUnlocked
+                  ? 'مراحل الأحداث الفضائية (🚀)'
+                  : 'مراحل الأحداث الفضائية (فتح بـ 200 نقطة 🪙)'
+                : 'Event Levels (200 pts)'
+            }
+          >
+            <span className="text-base sm:text-lg">🚀</span>
+            {!isEventUnlocked && (
+              <span className="absolute -top-1 -right-1 text-[8px] sm:text-[9px] bg-slate-950 text-amber-300 font-black px-1 py-0.2 rounded-full border border-amber-400/80 shadow-xs">
+                200
+              </span>
+            )}
           </button>
 
           {/* Coins Pill Badge */}

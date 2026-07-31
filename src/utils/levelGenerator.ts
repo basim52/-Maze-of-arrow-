@@ -5385,6 +5385,3108 @@ export const HANDCRAFTED_LEVELS: Level[] = [
       { "id": "50-10", "gridX": 7, "gridY": 6, "direction": "up-left", "color": "yellow", "length": 1 },
       { "id": "50-11", "gridX": 10, "gridY": 6, "direction": "up", "color": "pink", "length": 1 }
     ]
+  },
+  {
+    "id": 51,
+    "nameAr": "المستوى ٥١ - العاصفة البنفسجية",
+    "nameEn": "Level 51 - Violet Storm",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "51-1",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "slight-down-right",
+        "color": "purple",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "51-2",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "down-left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "51-3",
+        "gridX": 10,
+        "gridY": 3,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "51-4",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "slight-up-left",
+        "color": "lime",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "51-5",
+        "gridX": 11,
+        "gridY": 5,
+        "direction": "up",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "51-6",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "right",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "51-7",
+        "gridX": 6,
+        "gridY": 3,
+        "direction": "down-right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "51-8",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "slight-down-right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "51-9",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up-right",
+        "color": "cyan",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "51-10",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "right",
+        "color": "orange",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "51-11",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "slight-down-left",
+        "color": "yellow",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "51-12",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "right",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "51-13",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "down-right",
+        "color": "orange",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "nameAr": "المستوى ٥٢ - شبكة المجرة",
+    "nameEn": "Level 52 - Galaxy Web",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "52-1",
+        "gridX": 12,
+        "gridY": 5,
+        "direction": "down",
+        "color": "yellow",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "52-2",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "52-3",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "slight-down-right",
+        "color": "orange",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "52-4",
+        "gridX": 4,
+        "gridY": 2,
+        "direction": "up-right",
+        "color": "lime",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "52-5",
+        "gridX": 7,
+        "gridY": 2,
+        "direction": "down-right",
+        "color": "lime",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "52-6",
+        "gridX": 2,
+        "gridY": 4,
+        "direction": "slight-down-left",
+        "color": "lime",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "52-7",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "down-left",
+        "color": "pink",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "52-8",
+        "gridX": 11,
+        "gridY": 2,
+        "direction": "slight-up-left",
+        "color": "orange",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "52-9",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "52-10",
+        "gridX": 11,
+        "gridY": 4,
+        "direction": "slight-up-left",
+        "color": "pink",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "nameAr": "المستوى ٥٣ - دوامة النجوم",
+    "nameEn": "Level 53 - Star Vortex",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "53-1",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "slight-up-left",
+        "color": "purple",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "53-2",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "down",
+        "color": "lime",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "53-3",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "53-4",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "slight-up-right",
+        "color": "cyan",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "53-5",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "left",
+        "color": "pink",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "53-6",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "slight-up-left",
+        "color": "cyan",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "53-7",
+        "gridX": 5,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "53-8",
+        "gridX": 9,
+        "gridY": 2,
+        "direction": "slight-up-right",
+        "color": "orange",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "53-9",
+        "gridX": 10,
+        "gridY": 5,
+        "direction": "down-left",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "53-10",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "53-11",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "up-right",
+        "color": "purple",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "nameAr": "المستوى ٥٤ - الممر الذهبي",
+    "nameEn": "Level 54 - Golden Passage",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "54-1",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "down-right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "54-2",
+        "gridX": 12,
+        "gridY": 4,
+        "direction": "slight-up-right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "54-3",
+        "gridX": 10,
+        "gridY": 2,
+        "direction": "up-right",
+        "color": "purple",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "54-4",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "up-right",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "54-5",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "54-6",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "54-7",
+        "gridX": 7,
+        "gridY": 6,
+        "direction": "up-right",
+        "color": "cyan",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "54-8",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "up-right",
+        "color": "purple",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "54-9",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "slight-up-left",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "54-10",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "left",
+        "color": "cyan",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "54-11",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "54-12",
+        "gridX": 5,
+        "gridY": 2,
+        "direction": "right",
+        "color": "purple",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "nameAr": "🔥 المستوى ٥٥ - عرش وحش المجرة",
+    "nameEn": "🔥 Level 55 - Galaxy Boss",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "55-1",
+        "gridX": 11,
+        "gridY": 3,
+        "direction": "slight-down-left",
+        "color": "yellow",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "55-2",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "down-left",
+        "color": "lime",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "55-3",
+        "gridX": 4,
+        "gridY": 2,
+        "direction": "slight-up-left",
+        "color": "pink",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "55-4",
+        "gridX": 8,
+        "gridY": 3,
+        "direction": "slight-down-left",
+        "color": "pink",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "55-5",
+        "gridX": 9,
+        "gridY": 5,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "55-6",
+        "gridX": 3,
+        "gridY": 6,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "55-7",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "slight-down-left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "55-8",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "up-left",
+        "color": "lime",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "55-9",
+        "gridX": 6,
+        "gridY": 5,
+        "direction": "up-right",
+        "color": "cyan",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "55-10",
+        "gridX": 11,
+        "gridY": 5,
+        "direction": "down-right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "55-11",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "up-right",
+        "color": "pink",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "55-12",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "55-13",
+        "gridX": 12,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "55-14",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "up-right",
+        "color": "cyan",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "nameAr": "المستوى ٥٦ - حارس البوابة الكونية",
+    "nameEn": "Level 56 - Cosmic Gatekeeper",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "56-1",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up-right",
+        "color": "purple",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "56-2",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "up",
+        "color": "lime",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "56-3",
+        "gridX": 11,
+        "gridY": 1,
+        "direction": "slight-up-right",
+        "color": "lime",
+        "length": 1,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "56-4",
+        "gridX": 12,
+        "gridY": 2,
+        "direction": "slight-down-right",
+        "color": "cyan",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "56-5",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "down",
+        "color": "lime",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "56-6",
+        "gridX": 4,
+        "gridY": 4,
+        "direction": "left",
+        "color": "purple",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "56-7",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "down-right",
+        "color": "lime",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "56-8",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "slight-down-right",
+        "color": "cyan",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "56-9",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "up",
+        "color": "pink",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "56-10",
+        "gridX": 11,
+        "gridY": 6,
+        "direction": "slight-up-left",
+        "color": "yellow",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "nameAr": "المستوى ٥٧ - أشباح الفضاء",
+    "nameEn": "Level 57 - Space Ghosts",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "57-1",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "up-right",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "57-2",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "57-3",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "down",
+        "color": "yellow",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "57-4",
+        "gridX": 11,
+        "gridY": 6,
+        "direction": "up",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "57-5",
+        "gridX": 10,
+        "gridY": 3,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "57-6",
+        "gridX": 11,
+        "gridY": 2,
+        "direction": "down-left",
+        "color": "cyan",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "57-7",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "slight-up-left",
+        "color": "orange",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "57-8",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "slight-up-right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "57-9",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "slight-down-right",
+        "color": "cyan",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "57-10",
+        "gridX": 11,
+        "gridY": 3,
+        "direction": "up-right",
+        "color": "orange",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "57-11",
+        "gridX": 8,
+        "gridY": 3,
+        "direction": "left",
+        "color": "lime",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "nameAr": "المستوى ٥٨ - تقاطع النيزك",
+    "nameEn": "Level 58 - Meteor Crossing",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "58-1",
+        "gridX": 12,
+        "gridY": 2,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "58-2",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "slight-down-left",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "58-3",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "orange",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "58-4",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "lime",
+        "length": 1,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "58-5",
+        "gridX": 8,
+        "gridY": 2,
+        "direction": "left",
+        "color": "lime",
+        "length": 1,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "58-6",
+        "gridX": 12,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "58-7",
+        "gridX": 6,
+        "gridY": 4,
+        "direction": "slight-down-right",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "58-8",
+        "gridX": 7,
+        "gridY": 6,
+        "direction": "up-right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "58-9",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "up",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "58-10",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "up-left",
+        "color": "cyan",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "58-11",
+        "gridX": 5,
+        "gridY": 4,
+        "direction": "down-left",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "58-12",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "down",
+        "color": "cyan",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "nameAr": "المستوى ٥٩ - الحصن البلوري",
+    "nameEn": "Level 59 - Crystal Fortress",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "59-1",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "slight-up-right",
+        "color": "yellow",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "59-2",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "slight-down-right",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "59-3",
+        "gridX": 8,
+        "gridY": 3,
+        "direction": "down",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "59-4",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "slight-up-left",
+        "color": "lime",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "59-5",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "slight-down-right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "59-6",
+        "gridX": 11,
+        "gridY": 2,
+        "direction": "up-right",
+        "color": "cyan",
+        "length": 1,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "59-7",
+        "gridX": 7,
+        "gridY": 2,
+        "direction": "slight-up-left",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "59-8",
+        "gridX": 11,
+        "gridY": 1,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "59-9",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "slight-up-right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "59-10",
+        "gridX": 10,
+        "gridY": 5,
+        "direction": "up-right",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "59-11",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "slight-down-right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "59-12",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "slight-up-left",
+        "color": "lime",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "59-13",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "down",
+        "color": "orange",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "nameAr": "🔥 المستوى ٦٠ - العاصفة النارية ٦٠",
+    "nameEn": "🔥 Level 60 - Firestorm 60",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "60-1",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "up-right",
+        "color": "pink",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "60-2",
+        "gridX": 11,
+        "gridY": 5,
+        "direction": "right",
+        "color": "orange",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "60-3",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "left",
+        "color": "orange",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "60-4",
+        "gridX": 8,
+        "gridY": 2,
+        "direction": "left",
+        "color": "yellow",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "60-5",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "up-right",
+        "color": "orange",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "60-6",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "slight-down-left",
+        "color": "cyan",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "60-7",
+        "gridX": 9,
+        "gridY": 5,
+        "direction": "up-left",
+        "color": "pink",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "60-8",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "slight-up-left",
+        "color": "cyan",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "60-9",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "up-left",
+        "color": "yellow",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "60-10",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "up-right",
+        "color": "yellow",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "60-11",
+        "gridX": 1,
+        "gridY": 4,
+        "direction": "down-right",
+        "color": "pink",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "60-12",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "slight-up-left",
+        "color": "pink",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "60-13",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "down-right",
+        "color": "lime",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "60-14",
+        "gridX": 4,
+        "gridY": 4,
+        "direction": "down-left",
+        "color": "pink",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "nameAr": "المستوى ٦١ - المسار المعكوس",
+    "nameEn": "Level 61 - Inverse Vector",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "61-1",
+        "gridX": 9,
+        "gridY": 5,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "61-2",
+        "gridX": 3,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "61-3",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "up-left",
+        "color": "pink",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "61-4",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "down",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "61-5",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "slight-up-right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "61-6",
+        "gridX": 11,
+        "gridY": 3,
+        "direction": "down-left",
+        "color": "lime",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "61-7",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "orange",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "61-8",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "up-left",
+        "color": "yellow",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "61-9",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "down-left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "61-10",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "up",
+        "color": "pink",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "61-11",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "left",
+        "color": "purple",
+        "length": 1
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "nameAr": "المستوى ٦٢ - سراديب الظلام",
+    "nameEn": "Level 62 - Shadow Crypts",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "62-1",
+        "gridX": 7,
+        "gridY": 2,
+        "direction": "down",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "62-2",
+        "gridX": 11,
+        "gridY": 4,
+        "direction": "left",
+        "color": "orange",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "62-3",
+        "gridX": 6,
+        "gridY": 3,
+        "direction": "slight-up-left",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "62-4",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "up-left",
+        "color": "yellow",
+        "length": 1,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "62-5",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "up",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "62-6",
+        "gridX": 5,
+        "gridY": 4,
+        "direction": "down-left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "62-7",
+        "gridX": 7,
+        "gridY": 6,
+        "direction": "slight-up-right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "62-8",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "slight-up-right",
+        "color": "purple",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "62-9",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "down-left",
+        "color": "yellow",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "62-10",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "right",
+        "color": "purple",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "62-11",
+        "gridX": 10,
+        "gridY": 5,
+        "direction": "up",
+        "color": "pink",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "62-12",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "up-left",
+        "color": "yellow",
+        "length": 1
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "nameAr": "المستوى ٦٣ - حلزون الضوء",
+    "nameEn": "Level 63 - Light Helix",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "63-1",
+        "gridX": 9,
+        "gridY": 2,
+        "direction": "down",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "63-2",
+        "gridX": 10,
+        "gridY": 4,
+        "direction": "slight-up-left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "63-3",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "slight-down-right",
+        "color": "yellow",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "63-4",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "slight-up-right",
+        "color": "cyan",
+        "length": 1,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "63-5",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "lime",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "63-6",
+        "gridX": 10,
+        "gridY": 3,
+        "direction": "up-left",
+        "color": "lime",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "63-7",
+        "gridX": 8,
+        "gridY": 1,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "63-8",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "up-left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "63-9",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "up",
+        "color": "pink",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "63-10",
+        "gridX": 3,
+        "gridY": 6,
+        "direction": "slight-up-right",
+        "color": "orange",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "63-11",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "up",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "63-12",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "up-right",
+        "color": "cyan",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "63-13",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "up-left",
+        "color": "lime",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "nameAr": "🌟 المستوى ٦٤ - كوكبة النجوم",
+    "nameEn": "🌟 Level 64 - Star Constellation",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "64-1",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "up",
+        "color": "purple",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "64-2",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "up",
+        "color": "yellow",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "64-3",
+        "gridX": 11,
+        "gridY": 4,
+        "direction": "down-left",
+        "color": "yellow",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "64-4",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "up-right",
+        "color": "pink",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "64-5",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "slight-down-left",
+        "color": "orange",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "64-6",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "up-right",
+        "color": "orange",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "64-7",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "down-left",
+        "color": "orange",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "64-8",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "up-left",
+        "color": "pink",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "64-9",
+        "gridX": 12,
+        "gridY": 4,
+        "direction": "down-right",
+        "color": "pink",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "64-10",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "slight-down-left",
+        "color": "lime",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "nameAr": "🔥 المستوى ٦٥ - المتاهة المزدوجة",
+    "nameEn": "🔥 Level 65 - Twin Labyrinth",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "65-1",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "65-2",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "up-right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "65-3",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "65-4",
+        "gridX": 8,
+        "gridY": 3,
+        "direction": "down",
+        "color": "orange",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "65-5",
+        "gridX": 4,
+        "gridY": 4,
+        "direction": "slight-up-left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "65-6",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "65-7",
+        "gridX": 9,
+        "gridY": 3,
+        "direction": "right",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "65-8",
+        "gridX": 6,
+        "gridY": 5,
+        "direction": "down-right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "65-9",
+        "gridX": 12,
+        "gridY": 2,
+        "direction": "left",
+        "color": "orange",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "65-10",
+        "gridX": 11,
+        "gridY": 6,
+        "direction": "up",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "65-11",
+        "gridX": 11,
+        "gridY": 5,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "65-12",
+        "gridX": 1,
+        "gridY": 2,
+        "direction": "slight-down-right",
+        "color": "lime",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "65-13",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "down-right",
+        "color": "lime",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "65-14",
+        "gridX": 1,
+        "gridY": 4,
+        "direction": "down-right",
+        "color": "lime",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "nameAr": "المستوى ٦٦ - أفق الأحلام",
+    "nameEn": "Level 66 - Dream Horizon",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "66-1",
+        "gridX": 4,
+        "gridY": 4,
+        "direction": "left",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "66-2",
+        "gridX": 9,
+        "gridY": 3,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "66-3",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "down-left",
+        "color": "yellow",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "66-4",
+        "gridX": 4,
+        "gridY": 2,
+        "direction": "slight-down-right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "66-5",
+        "gridX": 8,
+        "gridY": 1,
+        "direction": "up",
+        "color": "lime",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "66-6",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "up-left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "66-7",
+        "gridX": 5,
+        "gridY": 4,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "66-8",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "slight-down-right",
+        "color": "cyan",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "66-9",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "left",
+        "color": "yellow",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "66-10",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "down-right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "66-11",
+        "gridX": 9,
+        "gridY": 5,
+        "direction": "left",
+        "color": "pink",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "66-12",
+        "gridX": 10,
+        "gridY": 3,
+        "direction": "slight-up-left",
+        "color": "cyan",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "nameAr": "المستوى ٦٧ - الرعد الساطع",
+    "nameEn": "Level 67 - Bright Thunder",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "67-1",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "down-right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "67-2",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "up-left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "67-3",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "67-4",
+        "gridX": 4,
+        "gridY": 2,
+        "direction": "slight-down-left",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "67-5",
+        "gridX": 4,
+        "gridY": 4,
+        "direction": "slight-up-right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "67-6",
+        "gridX": 12,
+        "gridY": 3,
+        "direction": "up-right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "67-7",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "down-right",
+        "color": "orange",
+        "length": 1,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "67-8",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "up-left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "67-9",
+        "gridX": 9,
+        "gridY": 5,
+        "direction": "slight-down-left",
+        "color": "orange",
+        "length": 1,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "67-10",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "right",
+        "color": "yellow",
+        "length": 1,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "67-11",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "up-right",
+        "color": "pink",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "67-12",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "down",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "67-13",
+        "gridX": 8,
+        "gridY": 5,
+        "direction": "up-left",
+        "color": "orange",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "nameAr": "المستوى ٦٨ - حارس المدار",
+    "nameEn": "Level 68 - Orbit Sentinel",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "68-1",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "down-left",
+        "color": "orange",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "68-2",
+        "gridX": 12,
+        "gridY": 2,
+        "direction": "down-left",
+        "color": "purple",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "68-3",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "slight-up-left",
+        "color": "cyan",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "68-4",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "up-right",
+        "color": "purple",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "68-5",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "slight-down-left",
+        "color": "pink",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "68-6",
+        "gridX": 11,
+        "gridY": 2,
+        "direction": "slight-down-left",
+        "color": "cyan",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "68-7",
+        "gridX": 1,
+        "gridY": 2,
+        "direction": "up-right",
+        "color": "yellow",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "68-8",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "68-9",
+        "gridX": 6,
+        "gridY": 4,
+        "direction": "down",
+        "color": "orange",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "68-10",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "slight-up-left",
+        "color": "yellow",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "nameAr": "🔥 المستوى ٦٩ - عرش التنين الفضائي",
+    "nameEn": "🔥 Level 69 - Cosmic Dragon Throne",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "69-1",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "69-2",
+        "gridX": 12,
+        "gridY": 6,
+        "direction": "right",
+        "color": "lime",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "69-3",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "up-right",
+        "color": "lime",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "69-4",
+        "gridX": 11,
+        "gridY": 1,
+        "direction": "down",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "69-5",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "slight-down-left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "69-6",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "down-right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "69-7",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "left",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "69-8",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "69-9",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "up-right",
+        "color": "lime",
+        "length": 1,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "69-10",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "down",
+        "color": "cyan",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "69-11",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "slight-down-left",
+        "color": "purple",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "nameAr": "🔥 المستوى ٧٠ - التحدي الأسطوري ٧٠",
+    "nameEn": "🔥 Level 70 - Mythic Boss 70",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "70-1",
+        "gridX": 5,
+        "gridY": 4,
+        "direction": "slight-down-left",
+        "color": "purple",
+        "length": 1,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "70-2",
+        "gridX": 10,
+        "gridY": 5,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "70-3",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "up-right",
+        "color": "lime",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "70-4",
+        "gridX": 8,
+        "gridY": 2,
+        "direction": "down-right",
+        "color": "lime",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "70-5",
+        "gridX": 11,
+        "gridY": 1,
+        "direction": "left",
+        "color": "purple",
+        "length": 1,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "70-6",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "down",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "70-7",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "slight-up-left",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "70-8",
+        "gridX": 10,
+        "gridY": 3,
+        "direction": "slight-down-left",
+        "color": "cyan",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "70-9",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "lime",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "70-10",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "up-left",
+        "color": "pink",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "70-11",
+        "gridX": 1,
+        "gridY": 2,
+        "direction": "slight-up-right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "70-12",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "70-13",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "up-left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "70-14",
+        "gridX": 1,
+        "gridY": 4,
+        "direction": "down-left",
+        "color": "lime",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "nameAr": "المستوى ٧١ - القطب المغناطيسي",
+    "nameEn": "Level 71 - Magnetic Pole",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "71-1",
+        "gridX": 8,
+        "gridY": 2,
+        "direction": "slight-down-right",
+        "color": "purple",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "71-2",
+        "gridX": 8,
+        "gridY": 5,
+        "direction": "slight-up-left",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "71-3",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "slight-down-right",
+        "color": "cyan",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "71-4",
+        "gridX": 11,
+        "gridY": 2,
+        "direction": "right",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "71-5",
+        "gridX": 9,
+        "gridY": 3,
+        "direction": "down-left",
+        "color": "lime",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "71-6",
+        "gridX": 1,
+        "gridY": 4,
+        "direction": "slight-up-left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "71-7",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "left",
+        "color": "purple",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "71-8",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "slight-down-left",
+        "color": "pink",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "71-9",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "up-right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "71-10",
+        "gridX": 2,
+        "gridY": 4,
+        "direction": "up-left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "71-11",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "down-left",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "71-12",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "slight-down-left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "71-13",
+        "gridX": 8,
+        "gridY": 3,
+        "direction": "slight-down-right",
+        "color": "yellow",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "nameAr": "المستوى ٧٢ - أجنحة العنقاء",
+    "nameEn": "Level 72 - Phoenix Wings",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "72-1",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "up-left",
+        "color": "lime",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "72-2",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "72-3",
+        "gridX": 7,
+        "gridY": 6,
+        "direction": "up-left",
+        "color": "yellow",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "72-4",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "left",
+        "color": "orange",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "72-5",
+        "gridX": 12,
+        "gridY": 2,
+        "direction": "slight-up-left",
+        "color": "orange",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "72-6",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "slight-down-left",
+        "color": "orange",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "72-7",
+        "gridX": 12,
+        "gridY": 4,
+        "direction": "up-right",
+        "color": "cyan",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "72-8",
+        "gridX": 11,
+        "gridY": 1,
+        "direction": "down-left",
+        "color": "lime",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "72-9",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "up",
+        "color": "purple",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "72-10",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "down-right",
+        "color": "lime",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "nameAr": "المستوى ٧٣ - نبض السوبرنوفا",
+    "nameEn": "Level 73 - Supernova Pulse",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "73-1",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "slight-up-left",
+        "color": "yellow",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "73-2",
+        "gridX": 1,
+        "gridY": 4,
+        "direction": "slight-down-left",
+        "color": "orange",
+        "length": 1,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "73-3",
+        "gridX": 12,
+        "gridY": 6,
+        "direction": "up-right",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "73-4",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "slight-down-right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "73-5",
+        "gridX": 11,
+        "gridY": 4,
+        "direction": "slight-up-right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "73-6",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "left",
+        "color": "yellow",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "73-7",
+        "gridX": 5,
+        "gridY": 2,
+        "direction": "slight-up-right",
+        "color": "lime",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "73-8",
+        "gridX": 8,
+        "gridY": 3,
+        "direction": "slight-up-right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "73-9",
+        "gridX": 9,
+        "gridY": 2,
+        "direction": "left",
+        "color": "orange",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "73-10",
+        "gridX": 11,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "cyan",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "73-11",
+        "gridX": 8,
+        "gridY": 5,
+        "direction": "up-left",
+        "color": "cyan",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "nameAr": "المستوى ٧٤ - قلعة المدار الخارجي",
+    "nameEn": "Level 74 - Outer Orbit Citadel",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "74-1",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "right",
+        "color": "orange",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "74-2",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "left",
+        "color": "purple",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "74-3",
+        "gridX": 11,
+        "gridY": 4,
+        "direction": "slight-down-right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "74-4",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "slight-down-right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "74-5",
+        "gridX": 12,
+        "gridY": 1,
+        "direction": "up-right",
+        "color": "yellow",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "74-6",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "up-right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "74-7",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "down-right",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "74-8",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "up",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "74-9",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "74-10",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "slight-up-left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "74-11",
+        "gridX": 6,
+        "gridY": 5,
+        "direction": "slight-down-right",
+        "color": "pink",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "74-12",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "down-right",
+        "color": "pink",
+        "length": 1
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "nameAr": "🔥 المستوى ٧٥ - قمة أسطورة المجرة ٧٥",
+    "nameEn": "🔥 Level 75 - Galaxy Legend Boss 75",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": {
+      "cols": 14,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "75-1",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "down-right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "75-2",
+        "gridX": 5,
+        "gridY": 1,
+        "direction": "up",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "75-3",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "slight-down-right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "75-4",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "75-5",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "down-right",
+        "color": "pink",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "75-6",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "slight-up-left",
+        "color": "pink",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "75-7",
+        "gridX": 7,
+        "gridY": 2,
+        "direction": "down",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "75-8",
+        "gridX": 10,
+        "gridY": 4,
+        "direction": "slight-down-right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "75-9",
+        "gridX": 10,
+        "gridY": 2,
+        "direction": "right",
+        "color": "lime",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "75-10",
+        "gridX": 8,
+        "gridY": 3,
+        "direction": "slight-down-left",
+        "color": "purple",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "75-11",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "slight-up-right",
+        "color": "lime",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "75-12",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "slight-up-right",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "75-13",
+        "gridX": 11,
+        "gridY": 6,
+        "direction": "down",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "75-14",
+        "gridX": 11,
+        "gridY": 3,
+        "direction": "slight-up-right",
+        "color": "lime",
+        "length": 2
+      }
+    ]
   }
 ];
 
@@ -5519,8 +8621,8 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
   };
 }
 
-export const HAMMER_REQUIRED_LEVEL_IDS = [45, 52, 60, 68, 77, 93, 100, 108, 115, 122, 125, 140, 160, 180, 200];
-export const MONSTER_BOSS_LEVEL_IDS = [55, 69, 85, 105, 120, 138, 150, 158, 173, 188, 200];
+export const HAMMER_REQUIRED_LEVEL_IDS = [45, 52, 60, 68, 77, 93, 100, 108, 115, 122, 125, 140, 160, 180, 200, 205];
+export const MONSTER_BOSS_LEVEL_IDS = [55, 69, 85, 105, 120, 138, 150, 158, 173, 188, 200, 210];
 
 export function createMonsterBossLevel(levelNumber: number): Level {
   let nameAr = `👹🔥 ${levelNumber} - مرحلة الوحش الخارقة`;
@@ -5559,6 +8661,9 @@ export function createMonsterBossLevel(levelNumber: number): Level {
   } else if (levelNumber === 200) {
     nameAr = `👹🔥 200 - مرحلة الوحش النهائية: سيد الأسهم الأخير`;
     nameEn = `👹🔥 200 - Monster Boss Final: Ultimate Arrow Master`;
+  } else if (levelNumber === 210) {
+    nameAr = `👹🔥 210 - مرحلة الوحش الكونية: حارس المجرة الأخير`;
+    nameEn = `👹🔥 210 - Cosmic Monster Boss: Ultimate Galaxy Guardian`;
   }
 
   const cols = 12;
@@ -5727,14 +8832,14 @@ export function createHammerRequiredLevel(levelNumber: number): Level {
       deadlockArrows = [
         // Bomb deadlock center
         { id: '60-b1', gridX: 5, gridY: 3, direction: 'right', color: 'orange', length: 2, type: 'bomb', isBomb: true },
-        { id: '60-b2', gridX: 7, gridY: 3, direction: 'left', color: 'pink', length: 2, type: 'bomb', isBomb: true },
+        { id: '60-b2', gridX: 8, gridY: 3, direction: 'left', color: 'pink', length: 2, type: 'bomb', isBomb: true },
         { id: '60-1', gridX: 4, gridY: 1, direction: 'down', color: 'purple', length: 3 },
-        { id: '60-2', gridX: 8, gridY: 1, direction: 'down', color: 'lime', length: 3 },
+        { id: '60-2', gridX: 9, gridY: 1, direction: 'down', color: 'lime', length: 3 },
         { id: '60-3', gridX: 3, gridY: 5, direction: 'right', color: 'cyan', length: 2 },
         { id: '60-4', gridX: 7, gridY: 5, direction: 'left', color: 'yellow', length: 2 },
         { id: '60-5', gridX: 1, gridY: 3, direction: 'right', color: 'pink', length: 3, type: 'double', isDouble: true },
-        { id: '60-6', gridX: 10, gridY: 3, direction: 'left', color: 'orange', length: 2 },
-        { id: '60-7', gridX: 6, gridY: 6, direction: 'up', color: 'purple', length: 2 },
+        { id: '60-6', gridX: 11, gridY: 3, direction: 'left', color: 'orange', length: 2 },
+        { id: '60-7', gridX: 5, gridY: 6, direction: 'up', color: 'purple', length: 2 },
       ];
       break;
 
@@ -5796,11 +8901,11 @@ export function createHammerRequiredLevel(levelNumber: number): Level {
         { id: '85-4', gridX: 3, gridY: 6, direction: 'up', color: 'yellow', length: 3 },
         // Central deadlock core
         { id: '85-5', gridX: 5, gridY: 4, direction: 'right', color: 'pink', length: 2, type: 'double', isDouble: true },
-        { id: '85-6', gridX: 7, gridY: 4, direction: 'left', color: 'orange', length: 2, type: 'bomb', isBomb: true },
+        { id: '85-6', gridX: 8, gridY: 4, direction: 'left', color: 'orange', length: 2, type: 'bomb', isBomb: true },
         { id: '85-7', gridX: 1, gridY: 4, direction: 'right', color: 'purple', length: 2 },
         { id: '85-8', gridX: 11, gridY: 4, direction: 'left', color: 'cyan', length: 2 },
         { id: '85-9', gridX: 6, gridY: 1, direction: 'down', color: 'lime', length: 2 },
-        { id: '85-10', gridX: 6, gridY: 7, direction: 'up', color: 'yellow', length: 2 },
+        { id: '85-10', gridX: 7, gridY: 7, direction: 'up', color: 'yellow', length: 2 },
       ];
       break;
 
@@ -5842,7 +8947,7 @@ export function createHammerRequiredLevel(levelNumber: number): Level {
         { id: '100-9', gridX: 2, gridY: 8, direction: 'up', color: 'purple', length: 2 },
         { id: '100-10', gridX: 14, gridY: 8, direction: 'left', color: 'orange', length: 2 },
         { id: '100-11', gridX: 6, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
-        { id: '100-12', gridX: 9, gridY: 8, direction: 'up', color: 'pink', length: 2 },
+        { id: '100-12', gridX: 8, gridY: 8, direction: 'up', color: 'pink', length: 2 },
       ];
       break;
 
@@ -5861,7 +8966,7 @@ export function createHammerRequiredLevel(levelNumber: number): Level {
         { id: '108-7', gridX: 10, gridY: 5, direction: 'left', color: 'orange', length: 2 },
         { id: '108-8', gridX: 8, gridY: 5, direction: 'up', color: 'pink', length: 2 },
         { id: '108-9', gridX: 1, gridY: 3, direction: 'right', color: 'yellow', length: 2 },
-        { id: '108-10', gridX: 11, gridY: 3, direction: 'left', color: 'purple', length: 2 },
+        { id: '108-10', gridX: 12, gridY: 3, direction: 'left', color: 'purple', length: 2 },
       ];
       break;
 
@@ -5899,7 +9004,7 @@ export function createHammerRequiredLevel(levelNumber: number): Level {
         { id: '122-7', gridX: 12, gridY: 6, direction: 'left', color: 'cyan', length: 2 },
         { id: '122-8', gridX: 9, gridY: 6, direction: 'up', color: 'lime', length: 2 },
         { id: '122-9', gridX: 1, gridY: 4, direction: 'right', color: 'purple', length: 2 },
-        { id: '122-10', gridX: 13, gridY: 4, direction: 'left', color: 'pink', length: 2 },
+        { id: '122-10', gridX: 14, gridY: 4, direction: 'left', color: 'pink', length: 2 },
         { id: '122-11', gridX: 7, gridY: 1, direction: 'down', color: 'yellow', length: 2 },
         { id: '122-12', gridX: 8, gridY: 8, direction: 'up', color: 'orange', length: 2 },
       ];
@@ -6088,3 +9193,3474 @@ export function getLevel(id: number): Level {
 }
 
 
+
+
+export const GALAXY_LEVELS: Level[] = [
+  {
+    "id": 1,
+    "nameAr": "🌌 مرحلة المجرة ١ - بوابة النجوم",
+    "nameEn": "Galaxy Level 1 - Star Gate",
+    "difficulty": "سهل",
+    "difficultyEn": "Easy",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-1-1",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "galaxy-1-2",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "up-left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-1-3",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "slight-up-right",
+        "color": "lime",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-1-4",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "slight-up-right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-1-5",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "down-right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "galaxy-1-6",
+        "gridX": 9,
+        "gridY": 3,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-1-7",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "slight-down-left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-1-8",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "up",
+        "color": "pink",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "nameAr": "🌌 مرحلة المجرة ٢ - المدار الفضي",
+    "nameEn": "Galaxy Level 2 - Silver Orbit",
+    "difficulty": "سهل",
+    "difficultyEn": "Easy",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-2-1",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "down-left",
+        "color": "pink",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-2-2",
+        "gridX": 7,
+        "gridY": 6,
+        "direction": "up-right",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "galaxy-2-3",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "down-right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "galaxy-2-4",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "galaxy-2-5",
+        "gridX": 5,
+        "gridY": 1,
+        "direction": "slight-down-left",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "galaxy-2-6",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "up-left",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "galaxy-2-7",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-2-8",
+        "gridX": 9,
+        "gridY": 2,
+        "direction": "slight-up-left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-2-9",
+        "gridX": 10,
+        "gridY": 3,
+        "direction": "down-right",
+        "color": "yellow",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "nameAr": "🌌 مرحلة المجرة ٣ - سديم الأرجوان",
+    "nameEn": "Galaxy Level 3 - Purple Nebula",
+    "difficulty": "سهل",
+    "difficultyEn": "Easy",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-3-1",
+        "gridX": 10,
+        "gridY": 2,
+        "direction": "up-right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-3-2",
+        "gridX": 6,
+        "gridY": 5,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-3-3",
+        "gridX": 5,
+        "gridY": 2,
+        "direction": "slight-up-left",
+        "color": "purple",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-3-4",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-3-5",
+        "gridX": 4,
+        "gridY": 2,
+        "direction": "down",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "galaxy-3-6",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "slight-up-left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-3-7",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-3-8",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-3-9",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "up-right",
+        "color": "cyan",
+        "length": 1
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "nameAr": "🌌 مرحلة المجرة ٤ - الممر الكوني",
+    "nameEn": "Galaxy Level 4 - Cosmic Corridor",
+    "difficulty": "سهل",
+    "difficultyEn": "Easy",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-4-1",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "down",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "galaxy-4-2",
+        "gridX": 10,
+        "gridY": 2,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-4-3",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "down-right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-4-4",
+        "gridX": 6,
+        "gridY": 3,
+        "direction": "slight-up-right",
+        "color": "yellow",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-4-5",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "galaxy-4-6",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-4-7",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "right",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "galaxy-4-8",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "slight-down-left",
+        "color": "pink",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-4-9",
+        "gridX": 9,
+        "gridY": 3,
+        "direction": "right",
+        "color": "pink",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-4-10",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "down-right",
+        "color": "orange",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "nameAr": "🌌 مرحلة المجرة ٥ - حقل النيازك",
+    "nameEn": "Galaxy Level 5 - Asteroid Field",
+    "difficulty": "سهل",
+    "difficultyEn": "Easy",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "galaxy-5-1",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "slight-up-left",
+        "color": "purple",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-5-2",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "down",
+        "color": "lime",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-5-3",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "slight-up-right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-5-4",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "slight-up-left",
+        "color": "yellow",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-5-5",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "slight-down-left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "galaxy-5-6",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "down-left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-5-7",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "slight-up-left",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "galaxy-5-8",
+        "gridX": 7,
+        "gridY": 2,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "galaxy-5-9",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "slight-down-left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "galaxy-5-10",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "left",
+        "color": "purple",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "nameAr": "🌌 مرحلة المجرة ٦ - الأفق البنفسجي",
+    "nameEn": "Galaxy Level 6 - Violet Horizon",
+    "difficulty": "سهل",
+    "difficultyEn": "Easy",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-6-1",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-6-2",
+        "gridX": 1,
+        "gridY": 2,
+        "direction": "slight-down-left",
+        "color": "cyan",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-6-3",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-6-4",
+        "gridX": 5,
+        "gridY": 4,
+        "direction": "left",
+        "color": "orange",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-6-5",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "up-right",
+        "color": "yellow",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-6-6",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "slight-up-left",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "galaxy-6-7",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "slight-down-right",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "galaxy-6-8",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "right",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "galaxy-6-9",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "down-left",
+        "color": "lime",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-6-10",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "slight-up-right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-6-11",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "right",
+        "color": "pink",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "nameAr": "🌌 مرحلة المجرة ٧ - جاذبية السوبرنوفا",
+    "nameEn": "Galaxy Level 7 - Supernova Gravity",
+    "difficulty": "سهل",
+    "difficultyEn": "Easy",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-7-1",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "galaxy-7-2",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "down-right",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "galaxy-7-3",
+        "gridX": 10,
+        "gridY": 2,
+        "direction": "up-left",
+        "color": "orange",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-7-4",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "left",
+        "color": "lime",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-7-5",
+        "gridX": 8,
+        "gridY": 1,
+        "direction": "slight-up-left",
+        "color": "purple",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-7-6",
+        "gridX": 3,
+        "gridY": 6,
+        "direction": "slight-up-left",
+        "color": "pink",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-7-7",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "up-left",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "galaxy-7-8",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "up",
+        "color": "pink",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-7-9",
+        "gridX": 9,
+        "gridY": 2,
+        "direction": "up-right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "galaxy-7-10",
+        "gridX": 9,
+        "gridY": 3,
+        "direction": "down-left",
+        "color": "purple",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-7-11",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "slight-up-left",
+        "color": "cyan",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "nameAr": "🌌 مرحلة المجرة ٨ - قمر البلورات",
+    "nameEn": "Galaxy Level 8 - Crystal Moon",
+    "difficulty": "سهل",
+    "difficultyEn": "Easy",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-8-1",
+        "gridX": 10,
+        "gridY": 2,
+        "direction": "down",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "galaxy-8-2",
+        "gridX": 2,
+        "gridY": 4,
+        "direction": "slight-down-left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-8-3",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "right",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "galaxy-8-4",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-8-5",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "up-right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-8-6",
+        "gridX": 6,
+        "gridY": 3,
+        "direction": "up",
+        "color": "lime",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-8-7",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "right",
+        "color": "pink",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-8-8",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "slight-down-left",
+        "color": "pink",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-8-9",
+        "gridX": 4,
+        "gridY": 2,
+        "direction": "right",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "galaxy-8-10",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "slight-down-right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "galaxy-8-11",
+        "gridX": 9,
+        "gridY": 5,
+        "direction": "up-right",
+        "color": "orange",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-8-12",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "slight-down-left",
+        "color": "lime",
+        "length": 1
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "nameAr": "🌌 مرحلة المجرة ٩ - المسار الضوئي",
+    "nameEn": "Galaxy Level 9 - Light Path",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-9-1",
+        "gridX": 9,
+        "gridY": 3,
+        "direction": "left",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "galaxy-9-2",
+        "gridX": 1,
+        "gridY": 2,
+        "direction": "up-left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "galaxy-9-3",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "slight-up-right",
+        "color": "purple",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-9-4",
+        "gridX": 9,
+        "gridY": 5,
+        "direction": "right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-9-5",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "up-right",
+        "color": "orange",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-9-6",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "galaxy-9-7",
+        "gridX": 1,
+        "gridY": 4,
+        "direction": "down",
+        "color": "cyan",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-9-8",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "slight-up-left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "galaxy-9-9",
+        "gridX": 4,
+        "gridY": 4,
+        "direction": "up",
+        "color": "orange",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-9-10",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "up-left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-9-11",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-9-12",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "slight-up-right",
+        "color": "orange",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "nameAr": "🌌 مرحلة المجرة ١٠ - جسر المجرات",
+    "nameEn": "Galaxy Level 10 - Galactic Bridge",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "galaxy-10-1",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "slight-down-right",
+        "color": "yellow",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-10-2",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "down-left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-10-3",
+        "gridX": 1,
+        "gridY": 2,
+        "direction": "up-left",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "galaxy-10-4",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "galaxy-10-5",
+        "gridX": 9,
+        "gridY": 3,
+        "direction": "down-right",
+        "color": "yellow",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-10-6",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "down",
+        "color": "purple",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-10-7",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "up-left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-10-8",
+        "gridX": 9,
+        "gridY": 2,
+        "direction": "down-left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-10-9",
+        "gridX": 5,
+        "gridY": 2,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-10-10",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "up-right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "galaxy-10-11",
+        "gridX": 5,
+        "gridY": 1,
+        "direction": "slight-down-left",
+        "color": "lime",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-10-12",
+        "gridX": 2,
+        "gridY": 4,
+        "direction": "up",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "galaxy-10-13",
+        "gridX": 4,
+        "gridY": 4,
+        "direction": "right",
+        "color": "orange",
+        "length": 1
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "nameAr": "🌌 مرحلة المجرة ١١ - نبض الكوازار",
+    "nameEn": "Galaxy Level 11 - Quasar Pulse",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-11-1",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "down",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "galaxy-11-2",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "down-right",
+        "color": "lime",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-11-3",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "down-left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-11-4",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "slight-down-left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "galaxy-11-5",
+        "gridX": 8,
+        "gridY": 3,
+        "direction": "left",
+        "color": "lime",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-11-6",
+        "gridX": 1,
+        "gridY": 2,
+        "direction": "down",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "galaxy-11-7",
+        "gridX": 8,
+        "gridY": 1,
+        "direction": "right",
+        "color": "purple",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-11-8",
+        "gridX": 5,
+        "gridY": 2,
+        "direction": "down-left",
+        "color": "pink",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-11-9",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "slight-up-right",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "galaxy-11-10",
+        "gridX": 5,
+        "gridY": 1,
+        "direction": "down",
+        "color": "yellow",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-11-11",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "up-left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "galaxy-11-12",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-11-13",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "slight-down-left",
+        "color": "orange",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "nameAr": "🌌 مرحلة المجرة ١٢ - شفق المشتري",
+    "nameEn": "Galaxy Level 12 - Jupiter Aurora",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-12-1",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-12-2",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "up-right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "galaxy-12-3",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "slight-down-right",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "galaxy-12-4",
+        "gridX": 9,
+        "gridY": 2,
+        "direction": "down",
+        "color": "pink",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-12-5",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "slight-up-left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-12-6",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "galaxy-12-7",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "slight-up-left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "galaxy-12-8",
+        "gridX": 9,
+        "gridY": 5,
+        "direction": "left",
+        "color": "purple",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-12-9",
+        "gridX": 6,
+        "gridY": 3,
+        "direction": "down-left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "galaxy-12-10",
+        "gridX": 6,
+        "gridY": 4,
+        "direction": "up-left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-12-11",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "up-right",
+        "color": "orange",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-12-12",
+        "gridX": 5,
+        "gridY": 1,
+        "direction": "left",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "galaxy-12-13",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "galaxy-12-14",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "slight-down-right",
+        "color": "purple",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "nameAr": "🌌 مرحلة المجرة ١٣ - سراديب زحل",
+    "nameEn": "Galaxy Level 13 - Saturn Vaults",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-13-1",
+        "gridX": 5,
+        "gridY": 2,
+        "direction": "slight-up-right",
+        "color": "orange",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-13-2",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-13-3",
+        "gridX": 8,
+        "gridY": 1,
+        "direction": "slight-up-right",
+        "color": "cyan",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-13-4",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "slight-down-right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-13-5",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "slight-up-right",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "galaxy-13-6",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "up-left",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "galaxy-13-7",
+        "gridX": 6,
+        "gridY": 4,
+        "direction": "down-right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-13-8",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "slight-up-left",
+        "color": "orange",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-13-9",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "down-right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-13-10",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "up-right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "galaxy-13-11",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "slight-down-right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "galaxy-13-12",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "slight-up-left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-13-13",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "right",
+        "color": "orange",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-13-14",
+        "gridX": 6,
+        "gridY": 5,
+        "direction": "slight-down-left",
+        "color": "cyan",
+        "length": 1
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "nameAr": "🌌 مرحلة المجرة ١٤ - غبار النجوم",
+    "nameEn": "Galaxy Level 14 - Stardust Trail",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-14-1",
+        "gridX": 5,
+        "gridY": 4,
+        "direction": "up-right",
+        "color": "yellow",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-14-2",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "up",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "galaxy-14-3",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "down",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "galaxy-14-4",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "right",
+        "color": "lime",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-14-5",
+        "gridX": 1,
+        "gridY": 2,
+        "direction": "up-left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "galaxy-14-6",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "down",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "galaxy-14-7",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "right",
+        "color": "purple",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-14-8",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-14-9",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-14-10",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "slight-up-right",
+        "color": "yellow",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-14-11",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "up-left",
+        "color": "cyan",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-14-12",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "up-right",
+        "color": "purple",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-14-13",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "slight-down-left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "galaxy-14-14",
+        "gridX": 4,
+        "gridY": 2,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-14-15",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "nameAr": "🌌 مرحلة المجرة ١٥ - عاصفة الفضاء",
+    "nameEn": "Galaxy Level 15 - Deep Space Storm",
+    "difficulty": "متوسط",
+    "difficultyEn": "Medium",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "galaxy-15-1",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "up",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "galaxy-15-2",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "up-left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-15-3",
+        "gridX": 6,
+        "gridY": 3,
+        "direction": "up-right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "galaxy-15-4",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "up-left",
+        "color": "orange",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-15-5",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "up-right",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "galaxy-15-6",
+        "gridX": 1,
+        "gridY": 2,
+        "direction": "up-left",
+        "color": "pink",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-15-7",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "down-right",
+        "color": "yellow",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-15-8",
+        "gridX": 3,
+        "gridY": 3,
+        "direction": "right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-15-9",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "up-left",
+        "color": "yellow",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-15-10",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "slight-down-left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-15-11",
+        "gridX": 4,
+        "gridY": 4,
+        "direction": "left",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "galaxy-15-12",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "up-left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-15-13",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "slight-down-left",
+        "color": "lime",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-15-14",
+        "gridX": 10,
+        "gridY": 5,
+        "direction": "up-right",
+        "color": "orange",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-15-15",
+        "gridX": 10,
+        "gridY": 4,
+        "direction": "up-left",
+        "color": "orange",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "nameAr": "🌌 مرحلة المجرة ١٦ - مدار الثقب الأزرق",
+    "nameEn": "Galaxy Level 16 - Blue Hole Orbit",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-16-1",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "up",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-16-2",
+        "gridX": 8,
+        "gridY": 2,
+        "direction": "slight-up-right",
+        "color": "yellow",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-16-3",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-16-4",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "slight-up-right",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "galaxy-16-5",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "up",
+        "color": "purple",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-16-6",
+        "gridX": 10,
+        "gridY": 2,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-16-7",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "down-right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "galaxy-16-8",
+        "gridX": 1,
+        "gridY": 2,
+        "direction": "up-right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-16-9",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "left",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "galaxy-16-10",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "slight-down-left",
+        "color": "lime",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-16-11",
+        "gridX": 10,
+        "gridY": 6,
+        "direction": "down",
+        "color": "lime",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-16-12",
+        "gridX": 7,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "orange",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-16-13",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "up-left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "galaxy-16-14",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "galaxy-16-15",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "up-right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-16-16",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "right",
+        "color": "orange",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "nameAr": "🌌 مرحلة المجرة ١٧ - كوكبة التنين الكوني",
+    "nameEn": "Galaxy Level 17 - Cosmic Dragon Constellation",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-17-1",
+        "gridX": 5,
+        "gridY": 1,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-17-2",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "slight-up-left",
+        "color": "yellow",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-17-3",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "slight-up-left",
+        "color": "pink",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-17-4",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "down-left",
+        "color": "purple",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-17-5",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "down-left",
+        "color": "orange",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-17-6",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "slight-down-left",
+        "color": "yellow",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-17-7",
+        "gridX": 10,
+        "gridY": 3,
+        "direction": "down-left",
+        "color": "lime",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-17-8",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "slight-up-right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-17-9",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "up-right",
+        "color": "pink",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-17-10",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "galaxy-17-11",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-17-12",
+        "gridX": 9,
+        "gridY": 5,
+        "direction": "right",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "galaxy-17-13",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "slight-up-left",
+        "color": "orange",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-17-14",
+        "gridX": 8,
+        "gridY": 5,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-17-15",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "down-right",
+        "color": "lime",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-17-16",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "down",
+        "color": "cyan",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "nameAr": "🌌 مرحلة المجرة ١٨ - حصن المجرة الكبرى",
+    "nameEn": "Galaxy Level 18 - Grand Citadel",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-18-1",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "slight-down-right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "galaxy-18-2",
+        "gridX": 6,
+        "gridY": 4,
+        "direction": "slight-up-right",
+        "color": "pink",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-18-3",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "up-right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-18-4",
+        "gridX": 1,
+        "gridY": 4,
+        "direction": "slight-up-right",
+        "color": "yellow",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-18-5",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "right",
+        "color": "purple",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-18-6",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "down-left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "galaxy-18-7",
+        "gridX": 6,
+        "gridY": 3,
+        "direction": "up-right",
+        "color": "lime",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-18-8",
+        "gridX": 5,
+        "gridY": 5,
+        "direction": "down-right",
+        "color": "pink",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-18-9",
+        "gridX": 6,
+        "gridY": 5,
+        "direction": "down-right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "galaxy-18-10",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "down-right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "galaxy-18-11",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "slight-up-left",
+        "color": "pink",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-18-12",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "up",
+        "color": "yellow",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-18-13",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "down-left",
+        "color": "purple",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-18-14",
+        "gridX": 9,
+        "gridY": 2,
+        "direction": "slight-up-left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "galaxy-18-15",
+        "gridX": 2,
+        "gridY": 4,
+        "direction": "slight-down-right",
+        "color": "purple",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-18-16",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "yellow",
+        "length": 1
+      },
+      {
+        "id": "galaxy-18-17",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "slight-up-right",
+        "color": "orange",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "nameAr": "🌌 مرحلة المجرة ١٩ - الممر السري",
+    "nameEn": "Galaxy Level 19 - Secret Nexus",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-19-1",
+        "gridX": 7,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "orange",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-19-2",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "slight-down-left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-19-3",
+        "gridX": 3,
+        "gridY": 4,
+        "direction": "slight-up-right",
+        "color": "yellow",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-19-4",
+        "gridX": 8,
+        "gridY": 5,
+        "direction": "up-right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "galaxy-19-5",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "up",
+        "color": "purple",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-19-6",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-19-7",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "up",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "galaxy-19-8",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "down-right",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "galaxy-19-9",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-19-10",
+        "gridX": 1,
+        "gridY": 4,
+        "direction": "slight-down-left",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "galaxy-19-11",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-19-12",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "galaxy-19-13",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "down",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-19-14",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "up",
+        "color": "purple",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-19-15",
+        "gridX": 8,
+        "gridY": 3,
+        "direction": "slight-down-left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "galaxy-19-16",
+        "gridX": 10,
+        "gridY": 3,
+        "direction": "right",
+        "color": "pink",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-19-17",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "down-left",
+        "color": "purple",
+        "length": 2
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "nameAr": "🌌 مرحلة المجرة ٢٠ - قلعة المدار الكوني",
+    "nameEn": "Galaxy Level 20 - Cosmic Orbit Keep",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "galaxy-20-1",
+        "gridX": 8,
+        "gridY": 5,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-20-2",
+        "gridX": 3,
+        "gridY": 6,
+        "direction": "right",
+        "color": "purple",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-20-3",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "slight-up-right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "galaxy-20-4",
+        "gridX": 5,
+        "gridY": 1,
+        "direction": "slight-down-right",
+        "color": "cyan",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-20-5",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "up-right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-20-6",
+        "gridX": 2,
+        "gridY": 4,
+        "direction": "slight-up-right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-20-7",
+        "gridX": 6,
+        "gridY": 3,
+        "direction": "up-right",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "galaxy-20-8",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "slight-up-right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-20-9",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "slight-up-left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "galaxy-20-10",
+        "gridX": 10,
+        "gridY": 4,
+        "direction": "down",
+        "color": "pink",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-20-11",
+        "gridX": 9,
+        "gridY": 1,
+        "direction": "slight-down-left",
+        "color": "lime",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-20-12",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "up-right",
+        "color": "yellow",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-20-13",
+        "gridX": 9,
+        "gridY": 2,
+        "direction": "down",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-20-14",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-20-15",
+        "gridX": 7,
+        "gridY": 6,
+        "direction": "slight-up-left",
+        "color": "pink",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-20-16",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "down-left",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "galaxy-20-17",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "down",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "galaxy-20-18",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "up-right",
+        "color": "pink",
+        "length": 1
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "nameAr": "🌌 مرحلة المجرة ٢١ - أشباح السديم",
+    "nameEn": "Galaxy Level 21 - Nebula Ghosts",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-21-1",
+        "gridX": 3,
+        "gridY": 6,
+        "direction": "left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-21-2",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "up",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "galaxy-21-3",
+        "gridX": 1,
+        "gridY": 3,
+        "direction": "down",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "galaxy-21-4",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "up",
+        "color": "orange",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-21-5",
+        "gridX": 1,
+        "gridY": 5,
+        "direction": "slight-up-right",
+        "color": "cyan",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-21-6",
+        "gridX": 1,
+        "gridY": 2,
+        "direction": "slight-down-right",
+        "color": "cyan",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-21-7",
+        "gridX": 9,
+        "gridY": 2,
+        "direction": "slight-down-right",
+        "color": "orange",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-21-8",
+        "gridX": 8,
+        "gridY": 3,
+        "direction": "down-left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-21-9",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "right",
+        "color": "lime",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-21-10",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "up",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-21-11",
+        "gridX": 7,
+        "gridY": 2,
+        "direction": "slight-up-left",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "galaxy-21-12",
+        "gridX": 9,
+        "gridY": 5,
+        "direction": "right",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "galaxy-21-13",
+        "gridX": 3,
+        "gridY": 2,
+        "direction": "down-right",
+        "color": "yellow",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-21-14",
+        "gridX": 5,
+        "gridY": 4,
+        "direction": "slight-up-right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-21-15",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "slight-up-right",
+        "color": "yellow",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-21-16",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "up-right",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "galaxy-21-17",
+        "gridX": 5,
+        "gridY": 1,
+        "direction": "down-right",
+        "color": "cyan",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-21-18",
+        "gridX": 2,
+        "gridY": 4,
+        "direction": "down-right",
+        "color": "orange",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "nameAr": "🌌 مرحلة المجرة ٢٢ - النواة الكونية",
+    "nameEn": "Galaxy Level 22 - Cosmic Core",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-22-1",
+        "gridX": 4,
+        "gridY": 4,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "galaxy-22-2",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "up",
+        "color": "pink",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-22-3",
+        "gridX": 10,
+        "gridY": 3,
+        "direction": "right",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-22-4",
+        "gridX": 8,
+        "gridY": 1,
+        "direction": "down",
+        "color": "yellow",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-22-5",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "slight-up-right",
+        "color": "pink",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-22-6",
+        "gridX": 5,
+        "gridY": 4,
+        "direction": "up",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "galaxy-22-7",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-22-8",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "up-right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-22-9",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "up",
+        "color": "lime",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-22-10",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "down-right",
+        "color": "pink",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-22-11",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "up",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-22-12",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "down",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-22-13",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "down-left",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "galaxy-22-14",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "up-right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "galaxy-22-15",
+        "gridX": 6,
+        "gridY": 3,
+        "direction": "left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "galaxy-22-16",
+        "gridX": 8,
+        "gridY": 3,
+        "direction": "up-right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "galaxy-22-17",
+        "gridX": 6,
+        "gridY": 6,
+        "direction": "up-left",
+        "color": "pink",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-22-18",
+        "gridX": 3,
+        "gridY": 6,
+        "direction": "slight-up-right",
+        "color": "orange",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-22-19",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "down-left",
+        "color": "cyan",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "nameAr": "🌌 مرحلة المجرة ٢٣ - أفق المجهول",
+    "nameEn": "Galaxy Level 23 - Unknown Horizon",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-23-1",
+        "gridX": 7,
+        "gridY": 5,
+        "direction": "up-left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "galaxy-23-2",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "slight-down-left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "galaxy-23-3",
+        "gridX": 8,
+        "gridY": 6,
+        "direction": "slight-down-left",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "galaxy-23-4",
+        "gridX": 5,
+        "gridY": 2,
+        "direction": "slight-up-left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-23-5",
+        "gridX": 7,
+        "gridY": 4,
+        "direction": "slight-down-right",
+        "color": "pink",
+        "length": 2
+      },
+      {
+        "id": "galaxy-23-6",
+        "gridX": 1,
+        "gridY": 6,
+        "direction": "slight-up-right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-23-7",
+        "gridX": 4,
+        "gridY": 6,
+        "direction": "left",
+        "color": "lime",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-23-8",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "galaxy-23-9",
+        "gridX": 10,
+        "gridY": 2,
+        "direction": "slight-up-right",
+        "color": "pink",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-23-10",
+        "gridX": 4,
+        "gridY": 4,
+        "direction": "down-left",
+        "color": "yellow",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-23-11",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "right",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "galaxy-23-12",
+        "gridX": 9,
+        "gridY": 2,
+        "direction": "down-right",
+        "color": "purple",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-23-13",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "slight-down-left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "galaxy-23-14",
+        "gridX": 6,
+        "gridY": 5,
+        "direction": "down-right",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-23-15",
+        "gridX": 6,
+        "gridY": 1,
+        "direction": "slight-up-left",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "galaxy-23-16",
+        "gridX": 2,
+        "gridY": 1,
+        "direction": "slight-up-left",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-23-17",
+        "gridX": 5,
+        "gridY": 1,
+        "direction": "slight-up-left",
+        "color": "orange",
+        "length": 1,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-23-18",
+        "gridX": 2,
+        "gridY": 2,
+        "direction": "left",
+        "color": "orange",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-23-19",
+        "gridX": 1,
+        "gridY": 1,
+        "direction": "left",
+        "color": "cyan",
+        "length": 1
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "nameAr": "🌌 مرحلة المجرة ٢٤ - حارس الأبعاد",
+    "nameEn": "Galaxy Level 24 - Dimensional Sentinel",
+    "difficulty": "صعب",
+    "difficultyEn": "Hard",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 3,
+    "arrows": [
+      {
+        "id": "galaxy-24-1",
+        "gridX": 4,
+        "gridY": 5,
+        "direction": "up",
+        "color": "cyan",
+        "length": 1
+      },
+      {
+        "id": "galaxy-24-2",
+        "gridX": 5,
+        "gridY": 3,
+        "direction": "slight-up-left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-24-3",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "slight-up-right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-24-4",
+        "gridX": 10,
+        "gridY": 2,
+        "direction": "up-right",
+        "color": "lime",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      },
+      {
+        "id": "galaxy-24-5",
+        "gridX": 1,
+        "gridY": 4,
+        "direction": "slight-down-left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "galaxy-24-6",
+        "gridX": 5,
+        "gridY": 2,
+        "direction": "slight-up-left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "galaxy-24-7",
+        "gridX": 9,
+        "gridY": 4,
+        "direction": "slight-up-left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "galaxy-24-8",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "slight-up-right",
+        "color": "purple",
+        "length": 1
+      },
+      {
+        "id": "galaxy-24-9",
+        "gridX": 3,
+        "gridY": 5,
+        "direction": "left",
+        "color": "orange",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-24-10",
+        "gridX": 7,
+        "gridY": 1,
+        "direction": "up-right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-24-11",
+        "gridX": 6,
+        "gridY": 5,
+        "direction": "up-right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-24-12",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "slight-down-left",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "galaxy-24-13",
+        "gridX": 2,
+        "gridY": 3,
+        "direction": "right",
+        "color": "orange",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-24-14",
+        "gridX": 9,
+        "gridY": 5,
+        "direction": "up-left",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-24-15",
+        "gridX": 8,
+        "gridY": 2,
+        "direction": "up-left",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "galaxy-24-16",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-24-17",
+        "gridX": 3,
+        "gridY": 1,
+        "direction": "down-right",
+        "color": "purple",
+        "length": 2
+      },
+      {
+        "id": "galaxy-24-18",
+        "gridX": 3,
+        "gridY": 6,
+        "direction": "down-right",
+        "color": "pink",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-24-19",
+        "gridX": 10,
+        "gridY": 5,
+        "direction": "right",
+        "color": "orange",
+        "length": 2
+      },
+      {
+        "id": "galaxy-24-20",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "slight-down-right",
+        "color": "yellow",
+        "length": 1,
+        "type": "double",
+        "isDouble": true
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "nameAr": "👹🔥 مرحلة المجرة ٢٥ - وحش المجرة الفضائي الأخير",
+    "nameEn": "👹🔥 Galaxy Level 25 - Ultimate Space Monster Boss",
+    "difficulty": "صعب جداً",
+    "difficultyEn": "Very Hard",
+    "gridSize": {
+      "cols": 12,
+      "rows": 8
+    },
+    "maxDrops": 1,
+    "arrows": [
+      {
+        "id": "galaxy-25-1",
+        "gridX": 6,
+        "gridY": 2,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-25-2",
+        "gridX": 4,
+        "gridY": 3,
+        "direction": "up-left",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-25-3",
+        "gridX": 9,
+        "gridY": 6,
+        "direction": "slight-down-left",
+        "color": "yellow",
+        "length": 2
+      },
+      {
+        "id": "galaxy-25-4",
+        "gridX": 2,
+        "gridY": 6,
+        "direction": "slight-up-left",
+        "color": "lime",
+        "length": 1
+      },
+      {
+        "id": "galaxy-25-5",
+        "gridX": 4,
+        "gridY": 1,
+        "direction": "slight-down-left",
+        "color": "orange",
+        "length": 2,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-25-6",
+        "gridX": 7,
+        "gridY": 2,
+        "direction": "up-left",
+        "color": "orange",
+        "length": 1
+      },
+      {
+        "id": "galaxy-25-7",
+        "gridX": 5,
+        "gridY": 6,
+        "direction": "down-left",
+        "color": "lime",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "galaxy-25-8",
+        "gridX": 7,
+        "gridY": 3,
+        "direction": "right",
+        "color": "cyan",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-25-9",
+        "gridX": 10,
+        "gridY": 3,
+        "direction": "down-right",
+        "color": "orange",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "galaxy-25-10",
+        "gridX": 1,
+        "gridY": 2,
+        "direction": "down-right",
+        "color": "pink",
+        "length": 1,
+        "type": "star",
+        "isStar": true
+      },
+      {
+        "id": "galaxy-25-11",
+        "gridX": 8,
+        "gridY": 4,
+        "direction": "right",
+        "color": "cyan",
+        "length": 2,
+        "type": "bomb",
+        "isBomb": true
+      },
+      {
+        "id": "galaxy-25-12",
+        "gridX": 2,
+        "gridY": 5,
+        "direction": "left",
+        "color": "cyan",
+        "length": 2
+      },
+      {
+        "id": "galaxy-25-13",
+        "gridX": 10,
+        "gridY": 1,
+        "direction": "down-left",
+        "color": "yellow",
+        "length": 2,
+        "type": "ghost",
+        "isGhost": true
+      },
+      {
+        "id": "galaxy-25-14",
+        "gridX": 4,
+        "gridY": 2,
+        "direction": "slight-down-right",
+        "color": "lime",
+        "length": 2
+      },
+      {
+        "id": "galaxy-25-15",
+        "gridX": 6,
+        "gridY": 5,
+        "direction": "slight-down-left",
+        "color": "pink",
+        "length": 1
+      },
+      {
+        "id": "galaxy-25-16",
+        "gridX": 8,
+        "gridY": 1,
+        "direction": "slight-down-right",
+        "color": "cyan",
+        "length": 2,
+        "type": "double",
+        "isDouble": true
+      }
+    ]
+  }
+];
+
+export function getGalaxyLevel(id: number): Level {
+  const levelId = Math.min(Math.max(1, id), 25);
+  const found = GALAXY_LEVELS.find((l) => l.id === levelId) || GALAXY_LEVELS[0];
+  const level: Level = {
+    ...found,
+    arrows: found.arrows.map((a) => ({ ...a })),
+  };
+
+  if (levelId === 25) {
+    level.maxDrops = 1;
+    level.difficulty = "صعب جداً";
+    level.difficultyEn = "Very Hard";
+    if (!level.nameAr.includes("👹🔥")) {
+      level.nameAr = "👹🔥 " + level.nameAr;
+    }
+  }
+
+  level.arrows = level.arrows.filter((arrow) => isArrowInBounds(arrow, level.gridSize.cols, level.gridSize.rows));
+  return level;
+}
