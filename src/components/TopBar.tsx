@@ -81,7 +81,11 @@ export const TopBar: React.FC<TopBarProps> = ({
           <h1 className="text-2xl sm:text-3xl font-black text-sky-500 drop-shadow-[0_2px_8px_rgba(56,189,248,0.3)] tracking-tight">
             {levelText}
           </h1>
-          <span className="text-xs sm:text-sm font-black text-rose-500 tracking-wider bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-100 -mt-0.5 shadow-2xs">
+          <span className={`text-xs sm:text-sm font-black tracking-wider px-2.5 py-0.5 rounded-full border -mt-0.5 shadow-2xs ${
+            difficultyAr === 'صعب جداً جداً'
+              ? 'bg-gradient-to-r from-purple-900 via-rose-900 to-red-900 text-amber-300 border-purple-500 animate-pulse'
+              : 'text-rose-500 bg-rose-50 border-rose-100'
+          }`}>
             {isAr ? difficultyAr : difficultyEn}
           </span>
         </div>

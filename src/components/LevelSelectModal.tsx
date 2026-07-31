@@ -1,7 +1,7 @@
 import React from 'react';
 import { X, Lock, Star } from 'lucide-react';
 import { soundManager } from '../utils/sound';
-import { HANDCRAFTED_LEVELS, HAMMER_REQUIRED_LEVEL_IDS } from '../utils/levelGenerator';
+import { HANDCRAFTED_LEVELS, HAMMER_REQUIRED_LEVEL_IDS, MONSTER_BOSS_LEVEL_IDS } from '../utils/levelGenerator';
 
 interface LevelSelectModalProps {
   unlockedLevel: number;
@@ -56,8 +56,9 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
             const isUnlocked = id <= unlockedLevel;
             const isCurrent = id === currentLevel;
             const isHammerLevel = HAMMER_REQUIRED_LEVEL_IDS.includes(id);
-            const isBossLevel = id % 5 === 0 && !isHammerLevel;
-            const isStarLevel = id % 4 === 0 && !isHammerLevel && !isBossLevel;
+            const isMonsterBossLevel = MONSTER_BOSS_LEVEL_IDS.includes(id);
+            const isBossLevel = (id % 5 === 0 || isMonsterBossLevel) && !isHammerLevel;
+            const isStarLevel = id % 4 === 0 && !isHammerLevel && !isBossLevel && !isMonsterBossLevel;
             const stars = starsPerLevel[id] || 0;
             const handcrafted = HANDCRAFTED_LEVELS.find((l) => l.id === id);
 
@@ -73,7 +74,9 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                   isCurrent
                     ? 'bg-gradient-to-tr from-sky-400 to-blue-500 text-white border-sky-300 shadow-md scale-105'
                     : isUnlocked
-                    ? isHammerLevel
+                    ? isMonsterBossLevel
+                      ? 'bg-gradient-to-tr from-purple-200 via-rose-100 to-red-100 text-purple-950 border-purple-500 hover:border-purple-700 hover:scale-105 shadow-md cursor-pointer'
+                      : isHammerLevel
                       ? 'bg-gradient-to-tr from-amber-100 via-orange-50 to-amber-50 text-slate-900 border-amber-300 hover:border-amber-400 hover:scale-105 shadow-sm cursor-pointer'
                       : isBossLevel
                       ? 'bg-gradient-to-tr from-rose-50 to-amber-50 text-slate-800 border-rose-300 hover:border-rose-400 hover:scale-105 shadow-sm cursor-pointer'
@@ -81,12 +84,17 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                     : 'bg-slate-100 text-slate-400 border-slate-200 opacity-60 cursor-not-allowed'
                 }`}
               >
-                {isHammerLevel && (
+                {isMonsterBossLevel && (
+                  <span className="absolute -top-1.5 -right-1.5 text-xs bg-purple-700 text-white font-black px-1.5 py-0.5 rounded-full shadow-xs border border-white" title={isAr ? 'مرحلة الوحش المرعبة' : 'Monster Boss Level'}>
+                    👹
+                  </span>
+                )}
+                {isHammerLevel && !isMonsterBossLevel && (
                   <span className="absolute -top-1.5 -right-1.5 text-xs bg-amber-500 text-white font-black px-1.5 py-0.5 rounded-full shadow-xs border border-white" title={isAr ? 'مرحلة تتطلب مطرقة أو رعد' : 'Hammer / Lightning required'}>
                     🔨
                   </span>
                 )}
-                {isBossLevel && (
+                {isBossLevel && !isMonsterBossLevel && (
                   <span className="absolute -top-1.5 -right-1.5 text-xs bg-rose-500 text-white font-black px-1.5 py-0.5 rounded-full shadow-xs border border-white">
                     🔥
                   </span>

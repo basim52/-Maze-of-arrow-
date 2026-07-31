@@ -26,8 +26,8 @@ export interface Level {
   id: number;
   nameAr: string;
   nameEn: string;
-  difficulty: 'سهل' | 'متوسط' | 'صعب' | 'خبير' | 'صعب جداً';
-  difficultyEn: 'Easy' | 'Medium' | 'Hard' | 'Expert' | 'Very Hard';
+  difficulty: 'سهل' | 'متوسط' | 'صعب' | 'خبير' | 'صعب جداً' | 'صعب جداً جداً';
+  difficultyEn: 'Easy' | 'Medium' | 'Hard' | 'Expert' | 'Very Hard' | 'Extremely Hard';
   gridSize: { cols: number; rows: number };
   arrows: Arrow[];
   maxDrops: number;

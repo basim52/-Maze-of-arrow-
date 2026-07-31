@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Arrow, Level, ThemeSkin } from './types';
-import { getLevel } from './utils/levelGenerator';
+import { getLevel, MONSTER_BOSS_LEVEL_IDS } from './utils/levelGenerator';
 import { soundManager } from './utils/sound';
 import { TopBar } from './components/TopBar';
 import { ArrowMazeBoard } from './components/ArrowMazeBoard';
@@ -715,6 +715,23 @@ export default function App() {
 
           {/* Main Interactive 3D Arrow Board Stage */}
           <main className="flex-1 flex flex-col items-center justify-center relative w-full px-1 sm:px-2">
+            {/* Monster Boss Level Banner */}
+            {(MONSTER_BOSS_LEVEL_IDS.includes(activeLevel.id) || activeLevel.difficulty === 'صعب جداً جداً') && (
+              <div className="mb-1.5 bg-gradient-to-r from-purple-900 via-rose-900 to-red-900 text-white font-black text-xs px-3.5 py-1.5 rounded-2xl shadow-xl flex items-center justify-between gap-2 border-2 border-rose-500/80 animate-pulse w-full max-w-sm">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-lg">👹🔥</span>
+                  <span className="text-[11px] leading-tight text-rose-100">
+                    {isAr
+                      ? 'مرحلة الوحش الشرسة! صعوبة قصوى للغاية - فرصة واحدة فقط للفوز 💀'
+                      : 'Monster Boss Challenge! Extreme difficulty - Only 1 attempt 💀'}
+                  </span>
+                </div>
+                <span className="bg-rose-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-inner uppercase tracking-wider shrink-0">
+                  {isAr ? 'صعب جداً جداً' : 'EXTREME'}
+                </span>
+              </div>
+            )}
+
             {/* Steel Lock Level Banner for Hammer/Thunder required levels */}
             {activeLevel.requiresHammer && !isHammerActive && (
               <div className="mb-1.5 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white font-black text-xs px-3.5 py-1.5 rounded-2xl shadow-md flex items-center gap-2 animate-pulse">

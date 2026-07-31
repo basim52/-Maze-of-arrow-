@@ -5489,6 +5489,112 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
 }
 
 export const HAMMER_REQUIRED_LEVEL_IDS = [45, 52, 60, 68, 77, 85, 93, 100, 108, 115, 122, 125, 140, 160, 180, 200];
+export const MONSTER_BOSS_LEVEL_IDS = [69, 150, 158, 173];
+
+export function createMonsterBossLevel(levelNumber: number): Level {
+  let nameAr = `👹🔥 مرحلة الوحش الخارقة ${levelNumber}`;
+  let nameEn = `👹🔥 Monster Boss Level ${levelNumber}`;
+
+  if (levelNumber === 69) {
+    nameAr = `👹🔥 69 - مرحلة الوحش: عرش التنين الشرس`;
+    nameEn = `👹🔥 69 - Monster Boss: Fierce Dragon Throne`;
+  } else if (levelNumber === 150) {
+    nameAr = `👹🔥 150 - مرحلة الوحش: قلعة ملك الأشباح`;
+    nameEn = `👹🔥 150 - Monster Boss: Ghost King Citadel`;
+  } else if (levelNumber === 158) {
+    nameAr = `👹🔥 158 - مرحلة الوحش: حصن العاصفة السوداء`;
+    nameEn = `👹🔥 158 - Monster Boss: Black Storm Fortress`;
+  } else if (levelNumber === 173) {
+    nameAr = `👹🔥 173 - مرحلة الوحش: التحدي الخارق المستحيل`;
+    nameEn = `👹🔥 173 - Monster Boss: Ultimate Impossible Pinnacle`;
+  }
+
+  const cols = 16;
+  const rows = 10;
+  const targetCount = 22; // Very dense, extremely challenging layout
+
+  const directions: Direction[] = ['up', 'down', 'left', 'right', 'up-left', 'up-right', 'down-left', 'down-right'];
+
+  for (let attempt = 0; attempt < 100; attempt++) {
+    const arrows: Arrow[] = [];
+    let innerAttempts = 0;
+
+    while (arrows.length < targetCount && innerAttempts < 500) {
+      innerAttempts++;
+      const gx = Math.floor(Math.random() * (cols - 2)) + 1;
+      const gy = Math.floor(Math.random() * (rows - 2)) + 1;
+      const dir = directions[Math.floor(Math.random() * directions.length)];
+      const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      const len = Math.random() > 0.5 ? 2 : 1;
+
+      const isBomb = Math.random() < 0.16;
+      const isGhost = !isBomb && Math.random() < 0.22;
+      const isStar = !isBomb && !isGhost && Math.random() < 0.20;
+      const isDouble = !isBomb && !isGhost && !isStar && Math.random() < 0.25;
+
+      const candidate: Arrow = {
+        id: `monster-${levelNumber}-${arrows.length}-${Math.random().toString(36).substring(2, 7)}`,
+        gridX: gx,
+        gridY: gy,
+        direction: dir,
+        color: color,
+        length: len,
+        ...(isBomb
+          ? { type: 'bomb', isBomb: true }
+          : isGhost
+          ? { type: 'ghost', isGhost: true }
+          : isStar
+          ? { type: 'star', isStar: true }
+          : isDouble
+          ? { type: 'double', isDouble: true }
+          : {}),
+      };
+
+      const testLevel: Level = {
+        id: levelNumber,
+        nameAr,
+        nameEn,
+        difficulty: 'صعب جداً جداً',
+        difficultyEn: 'Extremely Hard',
+        gridSize: { cols, rows },
+        maxDrops: 1,
+        arrows: [...arrows, candidate],
+      };
+
+      if (!hasOverlappingCells(testLevel.arrows) && isLevelSolvable(testLevel)) {
+        arrows.push(candidate);
+      }
+    }
+
+    const candidateLevel: Level = {
+      id: levelNumber,
+      nameAr,
+      nameEn,
+      difficulty: 'صعب جداً جداً',
+      difficultyEn: 'Extremely Hard',
+      gridSize: { cols, rows },
+      maxDrops: 1,
+      arrows,
+    };
+
+    if (arrows.length >= 16 && isLevelSolvable(candidateLevel)) {
+      return candidateLevel;
+    }
+  }
+
+  // Fallback
+  const fallback = generateRandomSolvableLevel(levelNumber);
+  return {
+    ...fallback,
+    id: levelNumber,
+    nameAr,
+    nameEn,
+    difficulty: 'صعب جداً جداً',
+    difficultyEn: 'Extremely Hard',
+    maxDrops: 1,
+    gridSize: { cols: 16, rows: 10 },
+  };
+}
 
 export function createHammerRequiredLevel(levelNumber: number): Level {
   const isEvery5th = levelNumber % 5 === 0;
@@ -5853,7 +5959,9 @@ export function createHammerRequiredLevel(levelNumber: number): Level {
 
 export function getLevel(id: number): Level {
   let level: Level;
-  if (HAMMER_REQUIRED_LEVEL_IDS.includes(id)) {
+  if (MONSTER_BOSS_LEVEL_IDS.includes(id)) {
+    level = createMonsterBossLevel(id);
+  } else if (HAMMER_REQUIRED_LEVEL_IDS.includes(id)) {
     level = createHammerRequiredLevel(id);
   } else {
     const handcrafted = HANDCRAFTED_LEVELS.find((l) => l.id === id);
