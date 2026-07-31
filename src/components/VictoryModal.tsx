@@ -115,7 +115,7 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({
           {dropsCount > 0 && (
             <div className="text-[11px] font-bold text-amber-700 flex items-center justify-end gap-1 pt-0.5 border-t border-amber-200/50">
               <span>⭐</span>
-              <span>{isAr ? `تتضمن +${dropsCount * 3} نقاط (${dropsCount} نجوم بقاء × 3)` : `Includes +${dropsCount * 3} coins (${dropsCount} Survival Stars × 3)`}</span>
+              <span>{isAr ? `${dropsCount} نجوم بقاء × ٤ نقاط = +${dropsCount * 4}` : `${dropsCount} Survival Stars × 4 = +${dropsCount * 4}`}</span>
             </div>
           )}
         </div>

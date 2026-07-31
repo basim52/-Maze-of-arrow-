@@ -594,14 +594,10 @@ export default function App() {
   // Victory Handler
   const handleLevelCompleted = () => {
     const starsEarned = drops === 3 ? 3 : drops === 2 ? 2 : 1;
-    const pointsPerStar = 11;
-    const survivalStarsBonus = drops * 3; // Every survival star gives 3 points
-    const pointsForRun = starsEarned * pointsPerStar + survivalStarsBonus;
+    const pointsForRun = drops * 4; // Every survival star gives 4 points (no 11-point star bonus)
 
     const prevStars = starsPerLevel[currentLevelId] || 0;
     const newStars = Math.max(prevStars, starsEarned);
-    const addedStars = newStars - prevStars;
-    const coinsReward = addedStars * pointsPerStar + survivalStarsBonus;
 
     setLastCoinsEarned(pointsForRun);
 
@@ -612,8 +608,8 @@ export default function App() {
 
     setStarsPerLevel(updatedStars);
 
-    if (coinsReward > 0) {
-      setCoins((prev) => prev + coinsReward);
+    if (pointsForRun > 0) {
+      setCoins((prev) => prev + pointsForRun);
     }
 
     const nextUnlocked = computeUnlockedLevel(updatedStars);
