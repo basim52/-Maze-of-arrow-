@@ -907,9 +907,44 @@ export default function App() {
   const handleLevelCompleted = () => {
     const isAr = language === 'ar';
     const starsEarned = drops === 3 ? 3 : drops === 2 ? 2 : 1;
-    const pointsForRun = drops * 4; // Every survival star gives 4 points
+    let pointsEarned = 0;
 
-    setLastCoinsEarned(pointsForRun);
+    if (gameMode === 'galaxy') {
+      const prevGalaxyStars = starsPerGalaxyLevel[currentGalaxyLevelId] || 0;
+      const newStarsAdded = Math.max(0, starsEarned - prevGalaxyStars);
+      pointsEarned = newStarsAdded * 4;
+
+      const newGalaxyStars = Math.max(prevGalaxyStars, starsEarned);
+      const updatedGalaxyStars = {
+        ...starsPerGalaxyLevel,
+        [currentGalaxyLevelId]: newGalaxyStars,
+      };
+      setStarsPerGalaxyLevel(updatedGalaxyStars);
+      setUnlockedGalaxyLevel((prev) => Math.max(prev, currentGalaxyLevelId + 1));
+      if (pointsEarned > 0) {
+        setCoins((prev) => prev + pointsEarned);
+      }
+    } else {
+      const prevStars = starsPerLevel[currentLevelId] || 0;
+      const newStarsAdded = Math.max(0, starsEarned - prevStars);
+      pointsEarned = newStarsAdded * 4;
+
+      const newStars = Math.max(prevStars, starsEarned);
+      const updatedStars = {
+        ...starsPerLevel,
+        [currentLevelId]: newStars,
+      };
+      setStarsPerLevel(updatedStars);
+
+      if (pointsEarned > 0) {
+        setCoins((prev) => prev + pointsEarned);
+      }
+
+      const nextUnlocked = computeUnlockedLevel(updatedStars);
+      setUnlockedLevel(nextUnlocked);
+    }
+
+    setLastCoinsEarned(pointsEarned);
 
     // Space Coins Reward: 10% chance to earn 2 to 5 space coins on level completion
     let spaceEarned = 0;
@@ -923,35 +958,6 @@ export default function App() {
       );
     }
     setSpaceCoinsEarned(spaceEarned);
-
-    if (gameMode === 'galaxy') {
-      const prevGalaxyStars = starsPerGalaxyLevel[currentGalaxyLevelId] || 0;
-      const newGalaxyStars = Math.max(prevGalaxyStars, starsEarned);
-      const updatedGalaxyStars = {
-        ...starsPerGalaxyLevel,
-        [currentGalaxyLevelId]: newGalaxyStars,
-      };
-      setStarsPerGalaxyLevel(updatedGalaxyStars);
-      setUnlockedGalaxyLevel((prev) => Math.max(prev, currentGalaxyLevelId + 1));
-      if (pointsForRun > 0) {
-        setCoins((prev) => prev + pointsForRun);
-      }
-    } else {
-      const prevStars = starsPerLevel[currentLevelId] || 0;
-      const newStars = Math.max(prevStars, starsEarned);
-      const updatedStars = {
-        ...starsPerLevel,
-        [currentLevelId]: newStars,
-      };
-      setStarsPerLevel(updatedStars);
-
-      if (pointsForRun > 0) {
-        setCoins((prev) => prev + pointsForRun);
-      }
-
-      const nextUnlocked = computeUnlockedLevel(updatedStars);
-      setUnlockedLevel(nextUnlocked);
-    }
 
     setShowVictoryModal(true);
   };
