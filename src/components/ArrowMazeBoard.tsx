@@ -430,19 +430,19 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
   const [flyingArrows, setFlyingArrows] = useState<Record<string, { x: number; y: number }>>({});
   const [tileSize, setTileSize] = useState<number>(52);
 
-  // Dynamic board & tile size calculator for responsive mobile perfection
+  // Dynamic board & tile size calculator for responsive mobile perfection and enlarged board
   useEffect(() => {
     const updateTileSize = () => {
       if (!containerRef.current) return;
-      const availableWidth = containerRef.current.clientWidth - 12;
-      const availableHeight = window.innerHeight - 150;
+      const availableWidth = containerRef.current.clientWidth - 8;
+      const availableHeight = window.innerHeight - 105;
 
       const maxTileW = Math.floor(availableWidth / gridCols);
       const maxTileH = Math.floor(availableHeight / gridRows);
 
       const optimal = Math.min(maxTileW, maxTileH);
-      // Clamp between 28 and 80 for expanded, clear, large screen board scaling
-      const clamped = Math.max(28, Math.min(80, optimal));
+      // Clamp between 30 and 100 for enlarged, ultra-clear board scale
+      const clamped = Math.max(30, Math.min(100, optimal));
       setTileSize(clamped);
     };
 

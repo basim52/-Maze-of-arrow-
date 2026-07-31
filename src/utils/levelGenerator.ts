@@ -6047,6 +6047,9 @@ export function getLevel(id: number): Level {
     }
   }
 
+  // Strictly sanitize all arrows to guarantee none ever bleed out of bounds
+  level.arrows = level.arrows.filter((arrow) => isArrowInBounds(arrow, level.gridSize.cols, level.gridSize.rows));
+
   return level;
 }
 
