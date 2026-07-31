@@ -434,15 +434,15 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
   useEffect(() => {
     const updateTileSize = () => {
       if (!containerRef.current) return;
-      const availableWidth = containerRef.current.clientWidth - 16;
-      const availableHeight = window.innerHeight - 210;
+      const availableWidth = containerRef.current.clientWidth - 12;
+      const availableHeight = window.innerHeight - 150;
 
       const maxTileW = Math.floor(availableWidth / gridCols);
       const maxTileH = Math.floor(availableHeight / gridRows);
 
       const optimal = Math.min(maxTileW, maxTileH);
-      // Clamp between 24 and 54 for perfect mobile scaling
-      const clamped = Math.max(24, Math.min(54, optimal));
+      // Clamp between 28 and 80 for expanded, clear, large screen board scaling
+      const clamped = Math.max(28, Math.min(80, optimal));
       setTileSize(clamped);
     };
 
@@ -523,9 +523,9 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
       className="w-full flex-1 flex flex-col items-center justify-center relative my-2 px-1 sm:px-2 overflow-hidden select-none"
     >
       {/* Off-White Stage matching screenshot clean ivory background */}
-      <div className="relative w-full max-w-4xl flex items-center justify-center">
+      <div className="relative w-full max-w-5xl flex items-center justify-center">
         <div
-          className={`relative bg-gradient-to-b from-slate-50/80 via-white/70 to-slate-100/80 backdrop-blur-md rounded-3xl p-2 sm:p-5 flex items-center justify-center transition-all duration-300 border-2 ${
+          className={`relative bg-gradient-to-b from-slate-50/80 via-white/70 to-slate-100/80 backdrop-blur-md rounded-3xl p-2 sm:p-6 flex items-center justify-center transition-all duration-300 border-2 ${
             isHammerActive ? 'border-amber-400 ring-4 ring-amber-300/30 shadow-amber-100' : 'border-slate-200/80 shadow-md'
           }`}
           style={{

@@ -8,6 +8,7 @@ import { VictoryModal } from './components/VictoryModal';
 import { LevelSelectModal } from './components/LevelSelectModal';
 import { SettingsModal } from './components/SettingsModal';
 import { ShopModal } from './components/ShopModal';
+import { InventoryModal } from './components/InventoryModal';
 import { RainItem } from './components/RainStrikeOverlay';
 import { Sparkles, HelpCircle, RefreshCw } from 'lucide-react';
 
@@ -198,6 +199,7 @@ export default function App() {
   const [showLevelSelectModal, setShowLevelSelectModal] = useState<boolean>(false);
   const [showSettingsModal, setShowSettingsModal] = useState<boolean>(false);
   const [showShopModal, setShowShopModal] = useState<boolean>(false);
+  const [showInventoryModal, setShowInventoryModal] = useState<boolean>(false);
 
   // Rain Strikes overlay state & app clock
   const [rainItems, setRainItems] = useState<RainItem[]>([]);
@@ -770,66 +772,35 @@ export default function App() {
             />
 
             {/* In-Game Action Bar Dock */}
-            <div className="flex items-center justify-center gap-1.5 sm:gap-2 my-1 z-20 flex-wrap">
-              {/* Cream Power-Up Button (129 coins in shop) */}
+            <div className="flex items-center justify-center gap-2 my-1 z-20 flex-wrap">
+              {/* My Inventory / Bag Button */}
               <button
-                id="btn-cream-tool"
-                onClick={handleUseCream}
-                className="px-2 sm:px-3 py-1.5 rounded-2xl border-2 border-pink-300 bg-gradient-to-r from-pink-50 via-rose-50 to-amber-50 text-pink-900 hover:border-pink-400 font-black text-[11px] sm:text-xs flex items-center gap-1 shadow-xs hover:scale-105 active:scale-95 cursor-pointer transition-all"
-                title={isAr ? 'استخدام الكريمة لإزالة 5 أسهم عشوائية (129 نقطة)' : 'Use Cream to remove 5 random arrows (129 coins)'}
+                id="btn-inventory"
+                onClick={() => {
+                  soundManager.playClick();
+                  setShowInventoryModal(true);
+                }}
+                className="px-4 py-2 rounded-2xl border-2 border-amber-400 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 font-black text-xs sm:text-sm flex items-center gap-2 shadow-md hover:scale-105 active:scale-95 cursor-pointer transition-all"
+                title={isAr ? 'عرض ممتلكاتك وأدواتك واستخدامها' : 'View and use your inventory & tools'}
               >
-                <span className="text-base sm:text-lg">🍦</span>
-                <span>{isAr ? 'كريمة' : 'Cream'}</span>
-                <span className="bg-pink-200/90 text-pink-950 font-extrabold text-[10px] sm:text-[11px] px-1.5 sm:px-2 py-0.5 rounded-full border border-pink-300">
-                  {creams}
+                <span className="text-lg sm:text-xl">🎒</span>
+                <span>{isAr ? 'حقيبة الأدوات والممتلكات' : 'My Bag & Tools'}</span>
+                <span className="bg-amber-950 text-amber-200 font-extrabold text-xs px-2 py-0.5 rounded-full shadow-inner">
+                  {creams + chocolates + thunders + hammers}
                 </span>
               </button>
 
-              {/* Chocolate Power-Up Button (55 coins in shop) */}
-              <button
-                id="btn-choco-tool"
-                onClick={handleUseChocolate}
-                className="px-2 sm:px-3 py-1.5 rounded-2xl border-2 border-amber-800/40 bg-gradient-to-r from-amber-900/10 via-amber-800/20 to-yellow-900/20 text-amber-950 hover:border-amber-700 font-black text-[11px] sm:text-xs flex items-center gap-1 shadow-xs hover:scale-105 active:scale-95 cursor-pointer transition-all"
-                title={isAr ? 'استخدام الشوكولاتة لإزالة سهمين عشوائيين (55 نقطة)' : 'Use Chocolate to remove 2 random arrows (55 coins)'}
-              >
-                <span className="text-base sm:text-lg">🍫</span>
-                <span>{isAr ? 'شوكولاتة' : 'Chocolate'}</span>
-                <span className="bg-amber-800/20 text-amber-950 font-extrabold text-[10px] sm:text-[11px] px-1.5 sm:px-2 py-0.5 rounded-full border border-amber-700/30">
-                  {chocolates}
-                </span>
-              </button>
-
-              {/* Thunder Power-Up Button (95 coins in shop) */}
-              <button
-                id="btn-thunder-tool"
-                onClick={handleUseLightning}
-                className="px-2 sm:px-3 py-1.5 rounded-2xl border-2 border-sky-300 bg-gradient-to-r from-sky-50 via-cyan-50 to-blue-50 text-sky-900 hover:border-sky-400 font-black text-[11px] sm:text-xs flex items-center gap-1 shadow-xs hover:scale-105 active:scale-95 cursor-pointer transition-all"
-                title={isAr ? 'استخدام ضربة الرعد لكسر 3 أسهم عشوائية (95 نقطة)' : 'Use Lightning to break 3 random arrows (95 coins)'}
-              >
-                <span className="text-base sm:text-lg">⚡</span>
-                <span>{isAr ? 'رعد' : 'Thunder'}</span>
-                <span className="bg-sky-200/90 text-sky-950 font-extrabold text-[10px] sm:text-[11px] px-1.5 sm:px-2 py-0.5 rounded-full border border-sky-300">
-                  {thunders}
-                </span>
-              </button>
-
-              {/* Magic Hammer Power-Up Button (45 coins in shop) */}
-              <button
-                id="btn-hammer-tool"
-                onClick={handleToggleHammer}
-                className={`px-2 sm:px-3 py-1.5 rounded-2xl border-2 font-black text-[11px] sm:text-xs flex items-center gap-1 shadow-xs transition-all cursor-pointer ${
-                  isHammerActive
-                    ? 'bg-amber-500 text-white border-amber-300 ring-4 ring-amber-300/40 scale-105 animate-pulse'
-                    : 'bg-gradient-to-r from-amber-50 via-yellow-50 to-orange-50 border-amber-200 text-amber-900 hover:border-amber-300 hover:scale-105 active:scale-95'
-                }`}
-                title={isAr ? 'استخدام المطرقة لكسر سهم' : 'Use Hammer to break an arrow'}
-              >
-                <span className="text-base sm:text-lg">🔨</span>
-                <span>{isAr ? 'المطرقة' : 'Hammer'}</span>
-                <span className="bg-amber-200/90 text-amber-950 font-extrabold text-[10px] sm:text-[11px] px-1.5 sm:px-2 py-0.5 rounded-full border border-amber-300">
-                  {hammers}
-                </span>
-              </button>
+              {/* Active Hammer Indicator Badge (if hammer active) */}
+              {isHammerActive && (
+                <button
+                  onClick={handleToggleHammer}
+                  className="px-3 py-2 rounded-2xl border-2 border-amber-400 bg-amber-500 text-white font-black text-xs flex items-center gap-1.5 shadow-md animate-pulse cursor-pointer hover:bg-amber-600 transition-all"
+                  title={isAr ? 'المطرقة مفعلة! انقر على أي سهم لكسره (انقر هنا للإلغاء)' : 'Hammer active! Click any arrow to smash (click to cancel)'}
+                >
+                  <span className="text-base">🔨</span>
+                  <span>{isAr ? 'المطرقة مفعلة (انقر لإلغاء)' : 'Hammer Active (Cancel)'}</span>
+                </button>
+              )}
 
               {/* Reset Level Button */}
               <button
@@ -838,9 +809,9 @@ export default function App() {
                   soundManager.playClick();
                   handleRestartLevel();
                 }}
-                className="px-2.5 py-1.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-700 hover:bg-slate-50 font-extrabold text-[11px] sm:text-xs flex items-center gap-1 shadow-xs hover:scale-105 active:scale-95 cursor-pointer"
+                className="px-3 py-2 rounded-2xl border-2 border-slate-200 bg-white text-slate-700 hover:bg-slate-50 font-extrabold text-xs sm:text-sm flex items-center gap-1.5 shadow-xs hover:scale-105 active:scale-95 cursor-pointer transition-all"
               >
-                <RefreshCw className="w-3.5 h-3.5 text-slate-500" />
+                <RefreshCw className="w-4 h-4 text-slate-500" />
                 <span>{isAr ? 'إعادة' : 'Reset'}</span>
               </button>
             </div>
@@ -936,6 +907,29 @@ export default function App() {
           onBuyBundle={handleBuyBundle}
           onBuyCakeBundle={handleBuyCakeBundle}
           onClose={() => setShowShopModal(false)}
+        />
+      )}
+
+      {showInventoryModal && (
+        <InventoryModal
+          coins={coins}
+          hammers={hammers}
+          thunders={thunders}
+          creams={creams}
+          chocolates={chocolates}
+          selectedSkin={selectedSkin}
+          unlockedSkins={unlockedSkins}
+          language={language}
+          onUseCream={handleUseCream}
+          onUseChocolate={handleUseChocolate}
+          onUseThunder={handleUseLightning}
+          onToggleHammer={handleToggleHammer}
+          onSelectSkin={(skin) => setSelectedSkin(skin)}
+          onOpenShop={() => {
+            setShowInventoryModal(false);
+            setShowShopModal(true);
+          }}
+          onClose={() => setShowInventoryModal(false)}
         />
       )}
     </div>
