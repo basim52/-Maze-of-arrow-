@@ -62,8 +62,8 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                     ? `اختيار المستوى الرئيسي (١ - ${TOTAL_MAIN_LEVELS})`
                     : `Main Levels (1 - ${TOTAL_MAIN_LEVELS})`
                   : isAr
-                  ? 'مراحل الأحداث الفضائية (١ - ٢٥ 🚀)'
-                  : 'Galaxy Event Levels (1 - 25 🚀)'}
+                  ? 'مراحل الأحداث الفضائية - تحديث الجمعة الكوني (١ - ٢٥ 🚀)'
+                  : 'Galaxy Event Levels - Cosmic Friday Update (1 - 25 🚀)'}
               </span>
             </h2>
             <p className="text-[11px] text-purple-200/80 font-medium mt-0.5">
@@ -72,8 +72,8 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                   ? 'اختر مرحلتك الرئيسية للتحدي والتقدم'
                   : 'Select your main puzzle level'
                 : isAr
-                ? 'مراحل فضاء كوكبية خاصة بدون مطرقة وحش حتى المرحلة ٢٥'
-                : 'Special space levels without monster boss until level 25'}
+                ? '🌌 تحديث الجمعة الكوني: أسهم فضائية، نجوم متلألئة، وخلفيات كوكبية مبهرة!'
+                : '🌌 Cosmic Friday Update: Space arrows, sparkling stars & planetary backgrounds!'}
             </p>
           </div>
 

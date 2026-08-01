@@ -1032,8 +1032,9 @@ export default function App() {
                 : isAr ? 'هروب الأسهم - تطبيق الألغاز' : 'Arrow Escape App'}
             </span>
           </div>
-          <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-full font-black border border-white/30 text-amber-200">
-            {gameMode === 'galaxy' ? 'GALAXY SPACE 🚀' : 'PRO v2.5'}
+          <span className="text-[10px] bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 text-slate-900 px-2.5 py-0.5 rounded-full font-black border border-white/50 shadow-xs animate-pulse flex items-center gap-1">
+            <span>🌌</span>
+            <span>{isAr ? 'تحديث الجمعة الكوني' : 'Cosmic Friday Update'}</span>
           </span>
         </div>
 
@@ -1131,6 +1132,7 @@ export default function App() {
               isHammerActive={isHammerActive}
               onUseHammer={handleUseHammer}
               rainItems={rainItems}
+              gameMode={gameMode}
             />
 
             {/* In-Game Action Bar Dock */}

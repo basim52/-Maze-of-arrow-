@@ -15,6 +15,7 @@ interface ArrowMazeBoardProps {
   isHammerActive?: boolean;
   onUseHammer?: (arrowId: string) => void;
   rainItems?: RainItem[];
+  gameMode?: 'main' | 'galaxy';
 }
 
 // Color palette matching user's screenshot exact vibrant smooth pastel jelly 3D colors
@@ -148,12 +149,24 @@ const Render3DArrowSVG: React.FC<{
   isBumping: boolean;
   isFlying: boolean;
   tileSize: number;
-}> = ({ arrow, isBumping, isFlying, tileSize }) => {
+  gameMode?: 'main' | 'galaxy';
+}> = ({ arrow, isBumping, isFlying, tileSize, gameMode }) => {
+  const isGalaxy = gameMode === 'galaxy';
   const theme = COLOR_THEMES[arrow.color] || COLOR_THEMES.cyan;
   const isDouble = arrow.isDouble || arrow.type === 'double';
   const isBomb = arrow.isBomb || arrow.type === 'bomb';
   const isGhost = arrow.isGhost || arrow.type === 'ghost';
   const isStar = arrow.isStar || arrow.type === 'star';
+
+  // Galaxy Space Color Palettes based on arrow color index
+  const galaxyTheme = {
+    highlight: arrow.color === 'pink' ? '#FCE7F3' : arrow.color === 'yellow' ? '#FEF9C3' : arrow.color === 'purple' ? '#F5D0FE' : '#E0F2FE',
+    gradientStart: arrow.color === 'pink' ? '#EC4899' : arrow.color === 'yellow' ? '#EAB308' : arrow.color === 'purple' ? '#A855F7' : '#06B6D4',
+    gradientEnd: arrow.color === 'pink' ? '#831843' : arrow.color === 'yellow' ? '#713F12' : arrow.color === 'purple' ? '#4C1D95' : '#0F172A',
+    border: arrow.color === 'pink' ? '#BE185D' : arrow.color === 'yellow' ? '#CA8A04' : arrow.color === 'purple' ? '#7E22CE' : '#0284C7',
+  };
+
+  const activeTheme = isGalaxy ? galaxyTheme : theme;
 
   const rotationDegrees: Record<Direction, number> = {
     up: -90,
@@ -259,7 +272,7 @@ const Render3DArrowSVG: React.FC<{
                   ? '#E9D5FF'
                   : isStar
                   ? '#FEF08A'
-                  : theme.highlight
+                  : activeTheme.highlight
               }
               stopOpacity="0.95"
             />
@@ -272,7 +285,7 @@ const Render3DArrowSVG: React.FC<{
                   ? '#A855F7'
                   : isStar
                   ? '#F59E0B'
-                  : theme.gradientStart
+                  : activeTheme.gradientStart
               }
             />
             <stop
@@ -284,7 +297,7 @@ const Render3DArrowSVG: React.FC<{
                   ? '#581C87'
                   : isStar
                   ? '#E11D48'
-                  : theme.gradientEnd
+                  : activeTheme.gradientEnd
               }
             />
           </linearGradient>
@@ -301,7 +314,7 @@ const Render3DArrowSVG: React.FC<{
                   ? '#3B0764'
                   : isStar
                   ? '#78350F'
-                  : theme.border
+                  : activeTheme.border
               }
               floodOpacity="0.4"
             />
@@ -318,7 +331,7 @@ const Render3DArrowSVG: React.FC<{
               ? '#3B0764'
               : isStar
               ? '#78350F'
-              : theme.border
+              : activeTheme.border
           }
           opacity="0.5"
           transform={`translate(0, ${s(3.5)})`}
@@ -335,7 +348,7 @@ const Render3DArrowSVG: React.FC<{
               ? '#6B21A8'
               : isStar
               ? '#B45309'
-              : theme.border
+              : activeTheme.border
           }
           strokeWidth={Math.max(1.2, s(2.2))}
           strokeLinejoin="round"
@@ -416,6 +429,21 @@ const Render3DArrowSVG: React.FC<{
             🌟
           </text>
         )}
+
+        {/* Cosmic Galaxy Sparkle Badge on standard space arrows */}
+        {isGalaxy && !isDouble && !isBomb && !isGhost && !isStar && (
+          <text
+            x={totalWidth / 2}
+            y={cy + s(4)}
+            textAnchor="middle"
+            fill="white"
+            fontSize={s(13)}
+            fontWeight="900"
+            className="select-none pointer-events-none drop-shadow-md animate-pulse"
+          >
+            ✨
+          </text>
+        )}
       </svg>
     </div>
   );
@@ -431,12 +459,14 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
   isHammerActive,
   onUseHammer,
   rainItems = [],
+  gameMode = 'main',
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [bumpingArrowId, setBumpingArrowId] = useState<string | null>(null);
   const [smashingArrowId, setSmashingArrowId] = useState<string | null>(null);
   const [flyingArrows, setFlyingArrows] = useState<Record<string, { x: number; y: number }>>({});
   const [tileSize, setTileSize] = useState<number>(52);
+  const isGalaxy = gameMode === 'galaxy';
 
   // Dynamic board & tile size calculator for responsive mobile perfection and enlarged board
   useEffect(() => {
@@ -537,11 +567,15 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
       ref={containerRef}
       className="w-full flex-1 flex flex-col items-center justify-center relative my-0.5 px-0.5 sm:px-1 overflow-hidden select-none min-h-[280px]"
     >
-      {/* Off-White Stage matching screenshot clean ivory background */}
+      {/* Stage Container */}
       <div className="relative w-full flex-1 flex items-center justify-center">
         <div
-          className={`relative bg-gradient-to-b from-slate-50/90 via-white/85 to-slate-100/90 backdrop-blur-md rounded-3xl p-2.5 sm:p-4 flex items-center justify-center transition-all duration-300 border-2 overflow-hidden shadow-lg ${
-            isHammerActive ? 'border-amber-400 ring-4 ring-amber-300/30 shadow-amber-100' : 'border-slate-200/80'
+          className={`relative backdrop-blur-md rounded-3xl p-2.5 sm:p-4 flex items-center justify-center transition-all duration-300 border-2 overflow-hidden shadow-lg ${
+            isGalaxy
+              ? 'bg-gradient-to-b from-slate-950 via-purple-950/90 to-indigo-950 border-purple-500/80 shadow-[0_0_30px_rgba(168,85,247,0.35)]'
+              : isHammerActive
+              ? 'bg-gradient-to-b from-slate-50/90 via-white/85 to-slate-100/90 border-amber-400 ring-4 ring-amber-300/30 shadow-amber-100'
+              : 'bg-gradient-to-b from-slate-50/90 via-white/85 to-slate-100/90 border-slate-200/80'
           }`}
           style={{
             width: `${gridCols * tileSize + 20}px`,
@@ -551,13 +585,49 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
         >
           {/* Subtle Grid Dot Pattern Canvas Background */}
           <div
-            className="absolute inset-0 rounded-3xl pointer-events-none opacity-40"
+            className={`absolute inset-0 rounded-3xl pointer-events-none ${isGalaxy ? 'opacity-20' : 'opacity-40'}`}
             style={{
-              backgroundImage: `radial-gradient(#94a3b8 1px, transparent 1px)`,
+              backgroundImage: `radial-gradient(${isGalaxy ? '#c084fc' : '#94a3b8'} 1px, transparent 1px)`,
               backgroundSize: `${tileSize}px ${tileSize}px`,
               backgroundPosition: `${tileSize / 2}px ${tileSize / 2}px`,
             }}
           />
+
+          {/* Twinkling Galaxy Stars Background for Event Levels */}
+          {isGalaxy && (
+            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+              {/* Cosmic Nebulae Glow Blobs */}
+              <div className="absolute top-0 left-1/4 w-32 h-32 bg-purple-600/30 rounded-full blur-2xl animate-pulse" />
+              <div className="absolute bottom-0 right-1/4 w-36 h-36 bg-pink-600/20 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }} />
+              <div className="absolute top-1/2 right-10 w-28 h-28 bg-indigo-600/30 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '2s' }} />
+
+              {/* Twinkling Star Field Dots */}
+              {[
+                { top: '8%', left: '12%', size: 'w-1 h-1', delay: '0s', color: 'bg-white' },
+                { top: '15%', left: '78%', size: 'w-1.5 h-1.5', delay: '0.4s', color: 'bg-purple-200' },
+                { top: '22%', left: '38%', size: 'w-2 h-2', delay: '0.8s', color: 'bg-amber-200' },
+                { top: '35%', left: '88%', size: 'w-1 h-1', delay: '1.2s', color: 'bg-cyan-200' },
+                { top: '48%', left: '18%', size: 'w-2.5 h-2.5', delay: '0.2s', color: 'bg-white' },
+                { top: '58%', left: '72%', size: 'w-1.5 h-1.5', delay: '1.6s', color: 'bg-pink-300' },
+                { top: '68%', left: '28%', size: 'w-1 h-1', delay: '0.9s', color: 'bg-sky-200' },
+                { top: '82%', left: '82%', size: 'w-2 h-2', delay: '1.4s', color: 'bg-amber-300' },
+                { top: '88%', left: '42%', size: 'w-1.5 h-1.5', delay: '0.6s', color: 'bg-white' },
+                { top: '12%', left: '60%', size: 'w-2 h-2', delay: '1.8s', color: 'bg-cyan-300' },
+                { top: '75%', left: '10%', size: 'w-1 h-1', delay: '1.1s', color: 'bg-purple-300' },
+                { top: '42%', left: '52%', size: 'w-1.5 h-1.5', delay: '0.3s', color: 'bg-white' },
+              ].map((star, idx) => (
+                <div
+                  key={`star-${idx}`}
+                  className={`absolute rounded-full shadow-[0_0_8px_rgba(255,255,255,0.9)] animate-pulse ${star.size} ${star.color}`}
+                  style={{
+                    top: star.top,
+                    left: star.left,
+                    animationDelay: star.delay,
+                  }}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Grid Container */}
           <div
@@ -652,6 +722,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
                     isBumping={isBumping}
                     isFlying={!!flyOffset}
                     tileSize={tileSize}
+                    gameMode={gameMode}
                   />
                 </div>
               );
