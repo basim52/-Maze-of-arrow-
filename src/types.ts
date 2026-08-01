@@ -22,11 +22,12 @@ export interface Arrow {
   direction: Direction;
   color: ArrowColor;
   length: number; // Standard length in grid units
-  type?: 'standard' | 'double' | 'bomb' | 'ghost' | 'star'; // Type of arrow: standard, double-headed, bomb, ghost, or bonus star
+  type?: 'standard' | 'double' | 'bomb' | 'ghost' | 'star' | 'diamond'; // Type of arrow: standard, double-headed, bomb, ghost, bonus star, or diamond veteran
   isDouble?: boolean;
   isBomb?: boolean;
   isGhost?: boolean;
   isStar?: boolean;
+  isDiamond?: boolean;
   cells?: { x: number; y: number }[]; // Ordered list of grid coordinates relative to (gridX, gridY) or absolute grid positions
   isEscaped?: boolean;
   isFlying?: boolean;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X, Lock, Star, Sparkles, Rocket } from 'lucide-react';
 import { soundManager } from '../utils/sound';
-import { HANDCRAFTED_LEVELS, HAMMER_REQUIRED_LEVEL_IDS, MONSTER_BOSS_LEVEL_IDS } from '../utils/levelGenerator';
+import { HANDCRAFTED_LEVELS, HAMMER_REQUIRED_LEVEL_IDS, MONSTER_BOSS_LEVEL_IDS, DIAMOND_VETERAN_LEVEL_IDS } from '../utils/levelGenerator';
 
 interface LevelSelectModalProps {
   unlockedLevel: number;
@@ -133,10 +133,11 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
             {mainLevelIds.map((id) => {
               const isUnlocked = id <= unlockedLevel;
               const isCurrent = id === currentLevel && gameMode === 'main';
+              const isDiamondLevel = DIAMOND_VETERAN_LEVEL_IDS.includes(id);
               const isHammerLevel = HAMMER_REQUIRED_LEVEL_IDS.includes(id);
               const isMonsterBossLevel = MONSTER_BOSS_LEVEL_IDS.includes(id);
-              const isBossLevel = (id % 5 === 0 || isMonsterBossLevel) && !isHammerLevel;
-              const isStarLevel = id % 4 === 0 && !isHammerLevel && !isBossLevel && !isMonsterBossLevel;
+              const isBossLevel = (id % 5 === 0 || isMonsterBossLevel) && !isHammerLevel && !isDiamondLevel;
+              const isStarLevel = id % 4 === 0 && !isHammerLevel && !isBossLevel && !isMonsterBossLevel && !isDiamondLevel;
               const stars = starsPerLevel[id] || 0;
               const handcrafted = HANDCRAFTED_LEVELS.find((l) => l.id === id);
 
@@ -152,7 +153,9 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                     isCurrent
                       ? 'bg-gradient-to-tr from-sky-400 to-blue-500 text-white border-sky-300 shadow-md scale-105'
                       : isUnlocked
-                      ? isMonsterBossLevel
+                      ? isDiamondLevel
+                        ? 'bg-gradient-to-tr from-cyan-950 via-slate-900 to-sky-900 text-cyan-200 border-cyan-400 hover:border-cyan-200 hover:scale-105 shadow-md cursor-pointer'
+                        : isMonsterBossLevel
                         ? 'bg-gradient-to-tr from-purple-900 via-rose-900 to-slate-900 text-white border-purple-500 hover:border-purple-300 hover:scale-105 shadow-md cursor-pointer'
                         : isHammerLevel
                         ? 'bg-gradient-to-tr from-amber-950 via-slate-900 to-amber-900 text-amber-200 border-amber-500 hover:border-amber-300 hover:scale-105 shadow-sm cursor-pointer'
@@ -162,7 +165,15 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                       : 'bg-slate-950 text-slate-600 border-slate-800 opacity-60 cursor-not-allowed'
                   }`}
                 >
-                  {isMonsterBossLevel && (
+                  {isDiamondLevel && (
+                    <span
+                      className="absolute -top-1.5 -right-1.5 text-xs bg-cyan-500 text-white font-black px-1.5 py-0.5 rounded-full shadow-xs border border-cyan-300 animate-pulse"
+                      title={isAr ? 'مرحلة سهم محنك الماسي (7 نقاط)' : 'Diamond Veteran Arrow Level (7 pts)'}
+                    >
+                      💎
+                    </span>
+                  )}
+                  {isMonsterBossLevel && !isDiamondLevel && (
                     <span
                       className="absolute -top-1.5 -right-1.5 text-xs bg-purple-600 text-white font-black px-1.5 py-0.5 rounded-full shadow-xs border border-purple-300"
                       title={isAr ? 'مرحلة الوحش المرعبة' : 'Monster Boss Level'}
@@ -170,7 +181,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                       👹
                     </span>
                   )}
-                  {isHammerLevel && !isMonsterBossLevel && (
+                  {isHammerLevel && !isMonsterBossLevel && !isDiamondLevel && (
                     <span
                       className="absolute -top-1.5 -right-1.5 text-xs bg-amber-500 text-white font-black px-1.5 py-0.5 rounded-full shadow-xs border border-amber-300"
                       title={isAr ? 'مرحلة تتطلب مطرقة أو رعد' : 'Hammer / Lightning required'}
@@ -178,12 +189,12 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                       🔨
                     </span>
                   )}
-                  {isBossLevel && !isMonsterBossLevel && (
+                  {isBossLevel && !isMonsterBossLevel && !isDiamondLevel && (
                     <span className="absolute -top-1.5 -right-1.5 text-xs bg-rose-500 text-white font-black px-1.5 py-0.5 rounded-full shadow-xs border border-rose-300">
                       🔥
                     </span>
                   )}
-                  {isStarLevel && (
+                  {isStarLevel && !isDiamondLevel && (
                     <span
                       className="absolute -top-1.5 -right-1.5 text-xs bg-amber-400 text-slate-950 font-black px-1.5 py-0.5 rounded-full shadow-xs border border-amber-200"
                       title={isAr ? 'مرحلة السهم الذهبي المحنك' : 'Golden Star Arrow Level'}

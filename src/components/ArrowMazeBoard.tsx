@@ -157,6 +157,7 @@ const Render3DArrowSVG: React.FC<{
   const isBomb = arrow.isBomb || arrow.type === 'bomb';
   const isGhost = arrow.isGhost || arrow.type === 'ghost';
   const isStar = arrow.isStar || arrow.type === 'star';
+  const isDiamond = arrow.isDiamond || arrow.type === 'diamond';
 
   // Galaxy Space Color Palettes based on arrow color index
   const galaxyTheme = {
@@ -266,7 +267,9 @@ const Render3DArrowSVG: React.FC<{
             <stop
               offset="0%"
               stopColor={
-                isBomb
+                isDiamond
+                  ? '#E0F2FE'
+                  : isBomb
                   ? '#FDE047'
                   : isGhost
                   ? '#E9D5FF'
@@ -279,7 +282,9 @@ const Render3DArrowSVG: React.FC<{
             <stop
               offset="30%"
               stopColor={
-                isBomb
+                isDiamond
+                  ? '#38BDF8'
+                  : isBomb
                   ? '#F97316'
                   : isGhost
                   ? '#A855F7'
@@ -291,7 +296,9 @@ const Render3DArrowSVG: React.FC<{
             <stop
               offset="100%"
               stopColor={
-                isBomb
+                isDiamond
+                  ? '#0284C7'
+                  : isBomb
                   ? '#DC2626'
                   : isGhost
                   ? '#581C87'
@@ -308,7 +315,9 @@ const Render3DArrowSVG: React.FC<{
               dy={s(3)}
               stdDeviation={s(2)}
               floodColor={
-                isBomb
+                isDiamond
+                  ? '#0369A1'
+                  : isBomb
                   ? '#991B1B'
                   : isGhost
                   ? '#3B0764'
@@ -325,7 +334,9 @@ const Render3DArrowSVG: React.FC<{
         <path
           d={shadowPath}
           fill={
-            isBomb
+            isDiamond
+              ? '#0369A1'
+              : isBomb
               ? '#991B1B'
               : isGhost
               ? '#3B0764'
@@ -342,7 +353,9 @@ const Render3DArrowSVG: React.FC<{
           d={bodyPath}
           fill={`url(#grad-${arrow.id})`}
           stroke={
-            isBomb
+            isDiamond
+              ? '#0284C7'
+              : isBomb
               ? '#7F1D1D'
               : isGhost
               ? '#6B21A8'
@@ -427,6 +440,21 @@ const Render3DArrowSVG: React.FC<{
             className="select-none pointer-events-none drop-shadow-md animate-bounce"
           >
             🌟
+          </text>
+        )}
+
+        {/* Diamond Veteran Arrow Badge Icon in the center */}
+        {isDiamond && (
+          <text
+            x={totalWidth / 2}
+            y={cy + s(5)}
+            textAnchor="middle"
+            fill="white"
+            fontSize={s(15)}
+            fontWeight="900"
+            className="select-none pointer-events-none drop-shadow-md animate-pulse"
+          >
+            💎
           </text>
         )}
 

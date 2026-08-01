@@ -8623,6 +8623,7 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
 
 export const HAMMER_REQUIRED_LEVEL_IDS = [45, 52, 60, 68, 77, 93, 100, 108, 115, 122, 125, 140, 160, 180, 200, 205];
 export const MONSTER_BOSS_LEVEL_IDS = [55, 69, 85, 105, 120, 138, 150, 158, 173, 188, 200, 210];
+export const DIAMOND_VETERAN_LEVEL_IDS = [87, 98, 100, 179, 194];
 
 export function createMonsterBossLevel(levelNumber: number): Level {
   let nameAr = `👹🔥 ${levelNumber} - مرحلة الوحش الخارقة`;
@@ -9184,6 +9185,32 @@ export function getLevel(id: number): Level {
     if (!level.nameEn.includes('🌟')) {
       level.nameEn = `🌟 ${level.nameEn}`;
     }
+  }
+
+  // Diamond Veteran Arrow levels (87, 98, 100, 179, 194)
+  if (DIAMOND_VETERAN_LEVEL_IDS.includes(id)) {
+    if (!level.nameAr.includes('💎')) {
+      level.nameAr = `💎 ${level.nameAr} - سهم محنك الماسي (7 نقاط)`;
+    }
+    if (!level.nameEn.includes('💎')) {
+      level.nameEn = `💎 ${level.nameEn} - Diamond Veteran Arrow (7 pts)`;
+    }
+    // Convert ALL arrows in this level to Diamond Veteran Arrows
+    level.arrows = level.arrows.map((a) => ({
+      ...a,
+      type: 'diamond',
+      isDiamond: true,
+      isBomb: false,
+      isGhost: false,
+      isStar: false,
+    }));
+  } else {
+    // Strictly ensure no Diamond Veteran Arrows in any other level
+    level.arrows = level.arrows.map((a) =>
+      a.isDiamond || a.type === 'diamond'
+        ? { ...a, isDiamond: false, type: 'standard' }
+        : a
+    );
   }
 
   // Strictly sanitize all arrows to guarantee none ever bleed out of bounds

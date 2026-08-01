@@ -827,7 +827,11 @@ export default function App() {
   const handleArrowEscaped = (arrowId: string) => {
     const escapedArrow = arrows.find((a) => a.id === arrowId);
     if (escapedArrow) {
-      if (escapedArrow.isStar || escapedArrow.type === 'star') {
+      if (escapedArrow.isDiamond || escapedArrow.type === 'diamond') {
+        const isAr = language === 'ar';
+        setCoins((prev) => prev + 7);
+        triggerToast(isAr ? '💎 سهم محنك الماسي منحك +7 نقاط!' : '💎 Diamond Veteran Arrow granted +7 coins!');
+      } else if (escapedArrow.isStar || escapedArrow.type === 'star') {
         const isAr = language === 'ar';
         const isAlreadyCompleted = (starsPerLevel[currentLevelId] || 0) > 0;
         if (!isAlreadyCompleted) {
