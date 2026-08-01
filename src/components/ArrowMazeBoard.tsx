@@ -483,6 +483,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
   gridRows,
   onArrowEscaped,
   onArrowBlocked,
+  selectedSkin,
   isCompleted,
   isHammerActive,
   onUseHammer,
@@ -599,8 +600,16 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
       <div className="relative w-full flex-1 flex items-center justify-center">
         <div
           className={`relative backdrop-blur-md rounded-3xl p-2.5 sm:p-4 flex items-center justify-center transition-all duration-300 border-2 overflow-hidden shadow-lg ${
-            isGalaxy
+            isGalaxy || selectedSkin === 'nebula'
               ? 'bg-gradient-to-b from-slate-950 via-purple-950/90 to-indigo-950 border-purple-500/80 shadow-[0_0_30px_rgba(168,85,247,0.35)]'
+              : selectedSkin === 'supernova'
+              ? 'bg-gradient-to-b from-slate-950 via-rose-950 to-amber-950/90 border-amber-500/80 shadow-[0_0_35px_rgba(245,158,11,0.35)]'
+              : selectedSkin === 'neon'
+              ? 'bg-gradient-to-b from-slate-900 via-teal-950 to-slate-950 border-teal-500/60 shadow-[0_0_20px_rgba(20,184,166,0.25)]'
+              : selectedSkin === 'cyber'
+              ? 'bg-gradient-to-b from-slate-900 via-amber-950/70 to-slate-950 border-amber-400/70 shadow-[0_0_20px_rgba(251,191,36,0.2)]'
+              : selectedSkin === 'candy'
+              ? 'bg-gradient-to-b from-pink-50/90 via-purple-50/80 to-indigo-50/90 border-pink-300'
               : isHammerActive
               ? 'bg-gradient-to-b from-slate-50/90 via-white/85 to-slate-100/90 border-amber-400 ring-4 ring-amber-300/30 shadow-amber-100'
               : 'bg-gradient-to-b from-slate-50/90 via-white/85 to-slate-100/90 border-slate-200/80'
@@ -621,8 +630,8 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
             }}
           />
 
-          {/* Twinkling Galaxy Stars Background for Event Levels */}
-          {isGalaxy && (
+          {/* Twinkling Galaxy Stars Background for Event Levels or Space Skins */}
+          {(isGalaxy || selectedSkin === 'nebula' || selectedSkin === 'supernova') && (
             <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
               {/* Cosmic Nebulae Glow Blobs */}
               <div className="absolute top-0 left-1/4 w-32 h-32 bg-purple-600/30 rounded-full blur-2xl animate-pulse" />

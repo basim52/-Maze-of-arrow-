@@ -71,6 +71,22 @@ const SKINS: SkinItem[] = [
     gradient: 'from-amber-300 via-yellow-400 to-amber-600',
     icon: '👑',
   },
+  {
+    id: 'nebula',
+    nameAr: 'سديم الفضاء الكوني 🌌',
+    nameEn: 'Cosmic Space Nebula 🌌',
+    cost: 50,
+    gradient: 'from-purple-600 via-indigo-600 to-pink-500',
+    icon: '🌌',
+  },
+  {
+    id: 'supernova',
+    nameAr: 'السوبرنوفا الفضائي 💥🌌',
+    nameEn: 'Supernova Black Hole 💥🌌',
+    cost: 65,
+    gradient: 'from-amber-500 via-rose-600 to-purple-900',
+    icon: '💥',
+  },
 ];
 
 export const ShopModal: React.FC<ShopModalProps> = ({
@@ -367,6 +383,34 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                   title={isAr ? 'شراء كريمة فضائية بـ 47 عملة' : 'Buy Cosmic Space Cream for 47 coins'}
                 >
                   <span>{isAr ? 'شراء (+1)' : 'Buy (+1)'}</span>
+                </button>
+              </div>
+
+              {/* Space Background Skins Highlight Card (خلفية فضاء جديدة) */}
+              <div className="p-3 mt-2.5 rounded-2xl border border-pink-400/80 bg-gradient-to-r from-slate-950 via-purple-950 to-pink-950 flex flex-col gap-2 shadow-lg">
+                <div className="flex items-center justify-between">
+                  <span className="font-black text-pink-300 text-xs sm:text-sm flex items-center gap-1.5">
+                    <span>🌌</span>
+                    <span>{isAr ? 'خلفيات الفضاء الكونية الجديدة!' : 'New Cosmic Space Backgrounds!'}</span>
+                  </span>
+                  <span className="bg-pink-500/30 text-pink-200 text-[9px] px-2 py-0.5 rounded-full font-black border border-pink-400/40">
+                    {isAr ? 'جديد 🚀' : 'NEW 🚀'}
+                  </span>
+                </div>
+                <p className="text-[10px] text-purple-200/90 font-medium leading-relaxed">
+                  {isAr
+                    ? 'غيّر مظهر اللعبة إلى خلفية سديم الفضاء الساحرة أو السوبرنوفا الفضائية من قسم المظاهر!'
+                    : 'Transform your game stage with the new Cosmic Nebula or Supernova space background!'}
+                </p>
+                <button
+                  onClick={() => {
+                    soundManager.playClick();
+                    setActiveTab('skins');
+                  }}
+                  className="w-full py-1.5 rounded-xl bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 text-white font-black text-xs shadow-md hover:opacity-90 transition-all flex items-center justify-center gap-1 cursor-pointer"
+                >
+                  <span>🌌</span>
+                  <span>{isAr ? 'عرض خلفيات الفضاء وتفعيلها' : 'View & Unlock Space Backgrounds'}</span>
                 </button>
               </div>
             </div>

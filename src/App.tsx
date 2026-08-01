@@ -1060,7 +1060,7 @@ export default function App() {
 
       {/* Mobile Phone Application Frame (واجهة تطبيق) */}
       <div className={`w-full max-w-[460px] sm:max-w-[480px] h-screen sm:h-[94vh] sm:max-h-[900px] sm:rounded-[46px] border-0 sm:border-[8px] sm:border-slate-800/90 shadow-[0_25px_70px_rgba(0,0,0,0.6)] flex flex-col relative overflow-hidden backdrop-blur-md transition-colors duration-500 ${
-        gameMode === 'galaxy'
+        gameMode === 'galaxy' || selectedSkin === 'nebula' || selectedSkin === 'supernova'
           ? 'bg-gradient-to-b from-slate-950 via-purple-950/95 to-indigo-950 text-white'
           : 'bg-gradient-to-b from-sky-50/90 via-white to-slate-100/95 text-slate-800'
       }`}>

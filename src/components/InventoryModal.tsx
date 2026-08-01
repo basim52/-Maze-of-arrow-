@@ -63,6 +63,20 @@ const SKINS_INFO: SkinInfo[] = [
     icon: '👑',
     gradient: 'from-amber-300 via-yellow-400 to-amber-600',
   },
+  {
+    id: 'nebula',
+    nameAr: 'سديم الفضاء الكوني 🌌',
+    nameEn: 'Cosmic Space Nebula 🌌',
+    icon: '🌌',
+    gradient: 'from-purple-600 via-indigo-600 to-pink-500',
+  },
+  {
+    id: 'supernova',
+    nameAr: 'السوبرنوفا الفضائي 💥🌌',
+    nameEn: 'Supernova Black Hole 💥🌌',
+    icon: '💥',
+    gradient: 'from-amber-500 via-rose-600 to-purple-900',
+  },
 ];
 
 export const InventoryModal: React.FC<InventoryModalProps> = ({

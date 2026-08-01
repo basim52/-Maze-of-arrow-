@@ -47,7 +47,7 @@ export interface Level {
   requiresHammer?: boolean;
 }
 
-export type ThemeSkin = 'candy' | 'jelly' | 'neon' | 'cyber';
+export type ThemeSkin = 'candy' | 'jelly' | 'neon' | 'cyber' | 'nebula' | 'supernova';
 
 export interface PlayerStats {
   currentLevel: number;
