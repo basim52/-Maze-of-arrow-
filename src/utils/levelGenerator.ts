@@ -8623,7 +8623,7 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
 
 export const HAMMER_REQUIRED_LEVEL_IDS = [45, 52, 60, 68, 77, 93, 100, 108, 115, 122, 125, 140, 160, 180, 200, 205];
 export const MONSTER_BOSS_LEVEL_IDS = [55, 69, 85, 105, 120, 138, 150, 158, 173, 188, 200, 210];
-export const DIAMOND_VETERAN_LEVEL_IDS = [87, 98, 100, 179, 194];
+export const DIAMOND_VETERAN_LEVEL_IDS = [23, 74, 87, 98, 100, 179, 187, 194];
 
 export function createMonsterBossLevel(levelNumber: number): Level {
   let nameAr = `👹🔥 ${levelNumber} - مرحلة الوحش الخارقة`;

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { X, Volume2, VolumeX, Globe, RefreshCw, HelpCircle, ArrowRight } from 'lucide-react';
+import { X, Volume2, VolumeX, Music, Globe, RefreshCw, HelpCircle, ArrowRight } from 'lucide-react';
 import { soundManager } from '../utils/sound';
 
 interface SettingsModalProps {
   soundEnabled: boolean;
+  musicEnabled?: boolean;
   language: 'ar' | 'en';
   onToggleSound: () => void;
+  onToggleMusic?: () => void;
   onChangeLanguage: (lang: 'ar' | 'en') => void;
   onResetProgress: () => void;
   onClose: () => void;
@@ -13,8 +15,10 @@ interface SettingsModalProps {
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({
   soundEnabled,
+  musicEnabled = true,
   language,
   onToggleSound,
+  onToggleMusic,
   onChangeLanguage,
   onResetProgress,
   onClose,
@@ -129,6 +133,36 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 <div
                   className={`w-5 h-5 rounded-full bg-white shadow-md absolute top-1 transition-transform ${
                     soundEnabled ? 'right-1' : 'left-1'
+                  }`}
+                />
+              </button>
+            </div>
+
+            {/* Calm Background Music Toggle Row */}
+            <div className="flex items-center justify-between p-3 rounded-2xl bg-purple-50/70 border border-purple-100">
+              <div className="flex items-center gap-3">
+                <Music className={`w-5 h-5 ${musicEnabled ? 'text-purple-600 animate-pulse' : 'text-slate-400'}`} />
+                <div className="flex flex-col">
+                  <span className="font-bold text-slate-800 text-sm">
+                    {isAr ? 'موسيقى هادئة 🎶' : 'Calm BGM 🎶'}
+                  </span>
+                  <span className="text-[10px] text-slate-500">
+                    {isAr ? 'موسيقى خلفية استرخائية مهدئة' : 'Relaxing ambient music'}
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  soundManager.playClick();
+                  if (onToggleMusic) onToggleMusic();
+                }}
+                className={`w-12 h-7 rounded-full transition-colors relative cursor-pointer ${
+                  musicEnabled && soundEnabled ? 'bg-purple-600' : 'bg-slate-300'
+                }`}
+              >
+                <div
+                  className={`w-5 h-5 rounded-full bg-white shadow-md absolute top-1 transition-transform ${
+                    musicEnabled && soundEnabled ? 'right-1' : 'left-1'
                   }`}
                 />
               </button>

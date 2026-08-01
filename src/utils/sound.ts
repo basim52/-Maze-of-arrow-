@@ -3,6 +3,13 @@
 class SoundManager {
   private ctx: AudioContext | null = null;
   private enabled: boolean = true;
+  private musicEnabled: boolean = true;
+  private bgmGain: GainNode | null = null;
+  private isBgmPlaying: boolean = false;
+  private bgmTimer: number | null = null;
+  private droneOsc1: OscillatorNode | null = null;
+  private droneOsc2: OscillatorNode | null = null;
+  private bgmNoteIndex: number = 0;
 
   constructor() {
     // AudioContext will be initialized on first user gesture
@@ -22,10 +29,174 @@ class SoundManager {
 
   public setEnabled(val: boolean) {
     this.enabled = val;
+    if (!val) {
+      this.stopBGM();
+    } else if (this.musicEnabled) {
+      this.startBGM();
+    }
   }
 
   public isEnabled(): boolean {
     return this.enabled;
+  }
+
+  public setMusicEnabled(val: boolean) {
+    this.musicEnabled = val;
+    if (val && this.enabled) {
+      this.startBGM();
+    } else {
+      this.stopBGM();
+    }
+  }
+
+  public isMusicEnabled(): boolean {
+    return this.musicEnabled;
+  }
+
+  // Gentle & Lively Background Music Synthesizer
+  public startBGM() {
+    if (!this.enabled || !this.musicEnabled || this.isBgmPlaying) return;
+    this.initCtx();
+    if (!this.ctx) return;
+
+    try {
+      this.isBgmPlaying = true;
+
+      // Master BGM Gain Node - clearer and pleasant volume
+      const bgmGain = this.ctx.createGain();
+      bgmGain.gain.setValueAtTime(0.001, this.ctx.currentTime);
+      bgmGain.gain.linearRampToValueAtTime(0.16, this.ctx.currentTime + 1.5); // Clearer volume
+      bgmGain.connect(this.ctx.destination);
+      this.bgmGain = bgmGain;
+
+      // Warm chord backing pad
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.value = 1200;
+      filter.connect(bgmGain);
+
+      const drone1 = this.ctx.createOscillator();
+      const drone2 = this.ctx.createOscillator();
+      drone1.type = 'sine';
+      drone2.type = 'triangle';
+      drone1.frequency.setValueAtTime(261.63, this.ctx.currentTime); // C4
+      drone2.frequency.setValueAtTime(329.63, this.ctx.currentTime); // E4
+
+      const droneGain = this.ctx.createGain();
+      droneGain.gain.value = 0.15;
+      drone1.connect(droneGain);
+      drone2.connect(droneGain);
+      droneGain.connect(filter);
+
+      drone1.start();
+      drone2.start();
+      this.droneOsc1 = drone1;
+      this.droneOsc2 = drone2;
+
+      // Lively puzzle melody sequence generator
+      const melodyScale = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99, 880.00];
+      const chordProgressions = [
+        [0, 2, 4, 7], // Cmaj
+        [1, 3, 5, 8], // Dm/G
+        [2, 4, 6, 9], // Em
+        [0, 3, 5, 7], // Fmaj
+      ];
+
+      let progStep = 0;
+
+      const playLivelyPattern = () => {
+        if (!this.isBgmPlaying || !this.ctx || !this.bgmGain) return;
+        const now = this.ctx.currentTime;
+        const currentChord = chordProgressions[progStep % chordProgressions.length];
+        progStep++;
+
+        // Play a lively 3-note arpeggiated motif
+        const noteIdxs = [
+          currentChord[this.bgmNoteIndex % currentChord.length],
+          currentChord[(this.bgmNoteIndex + 1) % currentChord.length],
+          currentChord[(this.bgmNoteIndex + 3) % currentChord.length],
+        ];
+        this.bgmNoteIndex++;
+
+        noteIdxs.forEach((idx, i) => {
+          if (!this.ctx || !this.bgmGain) return;
+          const freq = melodyScale[idx % melodyScale.length];
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          const noteFilter = this.ctx.createBiquadFilter();
+
+          osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+          osc.frequency.setValueAtTime(freq, now + i * 0.25);
+
+          noteFilter.type = 'lowpass';
+          noteFilter.frequency.setValueAtTime(1800, now + i * 0.25);
+
+          // Crisp, cheerful pluck envelope
+          const startTime = now + i * 0.25;
+          gain.gain.setValueAtTime(0.001, startTime);
+          gain.gain.linearRampToValueAtTime(0.2, startTime + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.001, startTime + 1.2);
+
+          osc.connect(noteFilter);
+          noteFilter.connect(gain);
+          gain.connect(this.bgmGain);
+
+          osc.start(startTime);
+          osc.stop(startTime + 1.3);
+        });
+
+        // Add soft rhythmic woodblock beat
+        const popOsc = this.ctx.createOscillator();
+        const popGain = this.ctx.createGain();
+        popOsc.type = 'sine';
+        popOsc.frequency.setValueAtTime(600, now);
+        popOsc.frequency.exponentialRampToValueAtTime(150, now + 0.08);
+
+        popGain.gain.setValueAtTime(0.12, now);
+        popGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+        popOsc.connect(popGain);
+        popGain.connect(this.bgmGain);
+        popOsc.start(now);
+        popOsc.stop(now + 0.09);
+      };
+
+      // Play initial motif
+      playLivelyPattern();
+
+      // Repeat lively pattern every 1.4 seconds
+      this.bgmTimer = window.setInterval(() => {
+        playLivelyPattern();
+      }, 1400);
+
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  public stopBGM() {
+    this.isBgmPlaying = false;
+    if (this.bgmTimer) {
+      clearInterval(this.bgmTimer);
+      this.bgmTimer = null;
+    }
+    if (this.droneOsc1) {
+      try { this.droneOsc1.stop(); } catch (e) {}
+      this.droneOsc1 = null;
+    }
+    if (this.droneOsc2) {
+      try { this.droneOsc2.stop(); } catch (e) {}
+      this.droneOsc2 = null;
+    }
+    if (this.bgmGain && this.ctx) {
+      try {
+        this.bgmGain.gain.linearRampToValueAtTime(0.001, this.ctx.currentTime + 0.8);
+        setTimeout(() => {
+          this.bgmGain?.disconnect();
+          this.bgmGain = null;
+        }, 900);
+      } catch (e) {}
+    }
   }
 
   // Soft click sound

@@ -96,6 +96,19 @@ export default function App() {
     return true;
   });
 
+  const [musicEnabled, setMusicEnabled] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.musicEnabled === 'boolean') {
+          return parsed.musicEnabled;
+        }
+      }
+    } catch (e) {}
+    return true;
+  });
+
   const [language, setLanguage] = useState<'ar' | 'en'>(() => {
     try {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -327,10 +340,25 @@ export default function App() {
   const [escapedCount, setEscapedCount] = useState<number>(0);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Configure sound manager on mount
+  // Configure sound manager on mount & handle user gesture for BGM
   useEffect(() => {
     soundManager.setEnabled(soundEnabled);
-  }, [soundEnabled]);
+    soundManager.setMusicEnabled(musicEnabled);
+  }, [soundEnabled, musicEnabled]);
+
+  useEffect(() => {
+    const handleFirstGesture = () => {
+      if (soundEnabled && musicEnabled) {
+        soundManager.startBGM();
+      }
+    };
+    window.addEventListener('click', handleFirstGesture);
+    window.addEventListener('touchstart', handleFirstGesture);
+    return () => {
+      window.removeEventListener('click', handleFirstGesture);
+      window.removeEventListener('touchstart', handleFirstGesture);
+    };
+  }, [soundEnabled, musicEnabled]);
 
   // Save state to localStorage
   useEffect(() => {
@@ -348,6 +376,7 @@ export default function App() {
         tomatoes,
         spaceCreams,
         soundEnabled,
+        musicEnabled,
         language,
         selectedSkin,
         unlockedSkins,
@@ -376,6 +405,7 @@ export default function App() {
     tomatoes,
     spaceCreams,
     soundEnabled,
+    musicEnabled,
     language,
     selectedSkin,
     unlockedSkins,
@@ -1288,11 +1318,17 @@ export default function App() {
       {showSettingsModal && (
         <SettingsModal
           soundEnabled={soundEnabled}
+          musicEnabled={musicEnabled}
           language={language}
           onToggleSound={() => {
             const next = !soundEnabled;
             setSoundEnabled(next);
             soundManager.setEnabled(next);
+          }}
+          onToggleMusic={() => {
+            const next = !musicEnabled;
+            setMusicEnabled(next);
+            soundManager.setMusicEnabled(next);
           }}
           onChangeLanguage={(lang) => setLanguage(lang)}
           onResetProgress={() => {
