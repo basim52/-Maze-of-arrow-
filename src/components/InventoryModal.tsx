@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { X, Package, Sparkles, ShoppingBag, Check, Rocket, ArrowRight, ArrowLeft } from 'lucide-react';
-import { ThemeSkin } from '../types';
+import { ThemeSkin, ArrowSkin } from '../types';
 import { soundManager } from '../utils/sound';
+import { ARROW_SKINS, ArrowSkinItem } from './ShopModal';
 
 interface InventoryModalProps {
   coins: number;
@@ -14,6 +15,8 @@ interface InventoryModalProps {
   chocolates: number;
   selectedSkin: ThemeSkin;
   unlockedSkins: ThemeSkin[];
+  selectedArrowSkin?: ArrowSkin;
+  unlockedArrowSkins?: ArrowSkin[];
   language: 'ar' | 'en';
   onUseCream: () => void;
   onUseChocolate: () => void;
@@ -22,6 +25,7 @@ interface InventoryModalProps {
   onUseSpaceCream: () => void;
   onToggleHammer: () => void;
   onSelectSkin: (skin: ThemeSkin) => void;
+  onSelectArrowSkin?: (skin: ArrowSkin) => void;
   onOpenShop: () => void;
   onClose: () => void;
 }
@@ -64,6 +68,13 @@ const SKINS_INFO: SkinInfo[] = [
     gradient: 'from-amber-300 via-yellow-400 to-amber-600',
   },
   {
+    id: 'rainstorm',
+    nameAr: 'عاصفة المطر والرعد ⛈️⚡',
+    nameEn: 'Rain & Thunderstorm ⛈️⚡',
+    icon: '⛈️',
+    gradient: 'from-slate-900 via-sky-900 to-blue-950',
+  },
+  {
     id: 'nebula',
     nameAr: 'سديم الفضاء الكوني 🌌',
     nameEn: 'Cosmic Space Nebula 🌌',
@@ -90,6 +101,8 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
   chocolates,
   selectedSkin,
   unlockedSkins,
+  selectedArrowSkin = 'classic',
+  unlockedArrowSkins = ['classic'],
   language,
   onUseCream,
   onUseChocolate,
@@ -98,6 +111,7 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
   onUseSpaceCream,
   onToggleHammer,
   onSelectSkin,
+  onSelectArrowSkin,
   onOpenShop,
   onClose,
 }) => {
@@ -571,11 +585,82 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
               </div>
             </div>
 
-            {/* Section 2: Skins & Themes Owned */}
+            {/* Section 2: Arrow Skins & Colors Owned */}
+            <div>
+              <h3 className="text-sm font-black text-slate-800 flex items-center gap-1.5 mb-2.5">
+                <span>🏹</span>
+                <span>{isAr ? 'سكنات وألوان الأسهم' : 'Arrow Skins & Colors'}</span>
+              </h3>
+
+              <div className="grid grid-cols-2 gap-2 mb-4">
+                {ARROW_SKINS.map((askin) => {
+                  const isUnlocked = unlockedArrowSkins?.includes(askin.id);
+                  const isSelected = selectedArrowSkin === askin.id;
+
+                  return (
+                    <div
+                      key={askin.id}
+                      className={`p-2.5 rounded-2xl border-2 flex flex-col justify-between transition-all ${
+                        isSelected
+                          ? 'border-emerald-400 bg-emerald-50/80 shadow-md ring-2 ring-emerald-300/50'
+                          : isUnlocked
+                          ? 'border-slate-200 bg-slate-50/80'
+                          : 'border-slate-100 bg-slate-50/40 opacity-60'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        <span
+                          className={`w-7 h-7 rounded-xl bg-gradient-to-tr ${askin.gradient} flex items-center justify-center text-white text-sm shadow-xs`}
+                        >
+                          {askin.icon}
+                        </span>
+                        <div>
+                          <span className="text-xs font-bold text-slate-800 block leading-tight">
+                            {isAr ? askin.nameAr : askin.nameEn}
+                          </span>
+                          {isSelected && (
+                            <span className="text-[10px] font-extrabold text-emerald-600 flex items-center gap-0.5">
+                              <Check className="w-3 h-3" />
+                              {isAr ? 'مُجهّز' : 'Active'}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {isUnlocked ? (
+                        !isSelected && (
+                          <button
+                            onClick={() => {
+                              soundManager.playClick();
+                              if (onSelectArrowSkin) onSelectArrowSkin(askin.id);
+                            }}
+                            className="w-full py-1 bg-white hover:bg-slate-100 text-slate-700 font-bold text-[11px] rounded-xl border border-slate-200 cursor-pointer transition-all"
+                          >
+                            {isAr ? 'تجهز' : 'Equip'}
+                          </button>
+                        )
+                      ) : (
+                        <button
+                          onClick={() => {
+                            soundManager.playClick();
+                            onOpenShop();
+                          }}
+                          className="w-full py-1 bg-amber-100 text-amber-800 font-bold text-[11px] rounded-xl border border-amber-200 cursor-pointer"
+                        >
+                          {isAr ? 'فتح بالمتجر' : 'Unlock in Shop'}
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Section 3: Skins & Themes Owned */}
             <div>
               <h3 className="text-sm font-black text-slate-800 flex items-center gap-1.5 mb-2.5">
                 <span>🎨</span>
-                <span>{isAr ? 'المظاهر والأشكال المملوكة' : 'Owned Skins'}</span>
+                <span>{isAr ? 'مظاهر وخلفيات اللوحة' : 'Board Themes'}</span>
               </h3>
 
               <div className="grid grid-cols-2 gap-2">

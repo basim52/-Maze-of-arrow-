@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Arrow, Level, ThemeSkin } from './types';
+import { Arrow, Level, ThemeSkin, ArrowSkin } from './types';
 import { getLevel, getGalaxyLevel, MONSTER_BOSS_LEVEL_IDS } from './utils/levelGenerator';
 import { soundManager } from './utils/sound';
 import { TopBar } from './components/TopBar';
@@ -143,6 +143,28 @@ export default function App() {
       }
     } catch (e) {}
     return ['jelly'];
+  });
+
+  const [selectedArrowSkin, setSelectedArrowSkin] = useState<ArrowSkin>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.selectedArrowSkin) return parsed.selectedArrowSkin;
+      }
+    } catch (e) {}
+    return 'classic';
+  });
+
+  const [unlockedArrowSkins, setUnlockedArrowSkins] = useState<ArrowSkin[]>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed.unlockedArrowSkins)) return parsed.unlockedArrowSkins;
+      }
+    } catch (e) {}
+    return ['classic'];
   });
 
   const [hammers, setHammers] = useState<number>(() => {
@@ -382,6 +404,8 @@ export default function App() {
         language,
         selectedSkin,
         unlockedSkins,
+        selectedArrowSkin,
+        unlockedArrowSkins,
         hammers,
         thunders,
         creams,
@@ -411,6 +435,8 @@ export default function App() {
     language,
     selectedSkin,
     unlockedSkins,
+    selectedArrowSkin,
+    unlockedArrowSkins,
     hammers,
     thunders,
     creams,
@@ -1064,6 +1090,8 @@ export default function App() {
       <div className={`w-full max-w-[460px] sm:max-w-[480px] h-screen sm:h-[94vh] sm:max-h-[900px] sm:rounded-[46px] border-0 sm:border-[8px] sm:border-slate-800/90 shadow-[0_25px_70px_rgba(0,0,0,0.6)] flex flex-col relative overflow-hidden backdrop-blur-md transition-colors duration-500 ${
         gameMode === 'galaxy' || selectedSkin === 'nebula' || selectedSkin === 'supernova'
           ? 'bg-gradient-to-b from-slate-950 via-purple-950/95 to-indigo-950 text-white'
+          : selectedSkin === 'rainstorm'
+          ? 'bg-gradient-to-b from-slate-950 via-slate-900 to-sky-950 text-white'
           : 'bg-gradient-to-b from-sky-50/90 via-white to-slate-100/95 text-slate-800'
       }`}>
         
@@ -1193,6 +1221,7 @@ export default function App() {
               onArrowEscaped={handleArrowEscaped}
               onArrowBlocked={handleArrowBlocked}
               selectedSkin={selectedSkin}
+              selectedArrowSkin={selectedArrowSkin}
               isCompleted={escapedCount === totalArrowsCount}
               isHammerActive={isHammerActive}
               onUseHammer={handleUseHammer}
@@ -1374,12 +1403,20 @@ export default function App() {
           chocolates={chocolates}
           selectedSkin={selectedSkin}
           unlockedSkins={unlockedSkins}
+          selectedArrowSkin={selectedArrowSkin}
+          unlockedArrowSkins={unlockedArrowSkins}
           language={language}
           onSelectSkin={(skin) => setSelectedSkin(skin)}
           onUnlockSkin={(skin, cost) => {
             setCoins((prev) => prev - cost);
             setUnlockedSkins((prev) => [...prev, skin]);
             setSelectedSkin(skin);
+          }}
+          onSelectArrowSkin={(askin) => setSelectedArrowSkin(askin)}
+          onUnlockArrowSkin={(askin, cost) => {
+            setCoins((prev) => prev - cost);
+            setUnlockedArrowSkins((prev) => [...prev, askin]);
+            setSelectedArrowSkin(askin);
           }}
           onBuyHammer={handleBuyHammer}
           onBuyThunder={handleBuyThunder}
@@ -1406,6 +1443,8 @@ export default function App() {
           chocolates={chocolates}
           selectedSkin={selectedSkin}
           unlockedSkins={unlockedSkins}
+          selectedArrowSkin={selectedArrowSkin}
+          unlockedArrowSkins={unlockedArrowSkins}
           language={language}
           onUseCream={handleUseCream}
           onUseChocolate={handleUseChocolate}
@@ -1414,6 +1453,7 @@ export default function App() {
           onUseSpaceCream={handleUseSpaceCream}
           onToggleHammer={handleToggleHammer}
           onSelectSkin={(skin) => setSelectedSkin(skin)}
+          onSelectArrowSkin={(askin) => setSelectedArrowSkin(askin)}
           onOpenShop={() => {
             setShowInventoryModal(false);
             setShowShopModal(true);

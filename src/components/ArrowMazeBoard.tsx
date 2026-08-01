@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Arrow, Direction, ThemeSkin } from '../types';
+import { Arrow, Direction, ThemeSkin, ArrowSkin } from '../types';
 import { DIRECTION_VECTORS, canArrowEscape } from '../utils/levelGenerator';
 import { soundManager } from '../utils/sound';
 import { RainStrikeOverlay, RainItem } from './RainStrikeOverlay';
@@ -11,6 +11,7 @@ interface ArrowMazeBoardProps {
   onArrowEscaped: (arrowId: string) => void;
   onArrowBlocked: (arrowId: string, blockerId: string) => void;
   selectedSkin?: ThemeSkin;
+  selectedArrowSkin?: ArrowSkin;
   isCompleted: boolean;
   isHammerActive?: boolean;
   onUseHammer?: (arrowId: string) => void;
@@ -150,7 +151,8 @@ const Render3DArrowSVG: React.FC<{
   isFlying: boolean;
   tileSize: number;
   gameMode?: 'main' | 'galaxy';
-}> = ({ arrow, isBumping, isFlying, tileSize, gameMode }) => {
+  selectedArrowSkin?: ArrowSkin;
+}> = ({ arrow, isBumping, isFlying, tileSize, gameMode, selectedArrowSkin = 'classic' }) => {
   const isGalaxy = gameMode === 'galaxy';
   const theme = COLOR_THEMES[arrow.color] || COLOR_THEMES.cyan;
   const isDouble = arrow.isDouble || arrow.type === 'double';
@@ -168,7 +170,37 @@ const Render3DArrowSVG: React.FC<{
     border: arrow.color === 'pink' ? '#BE185D' : arrow.color === 'yellow' ? '#CA8A04' : arrow.color === 'purple' ? '#7E22CE' : '#0284C7',
   };
 
-  const activeTheme = isGalaxy ? galaxyTheme : theme;
+  const getSkinTheme = () => {
+    if (selectedArrowSkin === 'neon') {
+      const neonMap: Record<string, { gradientStart: string; gradientEnd: string; border: string; highlight: string }> = {
+        cyan: { highlight: '#E0F2FE', gradientStart: '#00F0FF', gradientEnd: '#006699', border: '#00F0FF' },
+        lime: { highlight: '#ECFDF5', gradientStart: '#39FF14', gradientEnd: '#15803D', border: '#39FF14' },
+        yellow: { highlight: '#FEF9C3', gradientStart: '#FFE600', gradientEnd: '#A16207', border: '#FFE600' },
+        purple: { highlight: '#F3E8FF', gradientStart: '#D946EF', gradientEnd: '#701A75', border: '#E879F9' },
+        pink: { highlight: '#FCE7F3', gradientStart: '#FF007F', gradientEnd: '#9F1239', border: '#FF007F' },
+        orange: { highlight: '#FFEDD5', gradientStart: '#FF5500', gradientEnd: '#C2410C', border: '#FF5500' },
+      };
+      return neonMap[arrow.color] || neonMap.cyan;
+    }
+    if (selectedArrowSkin === 'gold') {
+      return { highlight: '#FFFBEB', gradientStart: '#F59E0B', gradientEnd: '#78350F', border: '#B45309' };
+    }
+    if (selectedArrowSkin === 'crystal') {
+      return { highlight: '#F0FDF4', gradientStart: '#38BDF8', gradientEnd: '#0369A1', border: '#0284C7' };
+    }
+    if (selectedArrowSkin === 'dragon') {
+      return { highlight: '#FEF2F2', gradientStart: '#EF4444', gradientEnd: '#7F1D1D', border: '#991B1B' };
+    }
+    if (selectedArrowSkin === 'cyber') {
+      return { highlight: '#F0FDF4', gradientStart: '#22C55E', gradientEnd: '#052E16', border: '#15803D' };
+    }
+    if (selectedArrowSkin === 'rainbow') {
+      return { highlight: '#FDF2F8', gradientStart: '#EC4899', gradientEnd: '#8B5CF6', border: '#A855F7' };
+    }
+    return isGalaxy ? galaxyTheme : theme;
+  };
+
+  const activeTheme = getSkinTheme();
 
   const rotationDegrees: Record<Direction, number> = {
     up: -90,
@@ -525,6 +557,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
   onArrowEscaped,
   onArrowBlocked,
   selectedSkin,
+  selectedArrowSkin = 'classic',
   isCompleted,
   isHammerActive,
   onUseHammer,
@@ -662,6 +695,8 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
               ? 'bg-gradient-to-b from-slate-950 via-purple-950/90 to-indigo-950 border-purple-500/80 shadow-[0_0_30px_rgba(168,85,247,0.35)]'
               : selectedSkin === 'supernova'
               ? 'bg-gradient-to-b from-slate-950 via-rose-950 to-amber-950/90 border-amber-500/80 shadow-[0_0_35px_rgba(245,158,11,0.35)]'
+              : selectedSkin === 'rainstorm'
+              ? 'bg-gradient-to-b from-slate-950 via-slate-900 to-sky-950 border-sky-400/80 shadow-[0_0_35px_rgba(56,189,248,0.35)]'
               : selectedSkin === 'neon'
               ? 'bg-gradient-to-b from-slate-900 via-teal-950 to-slate-950 border-teal-500/60 shadow-[0_0_20px_rgba(20,184,166,0.25)]'
               : selectedSkin === 'cyber'
@@ -687,6 +722,49 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
               backgroundPosition: `${tileSize / 2}px ${tileSize / 2}px`,
             }}
           />
+
+          {/* Rain & Thunderstorm Animated Background */}
+          {selectedSkin === 'rainstorm' && (
+            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+              {/* Storm Clouds Ambient Blobs */}
+              <div className="absolute top-0 left-1/4 w-40 h-28 bg-slate-800/70 rounded-full blur-2xl animate-pulse" />
+              <div className="absolute top-4 right-1/4 w-48 h-32 bg-sky-900/50 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1.2s' }} />
+              <div className="absolute bottom-2 left-10 w-36 h-36 bg-blue-950/60 rounded-full blur-2xl" />
+
+              {/* Lightning Glow Flash Pulsing Layer */}
+              <div className="absolute inset-0 bg-sky-200/10 animate-pulse pointer-events-none" style={{ animationDuration: '2.5s' }} />
+
+              {/* Dynamic Lightning Bolt Icons */}
+              <div className="absolute top-3 left-6 text-xl animate-bounce" style={{ animationDuration: '2.2s' }}>⚡</div>
+              <div className="absolute top-5 right-8 text-2xl animate-pulse" style={{ animationDuration: '1.5s' }}>⛈️</div>
+              <div className="absolute bottom-8 right-6 text-lg animate-bounce" style={{ animationDuration: '3s' }}>⚡</div>
+
+              {/* Falling Rain Streak Line Particles */}
+              {[
+                { left: '8%', top: '2%', delay: '0s', duration: '1.1s', h: 'h-6' },
+                { left: '22%', top: '12%', delay: '0.3s', duration: '0.9s', h: 'h-8' },
+                { left: '38%', top: '4%', delay: '0.1s', duration: '1.3s', h: 'h-5' },
+                { left: '52%', top: '10%', delay: '0.5s', duration: '1.0s', h: 'h-7' },
+                { left: '68%', top: '3%', delay: '0.2s', duration: '1.2s', h: 'h-6' },
+                { left: '84%', top: '14%', delay: '0.6s', duration: '0.8s', h: 'h-9' },
+                { left: '16%', top: '42%', delay: '0.4s', duration: '1.0s', h: 'h-7' },
+                { left: '46%', top: '48%', delay: '0.7s', duration: '1.2s', h: 'h-6' },
+                { left: '76%', top: '38%', delay: '0.1s', duration: '0.9s', h: 'h-8' },
+                { left: '90%', top: '58%', delay: '0.8s', duration: '1.1s', h: 'h-5' },
+              ].map((drop, idx) => (
+                <div
+                  key={`rain-${idx}`}
+                  className={`absolute w-0.5 ${drop.h} bg-gradient-to-b from-sky-300 via-cyan-400 to-transparent rounded-full opacity-75 animate-pulse`}
+                  style={{
+                    left: drop.left,
+                    top: drop.top,
+                    animationDelay: drop.delay,
+                    animationDuration: drop.duration,
+                  }}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Twinkling Galaxy Stars Background for Event Levels or Space Skins */}
           {(isGalaxy || selectedSkin === 'nebula' || selectedSkin === 'supernova') && (
@@ -828,6 +906,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
                     isFlying={!!flyOffset}
                     tileSize={tileSize}
                     gameMode={gameMode}
+                    selectedArrowSkin={selectedArrowSkin}
                   />
                 </div>
               );

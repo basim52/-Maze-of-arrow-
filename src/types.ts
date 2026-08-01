@@ -48,7 +48,9 @@ export interface Level {
   requiresHammer?: boolean;
 }
 
-export type ThemeSkin = 'candy' | 'jelly' | 'neon' | 'cyber' | 'nebula' | 'supernova';
+export type ThemeSkin = 'candy' | 'jelly' | 'neon' | 'cyber' | 'nebula' | 'supernova' | 'rainstorm';
+
+export type ArrowSkin = 'classic' | 'neon' | 'gold' | 'crystal' | 'dragon' | 'cyber' | 'rainbow';
 
 export interface PlayerStats {
   currentLevel: number;
@@ -58,6 +60,8 @@ export interface PlayerStats {
   drops: number;
   selectedSkin: ThemeSkin;
   unlockedSkins: ThemeSkin[];
+  selectedArrowSkin?: ArrowSkin;
+  unlockedArrowSkins?: ArrowSkin[];
   soundEnabled: boolean;
   language: 'ar' | 'en';
   hammers: number;

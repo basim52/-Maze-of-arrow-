@@ -1,6 +1,6 @@
 import React from 'react';
 import { X, Sparkles, Check, Lock } from 'lucide-react';
-import { ThemeSkin } from '../types';
+import { ThemeSkin, ArrowSkin } from '../types';
 import { soundManager } from '../utils/sound';
 
 interface ShopModalProps {
@@ -14,9 +14,13 @@ interface ShopModalProps {
   chocolates: number;
   selectedSkin: ThemeSkin;
   unlockedSkins: ThemeSkin[];
+  selectedArrowSkin?: ArrowSkin;
+  unlockedArrowSkins?: ArrowSkin[];
   language: 'ar' | 'en';
   onSelectSkin: (skin: ThemeSkin) => void;
   onUnlockSkin: (skin: ThemeSkin, cost: number) => void;
+  onSelectArrowSkin?: (skin: ArrowSkin) => void;
+  onUnlockArrowSkin?: (skin: ArrowSkin, cost: number) => void;
   onBuyHammer: (cost: number) => void;
   onBuyThunder: (cost: number) => void;
   onBuyCream: (cost: number) => void;
@@ -38,6 +42,90 @@ interface SkinItem {
   icon: string;
 }
 
+export interface ArrowSkinItem {
+  id: ArrowSkin;
+  nameAr: string;
+  nameEn: string;
+  cost: number;
+  gradient: string;
+  icon: string;
+  descAr: string;
+  descEn: string;
+}
+
+export const ARROW_SKINS: ArrowSkinItem[] = [
+  {
+    id: 'classic',
+    nameAr: 'كلاسيكي جيلي 🍬',
+    nameEn: 'Classic Jelly 🍬',
+    cost: 0,
+    gradient: 'from-cyan-400 to-sky-500',
+    icon: '🍬',
+    descAr: 'الأسهم اللامعة الكلاسيكية',
+    descEn: 'Classic glossy arrows',
+  },
+  {
+    id: 'neon',
+    nameAr: 'نيون متوهج ⚡',
+    nameEn: 'Neon Glow ⚡',
+    cost: 30,
+    gradient: 'from-emerald-400 via-teal-500 to-cyan-500',
+    icon: '⚡',
+    descAr: 'أسهم نيون ليزر براقة ومتوهجة',
+    descEn: 'Ultra-bright glowing neon laser arrows',
+  },
+  {
+    id: 'gold',
+    nameAr: 'الملكي الذهبي 👑',
+    nameEn: 'Royal Gold 👑',
+    cost: 60,
+    gradient: 'from-amber-300 via-yellow-400 to-amber-600',
+    icon: '👑',
+    descAr: 'أسهم ذهبية براقة ببريق الملوك والنجوم',
+    descEn: 'Shining royal gold arrows with sparkles',
+  },
+  {
+    id: 'crystal',
+    nameAr: 'البلور الجليدي ❄️',
+    nameEn: 'Ice Crystal ❄️',
+    cost: 90,
+    gradient: 'from-sky-300 via-cyan-400 to-blue-600',
+    icon: '❄️',
+    descAr: 'أسهم بلورية ثلجية ببريق الألماس',
+    descEn: 'Frosted ice crystal arrows with diamond shine',
+  },
+  {
+    id: 'dragon',
+    nameAr: 'تنين النار 🐲🔥',
+    nameEn: 'Fire Dragon 🐲🔥',
+    cost: 120,
+    gradient: 'from-rose-500 via-orange-500 to-amber-600',
+    icon: '🔥',
+    descAr: 'أسهم نارية مستعرة بهالة حمم التنين',
+    descEn: 'Fiery dragon arrows with molten lava aura',
+  },
+  {
+    id: 'cyber',
+    nameAr: 'ليزر السايبر 🤖',
+    nameEn: 'Cyber Laser 🤖',
+    cost: 150,
+    gradient: 'from-indigo-500 via-purple-500 to-pink-500',
+    icon: '🤖',
+    descAr: 'أسهم سايبر دقيقة بشعاع ليزري مستقبلي',
+    descEn: 'Futuristic cyberpunk laser grid arrows',
+  },
+  {
+    id: 'rainbow',
+    nameAr: 'قوس قزح السحري 🌈',
+    nameEn: 'Magic Rainbow 🌈',
+    cost: 187,
+    gradient: 'from-pink-500 via-yellow-400 via-emerald-400 via-sky-400 to-purple-600',
+    icon: '🌈',
+    descAr: 'أسهم طيف ألوان قوس قزح المتغير مع النجوم',
+    descEn: 'Multicolor shifting rainbow spectrum with star magic',
+  },
+];
+
 const SKINS: SkinItem[] = [
   {
     id: 'jelly',
@@ -51,7 +139,7 @@ const SKINS: SkinItem[] = [
     id: 'candy',
     nameAr: 'حلوى قوس قزح',
     nameEn: 'Rainbow Candy',
-    cost: 30,
+    cost: 22,
     gradient: 'from-pink-400 via-purple-400 to-indigo-500',
     icon: '🍭',
   },
@@ -59,7 +147,7 @@ const SKINS: SkinItem[] = [
     id: 'neon',
     nameAr: 'نيون سايبر',
     nameEn: 'Cyber Neon',
-    cost: 60,
+    cost: 45,
     gradient: 'from-emerald-400 via-teal-500 to-cyan-600',
     icon: '⚡',
   },
@@ -67,15 +155,23 @@ const SKINS: SkinItem[] = [
     id: 'cyber',
     nameAr: 'ذهبي ملكي',
     nameEn: 'Royal Gold',
-    cost: 100,
+    cost: 75,
     gradient: 'from-amber-300 via-yellow-400 to-amber-600',
     icon: '👑',
+  },
+  {
+    id: 'rainstorm',
+    nameAr: 'عاصفة المطر والرعد ⛈️⚡',
+    nameEn: 'Rain & Thunderstorm ⛈️⚡',
+    cost: 187,
+    gradient: 'from-slate-900 via-sky-900 to-blue-950',
+    icon: '⛈️',
   },
   {
     id: 'nebula',
     nameAr: 'سديم الفضاء الكوني 🌌',
     nameEn: 'Cosmic Space Nebula 🌌',
-    cost: 50,
+    cost: 37,
     gradient: 'from-purple-600 via-indigo-600 to-pink-500',
     icon: '🌌',
   },
@@ -83,7 +179,7 @@ const SKINS: SkinItem[] = [
     id: 'supernova',
     nameAr: 'السوبرنوفا الفضائي 💥🌌',
     nameEn: 'Supernova Black Hole 💥🌌',
-    cost: 65,
+    cost: 48,
     gradient: 'from-amber-500 via-rose-600 to-purple-900',
     icon: '💥',
   },
@@ -100,9 +196,13 @@ export const ShopModal: React.FC<ShopModalProps> = ({
   chocolates,
   selectedSkin,
   unlockedSkins,
+  selectedArrowSkin = 'classic',
+  unlockedArrowSkins = ['classic'],
   language,
   onSelectSkin,
   onUnlockSkin,
+  onSelectArrowSkin,
+  onUnlockArrowSkin,
   onBuyHammer,
   onBuyThunder,
   onBuyCream,
@@ -115,7 +215,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
   onClose,
 }) => {
   const isAr = language === 'ar';
-  const [activeTab, setActiveTab] = React.useState<'all' | 'galaxy' | 'tools' | 'skins'>('all');
+  const [activeTab, setActiveTab] = React.useState<'all' | 'galaxy' | 'tools' | 'skins' | 'arrowSkins'>('all');
 
   const canAffordBundle = coins >= 255;
   const canAffordCakeBundle = coins >= 170;
@@ -169,13 +269,13 @@ export const ShopModal: React.FC<ShopModalProps> = ({
         </div>
 
         {/* Category Tabs Bar */}
-        <div className="grid grid-cols-4 gap-1 p-1 bg-slate-950/80 rounded-2xl border border-slate-800 mb-4 shrink-0">
+        <div className="grid grid-cols-5 gap-1 p-1 bg-slate-950/80 rounded-2xl border border-slate-800 mb-4 shrink-0">
           <button
             onClick={() => {
               soundManager.playClick();
               setActiveTab('all');
             }}
-            className={`py-1.5 px-1 rounded-xl text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 ${
+            className={`py-1.5 px-1 rounded-xl text-[10px] sm:text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 ${
               activeTab === 'all'
                 ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md'
                 : 'text-slate-400 hover:text-slate-200'
@@ -188,24 +288,9 @@ export const ShopModal: React.FC<ShopModalProps> = ({
           <button
             onClick={() => {
               soundManager.playClick();
-              setActiveTab('galaxy');
-            }}
-            className={`py-1.5 px-1 rounded-xl text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 ${
-              activeTab === 'galaxy'
-                ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            <span>🌌</span>
-            <span>{isAr ? 'الفضاء' : 'Space'}</span>
-          </button>
-
-          <button
-            onClick={() => {
-              soundManager.playClick();
               setActiveTab('tools');
             }}
-            className={`py-1.5 px-1 rounded-xl text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 ${
+            className={`py-1.5 px-1 rounded-xl text-[10px] sm:text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 ${
               activeTab === 'tools'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-md'
                 : 'text-slate-400 hover:text-slate-200'
@@ -218,16 +303,46 @@ export const ShopModal: React.FC<ShopModalProps> = ({
           <button
             onClick={() => {
               soundManager.playClick();
+              setActiveTab('arrowSkins');
+            }}
+            className={`py-1.5 px-1 rounded-xl text-[10px] sm:text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 ${
+              activeTab === 'arrowSkins'
+                ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <span>🏹</span>
+            <span>{isAr ? 'الأسهم' : 'Arrows'}</span>
+          </button>
+
+          <button
+            onClick={() => {
+              soundManager.playClick();
               setActiveTab('skins');
             }}
-            className={`py-1.5 px-1 rounded-xl text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 ${
+            className={`py-1.5 px-1 rounded-xl text-[10px] sm:text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 ${
               activeTab === 'skins'
                 ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             <span>🎨</span>
-            <span>{isAr ? 'المظاهر' : 'Skins'}</span>
+            <span>{isAr ? 'اللوحة' : 'Themes'}</span>
+          </button>
+
+          <button
+            onClick={() => {
+              soundManager.playClick();
+              setActiveTab('galaxy');
+            }}
+            className={`py-1.5 px-1 rounded-xl text-[10px] sm:text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 ${
+              activeTab === 'galaxy'
+                ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <span>🌌</span>
+            <span>{isAr ? 'الفضاء' : 'Space'}</span>
           </button>
         </div>
 
@@ -700,12 +815,105 @@ export const ShopModal: React.FC<ShopModalProps> = ({
             </div>
           )}
 
+          {/* Arrow Skins Section */}
+          {(activeTab === 'all' || activeTab === 'arrowSkins') && (
+            <div className="flex flex-col gap-2.5">
+              <h3 className="text-xs font-black text-emerald-400 uppercase tracking-wider flex items-center gap-1">
+                <span>🏹</span>
+                <span>{isAr ? 'سكنات وألوان الأسهم' : 'Arrow Skins & Colors'}</span>
+              </h3>
+              <div className="flex flex-col gap-2">
+                {ARROW_SKINS.map((askin) => {
+                  const isUnlocked = unlockedArrowSkins?.includes(askin.id);
+                  const isSelected = selectedArrowSkin === askin.id;
+                  const canAfford = coins >= askin.cost;
+
+                  return (
+                    <div
+                      key={askin.id}
+                      className={`p-3 rounded-2xl border-2 flex items-center justify-between transition-all ${
+                        isSelected
+                          ? 'border-emerald-400 bg-emerald-950/40 shadow-sm'
+                          : 'border-slate-800 bg-slate-900/90 hover:border-slate-700'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={`w-10 h-10 rounded-xl bg-gradient-to-tr ${askin.gradient} flex items-center justify-center text-xl shadow-xs shrink-0`}
+                        >
+                          {askin.icon}
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="font-black text-white text-xs sm:text-sm">
+                            {isAr ? askin.nameAr : askin.nameEn}
+                          </span>
+                          <span className="text-[10px] text-slate-400 font-medium">
+                            {isAr ? askin.descAr : askin.descEn}
+                          </span>
+                          {!isUnlocked && askin.cost > 0 && (
+                            <span className="text-[11px] font-bold text-amber-300 flex items-center gap-1 mt-0.5">
+                              <Sparkles className="w-3 h-3 text-amber-400 fill-amber-300" />
+                              {askin.cost} {isAr ? 'نقطة' : 'Coins'}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {isUnlocked ? (
+                        <button
+                          onClick={() => {
+                            soundManager.playClick();
+                            if (onSelectArrowSkin) onSelectArrowSkin(askin.id);
+                          }}
+                          className={`px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1 cursor-pointer transition-all shrink-0 ${
+                            isSelected
+                              ? 'bg-emerald-500 text-slate-950 font-black shadow-xs'
+                              : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                          }`}
+                        >
+                          {isSelected && <Check className="w-3.5 h-3.5" />}
+                          <span>
+                            {isSelected
+                              ? isAr
+                                ? 'مُفعل'
+                                : 'Active'
+                              : isAr
+                              ? 'اختيار'
+                              : 'Select'}
+                          </span>
+                        </button>
+                      ) : (
+                        <button
+                          disabled={!canAfford}
+                          onClick={() => {
+                            soundManager.playClick();
+                            if (canAfford && onUnlockArrowSkin) {
+                              onUnlockArrowSkin(askin.id, askin.cost);
+                            }
+                          }}
+                          className={`px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1 cursor-pointer transition-all shrink-0 ${
+                            canAfford
+                              ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-amber-950 font-black shadow-xs hover:scale-105'
+                              : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700 opacity-60'
+                          }`}
+                        >
+                          <Lock className="w-3.5 h-3.5" />
+                          <span>{isAr ? 'فتح' : 'Unlock'}</span>
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           {/* Skins List Section */}
           {(activeTab === 'all' || activeTab === 'skins') && (
             <div className="flex flex-col gap-2.5">
               <h3 className="text-xs font-black text-cyan-400 uppercase tracking-wider flex items-center gap-1">
                 <span>🎨</span>
-                <span>{isAr ? 'مظاهر وألواح الأسهم' : 'Arrow Skins & Themes'}</span>
+                <span>{isAr ? 'مظاهر وألواح الخلفيات' : 'Board Themes'}</span>
               </h3>
               <div className="flex flex-col gap-2">
                 {SKINS.map((skin) => {
