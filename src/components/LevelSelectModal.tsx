@@ -62,8 +62,8 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                     ? `اختيار المستوى الرئيسي (١ - ${TOTAL_MAIN_LEVELS})`
                     : `Main Levels (1 - ${TOTAL_MAIN_LEVELS})`
                   : isAr
-                  ? 'مراحل الأحداث الفضائية - تحديث الجمعة الكوني (١ - ٢٥ 🚀)'
-                  : 'Galaxy Event Levels - Cosmic Friday Update (1 - 25 🚀)'}
+                  ? 'مراحل الأحداث الفضائية (١ - ٢٥ 🚀)'
+                  : 'Galaxy Event Levels (1 - 25 🚀)'}
               </span>
             </h2>
             <p className="text-[11px] text-purple-200/80 font-medium mt-0.5">
@@ -72,8 +72,8 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                   ? 'اختر مرحلتك الرئيسية للتحدي والتقدم'
                   : 'Select your main puzzle level'
                 : isAr
-                ? '🌌 تحديث الجمعة الكوني: أسهم فضائية، نجوم متلألئة، وخلفيات كوكبية مبهرة!'
-                : '🌌 Cosmic Friday Update: Space arrows, sparkling stars & planetary backgrounds!'}
+                ? '🌌 أسهم فضائية، نجوم متلألئة، وخلفيات كوكبية مبهرة!'
+                : '🌌 Space arrows, sparkling stars & planetary backgrounds!'}
             </p>
           </div>
 
@@ -89,20 +89,20 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
         </div>
 
         {/* Tab Navigation Switcher */}
-        <div className="grid grid-cols-2 gap-2 p-1 bg-slate-950 rounded-2xl border border-slate-800 mb-3 shrink-0">
+        <div className="grid grid-cols-2 gap-1.5 p-1 bg-slate-950 rounded-2xl border border-slate-800 mb-3 shrink-0">
           <button
             onClick={() => {
               soundManager.playClick();
               setActiveTab('main');
             }}
-            className={`py-2 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-2 ${
+            className={`py-2 px-1.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
               activeTab === 'main'
                 ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white shadow-md'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
             <span>🎯</span>
-            <span>{isAr ? 'المراحل الرئيسية' : 'Main Levels'}</span>
+            <span className="truncate">{isAr ? 'المستويات الرئيسية' : 'Main Levels'}</span>
           </button>
 
           <button
@@ -110,17 +110,17 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
               soundManager.playClick();
               setActiveTab('galaxy');
             }}
-            className={`py-2 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-2 relative ${
+            className={`py-2 px-1.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 relative ${
               activeTab === 'galaxy'
                 ? 'bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 text-white shadow-md'
                 : 'text-purple-300 hover:text-white bg-purple-950/40 border border-purple-800/50'
             }`}
           >
             <span>🚀</span>
-            <span>{isAr ? 'مراحل الأحداث' : 'Event Levels'}</span>
+            <span className="truncate">{isAr ? 'مراحل الأحداث' : 'Event Levels'}</span>
             {!isEventUnlocked && (
-              <span className="bg-amber-400 text-slate-950 text-[9px] px-1.5 py-0.2 rounded-full font-black animate-pulse">
-                200 🪙
+              <span className="bg-amber-400 text-slate-950 text-[9px] px-1 py-0.2 rounded-full font-black animate-pulse shrink-0">
+                200🪙
               </span>
             )}
           </button>

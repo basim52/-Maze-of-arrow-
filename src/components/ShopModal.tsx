@@ -40,6 +40,8 @@ interface SkinItem {
   cost: number;
   gradient: string;
   icon: string;
+  descAr?: string;
+  descEn?: string;
 }
 
 export interface ArrowSkinItem {
@@ -124,6 +126,26 @@ export const ARROW_SKINS: ArrowSkinItem[] = [
     descAr: 'أسهم طيف ألوان قوس قزح المتغير مع النجوم',
     descEn: 'Multicolor shifting rainbow spectrum with star magic',
   },
+  {
+    id: 'phoenix',
+    nameAr: 'العنقاء الذهبية 🦅🔥',
+    nameEn: 'Golden Phoenix 🦅🔥',
+    cost: 215,
+    gradient: 'from-amber-400 via-rose-500 to-red-600',
+    icon: '🦅',
+    descAr: 'أسهم العنقاء الأسطورية المتوهجة بشرارات اللهب',
+    descEn: 'Legendary Phoenix wings arrows blazing with embers',
+  },
+  {
+    id: 'galaxy',
+    nameAr: 'مجرة الفضاء 🌌✨',
+    nameEn: 'Cosmic Galaxy 🌌✨',
+    cost: 250,
+    gradient: 'from-purple-600 via-indigo-600 to-pink-500',
+    icon: '🌌',
+    descAr: 'أسهم مجرة الفضاء بعمق الكواكب والنجوم البرّاقة',
+    descEn: 'Deep space cosmic galaxy arrows with starlight',
+  },
 ];
 
 const SKINS: SkinItem[] = [
@@ -166,6 +188,8 @@ const SKINS: SkinItem[] = [
     cost: 187,
     gradient: 'from-slate-900 via-sky-900 to-blue-950',
     icon: '⛈️',
+    descAr: 'احتمال 27% لإسقاط من 3 إلى 6 عملات عند خروج كل سهم! ⛈️💰',
+    descEn: '27% chance to drop 3 to 6 coins when an arrow escapes! ⛈️💰',
   },
   {
     id: 'nebula',
@@ -369,7 +393,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                 </div>
               </div>
 
-              {/* Space Coins Exchange Card (استبدال ١٥ نقطة لعملة فضاء واحدة) */}
+              {/* Space Coins Exchange Card (استبدال ٢٣ نقطة لعملة فضاء واحدة) */}
               <div className="p-3 mb-2.5 rounded-2xl border border-amber-400/80 bg-gradient-to-r from-amber-950/90 via-purple-950/90 to-indigo-950/90 flex items-center justify-between gap-2 shadow-md">
                 <div className="flex items-center gap-2.5">
                   <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-400 via-yellow-400 to-amber-500 flex items-center justify-center text-xl shadow-md border border-amber-300 shrink-0 text-slate-950 font-black">
@@ -380,10 +404,10 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                       {isAr ? 'استبدال النقاط بعملة فضاء 🚀' : 'Exchange Coins for Space Coins 🚀'}
                     </span>
                     <span className="text-[10px] text-amber-100/90 font-semibold mt-0.5">
-                      {isAr ? 'استبدل 15 نقطة مقابل 1 عملة فضاء واحدة فقط' : 'Exchange 15 regular coins for 1 Space Coin'}
+                      {isAr ? 'استبدل 23 نقطة مقابل 1 عملة فضاء واحدة فقط' : 'Exchange 23 regular coins for 1 Space Coin'}
                     </span>
                     <span className="text-xs font-black text-amber-300 mt-1 flex items-center gap-1">
-                      <span>🪙 15</span>
+                      <span>🪙 23</span>
                       <span className="text-purple-300">➔</span>
                       <span>🚀 1</span>
                     </span>
@@ -391,19 +415,19 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                 </div>
 
                 <button
-                  disabled={coins < 15}
+                  disabled={coins < 23}
                   onClick={() => {
                     soundManager.playClick();
-                    if (coins >= 15 && onExchangeCoins) {
-                      onExchangeCoins(15, 1);
+                    if (coins >= 23 && onExchangeCoins) {
+                      onExchangeCoins(23, 1);
                     }
                   }}
                   className={`px-3 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-md shrink-0 ${
-                    coins >= 15
+                    coins >= 23
                       ? 'bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-slate-950 hover:scale-105 active:scale-95 shadow-amber-950 font-black'
                       : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700 opacity-60'
                   }`}
-                  title={isAr ? 'استبدال 15 نقطة بـ 1 عملة فضاء' : 'Exchange 15 coins for 1 Space Coin'}
+                  title={isAr ? 'استبدال 23 نقطة بـ 1 عملة فضاء' : 'Exchange 23 coins for 1 Space Coin'}
                 >
                   <span>{isAr ? 'استبدال (+1🚀)' : 'Exchange (+1🚀)'}</span>
                 </button>
@@ -940,8 +964,13 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                           <span className="font-black text-white text-xs sm:text-sm">
                             {isAr ? skin.nameAr : skin.nameEn}
                           </span>
+                          {(skin.descAr || skin.descEn) && (
+                            <span className="text-[10px] text-cyan-200/90 font-medium">
+                              {isAr ? skin.descAr : skin.descEn}
+                            </span>
+                          )}
                           {!isUnlocked && (
-                            <span className="text-[11px] font-bold text-amber-300 flex items-center gap-1">
+                            <span className="text-[11px] font-bold text-amber-300 flex items-center gap-1 mt-0.5">
                               <Sparkles className="w-3 h-3 text-amber-400 fill-amber-300" />
                               {skin.cost} {isAr ? 'نقطة' : 'Coins'}
                             </span>

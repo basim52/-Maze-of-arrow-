@@ -10,6 +10,7 @@ import { SettingsModal } from './components/SettingsModal';
 import { ShopModal } from './components/ShopModal';
 import { InventoryModal } from './components/InventoryModal';
 import { DailyWheelModal } from './components/DailyWheelModal';
+import { LandingModal } from './components/LandingModal';
 import { RainItem } from './components/RainStrikeOverlay';
 import { Sparkles, HelpCircle, RefreshCw } from 'lucide-react';
 
@@ -339,6 +340,11 @@ export default function App() {
   const [showShopModal, setShowShopModal] = useState<boolean>(false);
   const [showInventoryModal, setShowInventoryModal] = useState<boolean>(false);
   const [showDailyWheelModal, setShowDailyWheelModal] = useState<boolean>(false);
+  const [showLandingModal, setShowLandingModal] = useState<boolean>(true);
+
+  const handleCloseLanding = () => {
+    setShowLandingModal(false);
+  };
 
   // Rain Strikes overlay state & app clock
   const [rainItems, setRainItems] = useState<RainItem[]>([]);
@@ -358,7 +364,9 @@ export default function App() {
 
   // Active Level State initialized lazily
   const [activeLevel, setActiveLevel] = useState<Level>(() =>
-    gameMode === 'galaxy' ? getGalaxyLevel(currentGalaxyLevelId) : getLevel(currentLevelId)
+    gameMode === 'galaxy'
+      ? getGalaxyLevel(currentGalaxyLevelId)
+      : getLevel(currentLevelId)
   );
   const [arrows, setArrows] = useState<Arrow[]>([]);
   const [escapedCount, setEscapedCount] = useState<number>(0);
@@ -394,6 +402,7 @@ export default function App() {
         currentGalaxyLevelId,
         unlockedGalaxyLevel,
         starsPerGalaxyLevel,
+        gameMode,
         isEventUnlocked,
         coins,
         spaceCoins,
@@ -425,6 +434,7 @@ export default function App() {
     currentGalaxyLevelId,
     unlockedGalaxyLevel,
     starsPerGalaxyLevel,
+    gameMode,
     isEventUnlocked,
     coins,
     spaceCoins,
@@ -445,7 +455,10 @@ export default function App() {
 
   // Load level data whenever level or mode changes
   useEffect(() => {
-    const lvl = gameMode === 'galaxy' ? getGalaxyLevel(currentGalaxyLevelId) : getLevel(currentLevelId);
+    const lvl =
+      gameMode === 'galaxy'
+        ? getGalaxyLevel(currentGalaxyLevelId)
+        : getLevel(currentLevelId);
     setActiveLevel(lvl);
     setArrows(lvl.arrows.map((a) => ({ ...a, isEscaped: false })));
     setDrops(lvl.maxDrops || 3);
@@ -578,7 +591,7 @@ export default function App() {
     }
   };
 
-  const handleExchangeCoinsForSpaceCoins = (coinCost = 15, spaceCoinsEarned = 1) => {
+  const handleExchangeCoinsForSpaceCoins = (coinCost = 23, spaceCoinsEarned = 1) => {
     const isAr = language === 'ar';
     if (coins >= coinCost) {
       setCoins((prev) => prev - coinCost);
@@ -885,9 +898,10 @@ export default function App() {
   const handleArrowEscaped = (arrowId: string) => {
     const escapedArrow = arrows.find((a) => a.id === arrowId);
     if (escapedArrow) {
-      const isAlreadyCompleted = gameMode === 'galaxy'
-        ? (starsPerGalaxyLevel[currentGalaxyLevelId] || 0) > 0
-        : (starsPerLevel[currentLevelId] || 0) > 0;
+      const isAlreadyCompleted =
+        gameMode === 'galaxy'
+          ? (starsPerGalaxyLevel[currentGalaxyLevelId] || 0) > 0
+          : (starsPerLevel[currentLevelId] || 0) > 0;
 
       if (escapedArrow.isDiamond || escapedArrow.type === 'diamond') {
         const isAr = language === 'ar';
@@ -908,6 +922,19 @@ export default function App() {
       } else if (escapedArrow.isGhost || escapedArrow.type === 'ghost') {
         const isAr = language === 'ar';
         triggerToast(isAr ? '👻 سهم الشبح اخترق العوائق وهرب ببراعة!' : '👻 Ghost Arrow phased through obstacles!');
+      }
+
+      // Rain & Thunderstorm Theme bonus (27% chance to drop 3 to 6 coins)
+      if (selectedSkin === 'rainstorm' && Math.random() < 0.27) {
+        const rewardCoins = Math.floor(Math.random() * 4) + 3; // 3 to 6 inclusive
+        setCoins((prev) => prev + rewardCoins);
+        const isAr = language === 'ar';
+        soundManager.playThunder();
+        triggerToast(
+          isAr
+            ? `⛈️⚡ تساقطت قطرات العاصفة ومنحتك +${rewardCoins} عملات! 🪙`
+            : `⛈️⚡ Rainstorm dropped +${rewardCoins} bonus coins! 🪙`
+        );
       }
     }
 
@@ -992,15 +1019,15 @@ export default function App() {
     setShowLevelSelectModal(false);
   };
 
-  // Victory Handler
   const handleLevelCompleted = () => {
     const isAr = language === 'ar';
     const starsEarned = drops === 3 ? 3 : drops === 2 ? 2 : 1;
     let pointsEarned = 0;
 
-    const isAlreadyCompleted = gameMode === 'galaxy'
-      ? (starsPerGalaxyLevel[currentGalaxyLevelId] || 0) > 0
-      : (starsPerLevel[currentLevelId] || 0) > 0;
+    const isAlreadyCompleted =
+      gameMode === 'galaxy'
+        ? (starsPerGalaxyLevel[currentGalaxyLevelId] || 0) > 0
+        : (starsPerLevel[currentLevelId] || 0) > 0;
 
     if (gameMode === 'galaxy') {
       const prevGalaxyStars = starsPerGalaxyLevel[currentGalaxyLevelId] || 0;
@@ -1143,6 +1170,7 @@ export default function App() {
             maxDrops={activeLevel.maxDrops || 3}
             language={language}
             soundEnabled={soundEnabled}
+            gameMode={gameMode}
             coins={coins}
             onOpenSettings={() => setShowSettingsModal(true)}
             onOpenLevelSelect={() => {
@@ -1152,6 +1180,7 @@ export default function App() {
             onOpenEventLevels={handleOpenEventLevels}
             isEventUnlocked={isEventUnlocked}
             onOpenShop={() => setShowShopModal(true)}
+            onOpenLanding={() => setShowLandingModal(true)}
             onToggleSound={() => {
               const next = !soundEnabled;
               setSoundEnabled(next);
@@ -1475,6 +1504,25 @@ export default function App() {
             if (type === 'cream') setCreams((prev) => prev + amount);
             if (type === 'chocolate') setChocolates((prev) => prev + amount);
           }}
+        />
+      )}
+
+      {showLandingModal && (
+        <LandingModal
+          isOpen={showLandingModal}
+          onClose={handleCloseLanding}
+          onStartPlay={handleCloseLanding}
+          onOpenShop={() => {
+            handleCloseLanding();
+            setShowShopModal(true);
+          }}
+          onOpenLevelSelect={() => {
+            handleCloseLanding();
+            setLevelSelectTab(gameMode);
+            setShowLevelSelectModal(true);
+          }}
+          language={language}
+          coins={coins}
         />
       )}
     </div>

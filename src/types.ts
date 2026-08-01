@@ -50,7 +50,7 @@ export interface Level {
 
 export type ThemeSkin = 'candy' | 'jelly' | 'neon' | 'cyber' | 'nebula' | 'supernova' | 'rainstorm';
 
-export type ArrowSkin = 'classic' | 'neon' | 'gold' | 'crystal' | 'dragon' | 'cyber' | 'rainbow';
+export type ArrowSkin = 'classic' | 'neon' | 'gold' | 'crystal' | 'dragon' | 'cyber' | 'rainbow' | 'phoenix' | 'galaxy';
 
 export interface PlayerStats {
   currentLevel: number;

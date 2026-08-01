@@ -74,7 +74,7 @@ const COLOR_THEMES: Record<
   },
 };
 
-// Background Ghost Guide Arrow (Translucent grey track beneath active arrows as in user screenshot)
+// Background Ghost Guide Arrow (Translucent grey track beneath active arrows)
 const RenderGhostTrackSVG: React.FC<{ direction: Direction; length: number; tileSize: number; isDouble?: boolean }> = ({
   direction,
   length,
@@ -196,6 +196,12 @@ const Render3DArrowSVG: React.FC<{
     }
     if (selectedArrowSkin === 'rainbow') {
       return { highlight: '#FDF2F8', gradientStart: '#EC4899', gradientEnd: '#8B5CF6', border: '#A855F7' };
+    }
+    if (selectedArrowSkin === 'phoenix') {
+      return { highlight: '#FFF7ED', gradientStart: '#F97316', gradientEnd: '#7F1D1D', border: '#EA580C' };
+    }
+    if (selectedArrowSkin === 'galaxy') {
+      return { highlight: '#F3E8FF', gradientStart: '#A855F7', gradientEnd: '#312E81', border: '#C084FC' };
     }
     return isGalaxy ? galaxyTheme : theme;
   };
@@ -715,15 +721,19 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
         >
           {/* Subtle Grid Dot Pattern Canvas Background */}
           <div
-            className={`absolute inset-0 rounded-3xl pointer-events-none ${isGalaxy ? 'opacity-20' : 'opacity-40'}`}
+            className={`absolute inset-0 rounded-3xl pointer-events-none ${
+              isGalaxy ? 'opacity-20' : selectedSkin === 'rainstorm' ? 'opacity-60' : 'opacity-40'
+            }`}
             style={{
-              backgroundImage: `radial-gradient(${isGalaxy ? '#c084fc' : '#94a3b8'} 1px, transparent 1px)`,
+              backgroundImage: `radial-gradient(${
+                isGalaxy ? '#c084fc' : selectedSkin === 'rainstorm' ? '#38bdf8' : '#94a3b8'
+              } ${selectedSkin === 'rainstorm' ? '1.5px' : '1px'}, transparent ${selectedSkin === 'rainstorm' ? '1.5px' : '1px'})`,
               backgroundSize: `${tileSize}px ${tileSize}px`,
               backgroundPosition: `${tileSize / 2}px ${tileSize / 2}px`,
             }}
           />
 
-          {/* Rain & Thunderstorm Animated Background */}
+          {/* Rain & Thunderstorm Animated Background (Dot Particles) */}
           {selectedSkin === 'rainstorm' && (
             <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
               {/* Storm Clouds Ambient Blobs */}
@@ -739,27 +749,36 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
               <div className="absolute top-5 right-8 text-2xl animate-pulse" style={{ animationDuration: '1.5s' }}>⛈️</div>
               <div className="absolute bottom-8 right-6 text-lg animate-bounce" style={{ animationDuration: '3s' }}>⚡</div>
 
-              {/* Falling Rain Streak Line Particles */}
+              {/* Storm Dots Particles (نقاط العاصفة الكهربائية المتلألئة والمتساقطة) */}
               {[
-                { left: '8%', top: '2%', delay: '0s', duration: '1.1s', h: 'h-6' },
-                { left: '22%', top: '12%', delay: '0.3s', duration: '0.9s', h: 'h-8' },
-                { left: '38%', top: '4%', delay: '0.1s', duration: '1.3s', h: 'h-5' },
-                { left: '52%', top: '10%', delay: '0.5s', duration: '1.0s', h: 'h-7' },
-                { left: '68%', top: '3%', delay: '0.2s', duration: '1.2s', h: 'h-6' },
-                { left: '84%', top: '14%', delay: '0.6s', duration: '0.8s', h: 'h-9' },
-                { left: '16%', top: '42%', delay: '0.4s', duration: '1.0s', h: 'h-7' },
-                { left: '46%', top: '48%', delay: '0.7s', duration: '1.2s', h: 'h-6' },
-                { left: '76%', top: '38%', delay: '0.1s', duration: '0.9s', h: 'h-8' },
-                { left: '90%', top: '58%', delay: '0.8s', duration: '1.1s', h: 'h-5' },
-              ].map((drop, idx) => (
+                { left: '6%', top: '6%', delay: '0s', duration: '1.2s', size: 'w-2 h-2', color: 'bg-sky-300' },
+                { left: '14%', top: '22%', delay: '0.3s', duration: '1.5s', size: 'w-2.5 h-2.5', color: 'bg-cyan-200' },
+                { left: '25%', top: '10%', delay: '0.7s', duration: '1.1s', size: 'w-1.5 h-1.5', color: 'bg-blue-300' },
+                { left: '34%', top: '28%', delay: '0.1s', duration: '1.4s', size: 'w-3 h-3', color: 'bg-sky-200' },
+                { left: '45%', top: '14%', delay: '0.5s', duration: '1.0s', size: 'w-2 h-2', color: 'bg-cyan-300' },
+                { left: '56%', top: '32%', delay: '0.9s', duration: '1.3s', size: 'w-2.5 h-2.5', color: 'bg-sky-100' },
+                { left: '66%', top: '8%', delay: '0.2s', duration: '1.6s', size: 'w-1.5 h-1.5', color: 'bg-blue-200' },
+                { left: '76%', top: '24%', delay: '0.6s', duration: '1.2s', size: 'w-2 h-2', color: 'bg-cyan-200' },
+                { left: '86%', top: '16%', delay: '0.4s', duration: '1.1s', size: 'w-3 h-3', color: 'bg-sky-300' },
+                { left: '94%', top: '30%', delay: '0.8s', duration: '1.5s', size: 'w-2 h-2', color: 'bg-cyan-400' },
+                { left: '10%', top: '48%', delay: '0.2s', duration: '1.3s', size: 'w-2.5 h-2.5', color: 'bg-sky-200' },
+                { left: '22%', top: '64%', delay: '0.5s', duration: '1.1s', size: 'w-1.5 h-1.5', color: 'bg-cyan-300' },
+                { left: '38%', top: '54%', delay: '0.8s', duration: '1.4s', size: 'w-2 h-2', color: 'bg-sky-100' },
+                { left: '52%', top: '70%', delay: '0.1s', duration: '1.0s', size: 'w-3 h-3', color: 'bg-cyan-200' },
+                { left: '64%', top: '50%', delay: '0.6s', duration: '1.5s', size: 'w-2 h-2', color: 'bg-blue-300' },
+                { left: '78%', top: '60%', delay: '0.3s', duration: '1.2s', size: 'w-2.5 h-2.5', color: 'bg-sky-300' },
+                { left: '88%', top: '76%', delay: '0.7s', duration: '1.4s', size: 'w-1.5 h-1.5', color: 'bg-cyan-100' },
+                { left: '30%', top: '82%', delay: '0.4s', duration: '1.3s', size: 'w-2 h-2', color: 'bg-sky-200' },
+                { left: '72%', top: '85%', delay: '0.9s', duration: '1.1s', size: 'w-2.5 h-2.5', color: 'bg-cyan-300' },
+              ].map((dot, idx) => (
                 <div
-                  key={`rain-${idx}`}
-                  className={`absolute w-0.5 ${drop.h} bg-gradient-to-b from-sky-300 via-cyan-400 to-transparent rounded-full opacity-75 animate-pulse`}
+                  key={`storm-dot-${idx}`}
+                  className={`absolute rounded-full shadow-[0_0_10px_rgba(56,189,248,0.9)] animate-pulse ${dot.size} ${dot.color}`}
                   style={{
-                    left: drop.left,
-                    top: drop.top,
-                    animationDelay: drop.delay,
-                    animationDuration: drop.duration,
+                    left: dot.left,
+                    top: dot.top,
+                    animationDelay: dot.delay,
+                    animationDuration: dot.duration,
                   }}
                 />
               ))}
@@ -833,6 +852,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
                     length={arrow.length || 1}
                     tileSize={tileSize}
                     isDouble={arrow.isDouble || arrow.type === 'double'}
+                    isZigzag={arrow.isZigzag || gameMode === 'long'}
                   />
                 </div>
               );

@@ -11,11 +11,13 @@ interface TopBarProps {
   maxDrops: number;
   language: 'ar' | 'en';
   soundEnabled: boolean;
+  gameMode?: 'main' | 'galaxy';
   onOpenSettings: () => void;
   onOpenLevelSelect: () => void;
   onOpenEventLevels: () => void;
   isEventUnlocked?: boolean;
   onOpenShop: () => void;
+  onOpenLanding?: () => void;
   onToggleSound: () => void;
   onRestartLevel: () => void;
   coins: number;
@@ -35,17 +37,20 @@ export const TopBar: React.FC<TopBarProps> = ({
   drops,
   maxDrops,
   language,
+  gameMode = 'main',
   onOpenSettings,
   onOpenLevelSelect,
   onOpenEventLevels,
   isEventUnlocked = false,
   onOpenShop,
+  onOpenLanding,
   onToggleSound,
   onRestartLevel,
   coins,
 }) => {
   const isAr = language === 'ar';
-  const levelText = isAr ? `المستوى ${toArabicDigits(levelNumber)}` : `Level ${levelNumber}`;
+  const modePrefix = gameMode === 'galaxy' ? (isAr ? 'المجرة ' : 'Galaxy ') : (isAr ? 'المستوى ' : 'Level ');
+  const levelText = `${modePrefix}${toArabicDigits(levelNumber)}`;
   const percentText = isAr ? `${toArabicDigits(Math.round(progressPercent))}%` : `${Math.round(progressPercent)}%`;
 
   return (
@@ -66,7 +71,6 @@ export const TopBar: React.FC<TopBarProps> = ({
             <Grid className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
           </button>
 
-          {/* Event Levels Button (زر مراحل الأحداث - 200 نقطة) */}
           <button
             id="btn-event-levels"
             onClick={() => {
@@ -164,6 +168,21 @@ export const TopBar: React.FC<TopBarProps> = ({
           >
             <Settings className="w-4 h-4 sm:w-5 sm:h-5 text-purple-500" />
           </button>
+
+          {/* Landing / Info Page Button (زر صفحة الهبوط والتعريف) */}
+          {onOpenLanding && (
+            <button
+              id="btn-landing"
+              onClick={() => {
+                soundManager.playClick();
+                onOpenLanding();
+              }}
+              className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-sky-400 to-indigo-600 border-2 border-sky-300 shadow-sm flex items-center justify-center text-white hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0"
+              title={isAr ? 'صفحة الهبوط والدليل الشامل 🚀' : 'Landing & Feature Guide 🚀'}
+            >
+              <span className="text-base sm:text-lg">🎯</span>
+            </button>
+          )}
         </div>
       </div>
 
