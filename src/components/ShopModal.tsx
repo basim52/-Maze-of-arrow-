@@ -25,6 +25,7 @@ interface ShopModalProps {
   onBuySpaceCream: (cost: number) => void;
   onBuyBundle: (cost: number) => void;
   onBuyCakeBundle: (cost: number) => void;
+  onExchangeCoins?: (coinCost: number, spaceCoinsEarned: number) => void;
   onClose: () => void;
 }
 
@@ -94,6 +95,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
   onBuySpaceCream,
   onBuyBundle,
   onBuyCakeBundle,
+  onExchangeCoins,
   onClose,
 }) => {
   const isAr = language === 'ar';
@@ -236,6 +238,46 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                 </div>
               </div>
 
+              {/* Space Coins Exchange Card (استبدال ١٥ نقطة لعملة فضاء واحدة) */}
+              <div className="p-3 mb-2.5 rounded-2xl border border-amber-400/80 bg-gradient-to-r from-amber-950/90 via-purple-950/90 to-indigo-950/90 flex items-center justify-between gap-2 shadow-md">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-400 via-yellow-400 to-amber-500 flex items-center justify-center text-xl shadow-md border border-amber-300 shrink-0 text-slate-950 font-black">
+                    🪙➔🚀
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-black text-amber-300 text-xs sm:text-sm flex items-center gap-1">
+                      {isAr ? 'استبدال النقاط بعملة فضاء 🚀' : 'Exchange Coins for Space Coins 🚀'}
+                    </span>
+                    <span className="text-[10px] text-amber-100/90 font-semibold mt-0.5">
+                      {isAr ? 'استبدل 15 نقطة مقابل 1 عملة فضاء واحدة فقط' : 'Exchange 15 regular coins for 1 Space Coin'}
+                    </span>
+                    <span className="text-xs font-black text-amber-300 mt-1 flex items-center gap-1">
+                      <span>🪙 15</span>
+                      <span className="text-purple-300">➔</span>
+                      <span>🚀 1</span>
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  disabled={coins < 15}
+                  onClick={() => {
+                    soundManager.playClick();
+                    if (coins >= 15 && onExchangeCoins) {
+                      onExchangeCoins(15, 1);
+                    }
+                  }}
+                  className={`px-3 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-md shrink-0 ${
+                    coins >= 15
+                      ? 'bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-slate-950 hover:scale-105 active:scale-95 shadow-amber-950 font-black'
+                      : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700 opacity-60'
+                  }`}
+                  title={isAr ? 'استبدال 15 نقطة بـ 1 عملة فضاء' : 'Exchange 15 coins for 1 Space Coin'}
+                >
+                  <span>{isAr ? 'استبدال (+1🚀)' : 'Exchange (+1🚀)'}</span>
+                </button>
+              </div>
+
               {/* Tomato Item (طماطة 🍅) */}
               <div className="p-3 rounded-2xl border border-rose-500/60 bg-gradient-to-r from-rose-950/90 via-purple-900/80 to-slate-900/90 flex items-center justify-between gap-2 shadow-md">
                 <div className="flex items-center gap-2.5">
@@ -254,7 +296,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                     </span>
                     <span className="text-xs font-black text-amber-300 mt-1 flex items-center gap-1">
                       <span>🚀</span>
-                      36 {isAr ? 'عملة فضاء' : 'Space Coins'}
+                      42 {isAr ? 'عملة فضاء' : 'Space Coins'}
                       <span className="text-purple-400 mx-1">•</span>
                       <span className="text-purple-200 font-extrabold">
                         {isAr ? `تملك: ${tomatoes}` : `Owned: ${tomatoes}`}
@@ -264,19 +306,19 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                 </div>
 
                 <button
-                  disabled={spaceCoins < 36 && coins < 36}
+                  disabled={spaceCoins < 42 && coins < 42}
                   onClick={() => {
                     soundManager.playClick();
-                    if (spaceCoins >= 36 || coins >= 36) {
-                      onBuyTomato(36);
+                    if (spaceCoins >= 42 || coins >= 42) {
+                      onBuyTomato(42);
                     }
                   }}
                   className={`px-3 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-md shrink-0 ${
-                    spaceCoins >= 36 || coins >= 36
+                    spaceCoins >= 42 || coins >= 42
                       ? 'bg-gradient-to-r from-rose-500 via-red-500 to-amber-500 text-white hover:scale-105 active:scale-95 shadow-rose-950/60'
                       : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700 opacity-60'
                   }`}
-                  title={isAr ? 'شراء طماطة بـ 36 عملة' : 'Buy Tomato for 36 coins'}
+                  title={isAr ? 'شراء طماطة بـ 42 عملة' : 'Buy Tomato for 42 coins'}
                 >
                   <span>{isAr ? 'شراء (+1)' : 'Buy (+1)'}</span>
                 </button>
@@ -300,7 +342,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                     </span>
                     <span className="text-xs font-black text-amber-300 mt-1 flex items-center gap-1">
                       <span>🚀</span>
-                      40 {isAr ? 'عملة فضاء' : 'Space Coins'}
+                      47 {isAr ? 'عملة فضاء' : 'Space Coins'}
                       <span className="text-purple-400 mx-1">•</span>
                       <span className="text-purple-200 font-extrabold">
                         {isAr ? `تملك: ${spaceCreams}` : `Owned: ${spaceCreams}`}
@@ -310,19 +352,19 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                 </div>
 
                 <button
-                  disabled={spaceCoins < 40 && coins < 40}
+                  disabled={spaceCoins < 47 && coins < 47}
                   onClick={() => {
                     soundManager.playClick();
-                    if (spaceCoins >= 40 || coins >= 40) {
-                      onBuySpaceCream(40);
+                    if (spaceCoins >= 47 || coins >= 47) {
+                      onBuySpaceCream(47);
                     }
                   }}
                   className={`px-3 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-md shrink-0 ${
-                    spaceCoins >= 40 || coins >= 40
+                    spaceCoins >= 47 || coins >= 47
                       ? 'bg-gradient-to-r from-purple-500 via-indigo-500 to-pink-500 text-white hover:scale-105 active:scale-95 shadow-purple-950/60'
                       : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700 opacity-60'
                   }`}
-                  title={isAr ? 'شراء كريمة فضائية بـ 40 عملة' : 'Buy Cosmic Space Cream for 40 coins'}
+                  title={isAr ? 'شراء كريمة فضائية بـ 47 عملة' : 'Buy Cosmic Space Cream for 47 coins'}
                 >
                   <span>{isAr ? 'شراء (+1)' : 'Buy (+1)'}</span>
                 </button>

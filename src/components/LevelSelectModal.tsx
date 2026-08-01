@@ -41,8 +41,8 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
   const isAr = language === 'ar';
   const [activeTab, setActiveTab] = useState<'main' | 'galaxy'>(initialTab);
 
-  // Main levels 1 to 210
-  const TOTAL_MAIN_LEVELS = Math.max(210, unlockedLevel, currentLevel + 5);
+  // Main levels 1 to 220
+  const TOTAL_MAIN_LEVELS = Math.max(220, unlockedLevel, currentLevel + 5);
   const mainLevelIds = Array.from({ length: TOTAL_MAIN_LEVELS }, (_, i) => i + 1);
 
   // Galaxy event levels 1 to 25

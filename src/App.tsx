@@ -520,6 +520,26 @@ export default function App() {
     }
   };
 
+  const handleExchangeCoinsForSpaceCoins = (coinCost = 15, spaceCoinsEarned = 1) => {
+    const isAr = language === 'ar';
+    if (coins >= coinCost) {
+      setCoins((prev) => prev - coinCost);
+      setSpaceCoins((prev) => prev + spaceCoinsEarned);
+      soundManager.playVictory();
+      triggerToast(
+        isAr
+          ? `تم استبدال ${coinCost} نقطة بـ ${spaceCoinsEarned} عملة فضاء بنجاح! 🚀`
+          : `Exchanged ${coinCost} coins for ${spaceCoinsEarned} Space Coin! 🚀`
+      );
+    } else {
+      triggerToast(
+        isAr
+          ? `عذراً، تحتاج إلى ${coinCost} نقطة على الأقل للاستبدال!`
+          : `You need at least ${coinCost} coins to exchange!`
+      );
+    }
+  };
+
   const handleUseChocolate = () => {
     const isAr = language === 'ar';
     soundManager.playClick();
@@ -1304,6 +1324,7 @@ export default function App() {
           onBuySpaceCream={handleBuySpaceCream}
           onBuyBundle={handleBuyBundle}
           onBuyCakeBundle={handleBuyCakeBundle}
+          onExchangeCoins={handleExchangeCoinsForSpaceCoins}
           onClose={() => setShowShopModal(false)}
         />
       )}
