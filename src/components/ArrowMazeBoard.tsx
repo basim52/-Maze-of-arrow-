@@ -158,6 +158,7 @@ const Render3DArrowSVG: React.FC<{
   const isGhost = arrow.isGhost || arrow.type === 'ghost';
   const isStar = arrow.isStar || arrow.type === 'star';
   const isDiamond = arrow.isDiamond || arrow.type === 'diamond';
+  const isIce = arrow.isIce || arrow.type === 'ice';
 
   // Galaxy Space Color Palettes based on arrow color index
   const galaxyTheme = {
@@ -267,7 +268,9 @@ const Render3DArrowSVG: React.FC<{
             <stop
               offset="0%"
               stopColor={
-                isDiamond
+                isIce
+                  ? '#F0F9FF'
+                  : isDiamond
                   ? '#E0F2FE'
                   : isBomb
                   ? '#FDE047'
@@ -282,7 +285,9 @@ const Render3DArrowSVG: React.FC<{
             <stop
               offset="30%"
               stopColor={
-                isDiamond
+                isIce
+                  ? '#38BDF8'
+                  : isDiamond
                   ? '#38BDF8'
                   : isBomb
                   ? '#F97316'
@@ -296,7 +301,9 @@ const Render3DArrowSVG: React.FC<{
             <stop
               offset="100%"
               stopColor={
-                isDiamond
+                isIce
+                  ? '#0284C7'
+                  : isDiamond
                   ? '#0284C7'
                   : isBomb
                   ? '#DC2626'
@@ -315,7 +322,9 @@ const Render3DArrowSVG: React.FC<{
               dy={s(3)}
               stdDeviation={s(2)}
               floodColor={
-                isDiamond
+                isIce
+                  ? '#0369A1'
+                  : isDiamond
                   ? '#0369A1'
                   : isBomb
                   ? '#991B1B'
@@ -334,7 +343,9 @@ const Render3DArrowSVG: React.FC<{
         <path
           d={shadowPath}
           fill={
-            isDiamond
+            isIce
+              ? '#0369A1'
+              : isDiamond
               ? '#0369A1'
               : isBomb
               ? '#991B1B'
@@ -353,7 +364,9 @@ const Render3DArrowSVG: React.FC<{
           d={bodyPath}
           fill={`url(#grad-${arrow.id})`}
           stroke={
-            isDiamond
+            isIce
+              ? '#0284C7'
+              : isDiamond
               ? '#0284C7'
               : isBomb
               ? '#7F1D1D'
@@ -369,6 +382,19 @@ const Render3DArrowSVG: React.FC<{
           filter={`url(#shadow-${arrow.id})`}
           opacity={isGhost ? 0.9 : 1}
         />
+
+        {/* Frozen Ice Shield Overlay with Dashed Crystals when frozen */}
+        {isIce && (
+          <path
+            d={bodyPath}
+            fill="none"
+            stroke="#BAE6FD"
+            strokeWidth={Math.max(2, s(3))}
+            strokeDasharray="6 3"
+            opacity="0.9"
+            className="animate-pulse"
+          />
+        )}
 
         {/* Specular White Gloss Top Edge Highlight */}
         <path
@@ -458,6 +484,21 @@ const Render3DArrowSVG: React.FC<{
           </text>
         )}
 
+        {/* Ice Arrow Badge Icon in the center */}
+        {isIce && (
+          <text
+            x={totalWidth / 2}
+            y={cy + s(5)}
+            textAnchor="middle"
+            fill="white"
+            fontSize={s(15)}
+            fontWeight="900"
+            className="select-none pointer-events-none drop-shadow-md animate-pulse"
+          >
+            ❄️
+          </text>
+        )}
+
         {/* Cosmic Galaxy Sparkle Badge on standard space arrows */}
         {isGalaxy && !isDouble && !isBomb && !isGhost && !isStar && (
           <text
@@ -525,10 +566,15 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
     };
   }, [gridCols, gridRows]);
 
+  const [shatteringIceArrowId, setShatteringIceArrowId] = useState<string | null>(null);
+  const [unfrozenArrowIds, setUnfrozenArrowIds] = useState<Set<string>>(new Set());
+
   useEffect(() => {
     setBumpingArrowId(null);
     setFlyingArrows({});
     setSmashingArrowId(null);
+    setUnfrozenArrowIds(new Set());
+    setShatteringIceArrowId(null);
   }, [arrows.length, gridCols, gridRows]);
 
   const handleArrowClick = (arrow: Arrow) => {
@@ -541,6 +587,18 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
         onUseHammer(arrow.id);
         setSmashingArrowId(null);
       }, 300);
+      return;
+    }
+
+    // Ice Arrow check: if frozen, clicking thaws/shatters the ice!
+    const isFrozen = (arrow.isIce || arrow.type === 'ice') && !unfrozenArrowIds.has(arrow.id);
+    if (isFrozen) {
+      soundManager.playIceShatter();
+      setShatteringIceArrowId(arrow.id);
+      setUnfrozenArrowIds((prev) => new Set(prev).add(arrow.id));
+      setTimeout(() => {
+        setShatteringIceArrowId(null);
+      }, 400);
       return;
     }
 
@@ -708,6 +766,8 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
 
               const isBumping = bumpingArrowId === arrow.id;
               const isSmashing = smashingArrowId === arrow.id;
+              const isShattering = shatteringIceArrowId === arrow.id;
+              const isArrowFrozen = (arrow.isIce || arrow.type === 'ice') && !unfrozenArrowIds.has(arrow.id);
               const flyOffset = flyingArrows[arrow.id];
 
               const left = arrow.gridX * tileSize;
@@ -745,6 +805,14 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
                     </div>
                   )}
 
+                  {/* Ice Shatter Particle Burst Overlay */}
+                  {isShattering && (
+                    <div className="absolute inset-0 flex items-center justify-center z-50 pointer-events-none">
+                      <span className="text-3xl animate-ping">❄️</span>
+                      <span className="absolute text-xl animate-bounce text-cyan-300 font-black">🧊</span>
+                    </div>
+                  )}
+
                   {/* Hammer Reticle target glow in hammer mode */}
                   {isHammerActive && (
                     <div className="absolute inset-0 rounded-2xl border-2 border-dashed border-amber-500 bg-amber-400/20 group-hover:bg-amber-400/40 group-hover:border-solid transition-all flex items-center justify-center z-30 pointer-events-none shadow-xs animate-pulse">
@@ -755,7 +823,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
                   )}
 
                   <Render3DArrowSVG
-                    arrow={arrow}
+                    arrow={{ ...arrow, isIce: isArrowFrozen }}
                     isBumping={isBumping}
                     isFlying={!!flyOffset}
                     tileSize={tileSize}

@@ -9,6 +9,7 @@ import { LevelSelectModal } from './components/LevelSelectModal';
 import { SettingsModal } from './components/SettingsModal';
 import { ShopModal } from './components/ShopModal';
 import { InventoryModal } from './components/InventoryModal';
+import { DailyWheelModal } from './components/DailyWheelModal';
 import { RainItem } from './components/RainStrikeOverlay';
 import { Sparkles, HelpCircle, RefreshCw } from 'lucide-react';
 
@@ -315,6 +316,7 @@ export default function App() {
   const [showSettingsModal, setShowSettingsModal] = useState<boolean>(false);
   const [showShopModal, setShowShopModal] = useState<boolean>(false);
   const [showInventoryModal, setShowInventoryModal] = useState<boolean>(false);
+  const [showDailyWheelModal, setShowDailyWheelModal] = useState<boolean>(false);
 
   // Rain Strikes overlay state & app clock
   const [rainItems, setRainItems] = useState<RainItem[]>([]);
@@ -1200,6 +1202,20 @@ export default function App() {
 
             {/* In-Game Action Bar Dock */}
             <div className="flex items-center justify-center gap-2 my-1 z-20 flex-wrap">
+              {/* Daily Lucky Wheel Button */}
+              <button
+                id="btn-daily-wheel"
+                onClick={() => {
+                  soundManager.playClick();
+                  setShowDailyWheelModal(true);
+                }}
+                className="px-3.5 py-2 rounded-2xl border-2 border-amber-300 bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 text-white font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md hover:scale-105 active:scale-95 cursor-pointer transition-all animate-bounce"
+                title={isAr ? 'عجلة الحظ اليومية - در عجلتك واكسب الجوائز!' : 'Daily Lucky Wheel - Spin to win!'}
+              >
+                <span className="text-lg">🎡</span>
+                <span>{isAr ? 'عجلة الحظ' : 'Daily Wheel'}</span>
+              </button>
+
               {/* Open Shop Button */}
               <button
                 id="btn-open-shop"
@@ -1403,6 +1419,22 @@ export default function App() {
             setShowShopModal(true);
           }}
           onClose={() => setShowInventoryModal(false)}
+        />
+      )}
+
+      {showDailyWheelModal && (
+        <DailyWheelModal
+          isOpen={showDailyWheelModal}
+          onClose={() => setShowDailyWheelModal(false)}
+          language={language}
+          onReward={({ type, amount }) => {
+            if (type === 'coins') setCoins((prev) => prev + amount);
+            if (type === 'spaceCoins') setSpaceCoins((prev) => prev + amount);
+            if (type === 'hammer') setHammers((prev) => prev + amount);
+            if (type === 'thunder') setThunders((prev) => prev + amount);
+            if (type === 'cream') setCreams((prev) => prev + amount);
+            if (type === 'chocolate') setChocolates((prev) => prev + amount);
+          }}
         />
       )}
     </div>

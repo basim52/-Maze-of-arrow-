@@ -8623,7 +8623,11 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
 
 export const HAMMER_REQUIRED_LEVEL_IDS = [45, 52, 60, 68, 77, 93, 100, 108, 115, 122, 125, 140, 160, 180, 200, 205, 225, 240];
 export const MONSTER_BOSS_LEVEL_IDS = [55, 69, 85, 105, 120, 138, 150, 158, 173, 188, 200, 210, 230, 250];
-export const DIAMOND_VETERAN_LEVEL_IDS = [23, 74, 87, 98, 100, 179, 187, 194, 235, 245];
+export const DIAMOND_VETERAN_LEVEL_IDS = [23, 74, 87, 98, 100, 179, 187, 194];
+export const ICE_ARROW_LEVEL_IDS = [
+  3, 6, 9, 14, 18, 22, 28, 33, 38, 42, 47, 52, 58, 63, 68, 72, 78, 84, 88, 94,
+  102, 112, 124, 134, 146, 162, 175, 184, 198, 212, 226, 238, 250
+];
 
 export function createMonsterBossLevel(levelNumber: number): Level {
   let nameAr = `👹🔥 ${levelNumber} - مرحلة الوحش الخارقة`;
@@ -9229,6 +9233,38 @@ export function getLevel(id: number): Level {
         ? { ...a, isDiamond: false, type: 'standard' }
         : a
     );
+  }
+
+  // Ice Arrow levels & general ice arrow integration across levels
+  if (ICE_ARROW_LEVEL_IDS.includes(id)) {
+    if (!level.nameAr.includes('🧊')) {
+      level.nameAr = `🧊 ${level.nameAr} - أسهم الجليد ❄️`;
+    }
+    if (!level.nameEn.includes('🧊')) {
+      level.nameEn = `🧊 ${level.nameEn} - Ice Arrows ❄️`;
+    }
+    level.arrows = level.arrows.map((a, idx) => {
+      if (idx % 2 === 0) {
+        return {
+          ...a,
+          type: 'ice',
+          isIce: true,
+        };
+      }
+      return a;
+    });
+  } else if (id >= 3) {
+    // Ice Arrow mechanic present in almost all levels (1-2 frozen arrows per level)
+    level.arrows = level.arrows.map((a, idx) => {
+      if (idx === 0 || idx % 4 === 0) {
+        return {
+          ...a,
+          type: 'ice',
+          isIce: true,
+        };
+      }
+      return a;
+    });
   }
 
   // Strictly sanitize all arrows to guarantee none ever bleed out of bounds
