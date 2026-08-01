@@ -827,13 +827,20 @@ export default function App() {
   const handleArrowEscaped = (arrowId: string) => {
     const escapedArrow = arrows.find((a) => a.id === arrowId);
     if (escapedArrow) {
+      const isAlreadyCompleted = gameMode === 'galaxy'
+        ? (starsPerGalaxyLevel[currentGalaxyLevelId] || 0) > 0
+        : (starsPerLevel[currentLevelId] || 0) > 0;
+
       if (escapedArrow.isDiamond || escapedArrow.type === 'diamond') {
         const isAr = language === 'ar';
-        setCoins((prev) => prev + 7);
-        triggerToast(isAr ? '💎 سهم محنك الماسي منحك +7 نقاط!' : '💎 Diamond Veteran Arrow granted +7 coins!');
+        if (!isAlreadyCompleted) {
+          setCoins((prev) => prev + 7);
+          triggerToast(isAr ? '💎 سهم محنك الماسي منحك +7 نقاط!' : '💎 Diamond Veteran Arrow granted +7 coins!');
+        } else {
+          triggerToast(isAr ? '💎 هذه المرحلة مكتملة سابقاً (لا نقاط سهم الماسي)' : '💎 Previously completed level (No extra diamond coins)');
+        }
       } else if (escapedArrow.isStar || escapedArrow.type === 'star') {
         const isAr = language === 'ar';
-        const isAlreadyCompleted = (starsPerLevel[currentLevelId] || 0) > 0;
         if (!isAlreadyCompleted) {
           setCoins((prev) => prev + 5);
           triggerToast(isAr ? '🌟 سهم النجمة الذهبية منحك +5 نقاط!' : '🌟 Star Arrow granted +5 coins!');
@@ -933,10 +940,13 @@ export default function App() {
     const starsEarned = drops === 3 ? 3 : drops === 2 ? 2 : 1;
     let pointsEarned = 0;
 
+    const isAlreadyCompleted = gameMode === 'galaxy'
+      ? (starsPerGalaxyLevel[currentGalaxyLevelId] || 0) > 0
+      : (starsPerLevel[currentLevelId] || 0) > 0;
+
     if (gameMode === 'galaxy') {
       const prevGalaxyStars = starsPerGalaxyLevel[currentGalaxyLevelId] || 0;
-      const newStarsAdded = Math.max(0, starsEarned - prevGalaxyStars);
-      pointsEarned = newStarsAdded * 4;
+      pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 4;
 
       const newGalaxyStars = Math.max(prevGalaxyStars, starsEarned);
       const updatedGalaxyStars = {
@@ -950,8 +960,7 @@ export default function App() {
       }
     } else {
       const prevStars = starsPerLevel[currentLevelId] || 0;
-      const newStarsAdded = Math.max(0, starsEarned - prevStars);
-      pointsEarned = newStarsAdded * 4;
+      pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 4;
 
       const newStars = Math.max(prevStars, starsEarned);
       const updatedStars = {
@@ -970,9 +979,9 @@ export default function App() {
 
     setLastCoinsEarned(pointsEarned);
 
-    // Space Coins Reward: 10% chance to earn 2 to 5 space coins on level completion
+    // Space Coins Reward: 10% chance to earn 2 to 5 space coins on level completion (only for first-time completions)
     let spaceEarned = 0;
-    if (Math.random() < 0.10) {
+    if (!isAlreadyCompleted && Math.random() < 0.10) {
       spaceEarned = Math.floor(Math.random() * 4) + 2; // 2 to 5 coins
       setSpaceCoins((prev) => prev + spaceEarned);
       triggerToast(
