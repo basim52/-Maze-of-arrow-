@@ -10,6 +10,7 @@ import { SettingsModal } from './components/SettingsModal';
 import { ShopModal } from './components/ShopModal';
 import { InventoryModal } from './components/InventoryModal';
 import { DailyWheelModal } from './components/DailyWheelModal';
+import { FridayUpdatesModal } from './components/FridayUpdatesModal';
 import { LandingModal } from './components/LandingModal';
 import { RainItem } from './components/RainStrikeOverlay';
 import { Sparkles, HelpCircle, RefreshCw } from 'lucide-react';
@@ -340,6 +341,7 @@ export default function App() {
   const [showShopModal, setShowShopModal] = useState<boolean>(false);
   const [showInventoryModal, setShowInventoryModal] = useState<boolean>(false);
   const [showDailyWheelModal, setShowDailyWheelModal] = useState<boolean>(false);
+  const [showFridayUpdatesModal, setShowFridayUpdatesModal] = useState<boolean>(false);
   const [showLandingModal, setShowLandingModal] = useState<boolean>(true);
 
   const handleCloseLanding = () => {
@@ -1305,6 +1307,23 @@ export default function App() {
                 </span>
               </button>
 
+              {/* Friday Weekly Update Button */}
+              <button
+                id="btn-friday-updates"
+                onClick={() => {
+                  soundManager.playClick();
+                  setShowFridayUpdatesModal(true);
+                }}
+                className="px-3.5 py-2 rounded-2xl border-2 border-indigo-400 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md hover:scale-105 active:scale-95 cursor-pointer transition-all"
+                title={isAr ? 'تحديثات يوم الجمعة الجديدة - اطلع على كل جديد!' : 'Friday Weekly Updates - Check out what is new!'}
+              >
+                <span className="text-lg">📅</span>
+                <span>{isAr ? 'تحديث الجمعة' : 'Friday Update'}</span>
+                <span className="bg-emerald-500 text-white font-black text-[10px] px-1.5 py-0.2 rounded-full shadow-xs animate-pulse">
+                  {isAr ? 'جديد' : 'NEW'}
+                </span>
+              </button>
+
               {/* Active Hammer Indicator Badge (if hammer active) */}
               {isHammerActive && (
                 <button
@@ -1504,6 +1523,13 @@ export default function App() {
             if (type === 'cream') setCreams((prev) => prev + amount);
             if (type === 'chocolate') setChocolates((prev) => prev + amount);
           }}
+        />
+      )}
+
+      {showFridayUpdatesModal && (
+        <FridayUpdatesModal
+          language={language}
+          onClose={() => setShowFridayUpdatesModal(false)}
         />
       )}
 
