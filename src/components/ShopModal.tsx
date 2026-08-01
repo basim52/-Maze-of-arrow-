@@ -97,7 +97,6 @@ export const ShopModal: React.FC<ShopModalProps> = ({
   onClose,
 }) => {
   const isAr = language === 'ar';
-  const [showSaturdayInfoModal, setShowSaturdayInfoModal] = React.useState<boolean>(false);
   const [activeTab, setActiveTab] = React.useState<'all' | 'galaxy' | 'tools' | 'skins'>('all');
 
   const canAffordBundle = coins >= 255;
@@ -150,30 +149,6 @@ export const ShopModal: React.FC<ShopModalProps> = ({
             </button>
           </div>
         </div>
-
-        {/* Saturday Update Banner Button */}
-        <button
-          onClick={() => {
-            soundManager.playClick();
-            setShowSaturdayInfoModal(true);
-          }}
-          className="w-full p-2.5 mb-3 rounded-2xl border border-indigo-400/60 bg-gradient-to-r from-indigo-950 via-purple-900 to-slate-900 text-white font-black text-xs flex items-center justify-between shadow-md hover:scale-[1.01] active:scale-[0.99] cursor-pointer transition-all relative overflow-hidden group shrink-0"
-        >
-          <div className="flex items-center gap-2 relative z-10">
-            <span className="text-2xl animate-bounce">📅</span>
-            <div className="flex flex-col text-right">
-              <span className="text-amber-300 font-black text-xs flex items-center gap-1">
-                {isAr ? 'تحديث يوم السبت الكوني! 🚀' : 'Saturday Cosmic Update! 🚀'}
-              </span>
-              <span className="text-[10px] text-indigo-200/90 font-medium leading-tight">
-                {isAr ? 'اضغط لمعرفة مفاجآت وعروض السبت' : 'Click to preview Saturday features'}
-              </span>
-            </div>
-          </div>
-          <span className="bg-amber-400 text-slate-950 text-[10px] font-black px-2.5 py-1 rounded-full shadow-md animate-pulse shrink-0 relative z-10">
-            {isAr ? 'التفاصيل' : 'Details'}
-          </span>
-        </button>
 
         {/* Category Tabs Bar */}
         <div className="grid grid-cols-4 gap-1 p-1 bg-slate-950/80 rounded-2xl border border-slate-800 mb-4 shrink-0">
@@ -729,62 +704,6 @@ export const ShopModal: React.FC<ShopModalProps> = ({
             </div>
           )}
         </div>
-
-        {/* Saturday Update Info Dialog Modal */}
-        {showSaturdayInfoModal && (
-          <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
-            <div className="w-full max-w-xs bg-slate-900 border-2 border-indigo-400 text-white rounded-3xl p-5 shadow-2xl flex flex-col items-center text-center relative animate-scale-up">
-              <button
-                onClick={() => {
-                  soundManager.playClick();
-                  setShowSaturdayInfoModal(false);
-                }}
-                className="absolute top-3 left-3 w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-amber-400 flex items-center justify-center text-3xl mb-3 shadow-lg animate-bounce">
-                📅
-              </div>
-
-              <h3 className="text-lg font-black text-amber-300 mb-1">
-                {isAr ? 'تحديث يوم السبت الكوني! 🚀' : 'Saturday Cosmic Update! 🚀'}
-              </h3>
-
-              <div className="bg-slate-800/80 border border-indigo-500/40 rounded-2xl p-3 my-3 text-right text-xs leading-relaxed flex flex-col gap-2 w-full">
-                <div className="flex items-start gap-2">
-                  <span className="text-amber-400 font-bold shrink-0">⭐</span>
-                  <span className="text-slate-200">
-                    {isAr ? 'إضافة أطوار ومستويات مجرة فضائية جديدة وسريعة' : 'New fast-paced cosmic galaxy levels & modes'}
-                  </span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-rose-400 font-bold shrink-0">🍅</span>
-                  <span className="text-slate-200">
-                    {isAr ? 'تطوير قوة طماطة الفضاء وتوليد عملات فضاء مضاعفة' : 'Upgraded space tomatoes & double space coin drops'}
-                  </span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-cyan-400 font-bold shrink-0">🎁</span>
-                  <span className="text-slate-200">
-                    {isAr ? 'مكافآت يومية كبرى وجوائز مجانية لجميع اللاعبين يوم السبت' : 'Major daily bonuses & free rewards for everyone this Saturday!'}
-                  </span>
-                </div>
-              </div>
-
-              <button
-                onClick={() => {
-                  soundManager.playClick();
-                  setShowSaturdayInfoModal(false);
-                }}
-                className="w-full py-2.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-amber-500 text-white font-black text-xs rounded-xl shadow-lg cursor-pointer hover:scale-105 active:scale-95 transition-all"
-              >
-                {isAr ? 'حسناً، بانتظار يوم السبت! 🚀' : 'Got it, waiting for Saturday! 🚀'}
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
