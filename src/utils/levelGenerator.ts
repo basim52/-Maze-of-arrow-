@@ -9195,15 +9195,27 @@ export function getLevel(id: number): Level {
     if (!level.nameEn.includes('💎')) {
       level.nameEn = `💎 ${level.nameEn} - Diamond Veteran Arrow (7 pts)`;
     }
-    // Convert ALL arrows in this level to Diamond Veteran Arrows
-    level.arrows = level.arrows.map((a) => ({
-      ...a,
-      type: 'diamond',
-      isDiamond: true,
-      isBomb: false,
-      isGhost: false,
-      isStar: false,
-    }));
+    // Convert MAJORITY (~70-75%) of arrows in this level to Diamond Veteran Arrows, with a mix of other arrow types for variety
+    level.arrows = level.arrows.map((a, idx) => {
+      // 3 out of every 4 arrows (75%) will be Diamond Veteran arrows
+      if (idx % 4 !== 3) {
+        return {
+          ...a,
+          type: 'diamond',
+          isDiamond: true,
+          isBomb: false,
+          isGhost: false,
+          isStar: false,
+        };
+      } else {
+        // Keep non-diamond arrows with their original or varied non-diamond type
+        return {
+          ...a,
+          isDiamond: false,
+          type: a.type === 'diamond' ? 'standard' : (a.type || 'standard'),
+        };
+      }
+    });
   } else {
     // Strictly ensure no Diamond Veteran Arrows in any other level
     level.arrows = level.arrows.map((a) =>
