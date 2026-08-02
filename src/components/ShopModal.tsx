@@ -12,6 +12,8 @@ interface ShopModalProps {
   thunders: number;
   creams: number;
   chocolates: number;
+  cakes?: number;
+  cakeArrowCounter?: number;
   selectedSkin: ThemeSkin;
   unlockedSkins: ThemeSkin[];
   selectedArrowSkin?: ArrowSkin;
@@ -30,6 +32,8 @@ interface ShopModalProps {
   onBuyBundle: (cost: number) => void;
   onBuyCakeBundle: (cost: number) => void;
   onExchangeCoins?: (coinCost: number, spaceCoinsEarned: number) => void;
+  onExchangeCake?: (cakeCount: number) => void;
+  initialTab?: 'all' | 'galaxy' | 'tools' | 'skins' | 'arrowSkins';
   onClose: () => void;
 }
 
@@ -182,6 +186,16 @@ const SKINS: SkinItem[] = [
     icon: '👑',
   },
   {
+    id: 'hammer',
+    nameAr: 'خلفية المطرقة الفولاذية 🔨',
+    nameEn: 'Steel Hammer Background 🔨',
+    cost: 278,
+    gradient: 'from-amber-800 via-stone-900 to-amber-950',
+    icon: '🔨',
+    descAr: 'تمنحك مطرقة سحرية مضمونة 100% عند خروج 200 سهم! 🔨✨ (مع وجود عداد للتقدم)',
+    descEn: '100% Guaranteed bonus magic hammer at 200 escaped arrows! 🔨✨ (with progress counter)',
+  },
+  {
     id: 'rainstorm',
     nameAr: 'عاصفة المطر والرعد ⛈️⚡',
     nameEn: 'Rain & Thunderstorm ⛈️⚡',
@@ -207,6 +221,16 @@ const SKINS: SkinItem[] = [
     gradient: 'from-amber-500 via-rose-600 to-purple-900',
     icon: '💥',
   },
+  {
+    id: 'crystal_neon',
+    nameAr: 'خلفية النيون الكرستالية 💎✨',
+    nameEn: 'Crystal Neon Background 💎✨',
+    cost: 124,
+    gradient: 'from-cyan-500 via-indigo-600 to-fuchsia-600',
+    icon: '💎',
+    descAr: 'تمنحك كعكة مجانية 🎂 + 30 نقطة عند إزالة كل 50 سهم! 💎✨ (يفتح العداد حصرياً عند استخدام هذه الخلفية)',
+    descEn: 'Grants 1 free cake 🎂 + 30 coins every 50 arrows! 💎✨ (Counter unlocks exclusively when using this background)',
+  },
 ];
 
 export const ShopModal: React.FC<ShopModalProps> = ({
@@ -218,6 +242,8 @@ export const ShopModal: React.FC<ShopModalProps> = ({
   thunders,
   creams,
   chocolates,
+  cakes = 0,
+  cakeArrowCounter = 0,
   selectedSkin,
   unlockedSkins,
   selectedArrowSkin = 'classic',
@@ -236,10 +262,12 @@ export const ShopModal: React.FC<ShopModalProps> = ({
   onBuyBundle,
   onBuyCakeBundle,
   onExchangeCoins,
+  onExchangeCake,
+  initialTab,
   onClose,
 }) => {
   const isAr = language === 'ar';
-  const [activeTab, setActiveTab] = React.useState<'all' | 'galaxy' | 'tools' | 'skins' | 'arrowSkins'>('all');
+  const [activeTab, setActiveTab] = React.useState<'all' | 'galaxy' | 'tools' | 'skins' | 'arrowSkins'>(initialTab || 'all');
 
   const canAffordBundle = coins >= 255;
   const canAffordCakeBundle = coins >= 170;
@@ -562,6 +590,88 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                 <span>⚡</span>
                 <span>{isAr ? 'منتجات المساعدات والأدوات' : 'Tools & Power-ups'}</span>
               </h3>
+
+              {/* Cake Exchange Shop Card (45 coins per cake) */}
+              <div className="p-3.5 rounded-2xl border-2 border-pink-400/80 bg-gradient-to-r from-pink-950/90 via-slate-900 to-amber-950/90 flex flex-col gap-2.5 shadow-lg relative overflow-hidden">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-xs">
+                    <span>🎂</span>
+                    <span>{isAr ? 'متجر استبدال الكعك' : 'Cake Exchange Shop'}</span>
+                  </div>
+                  <span className="text-[10px] font-extrabold text-amber-300 bg-amber-900/80 px-2 py-0.5 rounded-full border border-amber-500/50">
+                    {isAr ? '45 نقطة لكل كعكة! 🪙' : '45 Coins per Cake! 🪙'}
+                  </span>
+                </div>
+
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-pink-500 via-rose-500 to-amber-400 flex items-center justify-center text-2xl shadow-md shrink-0 border border-pink-300/40">
+                      🎂
+                    </div>
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-black text-white text-xs sm:text-sm">
+                          {isAr ? 'رصيد الكعك لديك:' : 'Your Cake Balance:'}
+                        </span>
+                        <span className="bg-pink-500/30 text-pink-200 text-xs px-2 py-0.5 rounded-full font-black border border-pink-400/40">
+                          {cakes} {isAr ? 'كعكة 🎂' : 'Cakes 🎂'}
+                        </span>
+                      </div>
+                      <span className="text-[10px] text-slate-300 font-medium mt-0.5">
+                        {isAr
+                          ? 'تحصل على 1 كعكة مجانية عند إزالة 70 سهم!'
+                          : 'Get 1 free cake for every 70 arrows removed!'}
+                      </span>
+                      <div className="flex items-center gap-1.5 mt-1">
+                        <div className="w-24 bg-slate-950 h-2 rounded-full overflow-hidden border border-pink-500/30">
+                          <div
+                            className="bg-gradient-to-r from-pink-400 to-amber-300 h-full rounded-full transition-all duration-300"
+                            style={{ width: `${Math.min(100, (cakeArrowCounter / 70) * 100)}%` }}
+                          />
+                        </div>
+                        <span className="text-[9px] font-bold text-pink-300">
+                          {cakeArrowCounter}/70 {isAr ? 'سهم' : 'arrows'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <button
+                      disabled={cakes <= 0}
+                      onClick={() => {
+                        soundManager.playClick();
+                        if (cakes > 0 && onExchangeCake) {
+                          onExchangeCake(1);
+                        }
+                      }}
+                      className={`px-3 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-xs ${
+                        cakes > 0
+                          ? 'bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 hover:scale-105 active:scale-95 shadow-amber-950'
+                          : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700 opacity-60'
+                      }`}
+                    >
+                      <span>{isAr ? 'استبدال (1)' : 'Exchange (1)'}</span>
+                      <span className="text-[10px] opacity-80">(+45)</span>
+                    </button>
+
+                    {cakes > 1 && (
+                      <button
+                        onClick={() => {
+                          soundManager.playClick();
+                          if (cakes > 0 && onExchangeCake) {
+                            onExchangeCake(cakes);
+                          }
+                        }}
+                        className="px-2.5 py-2 rounded-xl font-black text-xs bg-gradient-to-r from-pink-500 to-rose-600 text-white hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
+                      >
+                        <span>{isAr ? 'الكل' : 'All'}</span>
+                        <span className="text-[10px] opacity-90">({cakes * 45}+)</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
 
               {/* Mega Triple Power-Up Bundle (255 coins) */}
               <div className="p-3.5 rounded-2xl border-2 border-amber-400/80 bg-gradient-to-r from-amber-950/90 via-slate-900 to-purple-950/90 flex flex-col gap-2 shadow-md relative overflow-hidden">

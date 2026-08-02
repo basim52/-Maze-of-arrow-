@@ -12810,6 +12810,11 @@ export function getLongLevel(id: number): Level {
     const dir = directions[Math.floor(seededRandom(seed++) * directions.length)];
     const len = Math.floor(2 + seededRandom(seed++) * 5);
 
+    // Skip 65% of short arrow candidates (len <= 3) in long levels
+    if (len <= 3 && seededRandom(seed++) < 0.65) {
+      continue;
+    }
+
     const isDouble = levelId >= 5 && seededRandom(seed++) > 0.8;
     const isStar = levelId >= 8 && seededRandom(seed++) > 0.85;
 
@@ -12836,6 +12841,15 @@ export function getLongLevel(id: number): Level {
 
   const boundedArrows = arrows.filter((a) => isArrowInBounds(a, cols, rows));
 
+  // Remove 65% of short arrows (length <= 3) in all long levels
+  let shortFilterSeed = levelId * 888 + 123;
+  const finalArrows = boundedArrows.filter((a) => {
+    if (a.length <= 3) {
+      return seededRandom(shortFilterSeed++) >= 0.65; // Remove 65% of short arrows
+    }
+    return true;
+  });
+
   const difficulty: Level['difficulty'] =
     levelId <= 10 ? 'سهل' : levelId <= 25 ? 'متوسط' : levelId <= 40 ? 'صعب' : 'خبير';
   const difficultyEn: Level['difficultyEn'] =
@@ -12848,7 +12862,7 @@ export function getLongLevel(id: number): Level {
     difficulty,
     difficultyEn,
     gridSize: { cols: 32, rows: 14 },
-    arrows: boundedArrows,
+    arrows: finalArrows,
     maxDrops: levelId > 30 ? 2 : 3,
   };
 }

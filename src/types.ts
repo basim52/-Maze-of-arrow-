@@ -48,7 +48,7 @@ export interface Level {
   requiresHammer?: boolean;
 }
 
-export type ThemeSkin = 'candy' | 'jelly' | 'neon' | 'cyber' | 'nebula' | 'supernova' | 'rainstorm';
+export type ThemeSkin = 'candy' | 'jelly' | 'neon' | 'cyber' | 'nebula' | 'supernova' | 'rainstorm' | 'hammer' | 'crystal_neon';
 
 export type ArrowSkin = 'classic' | 'neon' | 'gold' | 'crystal' | 'dragon' | 'cyber' | 'rainbow' | 'phoenix' | 'galaxy';
 

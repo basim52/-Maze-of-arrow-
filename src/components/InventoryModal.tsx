@@ -13,6 +13,7 @@ interface InventoryModalProps {
   thunders: number;
   creams: number;
   chocolates: number;
+  cakes?: number;
   selectedSkin: ThemeSkin;
   unlockedSkins: ThemeSkin[];
   selectedArrowSkin?: ArrowSkin;
@@ -24,6 +25,7 @@ interface InventoryModalProps {
   onUseTomato: () => void;
   onUseSpaceCream: () => void;
   onToggleHammer: () => void;
+  onExchangeCake?: (cakeCount: number) => void;
   onSelectSkin: (skin: ThemeSkin) => void;
   onSelectArrowSkin?: (skin: ArrowSkin) => void;
   onOpenShop: () => void;
@@ -88,6 +90,13 @@ const SKINS_INFO: SkinInfo[] = [
     icon: '💥',
     gradient: 'from-amber-500 via-rose-600 to-purple-900',
   },
+  {
+    id: 'crystal_neon',
+    nameAr: 'خلفية النيون الكرستالية 💎✨',
+    nameEn: 'Crystal Neon Background 💎✨',
+    icon: '💎',
+    gradient: 'from-cyan-500 via-indigo-600 to-fuchsia-600',
+  },
 ];
 
 export const InventoryModal: React.FC<InventoryModalProps> = ({
@@ -99,6 +108,7 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
   thunders,
   creams,
   chocolates,
+  cakes = 0,
   selectedSkin,
   unlockedSkins,
   selectedArrowSkin = 'classic',
@@ -110,6 +120,7 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
   onUseTomato,
   onUseSpaceCream,
   onToggleHammer,
+  onExchangeCake,
   onSelectSkin,
   onSelectArrowSkin,
   onOpenShop,
@@ -117,7 +128,7 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
 }) => {
   const isAr = language === 'ar';
   const [viewMode, setViewMode] = useState<'main' | 'event'>('main');
-  const totalStandardTools = creams + chocolates + thunders + hammers;
+  const totalStandardTools = creams + chocolates + thunders + hammers + cakes;
   const totalEventTools = tomatoes + spaceCreams;
 
   return (
@@ -579,6 +590,55 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
                       className="px-2.5 py-1.5 bg-slate-100 hover:bg-amber-100 text-slate-500 hover:text-amber-800 font-bold text-[11px] rounded-xl border border-slate-200 cursor-pointer shrink-0"
                     >
                       {isAr ? 'شراء' : 'Buy'}
+                    </button>
+                  )}
+                </div>
+
+                {/* Cake Item (الكعكة المجانية 🎂) */}
+                <div className="p-3 rounded-2xl border-2 border-pink-300 bg-gradient-to-r from-pink-50 via-rose-50 to-amber-50 flex items-center justify-between gap-2 shadow-xs">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl sm:text-3xl bg-white p-2 rounded-2xl shadow-xs border border-pink-200">
+                      🎂
+                    </span>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-extrabold text-sm text-pink-950 flex items-center gap-1">
+                          {isAr ? 'الكعكة المجانية' : 'Free Cake'}
+                          <span className="bg-pink-500 text-white text-[9px] px-1.5 py-0.2 rounded-full font-black">
+                            +45 🪙
+                          </span>
+                        </span>
+                        <span className="bg-pink-200 text-pink-900 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-pink-300">
+                          {cakes} {isAr ? 'متوفر' : 'owned'}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-pink-800/90 font-medium">
+                        {isAr ? 'تستبدلها بـ 45 نقطة 🪙 فوراً' : 'Exchange for 45 bonus coins instantly'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {cakes > 0 ? (
+                    <button
+                      onClick={() => {
+                        soundManager.playClick();
+                        if (onExchangeCake) {
+                          onExchangeCake(1);
+                        }
+                      }}
+                      className="px-3.5 py-2 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-amber-950 font-black text-xs rounded-xl shadow-md shadow-amber-200 hover:scale-105 active:scale-95 cursor-pointer transition-all shrink-0"
+                    >
+                      {isAr ? 'استبدال (+45🪙)' : 'Exchange (+45🪙)'}
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        soundManager.playClick();
+                        onOpenShop();
+                      }}
+                      className="px-2.5 py-1.5 bg-slate-100 hover:bg-pink-100 text-slate-500 hover:text-pink-700 font-bold text-[11px] rounded-xl border border-slate-200 cursor-pointer shrink-0"
+                    >
+                      {isAr ? 'متجر الكعك' : 'Cake Shop'}
                     </button>
                   )}
                 </div>

@@ -12,6 +12,7 @@ import { InventoryModal } from './components/InventoryModal';
 import { DailyWheelModal } from './components/DailyWheelModal';
 import { FridayUpdatesModal } from './components/FridayUpdatesModal';
 import { LandingModal } from './components/LandingModal';
+import { TipsModal } from './components/TipsModal';
 import { RainItem } from './components/RainStrikeOverlay';
 import { Sparkles, HelpCircle, RefreshCw } from 'lucide-react';
 
@@ -259,6 +260,21 @@ export default function App() {
     return 0;
   });
 
+  const [hammerSkinEscapedCount, setHammerSkinEscapedCount] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.hammerSkinEscapedCount === 'number') {
+          return parsed.hammerSkinEscapedCount;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 0;
+  });
+
   const [spaceCreams, setSpaceCreams] = useState<number>(() => {
     try {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -266,6 +282,51 @@ export default function App() {
         const parsed = JSON.parse(saved);
         if (typeof parsed.spaceCreams === 'number') {
           return parsed.spaceCreams;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 0;
+  });
+
+  const [cakes, setCakes] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.cakes === 'number') {
+          return parsed.cakes;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 0;
+  });
+
+  const [cakeArrowCounter, setCakeArrowCounter] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.cakeArrowCounter === 'number') {
+          return parsed.cakeArrowCounter;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 0;
+  });
+
+  const [crystalNeonEscapedCount, setCrystalNeonEscapedCount] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.crystalNeonEscapedCount === 'number') {
+          return parsed.crystalNeonEscapedCount;
         }
       }
     } catch (e) {
@@ -383,6 +444,19 @@ export default function App() {
   const [showDailyWheelModal, setShowDailyWheelModal] = useState<boolean>(false);
   const [showFridayUpdatesModal, setShowFridayUpdatesModal] = useState<boolean>(false);
   const [showLandingModal, setShowLandingModal] = useState<boolean>(true);
+  const [showTipsModal, setShowTipsModal] = useState<boolean>(false);
+  const [shopModalTab, setShopModalTab] = useState<'all' | 'galaxy' | 'tools' | 'skins' | 'arrowSkins'>('all');
+
+  const handleOpenTips = () => {
+    soundManager.playClick();
+    setShowTipsModal(true);
+  };
+
+  const handleOpenShopWithTab = (tab: 'all' | 'galaxy' | 'tools' | 'skins' | 'arrowSkins' = 'all') => {
+    setShopModalTab(tab);
+    setShowTipsModal(false);
+    setShowShopModal(true);
+  };
 
   const handleCloseLanding = () => {
     setShowLandingModal(false);
@@ -466,6 +540,10 @@ export default function App() {
         thunders,
         creams,
         chocolates,
+        cakes,
+        cakeArrowCounter,
+        hammerSkinEscapedCount,
+        crystalNeonEscapedCount,
       };
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
       if (isEventUnlocked) {
@@ -501,6 +579,10 @@ export default function App() {
     thunders,
     creams,
     chocolates,
+    cakes,
+    cakeArrowCounter,
+    hammerSkinEscapedCount,
+    crystalNeonEscapedCount,
   ]);
 
   // Load level data whenever level or mode changes
@@ -639,7 +721,49 @@ export default function App() {
       setCoins((prev) => prev - cost);
       setChocolates((prev) => prev + 1);
       setCreams((prev) => prev + 1);
-      triggerToast(isAr ? 'تم شراء بكج الكيك بنجاح! 🎂 (🍫+🍦)' : 'Cake Bundle purchased! 🎂 (🍫+🍦)');
+      setCakes((prev) => prev + 1);
+      triggerToast(isAr ? 'تم شراء بكج الكيك بنجاح! 🎂 (🍫+🍦+🎂)' : 'Cake Bundle purchased! 🎂 (🍫+🍦+🎂)');
+    }
+  };
+
+  const registerEscapedArrowsForCake = (count: number) => {
+    const isAr = language === 'ar';
+    setCakeArrowCounter((prev) => {
+      const next = prev + count;
+      if (next >= 70) {
+        const cakesEarned = Math.floor(next / 70);
+        const remainder = next % 70;
+        setCakes((c) => c + cakesEarned);
+        soundManager.playVictory();
+        triggerToast(
+          isAr
+            ? `🎂 تم إزالة ٧٠ سهم! حصلت على +${cakesEarned} كعكة مجانية! 🎉`
+            : `🎂 70 arrows removed! Granted +${cakesEarned} free cake! 🎉`
+        );
+        return remainder;
+      }
+      return next;
+    });
+  };
+
+  const handleExchangeCake = (cakeAmount = 1) => {
+    const isAr = language === 'ar';
+    if (cakes >= cakeAmount) {
+      const coinsEarned = cakeAmount * 45;
+      setCakes((prev) => prev - cakeAmount);
+      setCoins((prev) => prev + coinsEarned);
+      soundManager.playVictory();
+      triggerToast(
+        isAr
+          ? `🎂 تم استبدال ${cakeAmount} كعكة بـ ${coinsEarned} نقطة بنجاح! 🪙`
+          : `🎂 Exchanged ${cakeAmount} cake for ${coinsEarned} coins! 🪙`
+      );
+    } else {
+      triggerToast(
+        isAr
+          ? 'عذراً، لا تملك كعكاً للاستبدال! يربح الكعك عند إزالة 70 سهم 🎂'
+          : 'No cakes available to exchange! Earn cakes by removing 70 arrows 🎂'
+      );
     }
   };
 
@@ -701,6 +825,7 @@ export default function App() {
     );
 
     setTimeout(() => {
+      registerEscapedArrowsForCake(smashedIds.size);
       setArrows((prev) => {
         const next = prev.map((a) => (smashedIds.has(a.id) ? { ...a, isEscaped: true } : a));
         const remaining = next.filter((a) => !a.isEscaped).length;
@@ -714,6 +839,7 @@ export default function App() {
         }
         return next;
       });
+      registerEscapedArrowsForCake(smashedIds.size);
       setRainItems([]);
     }, 450);
   };
@@ -756,6 +882,7 @@ export default function App() {
     );
 
     setTimeout(() => {
+      registerEscapedArrowsForCake(smashedIds.size);
       setArrows((prev) => {
         const next = prev.map((a) => (smashedIds.has(a.id) ? { ...a, isEscaped: true } : a));
         const remaining = next.filter((a) => !a.isEscaped).length;
@@ -769,6 +896,7 @@ export default function App() {
         }
         return next;
       });
+      registerEscapedArrowsForCake(smashedIds.size);
       setRainItems([]);
     }, 450);
   };
@@ -824,6 +952,7 @@ export default function App() {
         }
         return next;
       });
+      registerEscapedArrowsForCake(smashedIds.size);
       setRainItems([]);
     }, 480);
   };
@@ -879,6 +1008,7 @@ export default function App() {
         }
         return next;
       });
+      registerEscapedArrowsForCake(smashedIds.size);
       setRainItems([]);
     }, 500);
   };
@@ -934,6 +1064,7 @@ export default function App() {
         }
         return next;
       });
+      registerEscapedArrowsForCake(smashedIds.size);
       setRainItems([]);
     }, 500);
   };
@@ -948,6 +1079,48 @@ export default function App() {
 
   // Handle Arrow Escaped successfully
   const handleArrowEscaped = (arrowId: string) => {
+    // 1. ALWAYS count towards Cake 70-Arrow progress
+    registerEscapedArrowsForCake(1);
+
+    // 2. Hammer Theme bonus counter
+    if (selectedSkin === 'hammer') {
+      setHammerSkinEscapedCount((prev) => {
+        const next = prev + 1;
+        if (next >= 200) {
+          setHammers((h) => h + 1);
+          const isAr = language === 'ar';
+          soundManager.playVictory();
+          triggerToast(
+            isAr
+              ? `🔨 اكتمل العداد (٢٠٠ سهم)! حصلت على مطرقة سحرية بنسبة ١٠٠٪! (+1 🔨)`
+              : `🔨 200 arrows escaped! 100% Guaranteed Magic Hammer Granted! (+1 🔨)`
+          );
+          return 0;
+        }
+        return next;
+      });
+    }
+
+    // 3. Crystal Neon Theme bonus counter
+    if (selectedSkin === 'crystal_neon') {
+      setCrystalNeonEscapedCount((prev) => {
+        const next = prev + 1;
+        if (next >= 50) {
+          setCakes((c) => c + 1);
+          setCoins((c) => c + 30);
+          const isAr = language === 'ar';
+          soundManager.playVictory();
+          triggerToast(
+            isAr
+              ? '💎 اكتمل عداد النيون الكرستالي (50 سهم)! حصلت على كعكة مجانية 🎂 + 30 نقطة! 🎉'
+              : '💎 Crystal Neon Counter complete (50 arrows)! Granted 1 free cake 🎂 + 30 coins! 🎉'
+          );
+          return 0;
+        }
+        return next;
+      });
+    }
+
     const escapedArrow = arrows.find((a) => a.id === arrowId);
     if (escapedArrow) {
       const isAlreadyCompleted =
@@ -1105,7 +1278,7 @@ export default function App() {
       }
     } else if (gameMode === 'long') {
       const prevLongStars = starsPerLongLevel[currentLongLevelId] || 0;
-      pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 5;
+      pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 8;
 
       const newLongStars = Math.max(prevLongStars, starsEarned);
       const updatedLongStars = {
@@ -1260,8 +1433,9 @@ export default function App() {
             }}
             onOpenEventLevels={handleOpenEventLevels}
             isEventUnlocked={isEventUnlocked}
-            onOpenShop={() => setShowShopModal(true)}
+            onOpenShop={() => handleOpenShopWithTab('all')}
             onOpenLanding={() => setShowLandingModal(true)}
+            onOpenTips={handleOpenTips}
             onToggleSound={() => {
               const next = !soundEnabled;
               setSoundEnabled(next);
@@ -1323,6 +1497,62 @@ export default function App() {
               </div>
             )}
 
+            {/* Hammer Skin 200-Arrow Progress Counter Banner */}
+            {selectedSkin === 'hammer' && (
+              <div className="mb-1.5 bg-gradient-to-r from-stone-950 via-amber-950 to-stone-900 border-2 border-amber-500/80 text-amber-100 font-black text-xs px-3.5 py-1.5 rounded-2xl shadow-xl flex items-center justify-between gap-2.5 w-full max-w-md">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base animate-pulse">🔨</span>
+                  <div className="flex flex-col">
+                    <span className="text-[11px] leading-none text-amber-200">
+                      {isAr ? 'عداد المطرقة السحرية (مضمونة 100%):' : 'Magic Hammer Counter (100% Guaranteed):'}
+                    </span>
+                    <span className="text-[9px] text-amber-300/80 font-semibold mt-0.5">
+                      {isAr ? 'مطرقة مجانية عند خروج 200 سهم' : 'Free hammer at 200 escaped arrows'}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-20 sm:w-24 bg-stone-950 h-2.5 rounded-full overflow-hidden border border-amber-500/40 p-0.5">
+                    <div
+                      className="bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 h-full rounded-full transition-all duration-300"
+                      style={{ width: `${Math.min(100, (hammerSkinEscapedCount / 200) * 100)}%` }}
+                    />
+                  </div>
+                  <span className="text-xs font-black text-amber-300 bg-amber-950/90 px-2 py-0.5 rounded-lg border border-amber-500/40 shrink-0">
+                    {hammerSkinEscapedCount} / 200
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* Crystal Neon Skin 50-Arrow Progress Counter Banner (Unlocks when Crystal Neon background is used) */}
+            {selectedSkin === 'crystal_neon' && (
+              <div className="mb-1.5 bg-gradient-to-r from-slate-950 via-indigo-950 to-fuchsia-950 border-2 border-cyan-400/80 text-cyan-100 font-black text-xs px-3.5 py-1.5 rounded-2xl shadow-xl flex items-center justify-between gap-2.5 w-full max-w-md animate-fade-in">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base animate-pulse">💎</span>
+                  <div className="flex flex-col">
+                    <span className="text-[11px] leading-none text-cyan-200">
+                      {isAr ? 'عداد النيون الكرستالي (+كعكة 🎂 + 30 نقطة):' : 'Crystal Neon Counter (+1 Cake 🎂 + 30 coins):'}
+                    </span>
+                    <span className="text-[9px] text-cyan-300/90 font-semibold mt-0.5">
+                      {isAr ? 'كعكة مجانية 🎂 عند خروج 50 سهم!' : '1 Free cake 🎂 at 50 escaped arrows!'}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-20 sm:w-24 bg-slate-950 h-2.5 rounded-full overflow-hidden border border-cyan-400/40 p-0.5">
+                    <div
+                      className="bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-indigo-400 h-full rounded-full transition-all duration-300"
+                      style={{ width: `${Math.min(100, (crystalNeonEscapedCount / 50) * 100)}%` }}
+                    />
+                  </div>
+                  <span className="text-xs font-black text-cyan-300 bg-cyan-950/90 px-2 py-0.5 rounded-lg border border-cyan-400/40 shrink-0">
+                    {crystalNeonEscapedCount} / 50
+                  </span>
+                </div>
+              </div>
+            )}
+
             {/* Board */}
             <ArrowMazeBoard
               arrows={arrows}
@@ -1360,7 +1590,7 @@ export default function App() {
                 id="btn-open-shop"
                 onClick={() => {
                   soundManager.playClick();
-                  setShowShopModal(true);
+                  handleOpenShopWithTab('all');
                 }}
                 className="px-3.5 py-2 rounded-2xl border-2 border-purple-400 bg-gradient-to-r from-purple-600 via-indigo-600 to-slate-900 text-white font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md hover:scale-105 active:scale-95 cursor-pointer transition-all"
                 title={isAr ? 'فتح متجر الألعاب والجلكسي' : 'Open Game & Galaxy Shop'}
@@ -1382,7 +1612,7 @@ export default function App() {
                 <span className="text-lg">🎒</span>
                 <span>{isAr ? 'الحقيبة' : 'Bag'}</span>
                 <span className="bg-amber-950 text-amber-200 font-extrabold text-[11px] px-1.5 py-0.2 rounded-full shadow-inner">
-                  {creams + chocolates + thunders + hammers + tomatoes + spaceCreams}
+                  {creams + chocolates + thunders + hammers + tomatoes + spaceCreams + cakes}
                 </span>
               </button>
 
@@ -1541,6 +1771,8 @@ export default function App() {
           thunders={thunders}
           creams={creams}
           chocolates={chocolates}
+          cakes={cakes}
+          cakeArrowCounter={cakeArrowCounter}
           selectedSkin={selectedSkin}
           unlockedSkins={unlockedSkins}
           selectedArrowSkin={selectedArrowSkin}
@@ -1567,7 +1799,17 @@ export default function App() {
           onBuyBundle={handleBuyBundle}
           onBuyCakeBundle={handleBuyCakeBundle}
           onExchangeCoins={handleExchangeCoinsForSpaceCoins}
+          onExchangeCake={handleExchangeCake}
+          initialTab={shopModalTab}
           onClose={() => setShowShopModal(false)}
+        />
+      )}
+
+      {showTipsModal && (
+        <TipsModal
+          language={language}
+          onOpenShopBackgrounds={() => handleOpenShopWithTab('skins')}
+          onClose={() => setShowTipsModal(false)}
         />
       )}
 
@@ -1581,6 +1823,7 @@ export default function App() {
           thunders={thunders}
           creams={creams}
           chocolates={chocolates}
+          cakes={cakes}
           selectedSkin={selectedSkin}
           unlockedSkins={unlockedSkins}
           selectedArrowSkin={selectedArrowSkin}
@@ -1592,6 +1835,7 @@ export default function App() {
           onUseTomato={handleUseTomato}
           onUseSpaceCream={handleUseSpaceCream}
           onToggleHammer={handleToggleHammer}
+          onExchangeCake={handleExchangeCake}
           onSelectSkin={(skin) => setSelectedSkin(skin)}
           onSelectArrowSkin={(askin) => setSelectedArrowSkin(askin)}
           onOpenShop={() => {

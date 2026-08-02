@@ -29,7 +29,7 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({
   onLevelSelect,
 }) => {
   const isAr = language === 'ar';
-  const pointsPerStar = gameMode === 'long' ? 5 : 4;
+  const pointsPerStar = gameMode === 'long' ? 8 : 4;
 
   useEffect(() => {
     soundManager.playVictory();
@@ -122,7 +122,7 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({
               <span>⭐</span>
               <span>
                 {isAr
-                  ? `${dropsCount} نجوم بقاء × ${pointsPerStar === 5 ? '٥' : '٤'} نقاط = +${dropsCount * pointsPerStar}`
+                  ? `${dropsCount} نجوم بقاء × ${pointsPerStar === 8 ? '٨' : '٤'} نقاط = +${dropsCount * pointsPerStar}`
                   : `${dropsCount} Survival Stars × ${pointsPerStar} = +${dropsCount * pointsPerStar}`}
               </span>
             </div>

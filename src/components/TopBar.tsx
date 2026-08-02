@@ -1,5 +1,5 @@
 import React from 'react';
-import { Settings, Palette, Sparkles, RotateCcw, Grid } from 'lucide-react';
+import { Settings, Palette, Sparkles, RotateCcw, Grid, Lightbulb } from 'lucide-react';
 import { soundManager } from '../utils/sound';
 
 interface TopBarProps {
@@ -18,6 +18,7 @@ interface TopBarProps {
   isEventUnlocked?: boolean;
   onOpenShop: () => void;
   onOpenLanding?: () => void;
+  onOpenTips?: () => void;
   onToggleSound: () => void;
   onRestartLevel: () => void;
   coins: number;
@@ -44,6 +45,7 @@ export const TopBar: React.FC<TopBarProps> = ({
   isEventUnlocked = false,
   onOpenShop,
   onOpenLanding,
+  onOpenTips,
   onToggleSound,
   onRestartLevel,
   coins,
@@ -166,6 +168,24 @@ export const TopBar: React.FC<TopBarProps> = ({
               ★
             </span>
           </button>
+
+          {/* Tips Button (زر نصائح) */}
+          {onOpenTips && (
+            <button
+              id="btn-tips"
+              onClick={() => {
+                soundManager.playClick();
+                onOpenTips();
+              }}
+              className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-amber-400 via-yellow-400 to-amber-500 border-2 border-amber-300 shadow-sm flex items-center justify-center text-slate-950 hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0 relative"
+              title={isAr ? 'نصائح اللعبة وشراء الخلفيات 💡' : 'Game Tips & Background Perks 💡'}
+            >
+              <Lightbulb className="w-4 h-4 sm:w-5 sm:h-5 text-slate-950 fill-amber-100" />
+              <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[8px] font-black px-1.5 py-0.2 rounded-full border border-white shadow-2xs animate-pulse">
+                {isAr ? 'نصائح' : 'Tips'}
+              </span>
+            </button>
+          )}
 
           {/* Settings Button */}
           <button

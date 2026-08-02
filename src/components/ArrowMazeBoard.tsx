@@ -702,8 +702,12 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
               ? 'bg-gradient-to-b from-slate-950 via-purple-950/90 to-indigo-950 border-purple-500/80 shadow-[0_0_30px_rgba(168,85,247,0.35)]'
               : selectedSkin === 'supernova'
               ? 'bg-gradient-to-b from-slate-950 via-rose-950 to-amber-950/90 border-amber-500/80 shadow-[0_0_35px_rgba(245,158,11,0.35)]'
+              : selectedSkin === 'crystal_neon'
+              ? 'bg-gradient-to-b from-slate-950 via-indigo-950 to-fuchsia-950 border-cyan-400/80 shadow-[0_0_35px_rgba(34,211,238,0.35)]'
               : selectedSkin === 'rainstorm'
               ? 'bg-gradient-to-b from-slate-950 via-slate-900 to-sky-950 border-sky-400/80 shadow-[0_0_35px_rgba(56,189,248,0.35)]'
+              : selectedSkin === 'hammer'
+              ? 'bg-gradient-to-b from-stone-950 via-amber-950 to-stone-900 border-amber-500/80 shadow-[0_0_35px_rgba(217,119,6,0.35)]'
               : selectedSkin === 'neon'
               ? 'bg-gradient-to-b from-slate-900 via-teal-950 to-slate-950 border-teal-500/60 shadow-[0_0_20px_rgba(20,184,166,0.25)]'
               : selectedSkin === 'cyber'
@@ -787,7 +791,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
           )}
 
           {/* Twinkling Galaxy Stars Background for Event Levels or Space Skins */}
-          {(isGalaxy || selectedSkin === 'nebula' || selectedSkin === 'supernova') && (
+          {(isGalaxy || selectedSkin === 'nebula' || selectedSkin === 'supernova' || selectedSkin === 'crystal_neon') && (
             <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
               {/* Cosmic Nebulae Glow Blobs */}
               <div className="absolute top-0 left-1/4 w-32 h-32 bg-purple-600/30 rounded-full blur-2xl animate-pulse" />
