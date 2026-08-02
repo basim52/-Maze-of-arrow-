@@ -11,7 +11,7 @@ interface TopBarProps {
   maxDrops: number;
   language: 'ar' | 'en';
   soundEnabled: boolean;
-  gameMode?: 'main' | 'galaxy';
+  gameMode?: 'main' | 'galaxy' | 'long';
   onOpenSettings: () => void;
   onOpenLevelSelect: () => void;
   onOpenEventLevels: () => void;
@@ -49,7 +49,18 @@ export const TopBar: React.FC<TopBarProps> = ({
   coins,
 }) => {
   const isAr = language === 'ar';
-  const modePrefix = gameMode === 'galaxy' ? (isAr ? 'المجرة ' : 'Galaxy ') : (isAr ? 'المستوى ' : 'Level ');
+  const modePrefix =
+    gameMode === 'galaxy'
+      ? isAr
+        ? 'المجرة '
+        : 'Galaxy '
+      : gameMode === 'long'
+      ? isAr
+        ? 'مرحلة طويلة '
+        : 'Long Level '
+      : isAr
+      ? 'المستوى '
+      : 'Level ';
   const levelText = `${modePrefix}${toArabicDigits(levelNumber)}`;
   const percentText = isAr ? `${toArabicDigits(Math.round(progressPercent))}%` : `${Math.round(progressPercent)}%`;
 

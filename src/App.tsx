@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Arrow, Level, ThemeSkin, ArrowSkin } from './types';
-import { getLevel, getGalaxyLevel, MONSTER_BOSS_LEVEL_IDS } from './utils/levelGenerator';
+import { getLevel, getGalaxyLevel, getLongLevel, MONSTER_BOSS_LEVEL_IDS } from './utils/levelGenerator';
 import { soundManager } from './utils/sound';
 import { TopBar } from './components/TopBar';
 import { ArrowMazeBoard } from './components/ArrowMazeBoard';
@@ -274,7 +274,7 @@ export default function App() {
     return 0;
   });
 
-  const [gameMode, setGameMode] = useState<'main' | 'galaxy'>('main');
+  const [gameMode, setGameMode] = useState<'main' | 'galaxy' | 'long'>('main');
 
   const [currentGalaxyLevelId, setCurrentGalaxyLevelId] = useState<number>(() => {
     try {
@@ -315,6 +315,46 @@ export default function App() {
     return {};
   });
 
+  // Long panoramic maze level states
+  const [currentLongLevelId, setCurrentLongLevelId] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.currentLongLevelId === 'number' && parsed.currentLongLevelId >= 1) {
+          return parsed.currentLongLevelId;
+        }
+      }
+    } catch (e) {}
+    return 1;
+  });
+
+  const [unlockedLongLevel, setUnlockedLongLevel] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.unlockedLongLevel === 'number' && parsed.unlockedLongLevel >= 1) {
+          return parsed.unlockedLongLevel;
+        }
+      }
+    } catch (e) {}
+    return 1;
+  });
+
+  const [starsPerLongLevel, setStarsPerLongLevel] = useState<Record<number, number>>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.starsPerLongLevel && typeof parsed.starsPerLongLevel === 'object') {
+          return parsed.starsPerLongLevel;
+        }
+      }
+    } catch (e) {}
+    return {};
+  });
+
   const [isEventUnlocked, setIsEventUnlocked] = useState<boolean>(() => {
     try {
       const saved = localStorage.getItem('arrow_event_unlocked');
@@ -328,7 +368,7 @@ export default function App() {
     return false;
   });
 
-  const [levelSelectTab, setLevelSelectTab] = useState<'main' | 'galaxy'>('main');
+  const [levelSelectTab, setLevelSelectTab] = useState<'main' | 'galaxy' | 'long'>('main');
 
   const [isHammerActive, setIsHammerActive] = useState<boolean>(false);
   const [lastCoinsEarned, setLastCoinsEarned] = useState<number>(10);
@@ -368,6 +408,8 @@ export default function App() {
   const [activeLevel, setActiveLevel] = useState<Level>(() =>
     gameMode === 'galaxy'
       ? getGalaxyLevel(currentGalaxyLevelId)
+      : gameMode === 'long'
+      ? getLongLevel(currentLongLevelId)
       : getLevel(currentLevelId)
   );
   const [arrows, setArrows] = useState<Arrow[]>([]);
@@ -404,6 +446,9 @@ export default function App() {
         currentGalaxyLevelId,
         unlockedGalaxyLevel,
         starsPerGalaxyLevel,
+        currentLongLevelId,
+        unlockedLongLevel,
+        starsPerLongLevel,
         gameMode,
         isEventUnlocked,
         coins,
@@ -436,6 +481,9 @@ export default function App() {
     currentGalaxyLevelId,
     unlockedGalaxyLevel,
     starsPerGalaxyLevel,
+    currentLongLevelId,
+    unlockedLongLevel,
+    starsPerLongLevel,
     gameMode,
     isEventUnlocked,
     coins,
@@ -460,6 +508,8 @@ export default function App() {
     const lvl =
       gameMode === 'galaxy'
         ? getGalaxyLevel(currentGalaxyLevelId)
+        : gameMode === 'long'
+        ? getLongLevel(currentLongLevelId)
         : getLevel(currentLevelId);
     setActiveLevel(lvl);
     setArrows(lvl.arrows.map((a) => ({ ...a, isEscaped: false })));
@@ -468,7 +518,7 @@ export default function App() {
     setShowVictoryModal(false);
     setIsHammerActive(false);
     setSpaceCoinsEarned(0);
-  }, [currentLevelId, currentGalaxyLevelId, gameMode]);
+  }, [currentLevelId, currentGalaxyLevelId, currentLongLevelId, gameMode]);
 
   // Hammer tool actions
   const handleToggleHammer = () => {
@@ -1021,6 +1071,12 @@ export default function App() {
     setShowLevelSelectModal(false);
   };
 
+  const handleSelectLongLevel = (longId: number) => {
+    setGameMode('long');
+    setCurrentLongLevelId(longId);
+    setShowLevelSelectModal(false);
+  };
+
   const handleLevelCompleted = () => {
     const isAr = language === 'ar';
     const starsEarned = drops === 3 ? 3 : drops === 2 ? 2 : 1;
@@ -1029,6 +1085,8 @@ export default function App() {
     const isAlreadyCompleted =
       gameMode === 'galaxy'
         ? (starsPerGalaxyLevel[currentGalaxyLevelId] || 0) > 0
+        : gameMode === 'long'
+        ? (starsPerLongLevel[currentLongLevelId] || 0) > 0
         : (starsPerLevel[currentLevelId] || 0) > 0;
 
     if (gameMode === 'galaxy') {
@@ -1042,6 +1100,20 @@ export default function App() {
       };
       setStarsPerGalaxyLevel(updatedGalaxyStars);
       setUnlockedGalaxyLevel((prev) => Math.max(prev, currentGalaxyLevelId + 1));
+      if (pointsEarned > 0) {
+        setCoins((prev) => prev + pointsEarned);
+      }
+    } else if (gameMode === 'long') {
+      const prevLongStars = starsPerLongLevel[currentLongLevelId] || 0;
+      pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 5;
+
+      const newLongStars = Math.max(prevLongStars, starsEarned);
+      const updatedLongStars = {
+        ...starsPerLongLevel,
+        [currentLongLevelId]: newLongStars,
+      };
+      setStarsPerLongLevel(updatedLongStars);
+      setUnlockedLongLevel((prev) => Math.max(prev, currentLongLevelId + 1));
       if (pointsEarned > 0) {
         setCoins((prev) => prev + pointsEarned);
       }
@@ -1087,6 +1159,9 @@ export default function App() {
     if (gameMode === 'galaxy') {
       const nextId = Math.min(25, currentGalaxyLevelId + 1);
       setCurrentGalaxyLevelId(nextId);
+    } else if (gameMode === 'long') {
+      const nextId = Math.min(20, currentLongLevelId + 1);
+      setCurrentLongLevelId(nextId);
     } else {
       const nextId = currentLevelId + 1;
       setCurrentLevelId(nextId);
@@ -1142,15 +1217,19 @@ export default function App() {
         <div className={`w-full px-4 py-1.5 flex items-center justify-between text-white shadow-md z-30 shrink-0 select-none ${
           gameMode === 'galaxy'
             ? 'bg-gradient-to-r from-purple-700 via-indigo-600 to-pink-600'
+            : gameMode === 'long'
+            ? 'bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700'
             : 'bg-gradient-to-r from-sky-600 via-sky-500 to-blue-600'
         }`}>
           <div className="flex items-center gap-2">
             <div className="w-6.5 h-6.5 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-xs shadow-inner font-bold">
-              {gameMode === 'galaxy' ? '🌌' : '🎯'}
+              {gameMode === 'galaxy' ? '🌌' : gameMode === 'long' ? '📜' : '🎯'}
             </div>
             <span className="font-black text-xs sm:text-sm tracking-wide">
               {gameMode === 'galaxy'
                 ? isAr ? `مراحل الأحداث - المجرة ${activeLevel.id}` : `Galaxy Level ${activeLevel.id}`
+                : gameMode === 'long'
+                ? isAr ? `المراحل الطويلة - مرحلة ${activeLevel.id}` : `Long Maze Level ${activeLevel.id}`
                 : isAr ? 'هروب الأسهم - تطبيق الألغاز' : 'Arrow Escape App'}
             </span>
           </div>
@@ -1368,15 +1447,24 @@ export default function App() {
       {/* Modals & Overlays */}
       {showVictoryModal && (
         <VictoryModal
-          levelNumber={gameMode === 'galaxy' ? currentGalaxyLevelId : currentLevelId}
+          levelNumber={
+            gameMode === 'galaxy'
+              ? currentGalaxyLevelId
+              : gameMode === 'long'
+              ? currentLongLevelId
+              : currentLevelId
+          }
           stars={
             gameMode === 'galaxy'
               ? starsPerGalaxyLevel[currentGalaxyLevelId] || 3
+              : gameMode === 'long'
+              ? starsPerLongLevel[currentLongLevelId] || 3
               : starsPerLevel[currentLevelId] || 3
           }
           coinsEarned={lastCoinsEarned}
           spaceCoinsEarned={spaceCoinsEarned}
           dropsCount={drops}
+          gameMode={gameMode}
           language={language}
           onNextLevel={handleNextLevel}
           onReplay={handleRestartLevel}
@@ -1396,6 +1484,9 @@ export default function App() {
           unlockedGalaxyLevel={unlockedGalaxyLevel}
           currentGalaxyLevel={currentGalaxyLevelId}
           starsPerGalaxyLevel={starsPerGalaxyLevel}
+          unlockedLongLevel={unlockedLongLevel}
+          currentLongLevel={currentLongLevelId}
+          starsPerLongLevel={starsPerLongLevel}
           isEventUnlocked={isEventUnlocked}
           gameMode={gameMode}
           initialTab={levelSelectTab}
@@ -1403,6 +1494,7 @@ export default function App() {
           language={language}
           onSelectMainLevel={handleSelectMainLevel}
           onSelectGalaxyLevel={handleSelectGalaxyLevel}
+          onSelectLongLevel={handleSelectLongLevel}
           onUnlockEvent={handleUnlockEventInModal}
           onClose={() => setShowLevelSelectModal(false)}
         />

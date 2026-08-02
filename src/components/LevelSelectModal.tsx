@@ -10,13 +10,17 @@ interface LevelSelectModalProps {
   unlockedGalaxyLevel: number;
   currentGalaxyLevel: number;
   starsPerGalaxyLevel: Record<number, number>;
+  unlockedLongLevel: number;
+  currentLongLevel: number;
+  starsPerLongLevel: Record<number, number>;
   isEventUnlocked: boolean;
-  gameMode: 'main' | 'galaxy';
-  initialTab?: 'main' | 'galaxy';
+  gameMode: 'main' | 'galaxy' | 'long';
+  initialTab?: 'main' | 'galaxy' | 'long';
   coins: number;
   language: 'ar' | 'en';
   onSelectMainLevel: (levelId: number) => void;
   onSelectGalaxyLevel: (galaxyId: number) => void;
+  onSelectLongLevel: (longId: number) => void;
   onUnlockEvent: () => void;
   onClose: () => void;
 }
@@ -28,6 +32,9 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
   unlockedGalaxyLevel,
   currentGalaxyLevel,
   starsPerGalaxyLevel,
+  unlockedLongLevel,
+  currentLongLevel,
+  starsPerLongLevel,
   isEventUnlocked,
   gameMode,
   initialTab = 'main',
@@ -35,11 +42,12 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
   language,
   onSelectMainLevel,
   onSelectGalaxyLevel,
+  onSelectLongLevel,
   onUnlockEvent,
   onClose,
 }) => {
   const isAr = language === 'ar';
-  const [activeTab, setActiveTab] = useState<'main' | 'galaxy'>(initialTab);
+  const [activeTab, setActiveTab] = useState<'main' | 'galaxy' | 'long'>(initialTab);
 
   // Main levels 1 to 250
   const TOTAL_MAIN_LEVELS = Math.max(250, unlockedLevel, currentLevel + 5);
@@ -48,6 +56,9 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
   // Galaxy event levels 1 to 25
   const galaxyLevelIds = Array.from({ length: 25 }, (_, i) => i + 1);
 
+  // Long maze levels 1 to 20
+  const longLevelIds = Array.from({ length: 20 }, (_, i) => i + 1);
+
   return (
     <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-fade-in">
       <div className="w-full max-w-lg bg-slate-900 text-white rounded-3xl p-4 sm:p-6 shadow-2xl border-2 border-purple-500/40 flex flex-col max-h-[88vh] relative animate-scale-up overflow-hidden">
@@ -55,15 +66,19 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
         <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-3 shrink-0">
           <div>
             <h2 className="text-lg sm:text-xl font-black text-white flex items-center gap-2">
-              <span>{activeTab === 'galaxy' ? '🌌' : '🎯'}</span>
+              <span>{activeTab === 'galaxy' ? '🌌' : activeTab === 'long' ? '📜' : '🎯'}</span>
               <span>
                 {activeTab === 'main'
                   ? isAr
                     ? `اختيار المستوى الرئيسي (١ - ${TOTAL_MAIN_LEVELS})`
                     : `Main Levels (1 - ${TOTAL_MAIN_LEVELS})`
+                  : activeTab === 'galaxy'
+                  ? isAr
+                    ? 'مراحل الأحداث الفضائية (١ - ٢٥ 🚀)'
+                    : 'Galaxy Event Levels (1 - 25 🚀)'
                   : isAr
-                  ? 'مراحل الأحداث الفضائية (١ - ٢٥ 🚀)'
-                  : 'Galaxy Event Levels (1 - 25 🚀)'}
+                  ? 'المراحل الطويلة البانورامية (١ - ٢٠ 🗺️)'
+                  : 'Long Panoramic Levels (1 - 20 🗺️)'}
               </span>
             </h2>
             <p className="text-[11px] text-purple-200/80 font-medium mt-0.5">
@@ -71,9 +86,13 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                 ? isAr
                   ? 'اختر مرحلتك الرئيسية للتحدي والتقدم'
                   : 'Select your main puzzle level'
+                : activeTab === 'galaxy'
+                ? isAr
+                  ? '🌌 أسهم فضائية، نجوم متلألئة، وخلفيات كوكبية مبهرة!'
+                  : '🌌 Space arrows, sparkling stars & planetary backgrounds!'
                 : isAr
-                ? '🌌 أسهم فضائية، نجوم متلألئة، وخلفيات كوكبية مبهرة!'
-                : '🌌 Space arrows, sparkling stars & planetary backgrounds!'}
+                ? '📜 متاهات عريضة ممتدة ومراحل طويلة بانورامية مليئة بالتحديات!'
+                : '📜 Wide panoramic mazes with winding long paths!'}
             </p>
           </div>
 
@@ -88,21 +107,21 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
           </button>
         </div>
 
-        {/* Tab Navigation Switcher */}
-        <div className="grid grid-cols-2 gap-1.5 p-1 bg-slate-950 rounded-2xl border border-slate-800 mb-3 shrink-0">
+        {/* Tab Navigation Switcher (3 Tabs) */}
+        <div className="grid grid-cols-3 gap-1 p-1 bg-slate-950 rounded-2xl border border-slate-800 mb-3 shrink-0">
           <button
             onClick={() => {
               soundManager.playClick();
               setActiveTab('main');
             }}
-            className={`py-2 px-1.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+            className={`py-2 px-1 rounded-xl text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 ${
               activeTab === 'main'
                 ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white shadow-md'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
             <span>🎯</span>
-            <span className="truncate">{isAr ? 'المستويات الرئيسية' : 'Main Levels'}</span>
+            <span className="truncate">{isAr ? 'الرئيسية' : 'Main'}</span>
           </button>
 
           <button
@@ -110,19 +129,34 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
               soundManager.playClick();
               setActiveTab('galaxy');
             }}
-            className={`py-2 px-1.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 relative ${
+            className={`py-2 px-1 rounded-xl text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 relative ${
               activeTab === 'galaxy'
                 ? 'bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 text-white shadow-md'
                 : 'text-purple-300 hover:text-white bg-purple-950/40 border border-purple-800/50'
             }`}
           >
             <span>🚀</span>
-            <span className="truncate">{isAr ? 'مراحل الأحداث' : 'Event Levels'}</span>
+            <span className="truncate">{isAr ? 'الأحداث' : 'Galaxy'}</span>
             {!isEventUnlocked && (
-              <span className="bg-amber-400 text-slate-950 text-[9px] px-1 py-0.2 rounded-full font-black animate-pulse shrink-0">
+              <span className="bg-amber-400 text-slate-950 text-[8px] px-1 py-0.2 rounded-full font-black shrink-0">
                 200🪙
               </span>
             )}
+          </button>
+
+          <button
+            onClick={() => {
+              soundManager.playClick();
+              setActiveTab('long');
+            }}
+            className={`py-2 px-1 rounded-xl text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 ${
+              activeTab === 'long'
+                ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-md'
+                : 'text-amber-200 hover:text-white bg-amber-950/30 border border-amber-800/40'
+            }`}
+          >
+            <span>📜</span>
+            <span className="truncate">{isAr ? 'طويلة' : 'Long'}</span>
           </button>
         </div>
 
@@ -240,7 +274,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
               );
             })}
           </div>
-        ) : (
+        ) : activeTab === 'galaxy' ? (
           /* Galaxy Event Levels Tab Content */
           <div className="flex-1 overflow-y-auto flex flex-col gap-3">
             {!isEventUnlocked ? (
@@ -365,6 +399,58 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                 })}
               </div>
             )}
+          </div>
+        ) : (
+          /* Long Panoramic Levels Tab Content (1 to 50 Grid) */
+          <div className="flex-1 overflow-y-auto pr-1 grid grid-cols-5 gap-2.5 p-1">
+            {longLevelIds.map((id) => {
+              const isUnlocked = id <= unlockedLongLevel;
+              const isCurrent = id === currentLongLevel && gameMode === 'long';
+              const stars = starsPerLongLevel[id] || 0;
+
+              return (
+                <button
+                  key={`long-${id}`}
+                  disabled={!isUnlocked}
+                  onClick={() => {
+                    soundManager.playClick();
+                    onSelectLongLevel(id);
+                  }}
+                  className={`relative flex flex-col items-center justify-center p-2 rounded-2xl border-2 transition-all duration-200 aspect-square ${
+                    isCurrent
+                      ? 'bg-gradient-to-tr from-amber-500 via-orange-600 to-amber-700 text-white border-amber-300 shadow-lg scale-105 ring-2 ring-amber-400/50'
+                      : isUnlocked
+                      ? 'bg-gradient-to-tr from-slate-900 via-amber-950/80 to-slate-900 text-amber-100 border-amber-600/60 hover:border-amber-400 hover:scale-105 shadow-sm cursor-pointer'
+                      : 'bg-slate-950 text-slate-600 border-slate-800 opacity-60 cursor-not-allowed'
+                  }`}
+                >
+                  <span className="absolute -top-1.5 -right-1.5 text-[10px] bg-amber-900/90 text-amber-200 font-black px-1.5 py-0.2 rounded-full border border-amber-600/50">
+                    📜
+                  </span>
+
+                  {isUnlocked ? (
+                    <>
+                      <span className="text-base font-black text-amber-200">{id}</span>
+                      <div className="flex items-center gap-0.5 mt-0.5">
+                        {[1, 2, 3].map((starIdx) => (
+                          <Star
+                            key={starIdx}
+                            className={`w-3 h-3 ${
+                              starIdx <= stars ? 'text-amber-400 fill-amber-400' : 'text-amber-950 fill-amber-900'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center gap-0.5">
+                      <span className="text-xs font-bold text-slate-500">{id}</span>
+                      <Lock className="w-4 h-4 text-slate-500" />
+                    </div>
+                  )}
+                </button>
+              );
+            })}
           </div>
         )}
       </div>

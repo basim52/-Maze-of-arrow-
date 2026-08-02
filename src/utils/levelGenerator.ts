@@ -38,11 +38,9 @@ export function isArrowInBounds(arrow: Arrow, cols: number = 16, rows: number = 
 
 // Get all grid cells occupied by an arrow
 export function getArrowOccupiedCells(arrow: Arrow): { x: number; y: number }[] {
-  if (arrow.cells && arrow.cells.length > 0) {
-    return arrow.cells;
-  }
   const occupied: { x: number; y: number }[] = [];
   const dir = DIRECTION_VECTORS[arrow.direction];
+  if (!dir) return [{ x: arrow.gridX, y: arrow.gridY }];
   for (let i = 0; i < (arrow.length || 1); i++) {
     occupied.push({
       x: arrow.gridX + dir.x * i,
@@ -12745,5 +12743,115 @@ export function getGalaxyLevel(id: number): Level {
   level.arrows = level.arrows.filter((arrow) => isArrowInBounds(arrow, level.gridSize.cols, level.gridSize.rows));
   return level;
 }
+
+// Pseudo-random helper for deterministic level generation
+function seededRandom(seed: number) {
+  const x = Math.sin(seed++) * 10000;
+  return x - Math.floor(x);
+}
+
+// Generator for Long Panoramic Maze Levels (32x14 Grid, Dual Maze Clusters with Long Connecting Corridors)
+export function getLongLevel(id: number): Level {
+  const levelId = Math.min(Math.max(1, id), 20);
+  const cols = 32;
+  const rows = 14;
+  let seed = levelId * 1543 + 789;
+
+  const colors: ArrowColor[] = ['cyan', 'lime', 'yellow', 'purple', 'pink', 'orange'];
+  const directions: Direction[] = ['right', 'left', 'up', 'down', 'up-right', 'up-left', 'down-right', 'down-left'];
+
+  const occupied = new Set<string>();
+  const arrows: Arrow[] = [];
+
+  const isCellFree = (x: number, y: number) => {
+    if (x < 0 || x >= cols || y < 0 || y >= rows) return false;
+    return !occupied.has(`${x},${y}`);
+  };
+
+  const markArrowCells = (candidate: Arrow) => {
+    const cells = getArrowOccupiedCells(candidate);
+    cells.forEach((c) => occupied.add(`${c.x},${c.y}`));
+  };
+
+  // 1. Long Bridge Arrows connecting Left and Right clusters across middle bridge
+  const bridgeRows = [2, 5, 8, 11];
+  bridgeRows.forEach((r, idx) => {
+    const isRight = (idx + levelId) % 2 === 0;
+    const startX = isRight ? 4 : 27;
+    const dir: Direction = isRight ? 'right' : 'left';
+    const len = 14;
+
+    const candidate: Arrow = {
+      id: `long-${levelId}-bridge-${idx}`,
+      gridX: startX,
+      gridY: r,
+      direction: dir,
+      color: colors[(idx + levelId) % colors.length],
+      length: len,
+    };
+
+    if (isArrowInBounds(candidate, cols, rows)) {
+      const candidateCells = getArrowOccupiedCells(candidate);
+      if (candidateCells.every((c) => isCellFree(c.x, c.y))) {
+        markArrowCells(candidate);
+        arrows.push(candidate);
+      }
+    }
+  });
+
+  // 2. Straight Labyrinth Arrows in Left and Right Clusters
+  const targetArrowCount = Math.min(42, 22 + Math.floor(levelId * 0.4));
+  let attempts = 0;
+
+  while (arrows.length < targetArrowCount && attempts < 500) {
+    attempts++;
+    const gx = Math.floor(1 + seededRandom(seed++) * (cols - 2));
+    const gy = Math.floor(1 + seededRandom(seed++) * (rows - 2));
+    const dir = directions[Math.floor(seededRandom(seed++) * directions.length)];
+    const len = Math.floor(2 + seededRandom(seed++) * 5);
+
+    const isDouble = levelId >= 5 && seededRandom(seed++) > 0.8;
+    const isStar = levelId >= 8 && seededRandom(seed++) > 0.85;
+
+    const candidate: Arrow = {
+      id: `long-${levelId}-a-${arrows.length}`,
+      gridX: gx,
+      gridY: gy,
+      direction: dir,
+      color: colors[arrows.length % colors.length],
+      length: len,
+      isDouble,
+      type: isDouble ? 'double' : isStar ? 'star' : 'standard',
+      isStar,
+    };
+
+    if (!isArrowInBounds(candidate, cols, rows)) continue;
+
+    const candidateCells = getArrowOccupiedCells(candidate);
+    if (candidateCells.every((c) => isCellFree(c.x, c.y))) {
+      markArrowCells(candidate);
+      arrows.push(candidate);
+    }
+  }
+
+  const boundedArrows = arrows.filter((a) => isArrowInBounds(a, cols, rows));
+
+  const difficulty: Level['difficulty'] =
+    levelId <= 10 ? 'سهل' : levelId <= 25 ? 'متوسط' : levelId <= 40 ? 'صعب' : 'خبير';
+  const difficultyEn: Level['difficultyEn'] =
+    levelId <= 10 ? 'Easy' : levelId <= 25 ? 'Medium' : levelId <= 40 ? 'Hard' : 'Expert';
+
+  return {
+    id: levelId,
+    nameAr: `مرحلة طويلة ${levelId} 📜`,
+    nameEn: `Long Level ${levelId} 📜`,
+    difficulty,
+    difficultyEn,
+    gridSize: { cols: 32, rows: 14 },
+    arrows: boundedArrows,
+    maxDrops: levelId > 30 ? 2 : 3,
+  };
+}
+
 
 

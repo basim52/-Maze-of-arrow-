@@ -589,9 +589,10 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
       const maxTileW = Math.floor(availW / gridCols);
       const maxTileH = Math.floor(availH / gridRows);
 
-      // Strict rule: tile size must NEVER cause grid width to exceed container width
+      // Allow smaller minimum tile size for wide long levels to fit cleanly, or allow scrolling
       const optimal = Math.min(maxTileW, maxTileH);
-      const clamped = Math.max(16, Math.min(95, optimal));
+      const minTile = gridCols > 20 ? 10 : 16;
+      const clamped = Math.max(minTile, Math.min(95, optimal));
       setTileSize(clamped);
     };
 
@@ -694,9 +695,9 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
       className="w-full flex-1 flex flex-col items-center justify-center relative my-0.5 px-0.5 sm:px-1 overflow-hidden select-none min-h-[280px]"
     >
       {/* Stage Container */}
-      <div className="relative w-full flex-1 flex items-center justify-center">
+      <div className="relative w-full flex-1 flex items-center justify-center overflow-x-auto overflow-y-hidden max-w-full py-1 scrollbar-thin scrollbar-thumb-amber-500/50">
         <div
-          className={`relative backdrop-blur-md rounded-3xl p-2.5 sm:p-4 flex items-center justify-center transition-all duration-300 border-2 overflow-hidden shadow-lg ${
+          className={`relative backdrop-blur-md rounded-3xl p-2.5 sm:p-4 flex items-center justify-center transition-all duration-300 border-2 overflow-hidden shadow-lg shrink-0 ${
             isGalaxy || selectedSkin === 'nebula'
               ? 'bg-gradient-to-b from-slate-950 via-purple-950/90 to-indigo-950 border-purple-500/80 shadow-[0_0_30px_rgba(168,85,247,0.35)]'
               : selectedSkin === 'supernova'
@@ -716,7 +717,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
           style={{
             width: `${gridCols * tileSize + 20}px`,
             height: `${gridRows * tileSize + 20}px`,
-            maxWidth: '100%',
+            maxWidth: gridCols > 20 ? 'none' : '100%',
           }}
         >
           {/* Subtle Grid Dot Pattern Canvas Background */}

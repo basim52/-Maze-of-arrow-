@@ -9,6 +9,7 @@ interface VictoryModalProps {
   coinsEarned: number;
   spaceCoinsEarned?: number;
   dropsCount?: number;
+  gameMode?: 'main' | 'galaxy' | 'long';
   language: 'ar' | 'en';
   onNextLevel: () => void;
   onReplay: () => void;
@@ -21,12 +22,14 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({
   coinsEarned,
   spaceCoinsEarned = 0,
   dropsCount = 0,
+  gameMode = 'main',
   language,
   onNextLevel,
   onReplay,
   onLevelSelect,
 }) => {
   const isAr = language === 'ar';
+  const pointsPerStar = gameMode === 'long' ? 5 : 4;
 
   useEffect(() => {
     soundManager.playVictory();
@@ -117,7 +120,11 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({
           {dropsCount > 0 && (
             <div className="text-[11px] font-bold text-amber-700 flex items-center justify-end gap-1 pt-0.5 border-t border-amber-200/50">
               <span>⭐</span>
-              <span>{isAr ? `${dropsCount} نجوم بقاء × ٤ نقاط = +${dropsCount * 4}` : `${dropsCount} Survival Stars × 4 = +${dropsCount * 4}`}</span>
+              <span>
+                {isAr
+                  ? `${dropsCount} نجوم بقاء × ${pointsPerStar === 5 ? '٥' : '٤'} نقاط = +${dropsCount * pointsPerStar}`
+                  : `${dropsCount} Survival Stars × ${pointsPerStar} = +${dropsCount * pointsPerStar}`}
+              </span>
             </div>
           )}
         </div>
