@@ -79,8 +79,8 @@ export const TipsModal: React.FC<TipsModalProps> = ({
                 </span>
                 <span className="text-[11px] text-amber-100/90">
                   {isAr
-                    ? 'تغطي الشاشة بالكامل بطابع ملكي فاخر، وتضاعف عملات الفوز ×٢ في جميع المراحل! 👑🪙'
-                    : 'Full screen royal golden throne background that doubles all level victory coins (2x)! 👑🪙'}
+                    ? 'تغطي الشاشة بالكامل بطابع ملكي فاخر، وتضاعف عملات الفوز ×٢ في جميع المراحل وللأسهم المحنكة! 👑🪙'
+                    : 'Full screen royal golden throne background that doubles all level victory coins (2x) and veteran arrow coins! 👑🪙'}
                 </span>
               </div>
             </div>

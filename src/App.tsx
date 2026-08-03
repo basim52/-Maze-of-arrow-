@@ -1183,16 +1183,28 @@ export default function App() {
       if (escapedArrow.isDiamond || escapedArrow.type === 'diamond') {
         const isAr = language === 'ar';
         if (!isAlreadyCompleted) {
-          setCoins((prev) => prev + 7);
-          triggerToast(isAr ? '💎 سهم محنك الماسي منحك +7 نقاط!' : '💎 Diamond Veteran Arrow granted +7 coins!');
+          const baseCoins = 7;
+          const gainedCoins = selectedSkin === 'golden_throne' ? baseCoins * 2 : baseCoins;
+          setCoins((prev) => prev + gainedCoins);
+          triggerToast(
+            selectedSkin === 'golden_throne'
+              ? (isAr ? '👑 💎 مضاعف العرش الذهبي: سهم محنك الماسي منحك +14 نقطة (×2)!' : '👑 💎 Golden Throne 2x: Diamond Veteran Arrow granted +14 coins (2x)!')
+              : (isAr ? '💎 سهم محنك الماسي منحك +7 نقاط!' : '💎 Diamond Veteran Arrow granted +7 coins!')
+          );
         } else {
           triggerToast(isAr ? '💎 هذه المرحلة مكتملة سابقاً (لا نقاط سهم الماسي)' : '💎 Previously completed level (No extra diamond coins)');
         }
       } else if (escapedArrow.isStar || escapedArrow.type === 'star') {
         const isAr = language === 'ar';
         if (!isAlreadyCompleted) {
-          setCoins((prev) => prev + 5);
-          triggerToast(isAr ? '🌟 سهم النجمة الذهبية منحك +5 نقاط!' : '🌟 Star Arrow granted +5 coins!');
+          const baseCoins = 5;
+          const gainedCoins = selectedSkin === 'golden_throne' ? baseCoins * 2 : baseCoins;
+          setCoins((prev) => prev + gainedCoins);
+          triggerToast(
+            selectedSkin === 'golden_throne'
+              ? (isAr ? '👑 🌟 مضاعف العرش الذهبي: سهم النجمة الذهبية منحك +10 نقاط (×2)!' : '👑 🌟 Golden Throne 2x: Star Arrow granted +10 coins (2x)!')
+              : (isAr ? '🌟 سهم النجمة الذهبية منحك +5 نقاط!' : '🌟 Star Arrow granted +5 coins!')
+          );
         } else {
           triggerToast(isAr ? '🌟 هذه المرحلة مكتملة سابقاً (لا نقاط نجمة إضافية)' : '🌟 Previously completed level (No extra star coins)');
         }

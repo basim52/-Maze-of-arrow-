@@ -241,8 +241,8 @@ const SKINS: SkinItem[] = [
     cost: 400,
     gradient: 'from-amber-500 via-yellow-500 to-amber-700',
     icon: '👑',
-    descAr: 'تغطي الشاشة بالكامل بطابع العرش الذهبي الملوكي 👑 وتمنحك مضاعف عملات ×2 (ضعف الفلوس) عند إكمال أي مرحلة! 🪙✨',
-    descEn: 'Full-screen royal golden throne theme 👑 & grants 2x coins multiplier on level completion! 🪙✨',
+    descAr: 'تغطي الشاشة بالكامل بطابع العرش الذهبي الملوكي 👑 وتمنحك مضاعف عملات ×2 (ضعف الفلوس) عند إكمال أي مرحلة وللأسهم المحنكة! 🪙✨',
+    descEn: 'Full-screen royal golden throne theme 👑 & grants 2x coins multiplier on level completion & veteran arrows! 🪙✨',
   },
 ];
 
