@@ -33,6 +33,7 @@ interface ShopModalProps {
   onBuySpaceCream: (cost: number) => void;
   onBuyBundle: (cost: number) => void;
   onBuyCakeBundle: (cost: number) => void;
+  onBuySpaceBundle?: (cost: number) => void;
   onExchangeCoins?: (coinCost: number, spaceCoinsEarned: number) => void;
   onExchangeCake?: (cakeCount: number) => void;
   initialTab?: 'all' | 'galaxy' | 'tools' | 'skins' | 'arrowSkins';
@@ -275,6 +276,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
   onBuySpaceCream,
   onBuyBundle,
   onBuyCakeBundle,
+  onBuySpaceBundle,
   onExchangeCoins,
   onExchangeCake,
   initialTab,
@@ -285,6 +287,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
 
   const canAffordBundle = coins >= 160;
   const canAffordCakeBundle = coins >= 170;
+  const canAffordSpaceBundle = coins >= 950;
   const canAffordHammer = coins >= 45;
   const canAffordChocolate = coins >= 55;
   const canAffordCreamHammer = coins >= 85;
@@ -703,6 +706,61 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                     className={`px-3 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-xs shrink-0 ${
                       canAffordCakeBundle
                         ? 'bg-gradient-to-r from-pink-500 via-rose-500 to-amber-600 text-white hover:scale-105 active:scale-95 shadow-pink-950'
+                        : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700 opacity-60'
+                    }`}
+                  >
+                    <span>{isAr ? 'شراء' : 'Buy'}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Space Bundle (950 coins) */}
+              <div className="p-3.5 rounded-2xl border-2 border-purple-400/80 bg-gradient-to-r from-purple-950/90 via-indigo-950/90 to-pink-950/90 flex flex-col gap-2 shadow-md relative overflow-hidden">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-xs">
+                    <span>🚀</span>
+                    <span>{isAr ? 'بكج الفضاء الخيالي' : 'Super Space Bundle'}</span>
+                  </div>
+                  <span className="text-[10px] font-extrabold text-pink-300 bg-purple-900/80 px-2 py-0.5 rounded-full border border-purple-400/50">
+                    {isAr ? 'عرض الفضاء المميز' : 'Cosmic Offer!'}
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-purple-600 via-pink-500 to-rose-400 flex items-center justify-center text-lg shadow-md gap-0.5 shrink-0 border border-purple-300/50">
+                      <span>🍅</span>
+                      <span>🍅</span>
+                      <span>🍦</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-black text-white text-xs sm:text-sm flex items-center gap-1">
+                        {isAr ? 'بكج الفضاء 🌌' : 'Space Bundle 🌌'}
+                        <span className="bg-purple-500/30 text-purple-200 text-[9px] px-1.5 py-0.2 rounded-full font-black border border-purple-400/40">
+                          {isAr ? 'إزالة 19 سهماً!' : 'Removes 19 Arrows!'}
+                        </span>
+                      </span>
+                      <span className="text-[10px] font-bold text-slate-300 mt-0.5">
+                        {isAr ? '2x طماطة فضائية 🍅 + 1x كريمة فضائية 🍦' : '2x Space Tomatoes 🍅 + 1x Space Cream 🍦'}
+                      </span>
+                      <span className="text-xs font-black text-amber-300 mt-1 flex items-center gap-1">
+                        <Sparkles className="w-3 h-3 text-amber-400 fill-amber-300" />
+                        950 {isAr ? 'نقطة' : 'Coins'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    disabled={!canAffordSpaceBundle}
+                    onClick={() => {
+                      soundManager.playClick();
+                      if (canAffordSpaceBundle && onBuySpaceBundle) {
+                        onBuySpaceBundle(950);
+                      }
+                    }}
+                    className={`px-3 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-xs shrink-0 ${
+                      canAffordSpaceBundle
+                        ? 'bg-gradient-to-r from-purple-500 via-pink-500 to-amber-500 text-white hover:scale-105 active:scale-95 shadow-purple-950'
                         : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700 opacity-60'
                     }`}
                   >

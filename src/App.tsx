@@ -718,6 +718,10 @@ export default function App() {
       setSpaceCoins((prev) => prev - cost);
       setTomatoes((prev) => prev + 1);
       triggerToast(isAr ? 'تم شراء طماطة الفضاء بنجاح! 🍅🚀' : 'Space Tomato purchased! 🍅🚀');
+    } else if (coins >= cost) {
+      setCoins((prev) => prev - cost);
+      setTomatoes((prev) => prev + 1);
+      triggerToast(isAr ? 'تم شراء طماطة الفضاء بنجاح! 🍅🚀' : 'Space Tomato purchased! 🍅🚀');
     }
   };
 
@@ -727,6 +731,20 @@ export default function App() {
       setSpaceCoins((prev) => prev - cost);
       setSpaceCreams((prev) => prev + 1);
       triggerToast(isAr ? 'تم شراء الكريمة الفضائية بنجاح! 🌌🍦' : 'Cosmic Space Cream purchased! 🌌🍦');
+    } else if (coins >= cost) {
+      setCoins((prev) => prev - cost);
+      setSpaceCreams((prev) => prev + 1);
+      triggerToast(isAr ? 'تم شراء الكريمة الفضائية بنجاح! 🌌🍦' : 'Cosmic Space Cream purchased! 🌌🍦');
+    }
+  };
+
+  const handleBuySpaceBundle = (cost: number) => {
+    const isAr = language === 'ar';
+    if (coins >= cost) {
+      setCoins((prev) => prev - cost);
+      setTomatoes((prev) => prev + 2);
+      setSpaceCreams((prev) => prev + 1);
+      triggerToast(isAr ? 'تم شراء بكج الفضاء (٢ طماطة فضائية + كريمة فضائية) بنجاح! 🚀🍅🍦' : 'Space Bundle (2x Tomatoes + 1x Space Cream) purchased! 🚀🍅🍦');
     }
   };
 
@@ -1909,6 +1927,7 @@ export default function App() {
           onBuySpaceCream={handleBuySpaceCream}
           onBuyBundle={handleBuyBundle}
           onBuyCakeBundle={handleBuyCakeBundle}
+          onBuySpaceBundle={handleBuySpaceBundle}
           onExchangeCoins={handleExchangeCoinsForSpaceCoins}
           onExchangeCake={handleExchangeCake}
           initialTab={shopModalTab}
