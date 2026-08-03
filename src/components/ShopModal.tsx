@@ -601,12 +601,12 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                 <span>{isAr ? 'منتجات المساعدات والأدوات' : 'Tools & Power-ups'}</span>
               </h3>
 
-              {/* Mega Triple Power-Up Bundle (255 coins) */}
+              {/* Mega Value Bundle (160 coins) */}
               <div className="p-3.5 rounded-2xl border-2 border-amber-400/80 bg-gradient-to-r from-amber-950/90 via-slate-900 to-purple-950/90 flex flex-col gap-2 shadow-md relative overflow-hidden">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5 bg-amber-500 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-xs">
                     <span>🎁</span>
-                    <span>{isAr ? 'عرض البكج الشامل' : 'Mega Value Bundle'}</span>
+                    <span>{isAr ? 'عرض البكج المميز' : 'Value Bundle'}</span>
                   </div>
                   <span className="text-[10px] font-extrabold text-amber-300 bg-amber-900/80 px-2 py-0.5 rounded-full border border-amber-500/50">
                     {isAr ? 'توفير 14 نقطة!' : 'Save 14 coins!'}
@@ -618,18 +618,17 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                     <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-400 via-orange-400 to-purple-500 flex items-center justify-center text-lg shadow-md gap-0.5 shrink-0">
                       <span>🍦</span>
                       <span>🔨</span>
-                      <span>⚡</span>
                     </div>
                     <div className="flex flex-col">
                       <span className="font-black text-white text-xs sm:text-sm">
-                        {isAr ? 'بكج الكريمة والمطرقة والرعد' : 'Cream + Hammer + Thunder'}
+                        {isAr ? 'بكج الكريمة والمطرقة' : 'Cream + Hammer Bundle'}
                       </span>
                       <span className="text-[10px] font-bold text-slate-300 mt-0.5">
-                        {isAr ? '1x كريمة 🍦 + 1x مطرقة 🔨 + 1x رعد ⚡' : '1x Cream 🍦 + 1x Hammer 🔨 + 1x Thunder ⚡'}
+                        {isAr ? '1x كريمة 🍦 + 1x مطرقة 🔨' : '1x Cream 🍦 + 1x Hammer 🔨'}
                       </span>
                       <span className="text-xs font-black text-amber-300 mt-1 flex items-center gap-1">
                         <Sparkles className="w-3 h-3 text-amber-400 fill-amber-300" />
-                        255 {isAr ? 'نقطة' : 'Coins'}
+                        160 {isAr ? 'نقطة' : 'Coins'}
                       </span>
                     </div>
                   </div>
@@ -639,7 +638,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                     onClick={() => {
                       soundManager.playClick();
                       if (canAffordBundle) {
-                        onBuyBundle(255);
+                        onBuyBundle(160);
                       }
                     }}
                     className={`px-3 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-xs shrink-0 ${
@@ -705,48 +704,6 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                     <span>{isAr ? 'شراء' : 'Buy'}</span>
                   </button>
                 </div>
-              </div>
-
-              {/* Lightning / Thunder Item (95 coins) */}
-              <div className="p-3 rounded-2xl border border-sky-500/60 bg-slate-900 flex items-center justify-between gap-2 shadow-xs">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-cyan-400 via-sky-500 to-blue-600 flex items-center justify-center text-xl shadow-md shrink-0">
-                    ⚡
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-black text-white text-xs sm:text-sm flex items-center gap-1">
-                      {isAr ? 'ضربة الرعد ⚡' : 'Thunder Strike ⚡'}
-                      <span className="bg-sky-500/20 text-sky-300 text-[9px] px-1.5 py-0.2 rounded-full font-extrabold border border-sky-400/30">
-                        {isAr ? `تكسر 3 أسهم` : `Breaks 3 Arrows`}
-                      </span>
-                    </span>
-                    <span className="text-xs font-black text-sky-300 mt-0.5 flex items-center gap-1">
-                      <Sparkles className="w-3 h-3 text-amber-400 fill-amber-300" />
-                      95 {isAr ? 'نقطة' : 'Coins'}
-                      <span className="text-slate-500 mx-1">•</span>
-                      <span className="text-slate-300 font-extrabold">
-                        {isAr ? `تملك: ${thunders}` : `Owned: ${thunders}`}
-                      </span>
-                    </span>
-                  </div>
-                </div>
-
-                <button
-                  disabled={!canAffordThunder}
-                  onClick={() => {
-                    soundManager.playClick();
-                    if (canAffordThunder) {
-                      onBuyThunder(95);
-                    }
-                  }}
-                  className={`px-3 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-xs shrink-0 ${
-                    canAffordThunder
-                      ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white hover:scale-105 active:scale-95 shadow-sky-950'
-                      : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700 opacity-60'
-                  }`}
-                >
-                  <span>{isAr ? 'شراء (+1)' : 'Buy (+1)'}</span>
-                </button>
               </div>
 
               {/* Chocolate Item (55 coins) */}

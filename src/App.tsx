@@ -710,8 +710,7 @@ export default function App() {
       setCoins((prev) => prev - cost);
       setCreams((prev) => prev + 1);
       setHammers((prev) => prev + 1);
-      setThunders((prev) => prev + 1);
-      triggerToast(isAr ? 'تم شراء بكج الأدوات الشامل بنجاح! 🍦🔨⚡' : 'Mega Power-Up Bundle purchased! 🍦🔨⚡');
+      triggerToast(isAr ? 'تم شراء بكج الكريمة والمطرقة بنجاح! 🍦🔨' : 'Cream & Hammer Bundle purchased! 🍦🔨');
     }
   };
 
@@ -847,58 +846,11 @@ export default function App() {
   const handleUseLightning = () => {
     const isAr = language === 'ar';
     soundManager.playClick();
-
-    if (thunders <= 0) {
-      triggerToast(isAr ? 'لا تملك رعد! يمكنك شراؤه بـ 95 نقطة 🛒' : 'No thunder! Buy for 95 coins 🛒');
-      setShowShopModal(true);
-      return;
-    }
-
-    const unescaped = arrows.filter((a) => !a.isEscaped);
-    if (unescaped.length === 0) return;
-
-    soundManager.playThunder();
-
-    // Select up to 3 random unescaped arrows to destroy
-    const shuffled = [...unescaped].sort(() => 0.5 - Math.random());
-    const selectedToSmash = shuffled.slice(0, 3);
-    const smashedIds = new Set(selectedToSmash.map((a) => a.id));
-
-    const estimatedTile = Math.max(24, Math.min(54, Math.floor((Math.min(window.innerWidth, 460) - 32) / activeLevel.gridSize.cols)));
-    const thunderRainItems: RainItem[] = selectedToSmash.map((arrow, idx) => ({
-      id: `thunder-rain-${arrow.id}-${Date.now()}`,
-      type: 'thunder',
-      x: arrow.gridX * estimatedTile + estimatedTile / 2,
-      y: arrow.gridY * estimatedTile + estimatedTile / 2,
-      delay: idx * 80,
-    }));
-    setRainItems(thunderRainItems);
-
-    setThunders((prev) => Math.max(0, prev - 1));
     triggerToast(
       isAr
-        ? `⚡ تساقط مطر الصواعق على ${smashedIds.size} أسهم ودمرها!`
-        : `⚡ Lightning rained on ${smashedIds.size} arrows!`
+        ? `⚡ عملات الرعد تظهر في الأعلى عند تفعيل خلفية عاصفة المطر! ⛈️`
+        : `⚡ Thunder currency is accumulated when using the Rainstorm theme! ⛈️`
     );
-
-    setTimeout(() => {
-      registerEscapedArrowsForCake(smashedIds.size);
-      setArrows((prev) => {
-        const next = prev.map((a) => (smashedIds.has(a.id) ? { ...a, isEscaped: true } : a));
-        const remaining = next.filter((a) => !a.isEscaped).length;
-        const newEscapedCount = next.length - remaining;
-        setEscapedCount(newEscapedCount);
-
-        if (remaining === 0) {
-          setTimeout(() => {
-            handleLevelCompleted();
-          }, 400);
-        }
-        return next;
-      });
-      registerEscapedArrowsForCake(smashedIds.size);
-      setRainItems([]);
-    }, 450);
   };
 
   const handleUseCream = () => {

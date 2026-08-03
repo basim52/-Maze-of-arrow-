@@ -21,7 +21,7 @@ interface InventoryModalProps {
   language: 'ar' | 'en';
   onUseCream: () => void;
   onUseChocolate: () => void;
-  onUseThunder: () => void;
+  onUseThunder?: () => void;
   onUseTomato: () => void;
   onUseSpaceCream: () => void;
   onToggleHammer: () => void;
@@ -453,51 +453,6 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
                         onOpenShop();
                       }}
                       className="px-2.5 py-1.5 bg-slate-100 hover:bg-pink-100 text-slate-500 hover:text-pink-700 font-bold text-[11px] rounded-xl border border-slate-200 cursor-pointer shrink-0"
-                    >
-                      {isAr ? 'شراء' : 'Buy'}
-                    </button>
-                  )}
-                </div>
-
-                {/* Thunder Item */}
-                <div className="p-3 rounded-2xl border-2 border-sky-200 bg-gradient-to-r from-sky-50/70 to-cyan-50/50 flex items-center justify-between gap-2 shadow-xs">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl sm:text-3xl bg-white p-2 rounded-2xl shadow-xs border border-sky-100">
-                      ⚡
-                    </span>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-extrabold text-sm text-sky-950">
-                          {isAr ? 'ضربة الرعد' : 'Thunder Strike'}
-                        </span>
-                        <span className="bg-sky-200 text-sky-900 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-sky-300">
-                          {thunders} {isAr ? 'متوفر' : 'owned'}
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-sky-800/80 font-medium">
-                        {isAr ? 'تضرب 3 أسهم عشوائية' : 'Strikes 3 random arrows'}
-                      </p>
-                    </div>
-                  </div>
-
-                  {thunders > 0 ? (
-                    <button
-                      onClick={() => {
-                        soundManager.playClick();
-                        onUseThunder();
-                        onClose();
-                      }}
-                      className="px-3.5 py-2 bg-gradient-to-r from-sky-500 to-blue-500 hover:from-sky-600 hover:to-blue-600 text-white font-black text-xs rounded-xl shadow-md shadow-sky-200 hover:scale-105 active:scale-95 cursor-pointer transition-all shrink-0"
-                    >
-                      {isAr ? 'استخدم الآن' : 'Use Now'}
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => {
-                        soundManager.playClick();
-                        onOpenShop();
-                      }}
-                      className="px-2.5 py-1.5 bg-slate-100 hover:bg-sky-100 text-slate-500 hover:text-sky-700 font-bold text-[11px] rounded-xl border border-slate-200 cursor-pointer shrink-0"
                     >
                       {isAr ? 'شراء' : 'Buy'}
                     </button>
