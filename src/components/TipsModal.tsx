@@ -70,6 +70,21 @@ export const TipsModal: React.FC<TipsModalProps> = ({
 
           {/* Background Perks List */}
           <div className="flex flex-col gap-2 bg-slate-950/60 p-3 rounded-xl border border-amber-500/30 text-xs">
+            {/* Golden Throne Background */}
+            <div className="flex items-start gap-2 text-amber-200">
+              <span className="text-base shrink-0">👑</span>
+              <div className="flex flex-col">
+                <span className="font-black text-amber-300">
+                  {isAr ? 'خلفية العرش الذهبي 👑🏛️ (٤٠٠ نقطة - ميزة ضرب ٢ فلوس):' : 'Golden Throne Theme 👑🏛️ (400 Coins - 2x Coins Perk):'}
+                </span>
+                <span className="text-[11px] text-amber-100/90">
+                  {isAr
+                    ? 'تغطي الشاشة بالكامل بطابع ملكي فاخر، وتضاعف عملات الفوز ×٢ في جميع المراحل! 👑🪙'
+                    : 'Full screen royal golden throne background that doubles all level victory coins (2x)! 👑🪙'}
+                </span>
+              </div>
+            </div>
+
             {/* Crystal Neon Background */}
             <div className="flex items-start gap-2 text-cyan-200 border-t border-slate-800 pt-2">
               <span className="text-base shrink-0">💎</span>
@@ -109,8 +124,8 @@ export const TipsModal: React.FC<TipsModalProps> = ({
                 </span>
                 <span className="text-[11px] text-sky-100/90">
                   {isAr
-                    ? 'احتمال ٢٧٪ لإسقاط من ٣ إلى ٦ عملات إضافية عند خروج كل سهم! 💰'
-                    : '27% chance to drop 3 to 6 bonus coins when an arrow escapes! 💰'}
+                    ? 'احتمال ٢٧٪ لإسقاط من ٢ إلى ٦ عملات رعد ⚡ عند خروج الأسهم! ⛈️⚡'
+                    : '27% chance to drop 2 to 6 Thunder bolt currency ⚡ when arrows escape! ⛈️⚡'}
                 </span>
               </div>
             </div>

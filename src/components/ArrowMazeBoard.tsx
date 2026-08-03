@@ -700,6 +700,8 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
           className={`relative backdrop-blur-md rounded-3xl p-2.5 sm:p-4 flex items-center justify-center transition-all duration-300 border-2 overflow-hidden shadow-lg shrink-0 ${
             isGalaxy || selectedSkin === 'nebula'
               ? 'bg-gradient-to-b from-slate-950 via-purple-950/90 to-indigo-950 border-purple-500/80 shadow-[0_0_30px_rgba(168,85,247,0.35)]'
+              : selectedSkin === 'golden_throne'
+              ? 'bg-gradient-to-b from-amber-950/95 via-yellow-950/90 to-amber-950 border-amber-400/90 shadow-[0_0_45px_rgba(245,158,11,0.5)] ring-2 ring-amber-300/40'
               : selectedSkin === 'supernova'
               ? 'bg-gradient-to-b from-slate-950 via-rose-950 to-amber-950/90 border-amber-500/80 shadow-[0_0_35px_rgba(245,158,11,0.35)]'
               : selectedSkin === 'crystal_neon'
@@ -731,8 +733,8 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
             }`}
             style={{
               backgroundImage: `radial-gradient(${
-                isGalaxy ? '#c084fc' : selectedSkin === 'rainstorm' ? '#38bdf8' : '#94a3b8'
-              } ${selectedSkin === 'rainstorm' ? '1.5px' : '1px'}, transparent ${selectedSkin === 'rainstorm' ? '1.5px' : '1px'})`,
+                isGalaxy ? '#c084fc' : selectedSkin === 'golden_throne' ? '#fbbf24' : selectedSkin === 'rainstorm' ? '#38bdf8' : '#94a3b8'
+              } ${selectedSkin === 'rainstorm' || selectedSkin === 'golden_throne' ? '1.5px' : '1px'}, transparent ${selectedSkin === 'rainstorm' || selectedSkin === 'golden_throne' ? '1.5px' : '1px'})`,
               backgroundSize: `${tileSize}px ${tileSize}px`,
               backgroundPosition: `${tileSize / 2}px ${tileSize / 2}px`,
             }}

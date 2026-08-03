@@ -1149,16 +1149,16 @@ export default function App() {
         triggerToast(isAr ? '👻 سهم الشبح اخترق العوائق وهرب ببراعة!' : '👻 Ghost Arrow phased through obstacles!');
       }
 
-      // Rain & Thunderstorm Theme bonus (27% chance to drop 3 to 6 coins)
+      // Rain & Thunderstorm Theme bonus (27% chance on each single arrow escape to drop 2 to 6 thunder bolts ⚡)
       if (selectedSkin === 'rainstorm' && Math.random() < 0.27) {
-        const rewardCoins = Math.floor(Math.random() * 4) + 3; // 3 to 6 inclusive
-        setCoins((prev) => prev + rewardCoins);
+        const rewardThunders = Math.floor(Math.random() * 5) + 2; // 2 to 6 inclusive
+        setThunders((prev) => prev + rewardThunders);
         const isAr = language === 'ar';
         soundManager.playThunder();
         triggerToast(
           isAr
-            ? `⛈️⚡ تساقطت قطرات العاصفة ومنحتك +${rewardCoins} عملات! 🪙`
-            : `⛈️⚡ Rainstorm dropped +${rewardCoins} bonus coins! 🪙`
+            ? `⛈️⚡ خروج سهم! تساقطت صواعق العاصفة ومنحتك +${rewardThunders} عملة رعد ⚡!`
+            : `⛈️⚡ Single arrow escape! Rainstorm dropped +${rewardThunders} Thunder ⚡ currency!`
         );
       }
     }
@@ -1265,6 +1265,9 @@ export default function App() {
     if (gameMode === 'galaxy') {
       const prevGalaxyStars = starsPerGalaxyLevel[currentGalaxyLevelId] || 0;
       pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 4;
+      if (selectedSkin === 'golden_throne' && pointsEarned > 0) {
+        pointsEarned *= 2;
+      }
 
       const newGalaxyStars = Math.max(prevGalaxyStars, starsEarned);
       const updatedGalaxyStars = {
@@ -1279,6 +1282,9 @@ export default function App() {
     } else if (gameMode === 'long') {
       const prevLongStars = starsPerLongLevel[currentLongLevelId] || 0;
       pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 8;
+      if (selectedSkin === 'golden_throne' && pointsEarned > 0) {
+        pointsEarned *= 2;
+      }
 
       const newLongStars = Math.max(prevLongStars, starsEarned);
       const updatedLongStars = {
@@ -1293,6 +1299,9 @@ export default function App() {
     } else {
       const prevStars = starsPerLevel[currentLevelId] || 0;
       pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 4;
+      if (selectedSkin === 'golden_throne' && pointsEarned > 0) {
+        pointsEarned *= 2;
+      }
 
       const newStars = Math.max(prevStars, starsEarned);
       const updatedStars = {
@@ -1307,6 +1316,14 @@ export default function App() {
 
       const nextUnlocked = computeUnlockedLevel(updatedStars);
       setUnlockedLevel(nextUnlocked);
+    }
+
+    if (selectedSkin === 'golden_throne' && pointsEarned > 0) {
+      triggerToast(
+        isAr
+          ? '👑 مضاعف العرش الذهبي: حصلت على ضعف الفلوس (×2)! 🪙✨'
+          : '👑 Golden Throne Multiplier: 2x Double Coins Earned! 🪙✨'
+      );
     }
 
     setLastCoinsEarned(pointsEarned);
@@ -1355,17 +1372,33 @@ export default function App() {
   return (
     <div
       dir={isAr ? 'rtl' : 'ltr'}
-      className="min-h-screen w-full bg-slate-950 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-950 via-slate-900 to-indigo-950 text-slate-800 font-sans flex items-center justify-center p-0 sm:p-3 md:p-5 overflow-x-hidden antialiased select-none"
+      className={`min-h-screen w-full transition-colors duration-500 font-sans flex items-center justify-center p-0 sm:p-3 md:p-5 overflow-x-hidden antialiased select-none ${
+        selectedSkin === 'golden_throne'
+          ? 'bg-amber-950 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-600 via-yellow-950 to-amber-950 text-amber-100'
+          : 'bg-slate-950 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-950 via-slate-900 to-indigo-950 text-slate-800'
+      }`}
     >
       {/* Background Decorative Ambient Spheres for Desktop View */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-10 left-10 w-80 h-80 bg-sky-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        {selectedSkin === 'golden_throne' ? (
+          <>
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-b from-amber-400/20 via-yellow-500/10 to-transparent blur-3xl animate-pulse" />
+            <div className="absolute bottom-10 left-10 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl animate-pulse" />
+            <div className="absolute top-20 right-10 w-96 h-96 bg-yellow-400/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+          </>
+        ) : (
+          <>
+            <div className="absolute top-10 left-10 w-80 h-80 bg-sky-500/10 rounded-full blur-3xl animate-pulse" />
+            <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+          </>
+        )}
       </div>
 
       {/* Mobile Phone Application Frame (واجهة تطبيق) */}
       <div className={`w-full max-w-[460px] sm:max-w-[480px] h-screen sm:h-[94vh] sm:max-h-[900px] sm:rounded-[46px] border-0 sm:border-[8px] sm:border-slate-800/90 shadow-[0_25px_70px_rgba(0,0,0,0.6)] flex flex-col relative overflow-hidden backdrop-blur-md transition-colors duration-500 ${
-        gameMode === 'galaxy' || selectedSkin === 'nebula' || selectedSkin === 'supernova'
+        selectedSkin === 'golden_throne'
+          ? 'bg-gradient-to-b from-amber-950 via-yellow-950/95 to-amber-950 text-amber-100 sm:border-amber-500/80 shadow-[0_0_50px_rgba(245,158,11,0.4)]'
+          : gameMode === 'galaxy' || selectedSkin === 'nebula' || selectedSkin === 'supernova'
           ? 'bg-gradient-to-b from-slate-950 via-purple-950/95 to-indigo-950 text-white'
           : selectedSkin === 'rainstorm'
           ? 'bg-gradient-to-b from-slate-950 via-slate-900 to-sky-950 text-white'
@@ -1426,6 +1459,7 @@ export default function App() {
             soundEnabled={soundEnabled}
             gameMode={gameMode}
             coins={coins}
+            thunders={thunders}
             onOpenSettings={() => setShowSettingsModal(true)}
             onOpenLevelSelect={() => {
               setLevelSelectTab(gameMode);
@@ -1494,6 +1528,47 @@ export default function App() {
                 >
                   {isAr ? 'إلغاء' : 'Cancel'}
                 </button>
+              </div>
+            )}
+
+            {/* Golden Throne 2x Coins Multiplier Active Banner */}
+            {selectedSkin === 'golden_throne' && (
+              <div className="mb-1.5 bg-gradient-to-r from-amber-950 via-yellow-950 to-amber-900 border-2 border-amber-400/90 text-amber-100 font-black text-xs px-3.5 py-1.5 rounded-2xl shadow-xl flex items-center justify-between gap-2.5 w-full max-w-md animate-fade-in">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base animate-pulse">👑</span>
+                  <div className="flex flex-col">
+                    <span className="text-[11px] leading-none text-amber-200">
+                      {isAr ? 'خلفية العرش الذهبي (مضاعف نقاط ×2):' : 'Golden Throne Theme (2x Coins Multiplier):'}
+                    </span>
+                    <span className="text-[9px] text-amber-300/90 font-semibold mt-0.5">
+                      {isAr ? 'تحصل على ضعف الفلوس عند إكمال أي مرحلة! 👑🪙' : 'Earn 2x double coins on every level completion! 👑🪙'}
+                    </span>
+                  </div>
+                </div>
+                <span className="bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 text-amber-950 font-black text-xs px-2.5 py-1 rounded-xl shadow-md border border-amber-200 shrink-0">
+                  ×2 🪙
+                </span>
+              </div>
+            )}
+
+            {/* Rainstorm Thunder Currency Active Banner */}
+            {selectedSkin === 'rainstorm' && (
+              <div className="mb-1.5 bg-gradient-to-r from-slate-950 via-sky-950 to-blue-950 border-2 border-sky-400/90 text-sky-100 font-black text-xs px-3.5 py-1.5 rounded-2xl shadow-xl flex items-center justify-between gap-2.5 w-full max-w-md animate-fade-in">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base animate-pulse">⛈️⚡</span>
+                  <div className="flex flex-col">
+                    <span className="text-[11px] leading-none text-sky-200">
+                      {isAr ? 'خلفية عاصفة الرعد (عملة الصاعقة ⚡):' : 'Thunderstorm Theme (Thunder ⚡ Currency):'}
+                    </span>
+                    <span className="text-[9px] text-sky-300/90 font-semibold mt-0.5">
+                      {isAr ? 'عند خروج كل سهم مفرد: احتمال 27% لإسقاط من 2 إلى 6 عملات رعد ⚡! ⛈️' : 'On each single arrow escape: 27% chance to drop 2 to 6 Thunder ⚡ currency! ⛈️'}
+                    </span>
+                  </div>
+                </div>
+                <div className="bg-gradient-to-r from-sky-500 to-cyan-500 text-white font-black text-xs px-2.5 py-1 rounded-xl shadow-md border border-sky-300 shrink-0 flex items-center gap-1">
+                  <span>⚡</span>
+                  <span>{thunders}</span>
+                </div>
               </div>
             )}
 

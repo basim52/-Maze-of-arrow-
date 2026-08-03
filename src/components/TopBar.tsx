@@ -22,6 +22,7 @@ interface TopBarProps {
   onToggleSound: () => void;
   onRestartLevel: () => void;
   coins: number;
+  thunders?: number;
 }
 
 // Convert numbers to Arabic numerals if Arabic mode is on
@@ -49,6 +50,7 @@ export const TopBar: React.FC<TopBarProps> = ({
   onToggleSound,
   onRestartLevel,
   coins,
+  thunders = 0,
 }) => {
   const isAr = language === 'ar';
   const modePrefix =
@@ -70,8 +72,8 @@ export const TopBar: React.FC<TopBarProps> = ({
     <header className="w-full max-w-2xl mx-auto px-3 sm:px-4 pt-3 sm:pt-4 pb-1.5 flex flex-col items-center select-none">
       {/* Top Header Row: Coins/Hammers Stat Pill + Centered Level Title + Quick Action Icons */}
       <div className="w-full grid grid-cols-3 items-center mb-2.5 sm:mb-3">
-        {/* Left Side: Level Select Grid button & Event Levels button & Floating Stat Pill */}
-        <div className="flex items-center gap-1.5 sm:gap-2 justify-start">
+        {/* Left Side: Level Select Grid button & Event Levels button & Floating Stat Pills */}
+        <div className="flex items-center gap-1.5 sm:gap-2 justify-start flex-wrap">
           <button
             id="btn-level-select"
             onClick={() => {
@@ -123,6 +125,19 @@ export const TopBar: React.FC<TopBarProps> = ({
             <Sparkles className="w-3.5 h-3.5 text-amber-200 fill-amber-100 animate-pulse" />
             <span>{isAr ? toArabicDigits(coins) : coins}</span>
           </button>
+
+          {/* Thunder ⚡ Pill Badge */}
+          <button
+            onClick={() => {
+              soundManager.playClick();
+              onOpenShop();
+            }}
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 text-white font-black text-xs shadow-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer border border-sky-300/40"
+            title={isAr ? 'رصيد عملة الرعد ⚡' : 'Thunder Currency ⚡'}
+          >
+            <span className="text-xs sm:text-sm animate-pulse">⚡</span>
+            <span>{isAr ? toArabicDigits(thunders) : thunders}</span>
+          </button>
         </div>
 
         {/* Center: Level Title & Subtitle Badge */}
@@ -140,7 +155,7 @@ export const TopBar: React.FC<TopBarProps> = ({
         </div>
 
         {/* Right Side: Palette + Settings gear */}
-        <div className="flex items-center justify-end gap-1.5 sm:gap-2">
+        <div className="flex items-center justify-end gap-1.5 sm:gap-2 flex-wrap">
           {/* Mobile Coins Button */}
           <button
             onClick={() => {
@@ -148,9 +163,23 @@ export const TopBar: React.FC<TopBarProps> = ({
               onOpenShop();
             }}
             className="sm:hidden flex items-center gap-1 px-2 py-1 rounded-xl bg-amber-500 text-white font-black text-[11px] shadow-xs cursor-pointer border border-amber-300/40"
+            title={isAr ? 'النقاط' : 'Coins'}
           >
             <Sparkles className="w-3 h-3 text-amber-200 fill-amber-100" />
             <span>{isAr ? toArabicDigits(coins) : coins}</span>
+          </button>
+
+          {/* Mobile Thunder Button */}
+          <button
+            onClick={() => {
+              soundManager.playClick();
+              onOpenShop();
+            }}
+            className="sm:hidden flex items-center gap-1 px-2 py-1 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black text-[11px] shadow-xs cursor-pointer border border-sky-300/40"
+            title={isAr ? 'عملة الرعد ⚡' : 'Thunder ⚡'}
+          >
+            <span className="text-[11px] animate-pulse">⚡</span>
+            <span>{isAr ? toArabicDigits(thunders) : thunders}</span>
           </button>
 
           {/* Palette Button with Shop badge */}
