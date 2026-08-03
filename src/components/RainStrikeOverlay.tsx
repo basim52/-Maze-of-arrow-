@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface RainItem {
   id: string;
-  type: 'cream' | 'thunder' | 'hammer' | 'chocolate' | 'tomato' | 'spaceCream';
+  type: 'cream' | 'thunder' | 'hammer' | 'chocolate' | 'tomato' | 'spaceCream' | 'creamHammer';
   x: number; // Center X coordinate in pixels
   y: number; // Center Y coordinate in pixels
   delay: number; // Delay in ms before starting drop
@@ -22,6 +22,7 @@ export const RainStrikeOverlay: React.FC<RainStrikeOverlayProps> = ({ rainItems,
         const isCream = item.type === 'cream';
         const isThunder = item.type === 'thunder';
         const isHammer = item.type === 'hammer';
+        const isCreamHammer = item.type === 'creamHammer';
         const isChocolate = item.type === 'chocolate';
         const isTomato = item.type === 'tomato';
         const isSpaceCream = item.type === 'spaceCream';
@@ -106,6 +107,16 @@ export const RainStrikeOverlay: React.FC<RainStrikeOverlayProps> = ({ rainItems,
                     🔨
                   </span>
                   <div className="w-2.5 h-20 bg-gradient-to-t from-amber-500 via-yellow-400 to-transparent rounded-full -mt-3 opacity-85" />
+                </div>
+              )}
+
+              {isCreamHammer && (
+                <div className="relative flex flex-col items-center">
+                  {/* Cream Hammer Icon */}
+                  <span className="text-5xl sm:text-6xl filter drop-shadow-[0_8px_16px_rgba(236,72,153,0.8)] transform rotate-6">
+                    🍦🔨
+                  </span>
+                  <div className="w-3 h-20 bg-gradient-to-t from-pink-500 via-amber-400 to-transparent rounded-full -mt-3 opacity-90 blur-[1px]" />
                 </div>
               )}
             </div>

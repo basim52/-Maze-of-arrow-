@@ -12,6 +12,7 @@ interface InventoryModalProps {
   hammers: number;
   thunders: number;
   creams: number;
+  creamHammers?: number;
   chocolates: number;
   cakes?: number;
   selectedSkin: ThemeSkin;
@@ -20,6 +21,7 @@ interface InventoryModalProps {
   unlockedArrowSkins?: ArrowSkin[];
   language: 'ar' | 'en';
   onUseCream: () => void;
+  onUseCreamHammer?: () => void;
   onUseChocolate: () => void;
   onUseThunder?: () => void;
   onUseTomato: () => void;
@@ -107,6 +109,7 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
   hammers,
   thunders,
   creams,
+  creamHammers = 0,
   chocolates,
   cakes = 0,
   selectedSkin,
@@ -115,6 +118,7 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
   unlockedArrowSkins = ['classic'],
   language,
   onUseCream,
+  onUseCreamHammer,
   onUseChocolate,
   onUseThunder,
   onUseTomato,
@@ -128,7 +132,7 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
 }) => {
   const isAr = language === 'ar';
   const [viewMode, setViewMode] = useState<'main' | 'event'>('main');
-  const totalStandardTools = creams + chocolates + thunders + hammers + cakes;
+  const totalStandardTools = creams + creamHammers + chocolates + hammers + cakes;
   const totalEventTools = tomatoes + spaceCreams;
 
   return (
@@ -443,6 +447,51 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
                         onClose();
                       }}
                       className="px-3.5 py-2 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-black text-xs rounded-xl shadow-md shadow-pink-200 hover:scale-105 active:scale-95 cursor-pointer transition-all shrink-0"
+                    >
+                      {isAr ? 'استخدم الآن' : 'Use Now'}
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        soundManager.playClick();
+                        onOpenShop();
+                      }}
+                      className="px-2.5 py-1.5 bg-slate-100 hover:bg-pink-100 text-slate-500 hover:text-pink-700 font-bold text-[11px] rounded-xl border border-slate-200 cursor-pointer shrink-0"
+                    >
+                      {isAr ? 'شراء' : 'Buy'}
+                    </button>
+                  )}
+                </div>
+
+                {/* Cream Hammer Item */}
+                <div className="p-3 rounded-2xl border-2 border-pink-300 bg-gradient-to-r from-pink-50/80 via-amber-50/60 to-rose-50/80 flex items-center justify-between gap-2 shadow-xs">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl sm:text-3xl bg-white p-2 rounded-2xl shadow-xs border border-pink-200">
+                      🍦🔨
+                    </span>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-extrabold text-sm text-pink-950">
+                          {isAr ? 'مطرقة الكريمة' : 'Cream Hammer'}
+                        </span>
+                        <span className="bg-pink-200 text-pink-900 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-pink-300">
+                          {creamHammers} {isAr ? 'متوفر' : 'owned'}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-pink-800/80 font-medium">
+                        {isAr ? 'تزيل 3 أسهم عشوائية فوراً' : 'Removes 3 random arrows'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {creamHammers > 0 ? (
+                    <button
+                      onClick={() => {
+                        soundManager.playClick();
+                        if (onUseCreamHammer) onUseCreamHammer();
+                        onClose();
+                      }}
+                      className="px-3.5 py-2 bg-gradient-to-r from-pink-500 via-rose-500 to-amber-600 hover:scale-105 text-white font-black text-xs rounded-xl shadow-md shadow-pink-200 active:scale-95 cursor-pointer transition-all shrink-0"
                     >
                       {isAr ? 'استخدم الآن' : 'Use Now'}
                     </button>

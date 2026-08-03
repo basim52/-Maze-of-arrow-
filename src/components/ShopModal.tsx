@@ -11,6 +11,7 @@ interface ShopModalProps {
   hammers: number;
   thunders: number;
   creams: number;
+  creamHammers?: number;
   chocolates: number;
   cakes?: number;
   cakeArrowCounter?: number;
@@ -26,6 +27,7 @@ interface ShopModalProps {
   onBuyHammer: (cost: number) => void;
   onBuyThunder: (cost: number) => void;
   onBuyCream: (cost: number) => void;
+  onBuyCreamHammer?: (cost: number) => void;
   onBuyChocolate: (cost: number) => void;
   onBuyTomato: (cost: number) => void;
   onBuySpaceCream: (cost: number) => void;
@@ -251,6 +253,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
   hammers,
   thunders,
   creams,
+  creamHammers = 0,
   chocolates,
   cakes = 0,
   cakeArrowCounter = 0,
@@ -266,6 +269,7 @@ export const ShopModal: React.FC<ShopModalProps> = ({
   onBuyHammer,
   onBuyThunder,
   onBuyCream,
+  onBuyCreamHammer,
   onBuyChocolate,
   onBuyTomato,
   onBuySpaceCream,
@@ -279,10 +283,11 @@ export const ShopModal: React.FC<ShopModalProps> = ({
   const isAr = language === 'ar';
   const [activeTab, setActiveTab] = React.useState<'all' | 'galaxy' | 'tools' | 'skins' | 'arrowSkins'>(initialTab || 'all');
 
-  const canAffordBundle = coins >= 255;
+  const canAffordBundle = coins >= 160;
   const canAffordCakeBundle = coins >= 170;
   const canAffordHammer = coins >= 45;
   const canAffordChocolate = coins >= 55;
+  const canAffordCreamHammer = coins >= 85;
   const canAffordThunder = coins >= 95;
   const canAffordCream = coins >= 129;
 
@@ -741,6 +746,48 @@ export const ShopModal: React.FC<ShopModalProps> = ({
                   className={`px-3 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-xs shrink-0 ${
                     canAffordChocolate
                       ? 'bg-gradient-to-r from-amber-700 via-amber-800 to-yellow-900 text-white hover:scale-105 active:scale-95 shadow-amber-950'
+                      : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700 opacity-60'
+                  }`}
+                >
+                  <span>{isAr ? 'شراء (+1)' : 'Buy (+1)'}</span>
+                </button>
+              </div>
+
+              {/* Cream Hammer Item (85 coins) */}
+              <div className="p-3 rounded-2xl border border-pink-400/60 bg-slate-900 flex items-center justify-between gap-2 shadow-xs">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-pink-500 via-amber-400 to-amber-600 flex items-center justify-center text-xl shadow-md shrink-0 border border-pink-400/40">
+                    🍦🔨
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-black text-white text-xs sm:text-sm flex items-center gap-1">
+                      {isAr ? 'مطرقة الكريمة 🍦🔨' : 'Cream Hammer 🍦🔨'}
+                      <span className="bg-pink-500/20 text-pink-300 text-[9px] px-1.5 py-0.2 rounded-full font-extrabold border border-pink-400/30">
+                        {isAr ? `تزيل 3 أسهم` : `Removes 3 Arrows`}
+                      </span>
+                    </span>
+                    <span className="text-xs font-black text-pink-300 mt-0.5 flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-amber-400 fill-amber-300" />
+                      85 {isAr ? 'نقطة' : 'Coins'}
+                      <span className="text-slate-500 mx-1">•</span>
+                      <span className="text-slate-300 font-extrabold">
+                        {isAr ? `تملك: ${creamHammers}` : `Owned: ${creamHammers}`}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  disabled={!canAffordCreamHammer}
+                  onClick={() => {
+                    soundManager.playClick();
+                    if (canAffordCreamHammer && onBuyCreamHammer) {
+                      onBuyCreamHammer(85);
+                    }
+                  }}
+                  className={`px-3 py-2 rounded-xl font-black text-xs flex items-center gap-1 cursor-pointer transition-all shadow-xs shrink-0 ${
+                    canAffordCreamHammer
+                      ? 'bg-gradient-to-r from-pink-500 via-rose-500 to-amber-600 text-white hover:scale-105 active:scale-95 shadow-pink-950'
                       : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700 opacity-60'
                   }`}
                 >

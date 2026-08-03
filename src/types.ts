@@ -67,4 +67,5 @@ export interface PlayerStats {
   hammers: number;
   thunders: number;
   creams: number;
+  creamHammers?: number;
 }

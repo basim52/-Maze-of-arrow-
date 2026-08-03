@@ -215,6 +215,21 @@ export default function App() {
     return 1; // 1 free starter cream
   });
 
+  const [creamHammers, setCreamHammers] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.creamHammers === 'number') {
+          return parsed.creamHammers;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 1; // 1 free starter cream hammer
+  });
+
   const [chocolates, setChocolates] = useState<number>(() => {
     try {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -539,6 +554,7 @@ export default function App() {
         hammers,
         thunders,
         creams,
+        creamHammers,
         chocolates,
         cakes,
         cakeArrowCounter,
@@ -578,6 +594,7 @@ export default function App() {
     hammers,
     thunders,
     creams,
+    creamHammers,
     chocolates,
     cakes,
     cakeArrowCounter,
@@ -674,6 +691,15 @@ export default function App() {
       setCoins((prev) => prev - cost);
       setCreams((prev) => prev + 1);
       triggerToast(isAr ? 'تم شراء كريمة سحرية بنجاح! 🍦' : 'Magic Cream purchased! 🍦');
+    }
+  };
+
+  const handleBuyCreamHammer = (cost: number) => {
+    const isAr = language === 'ar';
+    if (coins >= cost) {
+      setCoins((prev) => prev - cost);
+      setCreamHammers((prev) => prev + 1);
+      triggerToast(isAr ? 'تم شراء مطرقة الكريمة بنجاح! 🍦🔨' : 'Cream Hammer purchased! 🍦🔨');
     }
   };
 
@@ -851,6 +877,62 @@ export default function App() {
         ? `⚡ عملات الرعد تظهر في الأعلى عند تفعيل خلفية عاصفة المطر! ⛈️`
         : `⚡ Thunder currency is accumulated when using the Rainstorm theme! ⛈️`
     );
+  };
+
+  const handleUseCreamHammer = () => {
+    const isAr = language === 'ar';
+    soundManager.playClick();
+
+    if (creamHammers <= 0) {
+      triggerToast(isAr ? 'لا تملك مطرقة كريمة! يمكنك شراؤها بـ 85 نقطة 🛒' : 'No cream hammer! Buy for 85 coins 🛒');
+      setShowShopModal(true);
+      return;
+    }
+
+    const unescaped = arrows.filter((a) => !a.isEscaped);
+    if (unescaped.length === 0) return;
+
+    soundManager.playSmash();
+
+    // Select up to 3 random unescaped arrows to remove (Cream Hammer deletes 3 arrows)
+    const shuffled = [...unescaped].sort(() => 0.5 - Math.random());
+    const selectedToSmash = shuffled.slice(0, 3);
+    const smashedIds = new Set(selectedToSmash.map((a) => a.id));
+
+    const estimatedTile = Math.max(24, Math.min(54, Math.floor((Math.min(window.innerWidth, 460) - 32) / activeLevel.gridSize.cols)));
+    const creamHammerItems: RainItem[] = selectedToSmash.map((arrow, idx) => ({
+      id: `cream-hammer-rain-${arrow.id}-${Date.now()}`,
+      type: 'creamHammer',
+      x: arrow.gridX * estimatedTile + estimatedTile / 2,
+      y: arrow.gridY * estimatedTile + estimatedTile / 2,
+      delay: idx * 60,
+    }));
+    setRainItems(creamHammerItems);
+
+    setCreamHammers((prev) => Math.max(0, prev - 1));
+    triggerToast(
+      isAr
+        ? `🍦🔨 هبطت مطرقة الكريمة ودمرت ${smashedIds.size} أسهم!`
+        : `🍦🔨 Cream hammer smashed ${smashedIds.size} arrows!`
+    );
+
+    setTimeout(() => {
+      setArrows((prev) => {
+        const next = prev.map((a) => (smashedIds.has(a.id) ? { ...a, isEscaped: true } : a));
+        const remaining = next.filter((a) => !a.isEscaped).length;
+        const newEscapedCount = next.length - remaining;
+        setEscapedCount(newEscapedCount);
+
+        if (remaining === 0) {
+          setTimeout(() => {
+            handleLevelCompleted();
+          }, 400);
+        }
+        return next;
+      });
+      registerEscapedArrowsForCake(smashedIds.size);
+      setRainItems([]);
+    }, 480);
   };
 
   const handleUseCream = () => {
@@ -1639,7 +1721,7 @@ export default function App() {
                 <span className="text-lg">🎒</span>
                 <span>{isAr ? 'الحقيبة' : 'Bag'}</span>
                 <span className="bg-amber-950 text-amber-200 font-extrabold text-[11px] px-1.5 py-0.2 rounded-full shadow-inner">
-                  {creams + chocolates + thunders + hammers + tomatoes + spaceCreams + cakes}
+                  {creams + creamHammers + chocolates + hammers + tomatoes + spaceCreams + cakes}
                 </span>
               </button>
 
@@ -1797,6 +1879,7 @@ export default function App() {
           hammers={hammers}
           thunders={thunders}
           creams={creams}
+          creamHammers={creamHammers}
           chocolates={chocolates}
           cakes={cakes}
           cakeArrowCounter={cakeArrowCounter}
@@ -1820,6 +1903,7 @@ export default function App() {
           onBuyHammer={handleBuyHammer}
           onBuyThunder={handleBuyThunder}
           onBuyCream={handleBuyCream}
+          onBuyCreamHammer={handleBuyCreamHammer}
           onBuyChocolate={handleBuyChocolate}
           onBuyTomato={handleBuyTomato}
           onBuySpaceCream={handleBuySpaceCream}
@@ -1849,6 +1933,7 @@ export default function App() {
           hammers={hammers}
           thunders={thunders}
           creams={creams}
+          creamHammers={creamHammers}
           chocolates={chocolates}
           cakes={cakes}
           selectedSkin={selectedSkin}
@@ -1857,6 +1942,7 @@ export default function App() {
           unlockedArrowSkins={unlockedArrowSkins}
           language={language}
           onUseCream={handleUseCream}
+          onUseCreamHammer={handleUseCreamHammer}
           onUseChocolate={handleUseChocolate}
           onUseThunder={handleUseLightning}
           onUseTomato={handleUseTomato}

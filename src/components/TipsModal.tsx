@@ -213,8 +213,8 @@ export const TipsModal: React.FC<TipsModalProps> = ({
                 </span>
                 <span className="text-[11px] text-slate-300 mt-0.5 leading-relaxed">
                   {isAr
-                    ? 'المطرقة 🔨 تكسر سهماً واحداً، الشوكولاتة 🍫 تزيل سهمين، والكريمة 🍦 تزيل ٥ أسهم!'
-                    : 'Hammer 🔨 smashes 1 arrow, Chocolate 🍫 removes 2 arrows, and Cream 🍦 clears 5 arrows!'}
+                    ? 'المطرقة 🔨 تكسر سهماً واحداً، الشوكولاتة 🍫 تزيل سهمين، مطرقة الكريمة 🍦🔨 تزيل ٣ أسهم، والكريمة 🍦 تزيل ٥ أسهم!'
+                    : 'Hammer 🔨 smashes 1 arrow, Chocolate 🍫 removes 2 arrows, Cream Hammer 🍦🔨 removes 3 arrows, and Cream 🍦 clears 5 arrows!'}
                 </span>
               </div>
             </div>
