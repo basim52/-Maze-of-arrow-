@@ -12752,7 +12752,7 @@ function seededRandom(seed: number) {
 
 // Generator for Long Panoramic Maze Levels (32x14 Grid, Dual Maze Clusters with Long Connecting Corridors)
 export function getLongLevel(id: number): Level {
-  const levelId = Math.min(Math.max(1, id), 20);
+  const levelId = Math.min(Math.max(1, id), 25);
   const cols = 32;
   const rows = 14;
   let seed = levelId * 1543 + 789;
@@ -12864,6 +12864,89 @@ export function getLongLevel(id: number): Level {
     gridSize: { cols: 32, rows: 14 },
     arrows: finalArrows,
     maxDrops: levelId > 30 ? 2 : 3,
+  };
+}
+
+// Generator for 5 Special Thunder Event Levels (Distinct Rain & Lightning Atmosphere)
+export function getThunderLevel(id: number): Level {
+  const levelId = Math.min(Math.max(1, id), 5);
+  const cols = 18;
+  const rows = 12;
+  let seed = levelId * 8765 + 43210;
+
+  const colors: ArrowColor[] = ['cyan', 'lime', 'purple', 'pink', 'yellow', 'orange'];
+  const directions: Direction[] = ['up', 'down', 'left', 'right', 'up-left', 'up-right', 'down-left', 'down-right'];
+
+  const occupied = new Set<string>();
+  const arrows: Arrow[] = [];
+
+  const isCellFree = (x: number, y: number) => {
+    if (x < 0 || x >= cols || y < 0 || y >= rows) return false;
+    return !occupied.has(`${x},${y}`);
+  };
+
+  const markArrowCells = (candidate: Arrow) => {
+    const cells = getArrowOccupiedCells(candidate);
+    cells.forEach((c) => occupied.add(`${c.x},${c.y}`));
+  };
+
+  const targetCount = 18 + levelId * 3; // 21 to 33 arrows
+  let attempts = 0;
+
+  while (arrows.length < targetCount && attempts < 400) {
+    attempts++;
+    const gx = Math.floor(1 + seededRandom(seed++) * (cols - 2));
+    const gy = Math.floor(1 + seededRandom(seed++) * (rows - 2));
+    const dir = directions[Math.floor(seededRandom(seed++) * directions.length)];
+    const len = Math.floor(2 + seededRandom(seed++) * 4);
+
+    const isDiamond = levelId >= 2 && seededRandom(seed++) > 0.8;
+    const isIce = levelId >= 3 && seededRandom(seed++) > 0.82;
+    const isDouble = levelId >= 1 && seededRandom(seed++) > 0.75;
+    const isStar = seededRandom(seed++) > 0.85;
+
+    const candidate: Arrow = {
+      id: `thunder-${levelId}-a-${arrows.length}`,
+      gridX: gx,
+      gridY: gy,
+      direction: dir,
+      color: colors[arrows.length % colors.length],
+      length: len,
+      isDiamond,
+      isIce,
+      isDouble,
+      isStar,
+      type: isDiamond
+        ? 'diamond'
+        : isIce
+        ? 'ice'
+        : isDouble
+        ? 'double'
+        : isStar
+        ? 'star'
+        : 'standard',
+    };
+
+    if (!isArrowInBounds(candidate, cols, rows)) continue;
+
+    const candidateCells = getArrowOccupiedCells(candidate);
+    if (candidateCells.every((c) => isCellFree(c.x, c.y))) {
+      markArrowCells(candidate);
+      arrows.push(candidate);
+    }
+  }
+
+  const boundedArrows = arrows.filter((a) => isArrowInBounds(a, cols, rows));
+
+  return {
+    id: levelId,
+    nameAr: `مرحلة العاصفة والرعد ${levelId} ⚡⛈️`,
+    nameEn: `Thunder Tempest Level ${levelId} ⚡⛈️`,
+    difficulty: levelId <= 2 ? 'صعب' : 'صعب جداً',
+    difficultyEn: levelId <= 2 ? 'Hard' : 'Very Hard',
+    gridSize: { cols, rows },
+    arrows: boundedArrows,
+    maxDrops: 3,
   };
 }
 

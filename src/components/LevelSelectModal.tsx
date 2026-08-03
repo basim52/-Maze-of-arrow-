@@ -13,14 +13,18 @@ interface LevelSelectModalProps {
   unlockedLongLevel: number;
   currentLongLevel: number;
   starsPerLongLevel: Record<number, number>;
+  unlockedThunderLevel?: number;
+  currentThunderLevel?: number;
+  starsPerThunderLevel?: Record<number, number>;
   isEventUnlocked: boolean;
-  gameMode: 'main' | 'galaxy' | 'long';
+  gameMode: 'main' | 'galaxy' | 'long' | 'thunder';
   initialTab?: 'main' | 'galaxy' | 'long';
   coins: number;
   language: 'ar' | 'en';
   onSelectMainLevel: (levelId: number) => void;
   onSelectGalaxyLevel: (galaxyId: number) => void;
   onSelectLongLevel: (longId: number) => void;
+  onSelectThunderLevel?: (thunderId: number) => void;
   onUnlockEvent: () => void;
   onClose: () => void;
 }
@@ -35,6 +39,9 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
   unlockedLongLevel,
   currentLongLevel,
   starsPerLongLevel,
+  unlockedThunderLevel = 1,
+  currentThunderLevel = 1,
+  starsPerThunderLevel = {},
   isEventUnlocked,
   gameMode,
   initialTab = 'main',
@@ -43,6 +50,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
   onSelectMainLevel,
   onSelectGalaxyLevel,
   onSelectLongLevel,
+  onSelectThunderLevel,
   onUnlockEvent,
   onClose,
 }) => {
@@ -56,8 +64,11 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
   // Galaxy event levels 1 to 25
   const galaxyLevelIds = Array.from({ length: 25 }, (_, i) => i + 1);
 
-  // Long maze levels 1 to 20
-  const longLevelIds = Array.from({ length: 20 }, (_, i) => i + 1);
+  // Long maze levels 1 to 25
+  const longLevelIds = Array.from({ length: 25 }, (_, i) => i + 1);
+
+  // Thunder event levels 1 to 5
+  const thunderLevelIds = Array.from({ length: 5 }, (_, i) => i + 1);
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-fade-in">
@@ -323,80 +334,155 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                 </button>
               </div>
             ) : (
-              /* Unlocked Galaxy Levels 1 to 25 Grid */
-              <div className="flex-1 overflow-y-auto pr-1 grid grid-cols-5 gap-2.5 p-1">
-                {galaxyLevelIds.map((id) => {
-                  const isUnlocked = id <= unlockedGalaxyLevel;
-                  const isCurrent = id === currentGalaxyLevel && gameMode === 'galaxy';
-                  const isGalaxyBossLevel = id === 25;
-                  const stars = starsPerGalaxyLevel[id] || 0;
+              /* Unlocked Event Levels Container (Galaxy + Thunder Event) */
+              <div className="flex-1 overflow-y-auto pr-1 flex flex-col gap-4 p-1">
+                {/* 1. Galaxy Event Levels Section */}
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between px-1">
+                    <span className="text-xs font-black text-purple-300 flex items-center gap-1">
+                      <span>🌌</span>
+                      <span>{isAr ? 'مراحل المجرة الفضائية (1 - 25)' : 'Galaxy Event Levels (1 - 25)'}</span>
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-5 gap-2.5">
+                    {galaxyLevelIds.map((id) => {
+                      const isUnlocked = id <= unlockedGalaxyLevel;
+                      const isCurrent = id === currentGalaxyLevel && gameMode === 'galaxy';
+                      const isGalaxyBossLevel = id === 25;
+                      const stars = starsPerGalaxyLevel[id] || 0;
 
-                  return (
-                    <button
-                      key={`galaxy-${id}`}
-                      disabled={!isUnlocked}
-                      onClick={() => {
-                        soundManager.playClick();
-                        onSelectGalaxyLevel(id);
-                      }}
-                      className={`relative flex flex-col items-center justify-center p-2 rounded-2xl border-2 transition-all duration-200 aspect-square ${
-                        isCurrent
-                          ? 'bg-gradient-to-tr from-purple-600 via-indigo-600 to-pink-500 text-white border-purple-300 shadow-lg scale-105'
-                          : isUnlocked
-                          ? isGalaxyBossLevel
-                            ? 'bg-gradient-to-tr from-purple-950 via-rose-900 to-slate-950 text-amber-300 border-purple-400 hover:border-purple-200 hover:scale-105 shadow-md cursor-pointer animate-pulse'
-                            : 'bg-gradient-to-tr from-slate-900 via-purple-950/90 to-indigo-950 text-white border-purple-500/60 hover:border-purple-300 hover:scale-105 shadow-sm cursor-pointer'
-                          : 'bg-slate-950 text-slate-600 border-slate-800 opacity-60 cursor-not-allowed'
-                      }`}
-                    >
-                      {isGalaxyBossLevel ? (
-                        <span
-                          className="absolute -top-1.5 -right-1.5 text-xs bg-purple-700 text-white font-black px-1.5 py-0.5 rounded-full shadow-xs border border-purple-300"
-                          title={isAr ? 'مرحلة وحش المجرة الفضائي الكبرى (صعب جداً)' : 'Galaxy Boss Monster (Very Hard)'}
+                      return (
+                        <button
+                          key={`galaxy-${id}`}
+                          disabled={!isUnlocked}
+                          onClick={() => {
+                            soundManager.playClick();
+                            onSelectGalaxyLevel(id);
+                          }}
+                          className={`relative flex flex-col items-center justify-center p-2 rounded-2xl border-2 transition-all duration-200 aspect-square ${
+                            isCurrent
+                              ? 'bg-gradient-to-tr from-purple-600 via-indigo-600 to-pink-500 text-white border-purple-300 shadow-lg scale-105'
+                              : isUnlocked
+                              ? isGalaxyBossLevel
+                                ? 'bg-gradient-to-tr from-purple-950 via-rose-900 to-slate-950 text-amber-300 border-purple-400 hover:border-purple-200 hover:scale-105 shadow-md cursor-pointer animate-pulse'
+                                : 'bg-gradient-to-tr from-slate-900 via-purple-950/90 to-indigo-950 text-white border-purple-500/60 hover:border-purple-300 hover:scale-105 shadow-sm cursor-pointer'
+                              : 'bg-slate-950 text-slate-600 border-slate-800 opacity-60 cursor-not-allowed'
+                          }`}
                         >
-                          👹🔥
-                        </span>
-                      ) : (
-                        <span className="absolute -top-1.5 -right-1.5 text-[10px] bg-purple-900 text-purple-200 font-extrabold px-1.5 py-0.2 rounded-full border border-purple-500/50">
-                          🌌
-                        </span>
-                      )}
+                          {isGalaxyBossLevel ? (
+                            <span
+                              className="absolute -top-1.5 -right-1.5 text-xs bg-purple-700 text-white font-black px-1.5 py-0.5 rounded-full shadow-xs border border-purple-300"
+                              title={isAr ? 'مرحلة وحش المجرة الفضائي الكبرى (صعب جداً)' : 'Galaxy Boss Monster (Very Hard)'}
+                            >
+                              👹🔥
+                            </span>
+                          ) : (
+                            <span className="absolute -top-1.5 -right-1.5 text-[10px] bg-purple-900 text-purple-200 font-extrabold px-1.5 py-0.2 rounded-full border border-purple-500/50">
+                              🌌
+                            </span>
+                          )}
 
-                      {isUnlocked ? (
-                        <>
-                          <span className={`text-base font-black ${isGalaxyBossLevel ? 'text-amber-300' : 'text-purple-100'}`}>
-                            {id}
+                          {isUnlocked ? (
+                            <>
+                              <span className={`text-base font-black ${isGalaxyBossLevel ? 'text-amber-300' : 'text-purple-100'}`}>
+                                {id}
+                              </span>
+
+                              {/* Stars indicator */}
+                              <div className="flex items-center gap-0.5 mt-0.5">
+                                {[1, 2, 3].map((starIdx) => (
+                                  <Star
+                                    key={starIdx}
+                                    className={`w-3 h-3 ${
+                                      starIdx <= stars
+                                        ? 'text-amber-400 fill-amber-400'
+                                        : 'text-purple-950 fill-purple-900'
+                                    }`}
+                                  />
+                                ))}
+                              </div>
+                            </>
+                          ) : (
+                            <div className="flex flex-col items-center justify-center gap-0.5">
+                              <span className="text-xs font-bold text-slate-500">{id}</span>
+                              <Lock className="w-4 h-4 text-slate-500" />
+                            </div>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 2. Thunder Tempest Event Levels Section */}
+                <div className="flex flex-col gap-2 pt-2 border-t border-purple-900/50">
+                  <div className="flex items-center justify-between px-1">
+                    <span className="text-xs font-black text-cyan-300 flex items-center gap-1">
+                      <span>⛈️⚡</span>
+                      <span>{isAr ? 'مراحل أحداث العاصفة والرعد (1 - 5)' : 'Thunder Tempest Events (1 - 5)'}</span>
+                    </span>
+                    <span className="text-[10px] bg-indigo-950 text-cyan-300 px-2 py-0.5 rounded-full border border-indigo-500/50 font-bold">
+                      {isAr ? 'خلفية مطر ورعد مميزة' : 'Midnight Thunder'}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-5 gap-2.5">
+                    {thunderLevelIds.map((id) => {
+                      const isUnlocked = id <= unlockedThunderLevel;
+                      const isCurrent = id === currentThunderLevel && gameMode === 'thunder';
+                      const stars = starsPerThunderLevel[id] || 0;
+
+                      return (
+                        <button
+                          key={`thunder-${id}`}
+                          disabled={!isUnlocked}
+                          onClick={() => {
+                            soundManager.playClick();
+                            if (onSelectThunderLevel) {
+                              onSelectThunderLevel(id);
+                            }
+                          }}
+                          className={`relative flex flex-col items-center justify-center p-2 rounded-2xl border-2 transition-all duration-200 aspect-square ${
+                            isCurrent
+                              ? 'bg-gradient-to-tr from-indigo-600 via-cyan-600 to-slate-900 text-white border-cyan-300 shadow-lg scale-105 ring-2 ring-cyan-400/50'
+                              : isUnlocked
+                              ? 'bg-gradient-to-tr from-slate-950 via-indigo-950 to-slate-900 text-cyan-200 border-indigo-500/70 hover:border-cyan-300 hover:scale-105 shadow-md cursor-pointer'
+                              : 'bg-slate-950 text-slate-600 border-slate-800 opacity-60 cursor-not-allowed'
+                          }`}
+                        >
+                          <span className="absolute -top-1.5 -right-1.5 text-[10px] bg-cyan-950 text-cyan-200 font-extrabold px-1.5 py-0.2 rounded-full border border-cyan-500/50">
+                            ⛈️
                           </span>
 
-                          {/* Stars indicator */}
-                          <div className="flex items-center gap-0.5 mt-0.5">
-                            {[1, 2, 3].map((starIdx) => (
-                              <Star
-                                key={starIdx}
-                                className={`w-3 h-3 ${
-                                  starIdx <= stars
-                                    ? 'text-amber-400 fill-amber-400'
-                                    : 'text-purple-950 fill-purple-900'
-                                }`}
-                              />
-                            ))}
-                          </div>
-                        </>
-                      ) : (
-                        <div className="flex flex-col items-center justify-center gap-0.5">
-                          <span className="text-xs font-bold text-slate-500">{id}</span>
-                          <Lock className="w-4 h-4 text-slate-500" />
-                        </div>
-                      )}
+                          {isUnlocked ? (
+                            <>
+                              <span className="text-base font-black text-cyan-200">{id}</span>
 
-                      {isGalaxyBossLevel && isUnlocked && (
-                        <span className="absolute -top-1.5 -left-1 text-[8px] px-1 py-0.2 rounded-full bg-rose-600 text-white font-black shadow-xs border border-rose-300">
-                          {isAr ? 'صعب جداً' : 'Very Hard'}
-                        </span>
-                      )}
-                    </button>
-                  );
-                })}
+                              {/* Stars indicator */}
+                              <div className="flex items-center gap-0.5 mt-0.5">
+                                {[1, 2, 3].map((starIdx) => (
+                                  <Star
+                                    key={starIdx}
+                                    className={`w-3 h-3 ${
+                                      starIdx <= stars
+                                        ? 'text-cyan-300 fill-cyan-300'
+                                        : 'text-indigo-950 fill-slate-900'
+                                    }`}
+                                  />
+                                ))}
+                              </div>
+                            </>
+                          ) : (
+                            <div className="flex flex-col items-center justify-center gap-0.5">
+                              <span className="text-xs font-bold text-slate-500">{id}</span>
+                              <Lock className="w-4 h-4 text-slate-500" />
+                            </div>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             )}
           </div>

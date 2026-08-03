@@ -16,7 +16,7 @@ interface ArrowMazeBoardProps {
   isHammerActive?: boolean;
   onUseHammer?: (arrowId: string) => void;
   rainItems?: RainItem[];
-  gameMode?: 'main' | 'galaxy';
+  gameMode?: 'main' | 'galaxy' | 'long' | 'thunder';
 }
 
 // Color palette matching user's screenshot exact vibrant smooth pastel jelly 3D colors
@@ -708,6 +708,8 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
               ? 'bg-gradient-to-b from-slate-950 via-indigo-950 to-fuchsia-950 border-cyan-400/80 shadow-[0_0_35px_rgba(34,211,238,0.35)]'
               : selectedSkin === 'rainstorm'
               ? 'bg-gradient-to-b from-slate-950 via-slate-900 to-sky-950 border-sky-400/80 shadow-[0_0_35px_rgba(56,189,248,0.35)]'
+              : selectedSkin === 'midnight_thunder' || gameMode === 'thunder'
+              ? 'bg-gradient-to-b from-slate-950 via-indigo-950/95 to-slate-950 border-indigo-500/90 shadow-[0_0_40px_rgba(99,102,241,0.4)] ring-1 ring-purple-400/30'
               : selectedSkin === 'hammer'
               ? 'bg-gradient-to-b from-stone-950 via-amber-950 to-stone-900 border-amber-500/80 shadow-[0_0_35px_rgba(217,119,6,0.35)]'
               : selectedSkin === 'neon'
@@ -786,6 +788,51 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
                     top: dot.top,
                     animationDelay: dot.delay,
                     animationDuration: dot.duration,
+                  }}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Midnight Thunderstorm & Heavy Rain Backdrop (distinct from standard rainstorm) */}
+          {(selectedSkin === 'midnight_thunder' || gameMode === 'thunder') && (
+            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+              {/* Dark Indigo Storm Clouds */}
+              <div className="absolute -top-10 left-1/3 w-64 h-36 bg-indigo-900/60 rounded-full blur-3xl animate-pulse" />
+              <div className="absolute top-2 right-10 w-52 h-32 bg-purple-900/50 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1.8s' }} />
+              <div className="absolute bottom-0 left-5 w-48 h-36 bg-blue-950/70 rounded-full blur-2xl" />
+
+              {/* Electric Flash Pulsing Glow Layer */}
+              <div className="absolute inset-0 bg-cyan-300/10 animate-pulse pointer-events-none" style={{ animationDuration: '1.8s' }} />
+
+              {/* Floating Lightning Bolt Icons */}
+              <div className="absolute top-2 left-8 text-2xl animate-bounce" style={{ animationDuration: '1.6s' }}>⚡</div>
+              <div className="absolute top-4 right-12 text-3xl animate-pulse" style={{ animationDuration: '1.2s' }}>⛈️</div>
+              <div className="absolute bottom-6 left-12 text-2xl animate-bounce" style={{ animationDuration: '2.5s' }}>⚡</div>
+
+              {/* Rain Streaks Overlay */}
+              <div className="absolute inset-0 opacity-40 pointer-events-none bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:16px_16px]" />
+
+              {/* Electric Rain Sparkles */}
+              {[
+                { left: '8%', top: '12%', delay: '0.1s' },
+                { left: '22%', top: '35%', delay: '0.4s' },
+                { left: '38%', top: '18%', delay: '0.7s' },
+                { left: '55%', top: '42%', delay: '0.2s' },
+                { left: '70%', top: '15%', delay: '0.8s' },
+                { left: '85%', top: '50%', delay: '0.5s' },
+                { left: '15%', top: '65%', delay: '0.3s' },
+                { left: '48%', top: '78%', delay: '0.9s' },
+                { left: '78%', top: '72%', delay: '0.6s' },
+              ].map((sparkle, idx) => (
+                <div
+                  key={`thunder-sparkle-${idx}`}
+                  className="absolute w-2.5 h-2.5 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,1)] animate-ping"
+                  style={{
+                    left: sparkle.left,
+                    top: sparkle.top,
+                    animationDelay: sparkle.delay,
+                    animationDuration: '2s',
                   }}
                 />
               ))}

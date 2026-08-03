@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Arrow, Level, ThemeSkin, ArrowSkin } from './types';
-import { getLevel, getGalaxyLevel, getLongLevel, MONSTER_BOSS_LEVEL_IDS } from './utils/levelGenerator';
+import { getLevel, getGalaxyLevel, getLongLevel, getThunderLevel, MONSTER_BOSS_LEVEL_IDS } from './utils/levelGenerator';
 import { soundManager } from './utils/sound';
 import { TopBar } from './components/TopBar';
 import { ArrowMazeBoard } from './components/ArrowMazeBoard';
@@ -13,6 +13,9 @@ import { DailyWheelModal } from './components/DailyWheelModal';
 import { FridayUpdatesModal } from './components/FridayUpdatesModal';
 import { LandingModal } from './components/LandingModal';
 import { TipsModal } from './components/TipsModal';
+import { TasksModal } from './components/TasksModal';
+import { getActiveDailyTasks } from './utils/dailyTasks';
+import { ThunderstormBackground } from './components/ThunderstormBackground';
 import { RainItem } from './components/RainStrikeOverlay';
 import { Sparkles, HelpCircle, RefreshCw } from 'lucide-react';
 
@@ -350,7 +353,98 @@ export default function App() {
     return 0;
   });
 
-  const [gameMode, setGameMode] = useState<'main' | 'galaxy' | 'long'>('main');
+  const [gameMode, setGameMode] = useState<'main' | 'galaxy' | 'long' | 'thunder'>('main');
+
+  // Thunder Event Level states (5 Event levels with rain and thunder background)
+  const [currentThunderLevelId, setCurrentThunderLevelId] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.currentThunderLevelId === 'number' && parsed.currentThunderLevelId >= 1) {
+          return parsed.currentThunderLevelId;
+        }
+      }
+    } catch (e) {}
+    return 1;
+  });
+
+  const [unlockedThunderLevel, setUnlockedThunderLevel] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.unlockedThunderLevel === 'number' && parsed.unlockedThunderLevel >= 1) {
+          return parsed.unlockedThunderLevel;
+        }
+      }
+    } catch (e) {}
+    return 1;
+  });
+
+  const [starsPerThunderLevel, setStarsPerThunderLevel] = useState<Record<number, number>>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.starsPerThunderLevel && typeof parsed.starsPerThunderLevel === 'object') {
+          return parsed.starsPerThunderLevel;
+        }
+      }
+    } catch (e) {}
+    return {};
+  });
+
+  // Task Stats Tracking
+  const [taskStats, setTaskStats] = useState(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.taskStats && typeof parsed.taskStats === 'object') {
+          return {
+            levelsCompleted: parsed.taskStats.levelsCompleted || 0,
+            arrowsEscaped: parsed.taskStats.arrowsEscaped || 0,
+            hammersUsed: parsed.taskStats.hammersUsed || 0,
+            chocolatesUsed: parsed.taskStats.chocolatesUsed || 0,
+            creamsUsed: parsed.taskStats.creamsUsed || 0,
+            rainLevelsPlayed: parsed.taskStats.rainLevelsPlayed || 0,
+            diamondEscaped: parsed.taskStats.diamondEscaped || 0,
+            goldenThroneCompleted: parsed.taskStats.goldenThroneCompleted || 0,
+            longCompleted: parsed.taskStats.longCompleted || 0,
+            galaxyCompleted: parsed.taskStats.galaxyCompleted || 0,
+            claimedTaskIds: Array.isArray(parsed.taskStats.claimedTaskIds) ? parsed.taskStats.claimedTaskIds : [],
+          };
+        }
+      }
+    } catch (e) {}
+    return {
+      levelsCompleted: 0,
+      arrowsEscaped: 0,
+      hammersUsed: 0,
+      chocolatesUsed: 0,
+      creamsUsed: 0,
+      rainLevelsPlayed: 0,
+      diamondEscaped: 0,
+      goldenThroneCompleted: 0,
+      longCompleted: 0,
+      galaxyCompleted: 0,
+      claimedTaskIds: [],
+    };
+  });
+
+  const [lastTasksResetTimestamp, setLastTasksResetTimestamp] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.lastTasksResetTimestamp === 'number' && parsed.lastTasksResetTimestamp > 0) {
+          return parsed.lastTasksResetTimestamp;
+        }
+      }
+    } catch (e) {}
+    return Date.now();
+  });
 
   const [currentGalaxyLevelId, setCurrentGalaxyLevelId] = useState<number>(() => {
     try {
@@ -460,6 +554,7 @@ export default function App() {
   const [showFridayUpdatesModal, setShowFridayUpdatesModal] = useState<boolean>(false);
   const [showLandingModal, setShowLandingModal] = useState<boolean>(true);
   const [showTipsModal, setShowTipsModal] = useState<boolean>(false);
+  const [showTasksModal, setShowTasksModal] = useState<boolean>(false);
   const [shopModalTab, setShopModalTab] = useState<'all' | 'galaxy' | 'tools' | 'skins' | 'arrowSkins'>('all');
 
   const handleOpenTips = () => {
@@ -499,6 +594,8 @@ export default function App() {
       ? getGalaxyLevel(currentGalaxyLevelId)
       : gameMode === 'long'
       ? getLongLevel(currentLongLevelId)
+      : gameMode === 'thunder'
+      ? getThunderLevel(currentThunderLevelId)
       : getLevel(currentLevelId)
   );
   const [arrows, setArrows] = useState<Arrow[]>([]);
@@ -560,6 +657,8 @@ export default function App() {
         cakeArrowCounter,
         hammerSkinEscapedCount,
         crystalNeonEscapedCount,
+        taskStats,
+        lastTasksResetTimestamp,
       };
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
       if (isEventUnlocked) {
@@ -600,7 +699,91 @@ export default function App() {
     cakeArrowCounter,
     hammerSkinEscapedCount,
     crystalNeonEscapedCount,
+    taskStats,
+    lastTasksResetTimestamp,
   ]);
+
+  // Check 24-hour daily task reset
+  useEffect(() => {
+    const checkTasksReset = () => {
+      const now = Date.now();
+      if (now - lastTasksResetTimestamp >= 24 * 60 * 60 * 1000) {
+        setLastTasksResetTimestamp(now);
+        setTaskStats({
+          levelsCompleted: 0,
+          arrowsEscaped: 0,
+          hammersUsed: 0,
+          chocolatesUsed: 0,
+          creamsUsed: 0,
+          rainLevelsPlayed: 0,
+          diamondEscaped: 0,
+          goldenThroneCompleted: 0,
+          longCompleted: 0,
+          galaxyCompleted: 0,
+          claimedTaskIds: [],
+        });
+        const isAr = language === 'ar';
+        triggerToast(
+          isAr
+            ? '🎉 تم تجديد المهام اليومية! تتوفر الآن 3 مهام جديدة لليوم ⚡'
+            : '🎉 Daily tasks reset! 3 new tasks available now ⚡'
+        );
+      }
+    };
+
+    checkTasksReset();
+    const interval = setInterval(checkTasksReset, 10000);
+    return () => clearInterval(interval);
+  }, [lastTasksResetTimestamp, language]);
+
+  // Auto-claim tasks immediately upon completion without requiring manual button click
+  useEffect(() => {
+    const activeTemplates = getActiveDailyTasks(lastTasksResetTimestamp);
+
+    const unclaimedCompleted = activeTemplates.filter((t) => {
+      const currentVal = Number(taskStats[t.statKey] || 0);
+      return currentVal >= t.target && !(taskStats.claimedTaskIds || []).includes(t.id);
+    });
+
+    if (unclaimedCompleted.length > 0) {
+      const isAr = language === 'ar';
+      let addedCoins = 0;
+      let addedHammers = 0;
+      let addedChocolates = 0;
+      let addedCreams = 0;
+      let addedThunders = 0;
+      const newlyClaimedIds: string[] = [];
+
+      unclaimedCompleted.forEach((t) => {
+        newlyClaimedIds.push(t.id);
+        if (t.rewardType === 'coins') addedCoins += t.rewardAmount;
+        else if (t.rewardType === 'hammer') addedHammers += t.rewardAmount;
+        else if (t.rewardType === 'chocolate') addedChocolates += t.rewardAmount;
+        else if (t.rewardType === 'cream') addedCreams += t.rewardAmount;
+        else if (t.rewardType === 'thunder') addedThunders += t.rewardAmount;
+      });
+
+      setTaskStats((prev) => ({
+        ...prev,
+        claimedTaskIds: [...(prev.claimedTaskIds || []), ...newlyClaimedIds],
+      }));
+
+      if (addedCoins > 0) setCoins((c) => c + addedCoins);
+      if (addedHammers > 0) setHammers((h) => h + addedHammers);
+      if (addedChocolates > 0) setChocolates((c) => c + addedChocolates);
+      if (addedCreams > 0) setCreams((c) => c + addedCreams);
+      if (addedThunders > 0) setThunders((t) => t + addedThunders);
+
+      soundManager.playVictory();
+
+      const taskTitles = unclaimedCompleted.map((t) => (isAr ? t.titleAr : t.titleEn)).join('، ');
+      triggerToast(
+        isAr
+          ? `🎉 تم إكمال مهمة [${taskTitles}] واستلام الجائزة تلقائياً!`
+          : `🎉 Task [${taskTitles}] completed & reward claimed automatically!`
+      );
+    }
+  }, [taskStats, lastTasksResetTimestamp, language]);
 
   // Load level data whenever level or mode changes
   useEffect(() => {
@@ -609,6 +792,8 @@ export default function App() {
         ? getGalaxyLevel(currentGalaxyLevelId)
         : gameMode === 'long'
         ? getLongLevel(currentLongLevelId)
+        : gameMode === 'thunder'
+        ? getThunderLevel(currentThunderLevelId)
         : getLevel(currentLevelId);
     setActiveLevel(lvl);
     setArrows(lvl.arrows.map((a) => ({ ...a, isEscaped: false })));
@@ -617,7 +802,11 @@ export default function App() {
     setShowVictoryModal(false);
     setIsHammerActive(false);
     setSpaceCoinsEarned(0);
-  }, [currentLevelId, currentGalaxyLevelId, currentLongLevelId, gameMode]);
+
+    if (selectedSkin === 'rainstorm' || selectedSkin === 'midnight_thunder' || gameMode === 'thunder') {
+      setTaskStats((prev) => ({ ...prev, rainLevelsPlayed: prev.rainLevelsPlayed + 1 }));
+    }
+  }, [currentLevelId, currentGalaxyLevelId, currentLongLevelId, currentThunderLevelId, gameMode]);
 
   // Hammer tool actions
   const handleToggleHammer = () => {
@@ -658,6 +847,7 @@ export default function App() {
 
     soundManager.playSmash();
     setHammers((prev) => Math.max(0, prev - 1));
+    setTaskStats((prev) => ({ ...prev, hammersUsed: prev.hammersUsed + 1 }));
     setIsHammerActive(false);
     triggerToast(isAr ? 'تم تساقط المطرقة وكسر السهم! 🔨💥' : 'Hammer rained & smashed arrow! 🔨💥');
 
@@ -1175,6 +1365,12 @@ export default function App() {
 
     const escapedArrow = arrows.find((a) => a.id === arrowId);
     if (escapedArrow) {
+      setTaskStats((prev) => ({
+        ...prev,
+        arrowsEscaped: prev.arrowsEscaped + 1,
+        diamondEscaped: escapedArrow.isDiamond || escapedArrow.type === 'diamond' ? prev.diamondEscaped + 1 : prev.diamondEscaped,
+      }));
+
       const isAlreadyCompleted =
         gameMode === 'galaxy'
           ? (starsPerGalaxyLevel[currentGalaxyLevelId] || 0) > 0
@@ -1314,16 +1510,60 @@ export default function App() {
     setShowLevelSelectModal(false);
   };
 
+  const handleSelectThunderLevel = (thunderId: number) => {
+    setGameMode('thunder');
+    setCurrentThunderLevelId(thunderId);
+    setShowLevelSelectModal(false);
+  };
+
+  const handleClaimTask = (taskId: string, rewardType: string, rewardAmount: number) => {
+    const isAr = language === 'ar';
+    soundManager.playVictory();
+
+    setTaskStats((prev) => ({
+      ...prev,
+      claimedTaskIds: [...prev.claimedTaskIds, taskId],
+    }));
+
+    if (rewardType === 'coins') {
+      setCoins((c) => c + rewardAmount);
+      triggerToast(isAr ? `🎁 تم استلام +${rewardAmount} نقطة مكافأة!` : `🎁 Claimed +${rewardAmount} coins reward!`);
+    } else if (rewardType === 'hammer') {
+      setHammers((h) => h + rewardAmount);
+      triggerToast(isAr ? `🎁 تم استلام +${rewardAmount} مطرقة مكافأة!` : `🎁 Claimed +${rewardAmount} hammer!`);
+    } else if (rewardType === 'chocolate') {
+      setChocolates((c) => c + rewardAmount);
+      triggerToast(isAr ? `🎁 تم استلام +${rewardAmount} شوكولاتة مكافأة!` : `🎁 Claimed +${rewardAmount} chocolate!`);
+    } else if (rewardType === 'cream') {
+      setCreams((c) => c + rewardAmount);
+      triggerToast(isAr ? `🎁 تم استلام +${rewardAmount} كريمة مكافأة!` : `🎁 Claimed +${rewardAmount} cream!`);
+    } else if (rewardType === 'thunder') {
+      setThunders((t) => t + rewardAmount);
+      triggerToast(isAr ? `🎁 تم استلام +${rewardAmount} عملة رعد مكافأة!` : `🎁 Claimed +${rewardAmount} thunder!`);
+    }
+  };
+
   const handleLevelCompleted = () => {
     const isAr = language === 'ar';
     const starsEarned = drops === 3 ? 3 : drops === 2 ? 2 : 1;
     let pointsEarned = 0;
+
+    // Track completed levels stat
+    setTaskStats((prev) => ({
+      ...prev,
+      levelsCompleted: prev.levelsCompleted + 1,
+      longCompleted: gameMode === 'long' ? prev.longCompleted + 1 : prev.longCompleted,
+      galaxyCompleted: gameMode === 'galaxy' ? prev.galaxyCompleted + 1 : prev.galaxyCompleted,
+      goldenThroneCompleted: selectedSkin === 'golden_throne' ? prev.goldenThroneCompleted + 1 : prev.goldenThroneCompleted,
+    }));
 
     const isAlreadyCompleted =
       gameMode === 'galaxy'
         ? (starsPerGalaxyLevel[currentGalaxyLevelId] || 0) > 0
         : gameMode === 'long'
         ? (starsPerLongLevel[currentLongLevelId] || 0) > 0
+        : gameMode === 'thunder'
+        ? (starsPerThunderLevel[currentThunderLevelId] || 0) > 0
         : (starsPerLevel[currentLevelId] || 0) > 0;
 
     if (gameMode === 'galaxy') {
@@ -1357,6 +1597,23 @@ export default function App() {
       };
       setStarsPerLongLevel(updatedLongStars);
       setUnlockedLongLevel((prev) => Math.max(prev, currentLongLevelId + 1));
+      if (pointsEarned > 0) {
+        setCoins((prev) => prev + pointsEarned);
+      }
+    } else if (gameMode === 'thunder') {
+      const prevThunderStars = starsPerThunderLevel[currentThunderLevelId] || 0;
+      pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 6;
+      if (selectedSkin === 'golden_throne' && pointsEarned > 0) {
+        pointsEarned *= 2;
+      }
+
+      const newThunderStars = Math.max(prevThunderStars, starsEarned);
+      const updatedThunderStars = {
+        ...starsPerThunderLevel,
+        [currentThunderLevelId]: newThunderStars,
+      };
+      setStarsPerThunderLevel(updatedThunderStars);
+      setUnlockedThunderLevel((prev) => Math.max(prev, currentThunderLevelId + 1));
       if (pointsEarned > 0) {
         setCoins((prev) => prev + pointsEarned);
       }
@@ -1414,8 +1671,11 @@ export default function App() {
       const nextId = Math.min(25, currentGalaxyLevelId + 1);
       setCurrentGalaxyLevelId(nextId);
     } else if (gameMode === 'long') {
-      const nextId = Math.min(20, currentLongLevelId + 1);
+      const nextId = Math.min(25, currentLongLevelId + 1);
       setCurrentLongLevelId(nextId);
+    } else if (gameMode === 'thunder') {
+      const nextId = Math.min(5, currentThunderLevelId + 1);
+      setCurrentThunderLevelId(nextId);
     } else {
       const nextId = currentLevelId + 1;
       setCurrentLevelId(nextId);
@@ -1462,13 +1722,18 @@ export default function App() {
       <div className={`w-full max-w-[460px] sm:max-w-[480px] h-screen sm:h-[94vh] sm:max-h-[900px] sm:rounded-[46px] border-0 sm:border-[8px] sm:border-slate-800/90 shadow-[0_25px_70px_rgba(0,0,0,0.6)] flex flex-col relative overflow-hidden backdrop-blur-md transition-colors duration-500 ${
         selectedSkin === 'golden_throne'
           ? 'bg-gradient-to-b from-amber-950 via-yellow-950/95 to-amber-950 text-amber-100 sm:border-amber-500/80 shadow-[0_0_50px_rgba(245,158,11,0.4)]'
+          : gameMode === 'thunder' || selectedSkin === 'rainstorm' || selectedSkin === 'midnight_thunder'
+          ? 'bg-slate-950 text-white border-sky-500/80 shadow-[0_0_50px_rgba(14,165,233,0.4)]'
           : gameMode === 'galaxy' || selectedSkin === 'nebula' || selectedSkin === 'supernova'
           ? 'bg-gradient-to-b from-slate-950 via-purple-950/95 to-indigo-950 text-white'
-          : selectedSkin === 'rainstorm'
-          ? 'bg-gradient-to-b from-slate-950 via-slate-900 to-sky-950 text-white'
           : 'bg-gradient-to-b from-sky-50/90 via-white to-slate-100/95 text-slate-800'
       }`}>
         
+        {/* Render Thunderstorm & Rain Background Overlay for Storm Event Levels */}
+        {(gameMode === 'thunder' || selectedSkin === 'rainstorm' || selectedSkin === 'midnight_thunder') && (
+          <ThunderstormBackground isThunderMode={gameMode === 'thunder'} />
+        )}
+
         {/* Mobile Top Status Bar */}
         <div className="w-full bg-slate-900 text-white px-5 py-2 flex items-center justify-between text-xs font-semibold z-40 shrink-0 select-none shadow-sm">
           <span className="font-mono text-[11px] text-slate-200 tracking-wider font-black">{currentTimeStr}</span>
@@ -1485,7 +1750,9 @@ export default function App() {
 
         {/* App Top Title Bar */}
         <div className={`w-full px-4 py-1.5 flex items-center justify-between text-white shadow-md z-30 shrink-0 select-none ${
-          gameMode === 'galaxy'
+          gameMode === 'thunder' || selectedSkin === 'rainstorm' || selectedSkin === 'midnight_thunder'
+            ? 'bg-gradient-to-r from-slate-950 via-sky-900 to-indigo-950 border-b border-sky-400/30'
+            : gameMode === 'galaxy'
             ? 'bg-gradient-to-r from-purple-700 via-indigo-600 to-pink-600'
             : gameMode === 'long'
             ? 'bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700'
@@ -1493,19 +1760,21 @@ export default function App() {
         }`}>
           <div className="flex items-center gap-2">
             <div className="w-6.5 h-6.5 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-xs shadow-inner font-bold">
-              {gameMode === 'galaxy' ? '🌌' : gameMode === 'long' ? '📜' : '🎯'}
+              {gameMode === 'thunder' ? '⚡' : gameMode === 'galaxy' ? '🌌' : gameMode === 'long' ? '📜' : '🎯'}
             </div>
             <span className="font-black text-xs sm:text-sm tracking-wide">
-              {gameMode === 'galaxy'
+              {gameMode === 'thunder'
+                ? isAr ? `أحداث المطر والعواصف - مرحلة ${activeLevel.id}` : `Rain & Thunder Event Level ${activeLevel.id}`
+                : gameMode === 'galaxy'
                 ? isAr ? `مراحل الأحداث - المجرة ${activeLevel.id}` : `Galaxy Level ${activeLevel.id}`
                 : gameMode === 'long'
                 ? isAr ? `المراحل الطويلة - مرحلة ${activeLevel.id}` : `Long Maze Level ${activeLevel.id}`
                 : isAr ? 'هروب الأسهم - تطبيق الألغاز' : 'Arrow Escape App'}
             </span>
           </div>
-          <span className="text-[10px] bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 text-slate-900 px-2.5 py-0.5 rounded-full font-black border border-white/50 shadow-xs animate-pulse flex items-center gap-1">
-            <span>🌌</span>
-            <span>{isAr ? 'تحديث الجمعة الكوني' : 'Cosmic Friday Update'}</span>
+          <span className="text-[10px] bg-gradient-to-r from-cyan-400 via-sky-300 to-cyan-400 text-slate-950 px-2.5 py-0.5 rounded-full font-black border border-white/50 shadow-xs animate-pulse flex items-center gap-1">
+            <span>⚡</span>
+            <span>{gameMode === 'thunder' ? (isAr ? 'حدث المطر والعواصف ⛈️' : 'Thunderstorm Event ⛈️') : (isAr ? 'تحديث الجمعة الكوني' : 'Cosmic Friday Update')}</span>
           </span>
         </div>
 
@@ -1534,6 +1803,7 @@ export default function App() {
             onOpenShop={() => handleOpenShopWithTab('all')}
             onOpenLanding={() => setShowLandingModal(true)}
             onOpenTips={handleOpenTips}
+            onOpenTasks={() => setShowTasksModal(true)}
             onToggleSound={() => {
               const next = !soundEnabled;
               setSoundEnabled(next);
@@ -1856,6 +2126,9 @@ export default function App() {
           unlockedLongLevel={unlockedLongLevel}
           currentLongLevel={currentLongLevelId}
           starsPerLongLevel={starsPerLongLevel}
+          unlockedThunderLevel={unlockedThunderLevel}
+          currentThunderLevel={currentThunderLevelId}
+          starsPerThunderLevel={starsPerThunderLevel}
           isEventUnlocked={isEventUnlocked}
           gameMode={gameMode}
           initialTab={levelSelectTab}
@@ -1864,6 +2137,7 @@ export default function App() {
           onSelectMainLevel={handleSelectMainLevel}
           onSelectGalaxyLevel={handleSelectGalaxyLevel}
           onSelectLongLevel={handleSelectLongLevel}
+          onSelectThunderLevel={handleSelectThunderLevel}
           onUnlockEvent={handleUnlockEventInModal}
           onClose={() => setShowLevelSelectModal(false)}
         />
@@ -2010,6 +2284,17 @@ export default function App() {
         <FridayUpdatesModal
           language={language}
           onClose={() => setShowFridayUpdatesModal(false)}
+        />
+      )}
+
+      {showTasksModal && (
+        <TasksModal
+          language={language}
+          coins={coins}
+          lastTasksResetTimestamp={lastTasksResetTimestamp}
+          taskStats={taskStats}
+          onClaimTask={handleClaimTask}
+          onClose={() => setShowTasksModal(false)}
         />
       )}
 

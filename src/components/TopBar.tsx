@@ -11,7 +11,7 @@ interface TopBarProps {
   maxDrops: number;
   language: 'ar' | 'en';
   soundEnabled: boolean;
-  gameMode?: 'main' | 'galaxy' | 'long';
+  gameMode?: 'main' | 'galaxy' | 'long' | 'thunder';
   onOpenSettings: () => void;
   onOpenLevelSelect: () => void;
   onOpenEventLevels: () => void;
@@ -19,6 +19,7 @@ interface TopBarProps {
   onOpenShop: () => void;
   onOpenLanding?: () => void;
   onOpenTips?: () => void;
+  onOpenTasks?: () => void;
   onToggleSound: () => void;
   onRestartLevel: () => void;
   coins: number;
@@ -47,6 +48,7 @@ export const TopBar: React.FC<TopBarProps> = ({
   onOpenShop,
   onOpenLanding,
   onOpenTips,
+  onOpenTasks,
   onToggleSound,
   onRestartLevel,
   coins,
@@ -197,6 +199,24 @@ export const TopBar: React.FC<TopBarProps> = ({
               ★
             </span>
           </button>
+
+          {/* Tasks Button (زر المهام) */}
+          {onOpenTasks && (
+            <button
+              id="btn-tasks"
+              onClick={() => {
+                soundManager.playClick();
+                onOpenTasks();
+              }}
+              className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-sky-500 via-blue-600 to-indigo-600 border-2 border-sky-300 shadow-sm flex items-center justify-center text-white hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0 relative"
+              title={isAr ? 'قائمة المهام والإنجازات 📋' : 'Tasks & Quests 📋'}
+            >
+              <span className="text-base sm:text-lg">📋</span>
+              <span className="absolute -top-1 -right-1 bg-emerald-500 text-white text-[8px] font-black px-1.5 py-0.2 rounded-full border border-white shadow-2xs animate-bounce">
+                {isAr ? 'مهام' : 'Tasks'}
+              </span>
+            </button>
+          )}
 
           {/* Tips Button (زر نصائح) */}
           {onOpenTips && (
