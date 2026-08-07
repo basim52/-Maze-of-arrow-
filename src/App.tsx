@@ -803,12 +803,12 @@ export default function App() {
   const [playerId] = useState<string>(() => {
     try {
       const saved = localStorage.getItem('player_id_code');
-      if (saved) return saved;
-      const code = `PLAYER-${Math.floor(1000 + Math.random() * 9000)}-${['SA', 'AE', 'KW', 'QA', 'EG', 'JO'][Math.floor(Math.random() * 6)]}`;
+      if (saved && /^\d+$/.test(saved)) return saved;
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
       localStorage.setItem('player_id_code', code);
       return code;
     } catch (e) {
-      return 'PLAYER-7788-SA';
+      return '849201';
     }
   });
 
@@ -816,10 +816,39 @@ export default function App() {
     try {
       const saved = localStorage.getItem('player_friends_list');
       if (saved) {
-        return JSON.parse(saved);
+        const parsed: Friend[] = JSON.parse(saved);
+        // Filter out any bots and convert old non-numeric IDs to numeric digits
+        const clean = parsed
+          .filter((f) => !f.id.toUpperCase().includes('BOT') && !('isBot' in f && (f as any).isBot))
+          .map((f) => {
+            if (!/^\d+$/.test(f.id)) {
+              const digits = f.id.replace(/\D/g, '');
+              return {
+                ...f,
+                id: digits.length >= 4 ? digits : Math.floor(100000 + Math.random() * 900000).toString(),
+              };
+            }
+            return f;
+          });
+        return clean;
       }
     } catch (e) {}
-    return [];
+    return [
+      {
+        id: '582910',
+        name: 'أحمد البطل',
+        avatar: '🛡️',
+        level: 42,
+        status: 'online',
+      },
+      {
+        id: '391054',
+        name: 'سارة نجمة الرعد',
+        avatar: '👸',
+        level: 38,
+        status: 'online',
+      },
+    ];
   });
 
   useEffect(() => {
@@ -834,8 +863,19 @@ export default function App() {
       const saved = localStorage.getItem('player_friend_requests');
       if (saved) {
         const parsed: Friend[] = JSON.parse(saved);
-        // Filter out any leftover bot requests
-        return parsed.filter((r) => !r.id.startsWith('BOT-'));
+        // Filter out any bot requests and convert non-numeric IDs
+        return parsed
+          .filter((r) => !r.id.toUpperCase().includes('BOT') && !('isBot' in r && (r as any).isBot))
+          .map((r) => {
+            if (!/^\d+$/.test(r.id)) {
+              const digits = r.id.replace(/\D/g, '');
+              return {
+                ...r,
+                id: digits.length >= 4 ? digits : Math.floor(100000 + Math.random() * 900000).toString(),
+              };
+            }
+            return r;
+          });
       }
     } catch (e) {}
     return [];
@@ -873,26 +913,30 @@ export default function App() {
   const [showTradeModal, setShowTradeModal] = useState<boolean>(false);
   const [selectedTradeFriend, setSelectedTradeFriend] = useState<Friend | null>(null);
 
-  const handleAddFriend = (friendIdOrName: string) => {
+  const handleAddFriend = (friendCode: string) => {
     const isAr = language === 'ar';
-    const exists = friends.some(
-      (f) => f.name.toLowerCase() === friendIdOrName.toLowerCase() || f.id.toLowerCase() === friendIdOrName.toLowerCase()
-    );
+    const cleanCode = friendCode.trim().replace(/\D/g, '');
+    if (!cleanCode) {
+      triggerToast(isAr ? 'عذراً، يجب أن يتكون كود اللاعب من أرقام فقط! ⚠️' : 'Player code must consist of numbers only! ⚠️');
+      return;
+    }
+
+    const exists = friends.some((f) => f.id === cleanCode);
     if (exists) {
-      triggerToast(isAr ? 'اللاعب موجود بالفعل في قائمة أصدقائك! 👥' : 'Player is already in your friends list! 👥');
+      triggerToast(isAr ? 'هذا اللاعب موجود بالفعل في قائمة أصدقائك! 👥' : 'Player is already in your friends list! 👥');
       return;
     }
 
     const newFriend: Friend = {
-      id: friendIdOrName.toUpperCase().startsWith('PLAYER-') ? friendIdOrName.toUpperCase() : `PLAYER-${Math.floor(1000 + Math.random() * 9000)}-KW`,
-      name: friendIdOrName,
+      id: cleanCode,
+      name: isAr ? `لاعب (${cleanCode})` : `Player (${cleanCode})`,
       avatar: ['🧙‍♂️', '👸', '🛡️', '⚡', '🎂', '🚀', '👑', '💎'][Math.floor(Math.random() * 8)],
-      level: Math.floor(100 + Math.random() * 150),
+      level: Math.floor(10 + Math.random() * 90),
       status: 'online',
     };
 
     setFriends((prev) => [newFriend, ...prev]);
-    triggerToast(isAr ? `تمت إضافة ${friendIdOrName} إلى قائمة الأصدقاء بنجاح! 🎉` : `Added ${friendIdOrName} to friends! 🎉`);
+    triggerToast(isAr ? `تمت إضافة الصديق بكود (${cleanCode}) بنجاح! 🎉` : `Added friend with code (${cleanCode})! 🎉`);
   };
 
   const handleRemoveFriend = (friendId: string) => {

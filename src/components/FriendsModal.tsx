@@ -14,7 +14,6 @@ interface FriendsModalProps {
   requests: Friend[];
   onAcceptRequest: (request: Friend) => void;
   onDeclineRequest: (requestId: string) => void;
-  onGenerateBotRequest?: () => void;
   onAddFriend: (friendIdOrName: string) => void;
   onRemoveFriend: (friendId: string) => void;
   onOpenTradeWithFriend: (friend: Friend) => void;
@@ -33,7 +32,6 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({
   requests,
   onAcceptRequest,
   onDeclineRequest,
-  onGenerateBotRequest,
   onAddFriend,
   onRemoveFriend,
   onOpenTradeWithFriend,
@@ -69,17 +67,21 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({
 
   const handleAddSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!addInput.trim()) return;
+    const cleanCode = addInput.trim().replace(/\D/g, '');
+    if (!cleanCode) {
+      alert(isAr ? 'يرجى إدخال كود اللاعب يتكون من أرقام فقط!' : 'Please enter a player code with numbers only!');
+      return;
+    }
     soundManager.playVictory();
-    onAddFriend(addInput.trim());
+    onAddFriend(cleanCode);
     setAddInput('');
   };
 
-  const filteredFriends = friends.filter(
-    (f) =>
-      f.name.toLowerCase().includes(searchInput.toLowerCase()) ||
-      f.id.toLowerCase().includes(searchInput.toLowerCase())
-  );
+  const filteredFriends = friends.filter((f) => {
+    const q = searchInput.trim();
+    if (!q) return true;
+    return f.id.includes(q) || f.name.toLowerCase().includes(q.toLowerCase());
+  });
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in select-none">
@@ -249,10 +251,11 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({
                 <Search className="w-4 h-4 absolute right-3 top-2.5 text-slate-400" />
                 <input
                   type="text"
+                  inputMode="numeric"
                   value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  placeholder={isAr ? 'ابحث عن صديق بالاسم أو الكود...' : 'Search friend by name or ID...'}
-                  className="w-full bg-slate-950/80 border border-sky-500/30 rounded-xl pr-9 pl-3 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-sky-400"
+                  onChange={(e) => setSearchInput(e.target.value.replace(/\D/g, ''))}
+                  placeholder={isAr ? 'ابحث عن صديق بكود اللاعب (أرقام فقط)...' : 'Search friend by code (numbers only)...'}
+                  className="w-full bg-slate-950/80 border border-sky-500/30 rounded-xl pr-9 pl-3 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-sky-400 font-mono tracking-wider"
                 />
               </div>
 
@@ -368,15 +371,17 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({
             <div className="space-y-4">
               <form onSubmit={handleAddSubmit} className="space-y-2">
                 <label className="text-xs font-bold text-sky-200 block">
-                  {isAr ? 'أدخل كود المعرّف أو اسم اللاعب لإضافته:' : 'Enter Player ID Code or Name to add:'}
+                  {isAr ? 'أدخل كود اللاعب (أرقام فقط):' : 'Enter Player Code (numbers only):'}
                 </label>
                 <div className="flex gap-2">
                   <input
                     type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     value={addInput}
-                    onChange={(e) => setAddInput(e.target.value)}
-                    placeholder={isAr ? 'مثال: PLAYER-9921-SA أو اكتب الاسم' : 'e.g. PLAYER-9921-SA or Player Name'}
-                    className="flex-1 bg-slate-950/80 border border-sky-500/40 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-sky-300 font-mono"
+                    onChange={(e) => setAddInput(e.target.value.replace(/\D/g, ''))}
+                    placeholder={isAr ? 'مثال: 582910' : 'e.g. 582910'}
+                    className="flex-1 bg-slate-950/80 border border-sky-500/40 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-sky-300 font-mono tracking-widest text-center font-bold"
                   />
                   <button
                     type="submit"

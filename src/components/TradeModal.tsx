@@ -159,15 +159,15 @@ export const TradeModal: React.FC<TradeModalProps> = ({
     if (e) e.preventDefault();
     soundManager.playClick();
 
-    const query = searchQuery.trim();
+    const query = searchQuery.trim().replace(/\D/g, '');
     if (!query) {
-      alert(isAr ? 'يرجى كتابة اسم أو كود اللاعب للبحث عنه!' : 'Please enter player name or ID to search!');
+      alert(isAr ? 'يرجى كتابة كود اللاعب (أرقام فقط) للبحث عنه!' : 'Please enter player code (numbers only) to search!');
       return;
     }
 
     // Match existing friend or create searched player
     const matchedFriend = friends.find(
-      (f) => f.name.toLowerCase().includes(query.toLowerCase()) || f.id.toLowerCase() === query.toLowerCase()
+      (f) => f.id === query || f.id.includes(query)
     );
 
     const player: SearchedPlayer = matchedFriend
@@ -179,8 +179,8 @@ export const TradeModal: React.FC<TradeModalProps> = ({
           isOnline: true,
         }
       : {
-          id: `ID-${Math.floor(Math.random() * 8999) + 1000}`,
-          name: query,
+          id: query,
+          name: isAr ? `لاعب (${query})` : `Player (${query})`,
           avatar: '👤',
           level: Math.floor(Math.random() * 12) + 8,
           isOnline: true,
@@ -365,17 +365,18 @@ export const TradeModal: React.FC<TradeModalProps> = ({
               <div className="p-3.5 rounded-2xl bg-slate-950/90 border border-emerald-500/40 space-y-2">
                 <label className="text-xs font-black text-emerald-300 flex items-center gap-1.5">
                   <Search className="w-4 h-4 text-emerald-400" />
-                  <span>{isAr ? 'ابحث عن اسم أو كود اللاعب للتبادل:' : 'Search Player Name or ID:'}</span>
+                  <span>{isAr ? 'ابحث بكود اللاعب للتبادل (أرقام فقط):' : 'Search Player Code (numbers only):'}</span>
                 </label>
 
                 <form onSubmit={handleSearchPlayer} className="flex gap-2">
                   <div className="relative flex-1">
                     <input
                       type="text"
+                      inputMode="numeric"
                       value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder={isAr ? 'اكتب اسم اللاعب (مثال: فيصل، سعد، نورة، عمر)...' : 'Type player name (e.g. Faisal, Saad)...'}
-                      className="w-full bg-slate-900 border border-emerald-500/50 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-emerald-300 font-semibold"
+                      onChange={(e) => setSearchQuery(e.target.value.replace(/\D/g, ''))}
+                      placeholder={isAr ? 'أدخل كود اللاعب الرقمي (مثال: 582910)...' : 'Enter numeric player code (e.g. 582910)...'}
+                      className="w-full bg-slate-900 border border-emerald-500/50 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-emerald-300 font-mono tracking-wider"
                     />
                   </div>
 
