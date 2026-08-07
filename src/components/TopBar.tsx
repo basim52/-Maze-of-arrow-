@@ -20,8 +20,6 @@ interface TopBarProps {
   onOpenLanding?: () => void;
   onOpenTips?: () => void;
   onOpenTasks?: () => void;
-  onOpenFriends?: () => void;
-  onOpenTrade?: () => void;
   onToggleSound: () => void;
   onRestartLevel: () => void;
   coins: number;
@@ -51,8 +49,6 @@ export const TopBar: React.FC<TopBarProps> = ({
   onOpenLanding,
   onOpenTips,
   onOpenTasks,
-  onOpenFriends,
-  onOpenTrade,
   onToggleSound,
   onRestartLevel,
   coins,
@@ -181,42 +177,6 @@ export const TopBar: React.FC<TopBarProps> = ({
             <Sparkles className="w-3 h-3 text-amber-200 fill-amber-100" />
             <span>{isAr ? toArabicDigits(coins) : coins}</span>
           </button>
-
-          {/* Friends Button (زر إضافة الأصدقاء) */}
-          {onOpenFriends && (
-            <button
-              id="btn-friends"
-              onClick={() => {
-                soundManager.playClick();
-                onOpenFriends();
-              }}
-              className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-indigo-500 via-sky-500 to-teal-500 border-2 border-sky-300 shadow-sm flex items-center justify-center text-white hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0 relative"
-              title={isAr ? 'إضافة أصدقاء وقائمة الناس 👥' : 'Add Friends & Community 👥'}
-            >
-              <span className="text-base sm:text-lg">👥</span>
-              <span className="absolute -top-1 -right-1 bg-sky-500 text-white text-[8px] font-black px-1.5 py-0.2 rounded-full border border-white shadow-2xs">
-                {isAr ? 'أصدقاء' : 'Friends'}
-              </span>
-            </button>
-          )}
-
-          {/* Trade Button (زر التبادل مع الناس) */}
-          {onOpenTrade && (
-            <button
-              id="btn-trade"
-              onClick={() => {
-                soundManager.playClick();
-                onOpenTrade();
-              }}
-              className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-600 to-emerald-700 border-2 border-emerald-300 shadow-sm flex items-center justify-center text-white hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0 relative"
-              title={isAr ? 'التبادل والمقايضة مع الناس 🔄' : 'Trade & Exchange 🔄'}
-            >
-              <span className="text-base sm:text-lg">🔄</span>
-              <span className="absolute -top-1 -right-1 bg-emerald-500 text-white text-[8px] font-black px-1.5 py-0.2 rounded-full border border-white shadow-2xs animate-pulse">
-                {isAr ? 'تبادل' : 'Trade'}
-              </span>
-            </button>
-          )}
 
           {/* Palette Button with Shop badge */}
           <button

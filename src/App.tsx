@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Arrow, Level, ThemeSkin, ArrowSkin, Friend, TradeItem } from './types';
+import { Arrow, Level, ThemeSkin, ArrowSkin } from './types';
 import { getLevel, getGalaxyLevel, getLongLevel, getThunderLevel, getTimedLevel, getMonsterLevel, MONSTER_BOSS_LEVEL_IDS, canArrowEscape } from './utils/levelGenerator';
 import { soundManager } from './utils/sound';
 import { TopBar } from './components/TopBar';
@@ -14,8 +14,6 @@ import { FridayUpdatesModal } from './components/FridayUpdatesModal';
 import { LandingModal } from './components/LandingModal';
 import { TipsModal } from './components/TipsModal';
 import { TasksModal } from './components/TasksModal';
-import { FriendsModal } from './components/FriendsModal';
-import { TradeModal } from './components/TradeModal';
 import { getActiveDailyTasks } from './utils/dailyTasks';
 import { ThunderstormBackground } from './components/ThunderstormBackground';
 import { RainItem } from './components/RainStrikeOverlay';
@@ -781,225 +779,6 @@ export default function App() {
   const [showTipsModal, setShowTipsModal] = useState<boolean>(false);
   const [showTasksModal, setShowTasksModal] = useState<boolean>(false);
   const [shopModalTab, setShopModalTab] = useState<'all' | 'thunder' | 'cake' | 'galaxy' | 'tools' | 'skins' | 'arrowSkins'>('all');
-
-  // Friends & Social System State
-  const [playerName, setPlayerName] = useState<string>(() => {
-    try {
-      const saved = localStorage.getItem('player_custom_name');
-      if (saved) return saved;
-    } catch (e) {}
-    return language === 'ar' ? 'البطل الملكي 👑' : 'Royal Hero 👑';
-  });
-
-  const handleUpdatePlayerName = (newName: string) => {
-    const isAr = language === 'ar';
-    setPlayerName(newName);
-    try {
-      localStorage.setItem('player_custom_name', newName);
-    } catch (e) {}
-    triggerToast(isAr ? `تم تحديث اسمك إلى: ${newName} ✨` : `Updated name to: ${newName} ✨`);
-  };
-
-  const [playerId] = useState<string>(() => {
-    try {
-      const saved = localStorage.getItem('player_id_code');
-      if (saved && /^\d+$/.test(saved)) return saved;
-      const code = Math.floor(100000 + Math.random() * 900000).toString();
-      localStorage.setItem('player_id_code', code);
-      return code;
-    } catch (e) {
-      return '849201';
-    }
-  });
-
-  const [friends, setFriends] = useState<Friend[]>(() => {
-    try {
-      const saved = localStorage.getItem('player_friends_list');
-      if (saved) {
-        const parsed: Friend[] = JSON.parse(saved);
-        // Filter out any bots and convert old non-numeric IDs to numeric digits
-        const clean = parsed
-          .filter((f) => !f.id.toUpperCase().includes('BOT') && !('isBot' in f && (f as any).isBot))
-          .map((f) => {
-            if (!/^\d+$/.test(f.id)) {
-              const digits = f.id.replace(/\D/g, '');
-              return {
-                ...f,
-                id: digits.length >= 4 ? digits : Math.floor(100000 + Math.random() * 900000).toString(),
-              };
-            }
-            return f;
-          });
-        return clean;
-      }
-    } catch (e) {}
-    return [
-      {
-        id: '582910',
-        name: 'أحمد البطل',
-        avatar: '🛡️',
-        level: 42,
-        status: 'online',
-      },
-      {
-        id: '391054',
-        name: 'سارة نجمة الرعد',
-        avatar: '👸',
-        level: 38,
-        status: 'online',
-      },
-    ];
-  });
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('player_friends_list', JSON.stringify(friends));
-    } catch (e) {}
-  }, [friends]);
-
-  // Player Incoming Friend Requests
-  const [friendRequests, setFriendRequests] = useState<Friend[]>(() => {
-    try {
-      const saved = localStorage.getItem('player_friend_requests');
-      if (saved) {
-        const parsed: Friend[] = JSON.parse(saved);
-        // Filter out any bot requests and convert non-numeric IDs
-        return parsed
-          .filter((r) => !r.id.toUpperCase().includes('BOT') && !('isBot' in r && (r as any).isBot))
-          .map((r) => {
-            if (!/^\d+$/.test(r.id)) {
-              const digits = r.id.replace(/\D/g, '');
-              return {
-                ...r,
-                id: digits.length >= 4 ? digits : Math.floor(100000 + Math.random() * 900000).toString(),
-              };
-            }
-            return r;
-          });
-      }
-    } catch (e) {}
-    return [];
-  });
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('player_friend_requests', JSON.stringify(friendRequests));
-    } catch (e) {}
-  }, [friendRequests]);
-
-  const handleAcceptFriendRequest = (request: Friend) => {
-    const isAr = language === 'ar';
-    setFriends((prev) => {
-      if (prev.some((f) => f.id === request.id)) return prev;
-      return [request, ...prev];
-    });
-    setFriendRequests((prev) => prev.filter((r) => r.id !== request.id));
-    soundManager.playVictory();
-    triggerToast(
-      isAr
-        ? `🎉 تم قبول طلب الصداقة! ${request.name} أصبح صديقك الآن ويمكنك التبادل معه.`
-        : `🎉 Accepted friend request! ${request.name} is now your friend.`
-    );
-  };
-
-  const handleDeclineFriendRequest = (requestId: string) => {
-    const isAr = language === 'ar';
-    setFriendRequests((prev) => prev.filter((r) => r.id !== requestId));
-    triggerToast(isAr ? 'تم رفض طلب الصداقة.' : 'Declined friend request.');
-  };
-
-  const [giftSentFriendIds, setGiftSentFriendIds] = useState<string[]>([]);
-  const [showFriendsModal, setShowFriendsModal] = useState<boolean>(false);
-  const [showTradeModal, setShowTradeModal] = useState<boolean>(false);
-  const [selectedTradeFriend, setSelectedTradeFriend] = useState<Friend | null>(null);
-
-  const handleAddFriend = (friendCode: string) => {
-    const isAr = language === 'ar';
-    const cleanCode = friendCode.trim().replace(/\D/g, '');
-    if (!cleanCode) {
-      triggerToast(isAr ? 'عذراً، يجب أن يتكون كود اللاعب من أرقام فقط! ⚠️' : 'Player code must consist of numbers only! ⚠️');
-      return;
-    }
-
-    const exists = friends.some((f) => f.id === cleanCode);
-    if (exists) {
-      triggerToast(isAr ? 'هذا اللاعب موجود بالفعل في قائمة أصدقائك! 👥' : 'Player is already in your friends list! 👥');
-      return;
-    }
-
-    const newFriend: Friend = {
-      id: cleanCode,
-      name: isAr ? `لاعب (${cleanCode})` : `Player (${cleanCode})`,
-      avatar: ['🧙‍♂️', '👸', '🛡️', '⚡', '🎂', '🚀', '👑', '💎'][Math.floor(Math.random() * 8)],
-      level: Math.floor(10 + Math.random() * 90),
-      status: 'online',
-    };
-
-    setFriends((prev) => [newFriend, ...prev]);
-    triggerToast(isAr ? `تمت إضافة الصديق بكود (${cleanCode}) بنجاح! 🎉` : `Added friend with code (${cleanCode})! 🎉`);
-  };
-
-  const handleRemoveFriend = (friendId: string) => {
-    const isAr = language === 'ar';
-    setFriends((prev) => prev.filter((f) => f.id !== friendId));
-    triggerToast(isAr ? 'تم إزالة اللاعب من قائمة الأصدقاء.' : 'Removed friend from list.');
-  };
-
-  const handleSendGift = (friend: Friend) => {
-    const isAr = language === 'ar';
-    if (giftSentFriendIds.includes(friend.id)) return;
-    setGiftSentFriendIds((prev) => [...prev, friend.id]);
-    setCoins((c) => c + 10);
-    soundManager.playVictory();
-    triggerToast(
-      isAr
-        ? `🎁 أرسلت هدية يومية لـ ${friend.name}! وحصلت على +10 نقاط مكافأة الصداقة! 🪙`
-        : `🎁 Sent daily gift to ${friend.name}! Received +10 bonus coins! 🪙`
-    );
-  };
-
-  const handleOpenTradeWithFriend = (friend: Friend) => {
-    setSelectedTradeFriend(friend);
-    setShowFriendsModal(false);
-    setShowTradeModal(true);
-  };
-
-  const handleExecuteTrade = (
-    givenItems: TradeItem[],
-    receivedItems: TradeItem[],
-    offerTitle: string
-  ): boolean => {
-    const isAr = language === 'ar';
-    // Deduct given items
-    for (const item of givenItems) {
-      if (item.type === 'coins') setCoins((c) => Math.max(0, c - item.amount));
-      else if (item.type === 'thunders') setThunders((t) => Math.max(0, t - item.amount));
-      else if (item.type === 'hammers') setHammers((h) => Math.max(0, h - item.amount));
-      else if (item.type === 'cakes') setCakes((ck) => Math.max(0, ck - item.amount));
-      else if (item.type === 'creams') setCreams((cr) => Math.max(0, cr - item.amount));
-      else if (item.type === 'chocolates') setChocolates((ch) => Math.max(0, ch - item.amount));
-      else if (item.type === 'spaceCreams') setSpaceCreams((sc) => Math.max(0, sc - item.amount));
-    }
-
-    // Add received items
-    for (const item of receivedItems) {
-      if (item.type === 'coins') setCoins((c) => c + item.amount);
-      else if (item.type === 'thunders') setThunders((t) => t + item.amount);
-      else if (item.type === 'hammers') setHammers((h) => h + item.amount);
-      else if (item.type === 'cakes') setCakes((ck) => ck + item.amount);
-      else if (item.type === 'creams') setCreams((cr) => cr + item.amount);
-      else if (item.type === 'chocolates') setChocolates((ch) => ch + item.amount);
-      else if (item.type === 'spaceCreams') setSpaceCreams((sc) => sc + item.amount);
-    }
-
-    soundManager.playVictory();
-    triggerToast(
-      isAr
-        ? `🔄 تم إتمام التبادل بنجاح مع ${offerTitle}! تم استلام الموارد في مخزونك! 🎉`
-        : `🔄 Trade completed with ${offerTitle}! Items updated in inventory! 🎉`
-    );
-    return true;
-  };
 
   const handleOpenTips = () => {
     soundManager.playClick();
@@ -3063,11 +2842,6 @@ export default function App() {
             onOpenLanding={() => setShowLandingModal(true)}
             onOpenTips={handleOpenTips}
             onOpenTasks={() => setShowTasksModal(true)}
-            onOpenFriends={() => setShowFriendsModal(true)}
-            onOpenTrade={() => {
-              setSelectedTradeFriend(null);
-              setShowTradeModal(true);
-            }}
             onToggleSound={() => {
               const next = !soundEnabled;
               setSoundEnabled(next);
@@ -3816,44 +3590,6 @@ export default function App() {
           taskStats={taskStats}
           onClaimTask={handleClaimTask}
           onClose={() => setShowTasksModal(false)}
-        />
-      )}
-
-      {showFriendsModal && (
-        <FriendsModal
-          isOpen={showFriendsModal}
-          onClose={() => setShowFriendsModal(false)}
-          language={language}
-          playerId={playerId}
-          playerName={playerName}
-          onUpdatePlayerName={handleUpdatePlayerName}
-          friends={friends}
-          requests={friendRequests}
-          onAcceptRequest={handleAcceptFriendRequest}
-          onDeclineRequest={handleDeclineFriendRequest}
-          onAddFriend={handleAddFriend}
-          onRemoveFriend={handleRemoveFriend}
-          onOpenTradeWithFriend={handleOpenTradeWithFriend}
-          onSendGift={handleSendGift}
-          giftSentFriendIds={giftSentFriendIds}
-        />
-      )}
-
-      {showTradeModal && (
-        <TradeModal
-          isOpen={showTradeModal}
-          onClose={() => setShowTradeModal(false)}
-          language={language}
-          friends={friends}
-          selectedFriendForTrade={selectedTradeFriend}
-          coins={coins}
-          thunders={thunders}
-          hammers={hammers}
-          cakes={cakes}
-          creams={creams}
-          chocolates={chocolates}
-          spaceCreams={spaceCreams}
-          onExecuteTrade={handleExecuteTrade}
         />
       )}
 
