@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Arrow, Level, ThemeSkin, ArrowSkin } from './types';
-import { getLevel, getGalaxyLevel, getLongLevel, getThunderLevel, MONSTER_BOSS_LEVEL_IDS } from './utils/levelGenerator';
+import { Arrow, Level, ThemeSkin, ArrowSkin, Friend, TradeItem } from './types';
+import { getLevel, getGalaxyLevel, getLongLevel, getThunderLevel, getTimedLevel, getMonsterLevel, MONSTER_BOSS_LEVEL_IDS, canArrowEscape } from './utils/levelGenerator';
 import { soundManager } from './utils/sound';
 import { TopBar } from './components/TopBar';
 import { ArrowMazeBoard } from './components/ArrowMazeBoard';
@@ -14,6 +14,8 @@ import { FridayUpdatesModal } from './components/FridayUpdatesModal';
 import { LandingModal } from './components/LandingModal';
 import { TipsModal } from './components/TipsModal';
 import { TasksModal } from './components/TasksModal';
+import { FriendsModal } from './components/FriendsModal';
+import { TradeModal } from './components/TradeModal';
 import { getActiveDailyTasks } from './utils/dailyTasks';
 import { ThunderstormBackground } from './components/ThunderstormBackground';
 import { RainItem } from './components/RainStrikeOverlay';
@@ -200,7 +202,22 @@ export default function App() {
     } catch (e) {
       console.error(e);
     }
-    return 1; // 1 free starter thunder bolt
+    return 0; // 0 starter thunder currency
+  });
+
+  const [lightnings, setLightnings] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.lightnings === 'number') {
+          return parsed.lightnings;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 0; // 0 starter lightning strikes
   });
 
   const [creams, setCreams] = useState<number>(() => {
@@ -278,6 +295,21 @@ export default function App() {
     return 0;
   });
 
+  const [smartCakeMultiplierLevelsRemaining, setSmartCakeMultiplierLevelsRemaining] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.smartCakeMultiplierLevelsRemaining === 'number') {
+          return parsed.smartCakeMultiplierLevelsRemaining;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 0;
+  });
+
   const [hammerSkinEscapedCount, setHammerSkinEscapedCount] = useState<number>(() => {
     try {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -293,11 +325,59 @@ export default function App() {
     return 0;
   });
 
+  const [emeraldPalaceEscapedCount, setEmeraldPalaceEscapedCount] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.emeraldPalaceEscapedCount === 'number') {
+          return parsed.emeraldPalaceEscapedCount;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 0;
+  });
+
+  const [cakeKingdomEscapedCount, setCakeKingdomEscapedCount] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.cakeKingdomEscapedCount === 'number') {
+          return parsed.cakeKingdomEscapedCount;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 0;
+  });
+
   const [spaceCreams, setSpaceCreams] = useState<number>(() => {
     try {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
+        if (typeof parsed.spaceCreams === 'number') {
+          return parsed.spaceCreams;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 0;
+  });
+
+  const [liquidChocolates, setLiquidChocolates] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.liquidChocolates === 'number') {
+          return parsed.liquidChocolates;
+        }
         if (typeof parsed.spaceCreams === 'number') {
           return parsed.spaceCreams;
         }
@@ -322,6 +402,38 @@ export default function App() {
     }
     return 0;
   });
+
+  const [chickens, setChickens] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.chickens === 'number') {
+          return parsed.chickens;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 0;
+  });
+
+  const [oracleEyes, setOracleEyes] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.oracleEyes === 'number') {
+          return parsed.oracleEyes;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 0; // Start with 0 free Oracle Eyes (must be purchased from Shop)
+  });
+
+  const [highlightedArrowIds, setHighlightedArrowIds] = useState<Set<string>>(new Set());
 
   const [cakeArrowCounter, setCakeArrowCounter] = useState<number>(() => {
     try {
@@ -353,7 +465,120 @@ export default function App() {
     return 0;
   });
 
-  const [gameMode, setGameMode] = useState<'main' | 'galaxy' | 'long' | 'thunder'>('main');
+  const [gameMode, setGameMode] = useState<'main' | 'galaxy' | 'long' | 'thunder' | 'timed' | 'monster'>('main');
+
+  // Monster Battle Mode states (5 Stage Boss levels, unlocked for 154 coins)
+  const [hasUnlockedMonsterMode, setHasUnlockedMonsterMode] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.hasUnlockedMonsterMode === 'boolean') {
+          return parsed.hasUnlockedMonsterMode;
+        }
+      }
+    } catch (e) {}
+    return false;
+  });
+
+  const [currentMonsterLevelId, setCurrentMonsterLevelId] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.currentMonsterLevelId === 'number' && parsed.currentMonsterLevelId >= 1) {
+          return parsed.currentMonsterLevelId;
+        }
+      }
+    } catch (e) {}
+    return 1;
+  });
+
+  const [unlockedMonsterLevel, setUnlockedMonsterLevel] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.unlockedMonsterLevel === 'number' && parsed.unlockedMonsterLevel >= 1) {
+          return parsed.unlockedMonsterLevel;
+        }
+      }
+    } catch (e) {}
+    return 1;
+  });
+
+  const [starsPerMonsterLevel, setStarsPerMonsterLevel] = useState<Record<number, number>>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.starsPerMonsterLevel && typeof parsed.starsPerMonsterLevel === 'object') {
+          return parsed.starsPerMonsterLevel;
+        }
+      }
+    } catch (e) {}
+    return {};
+  });
+
+  // 2-Second Monster Obstacle states
+  const [monsterObstacleActive, setMonsterObstacleActive] = useState<boolean>(false);
+  const [monsterObstacleTimer, setMonsterObstacleTimer] = useState<number>(2);
+  const [monsterCooldownTimer, setMonsterCooldownTimer] = useState<number>(5);
+
+  // Temporary Timed Levels states (10 Timed levels with countdown timer)
+  const [hasUnlockedTimedLevels, setHasUnlockedTimedLevels] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.hasUnlockedTimedLevels === 'boolean') {
+          return parsed.hasUnlockedTimedLevels;
+        }
+      }
+    } catch (e) {}
+    return false;
+  });
+
+  const [currentTimedLevelId, setCurrentTimedLevelId] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.currentTimedLevelId === 'number' && parsed.currentTimedLevelId >= 1) {
+          return parsed.currentTimedLevelId;
+        }
+      }
+    } catch (e) {}
+    return 1;
+  });
+
+  const [unlockedTimedLevel, setUnlockedTimedLevel] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.unlockedTimedLevel === 'number' && parsed.unlockedTimedLevel >= 1) {
+          return parsed.unlockedTimedLevel;
+        }
+      }
+    } catch (e) {}
+    return 1;
+  });
+
+  const [starsPerTimedLevel, setStarsPerTimedLevel] = useState<Record<number, number>>(() => {
+    try {
+      const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.starsPerTimedLevel && typeof parsed.starsPerTimedLevel === 'object') {
+          return parsed.starsPerTimedLevel;
+        }
+      }
+    } catch (e) {}
+    return {};
+  });
+
+  const [levelTimeLeft, setLevelTimeLeft] = useState<number | null>(null);
 
   // Thunder Event Level states (5 Event levels with rain and thunder background)
   const [currentThunderLevelId, setCurrentThunderLevelId] = useState<number>(() => {
@@ -538,7 +763,7 @@ export default function App() {
     return false;
   });
 
-  const [levelSelectTab, setLevelSelectTab] = useState<'main' | 'galaxy' | 'long'>('main');
+  const [levelSelectTab, setLevelSelectTab] = useState<'main' | 'galaxy' | 'long' | 'thunder' | 'timed' | 'monster'>('main');
 
   const [isHammerActive, setIsHammerActive] = useState<boolean>(false);
   const [lastCoinsEarned, setLastCoinsEarned] = useState<number>(10);
@@ -555,14 +780,189 @@ export default function App() {
   const [showLandingModal, setShowLandingModal] = useState<boolean>(true);
   const [showTipsModal, setShowTipsModal] = useState<boolean>(false);
   const [showTasksModal, setShowTasksModal] = useState<boolean>(false);
-  const [shopModalTab, setShopModalTab] = useState<'all' | 'galaxy' | 'tools' | 'skins' | 'arrowSkins'>('all');
+  const [shopModalTab, setShopModalTab] = useState<'all' | 'thunder' | 'cake' | 'galaxy' | 'tools' | 'skins' | 'arrowSkins'>('all');
+
+  // Friends & Social System State
+  const [playerName, setPlayerName] = useState<string>(() => {
+    try {
+      const saved = localStorage.getItem('player_custom_name');
+      if (saved) return saved;
+    } catch (e) {}
+    return language === 'ar' ? 'البطل الملكي 👑' : 'Royal Hero 👑';
+  });
+
+  const handleUpdatePlayerName = (newName: string) => {
+    const isAr = language === 'ar';
+    setPlayerName(newName);
+    try {
+      localStorage.setItem('player_custom_name', newName);
+    } catch (e) {}
+    triggerToast(isAr ? `تم تحديث اسمك إلى: ${newName} ✨` : `Updated name to: ${newName} ✨`);
+  };
+
+  const [playerId] = useState<string>(() => {
+    try {
+      const saved = localStorage.getItem('player_id_code');
+      if (saved) return saved;
+      const code = `PLAYER-${Math.floor(1000 + Math.random() * 9000)}-${['SA', 'AE', 'KW', 'QA', 'EG', 'JO'][Math.floor(Math.random() * 6)]}`;
+      localStorage.setItem('player_id_code', code);
+      return code;
+    } catch (e) {
+      return 'PLAYER-7788-SA';
+    }
+  });
+
+  const [friends, setFriends] = useState<Friend[]>(() => {
+    try {
+      const saved = localStorage.getItem('player_friends_list');
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch (e) {}
+    return [];
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('player_friends_list', JSON.stringify(friends));
+    } catch (e) {}
+  }, [friends]);
+
+  // Player Incoming Friend Requests
+  const [friendRequests, setFriendRequests] = useState<Friend[]>(() => {
+    try {
+      const saved = localStorage.getItem('player_friend_requests');
+      if (saved) {
+        const parsed: Friend[] = JSON.parse(saved);
+        // Filter out any leftover bot requests
+        return parsed.filter((r) => !r.id.startsWith('BOT-'));
+      }
+    } catch (e) {}
+    return [];
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('player_friend_requests', JSON.stringify(friendRequests));
+    } catch (e) {}
+  }, [friendRequests]);
+
+  const handleAcceptFriendRequest = (request: Friend) => {
+    const isAr = language === 'ar';
+    setFriends((prev) => {
+      if (prev.some((f) => f.id === request.id)) return prev;
+      return [request, ...prev];
+    });
+    setFriendRequests((prev) => prev.filter((r) => r.id !== request.id));
+    soundManager.playVictory();
+    triggerToast(
+      isAr
+        ? `🎉 تم قبول طلب الصداقة! ${request.name} أصبح صديقك الآن ويمكنك التبادل معه.`
+        : `🎉 Accepted friend request! ${request.name} is now your friend.`
+    );
+  };
+
+  const handleDeclineFriendRequest = (requestId: string) => {
+    const isAr = language === 'ar';
+    setFriendRequests((prev) => prev.filter((r) => r.id !== requestId));
+    triggerToast(isAr ? 'تم رفض طلب الصداقة.' : 'Declined friend request.');
+  };
+
+  const [giftSentFriendIds, setGiftSentFriendIds] = useState<string[]>([]);
+  const [showFriendsModal, setShowFriendsModal] = useState<boolean>(false);
+  const [showTradeModal, setShowTradeModal] = useState<boolean>(false);
+  const [selectedTradeFriend, setSelectedTradeFriend] = useState<Friend | null>(null);
+
+  const handleAddFriend = (friendIdOrName: string) => {
+    const isAr = language === 'ar';
+    const exists = friends.some(
+      (f) => f.name.toLowerCase() === friendIdOrName.toLowerCase() || f.id.toLowerCase() === friendIdOrName.toLowerCase()
+    );
+    if (exists) {
+      triggerToast(isAr ? 'اللاعب موجود بالفعل في قائمة أصدقائك! 👥' : 'Player is already in your friends list! 👥');
+      return;
+    }
+
+    const newFriend: Friend = {
+      id: friendIdOrName.toUpperCase().startsWith('PLAYER-') ? friendIdOrName.toUpperCase() : `PLAYER-${Math.floor(1000 + Math.random() * 9000)}-KW`,
+      name: friendIdOrName,
+      avatar: ['🧙‍♂️', '👸', '🛡️', '⚡', '🎂', '🚀', '👑', '💎'][Math.floor(Math.random() * 8)],
+      level: Math.floor(100 + Math.random() * 150),
+      status: 'online',
+    };
+
+    setFriends((prev) => [newFriend, ...prev]);
+    triggerToast(isAr ? `تمت إضافة ${friendIdOrName} إلى قائمة الأصدقاء بنجاح! 🎉` : `Added ${friendIdOrName} to friends! 🎉`);
+  };
+
+  const handleRemoveFriend = (friendId: string) => {
+    const isAr = language === 'ar';
+    setFriends((prev) => prev.filter((f) => f.id !== friendId));
+    triggerToast(isAr ? 'تم إزالة اللاعب من قائمة الأصدقاء.' : 'Removed friend from list.');
+  };
+
+  const handleSendGift = (friend: Friend) => {
+    const isAr = language === 'ar';
+    if (giftSentFriendIds.includes(friend.id)) return;
+    setGiftSentFriendIds((prev) => [...prev, friend.id]);
+    setCoins((c) => c + 10);
+    soundManager.playVictory();
+    triggerToast(
+      isAr
+        ? `🎁 أرسلت هدية يومية لـ ${friend.name}! وحصلت على +10 نقاط مكافأة الصداقة! 🪙`
+        : `🎁 Sent daily gift to ${friend.name}! Received +10 bonus coins! 🪙`
+    );
+  };
+
+  const handleOpenTradeWithFriend = (friend: Friend) => {
+    setSelectedTradeFriend(friend);
+    setShowFriendsModal(false);
+    setShowTradeModal(true);
+  };
+
+  const handleExecuteTrade = (
+    givenItems: TradeItem[],
+    receivedItems: TradeItem[],
+    offerTitle: string
+  ): boolean => {
+    const isAr = language === 'ar';
+    // Deduct given items
+    for (const item of givenItems) {
+      if (item.type === 'coins') setCoins((c) => Math.max(0, c - item.amount));
+      else if (item.type === 'thunders') setThunders((t) => Math.max(0, t - item.amount));
+      else if (item.type === 'hammers') setHammers((h) => Math.max(0, h - item.amount));
+      else if (item.type === 'cakes') setCakes((ck) => Math.max(0, ck - item.amount));
+      else if (item.type === 'creams') setCreams((cr) => Math.max(0, cr - item.amount));
+      else if (item.type === 'chocolates') setChocolates((ch) => Math.max(0, ch - item.amount));
+      else if (item.type === 'spaceCreams') setSpaceCreams((sc) => Math.max(0, sc - item.amount));
+    }
+
+    // Add received items
+    for (const item of receivedItems) {
+      if (item.type === 'coins') setCoins((c) => c + item.amount);
+      else if (item.type === 'thunders') setThunders((t) => t + item.amount);
+      else if (item.type === 'hammers') setHammers((h) => h + item.amount);
+      else if (item.type === 'cakes') setCakes((ck) => ck + item.amount);
+      else if (item.type === 'creams') setCreams((cr) => cr + item.amount);
+      else if (item.type === 'chocolates') setChocolates((ch) => ch + item.amount);
+      else if (item.type === 'spaceCreams') setSpaceCreams((sc) => sc + item.amount);
+    }
+
+    soundManager.playVictory();
+    triggerToast(
+      isAr
+        ? `🔄 تم إتمام التبادل بنجاح مع ${offerTitle}! تم استلام الموارد في مخزونك! 🎉`
+        : `🔄 Trade completed with ${offerTitle}! Items updated in inventory! 🎉`
+    );
+    return true;
+  };
 
   const handleOpenTips = () => {
     soundManager.playClick();
     setShowTipsModal(true);
   };
 
-  const handleOpenShopWithTab = (tab: 'all' | 'galaxy' | 'tools' | 'skins' | 'arrowSkins' = 'all') => {
+  const handleOpenShopWithTab = (tab: 'all' | 'thunder' | 'cake' | 'galaxy' | 'tools' | 'skins' | 'arrowSkins' = 'all') => {
     setShopModalTab(tab);
     setShowTipsModal(false);
     setShowShopModal(true);
@@ -596,6 +996,10 @@ export default function App() {
       ? getLongLevel(currentLongLevelId)
       : gameMode === 'thunder'
       ? getThunderLevel(currentThunderLevelId)
+      : gameMode === 'timed'
+      ? getTimedLevel(currentTimedLevelId)
+      : gameMode === 'monster'
+      ? getMonsterLevel(currentMonsterLevelId)
       : getLevel(currentLevelId)
   );
   const [arrows, setArrows] = useState<Arrow[]>([]);
@@ -609,9 +1013,23 @@ export default function App() {
   }, [soundEnabled, musicEnabled]);
 
   useEffect(() => {
+    if (soundEnabled && musicEnabled) {
+      if (MONSTER_BOSS_LEVEL_IDS.includes(activeLevel.id)) {
+        soundManager.startBossBGM();
+      } else {
+        soundManager.startBGM();
+      }
+    }
+  }, [activeLevel.id, soundEnabled, musicEnabled]);
+
+  useEffect(() => {
     const handleFirstGesture = () => {
       if (soundEnabled && musicEnabled) {
-        soundManager.startBGM();
+        if (MONSTER_BOSS_LEVEL_IDS.includes(activeLevel.id)) {
+          soundManager.startBossBGM();
+        } else {
+          soundManager.startBGM();
+        }
       }
     };
     window.addEventListener('click', handleFirstGesture);
@@ -620,7 +1038,7 @@ export default function App() {
       window.removeEventListener('click', handleFirstGesture);
       window.removeEventListener('touchstart', handleFirstGesture);
     };
-  }, [soundEnabled, musicEnabled]);
+  }, [activeLevel.id, soundEnabled, musicEnabled]);
 
   // Save state to localStorage
   useEffect(() => {
@@ -635,12 +1053,21 @@ export default function App() {
         currentLongLevelId,
         unlockedLongLevel,
         starsPerLongLevel,
+        hasUnlockedTimedLevels,
+        currentTimedLevelId,
+        unlockedTimedLevel,
+        starsPerTimedLevel,
+        hasUnlockedMonsterMode,
+        currentMonsterLevelId,
+        unlockedMonsterLevel,
+        starsPerMonsterLevel,
         gameMode,
         isEventUnlocked,
         coins,
         spaceCoins,
         tomatoes,
         spaceCreams,
+        liquidChocolates,
         soundEnabled,
         musicEnabled,
         language,
@@ -650,13 +1077,19 @@ export default function App() {
         unlockedArrowSkins,
         hammers,
         thunders,
+        lightnings,
         creams,
         creamHammers,
         chocolates,
         cakes,
+        chickens,
+        oracleEyes,
         cakeArrowCounter,
+        smartCakeMultiplierLevelsRemaining,
         hammerSkinEscapedCount,
         crystalNeonEscapedCount,
+        emeraldPalaceEscapedCount,
+        cakeKingdomEscapedCount,
         taskStats,
         lastTasksResetTimestamp,
       };
@@ -683,6 +1116,7 @@ export default function App() {
     spaceCoins,
     tomatoes,
     spaceCreams,
+    liquidChocolates,
     soundEnabled,
     musicEnabled,
     language,
@@ -692,13 +1126,19 @@ export default function App() {
     unlockedArrowSkins,
     hammers,
     thunders,
+    lightnings,
     creams,
     creamHammers,
     chocolates,
     cakes,
+    chickens,
+    oracleEyes,
     cakeArrowCounter,
+    smartCakeMultiplierLevelsRemaining,
     hammerSkinEscapedCount,
     crystalNeonEscapedCount,
+    emeraldPalaceEscapedCount,
+    cakeKingdomEscapedCount,
     taskStats,
     lastTasksResetTimestamp,
   ]);
@@ -794,6 +1234,10 @@ export default function App() {
         ? getLongLevel(currentLongLevelId)
         : gameMode === 'thunder'
         ? getThunderLevel(currentThunderLevelId)
+        : gameMode === 'timed'
+        ? getTimedLevel(currentTimedLevelId)
+        : gameMode === 'monster'
+        ? getMonsterLevel(currentMonsterLevelId)
         : getLevel(currentLevelId);
     setActiveLevel(lvl);
     setArrows(lvl.arrows.map((a) => ({ ...a, isEscaped: false })));
@@ -802,11 +1246,89 @@ export default function App() {
     setShowVictoryModal(false);
     setIsHammerActive(false);
     setSpaceCoinsEarned(0);
+    setHighlightedArrowIds(new Set());
+
+    if (gameMode === 'timed' || gameMode === 'monster') {
+      setLevelTimeLeft(lvl.timeLimitSeconds || (gameMode === 'monster' ? 60 : 45));
+    } else {
+      setLevelTimeLeft(null);
+    }
 
     if (selectedSkin === 'rainstorm' || selectedSkin === 'midnight_thunder' || gameMode === 'thunder') {
       setTaskStats((prev) => ({ ...prev, rainLevelsPlayed: prev.rainLevelsPlayed + 1 }));
     }
-  }, [currentLevelId, currentGalaxyLevelId, currentLongLevelId, currentThunderLevelId, gameMode]);
+  }, [currentLevelId, currentGalaxyLevelId, currentLongLevelId, currentThunderLevelId, currentTimedLevelId, currentMonsterLevelId, gameMode]);
+
+  // Timed & Monster Level countdown interval
+  useEffect(() => {
+    if ((gameMode !== 'timed' && gameMode !== 'monster') || levelTimeLeft === null || showVictoryModal) return;
+
+    if (levelTimeLeft <= 0) {
+      soundManager.playSmash();
+      const isAr = language === 'ar';
+      if (gameMode === 'monster') {
+        triggerToast(
+          isAr
+            ? '👹💥 هجم الوحش وانتهى الوقت! تمت إعادة مرحلة الوحش!'
+            : '👹💥 Monster attacked! Time is up! Level restarted!'
+        );
+      } else {
+        triggerToast(
+          isAr
+            ? '⏱️❌ انتهى الوقت! لقد خسرت في هذه المرحلة المؤقتة وتمت إعادتها تلقائياً!'
+            : '⏱️❌ Time is up! You lost this timed level and it restarted!'
+        );
+      }
+      setArrows(activeLevel.arrows.map((a) => ({ ...a, isEscaped: false })));
+      setDrops(activeLevel.maxDrops || 3);
+      setEscapedCount(0);
+      setLevelTimeLeft(activeLevel.timeLimitSeconds || (gameMode === 'monster' ? 60 : 45));
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setLevelTimeLeft((prev) => (prev !== null && prev > 0 ? prev - 1 : prev));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [gameMode, levelTimeLeft, showVictoryModal, language, activeLevel]);
+
+  // Monster Battle Mode: 2-second dynamic obstacle loop (عائق لمدة ٢ ثانية)
+  useEffect(() => {
+    if (gameMode !== 'monster' || showVictoryModal) {
+      setMonsterObstacleActive(false);
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setMonsterObstacleActive((isActive) => {
+        if (isActive) {
+          setMonsterObstacleTimer((sec) => {
+            if (sec <= 1) {
+              setMonsterObstacleActive(false);
+              setMonsterCooldownTimer(5);
+              return 2;
+            }
+            return sec - 1;
+          });
+          return true;
+        } else {
+          setMonsterCooldownTimer((sec) => {
+            if (sec <= 1) {
+              setMonsterObstacleActive(true);
+              setMonsterObstacleTimer(2);
+              soundManager.playSmash();
+              return 5;
+            }
+            return sec - 1;
+          });
+          return false;
+        }
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [gameMode, showVictoryModal]);
 
   // Hammer tool actions
   const handleToggleHammer = () => {
@@ -866,12 +1388,14 @@ export default function App() {
     }
   };
 
-  const handleBuyThunder = (cost: number) => {
+  const handleBuyThunder = (cost = 85) => {
     const isAr = language === 'ar';
     if (coins >= cost) {
       setCoins((prev) => prev - cost);
-      setThunders((prev) => prev + 1);
-      triggerToast(isAr ? 'تم شراء ضربة رعد بنجاح! ⚡' : 'Thunder Strike purchased! ⚡');
+      setLightnings((prev) => prev + 1);
+      triggerToast(isAr ? 'تم شراء ضربة رعد بنجاح بـ 85 نقطة! ⚡' : 'Bought Thunder Strike for 85 coins! ⚡');
+    } else {
+      triggerToast(isAr ? 'نقاطك غير كافية لشراء ضربة الرعد (85 نقطة) ⚡' : 'Not enough coins (85 required)! ⚡');
     }
   };
 
@@ -912,6 +1436,19 @@ export default function App() {
       setCoins((prev) => prev - cost);
       setTomatoes((prev) => prev + 1);
       triggerToast(isAr ? 'تم شراء طماطة الفضاء بنجاح! 🍅🚀' : 'Space Tomato purchased! 🍅🚀');
+    }
+  };
+
+  const handleBuyLiquidChocolate = (cost: number) => {
+    const isAr = language === 'ar';
+    if (spaceCoins >= cost) {
+      setSpaceCoins((prev) => prev - cost);
+      setLiquidChocolates((prev) => prev + 1);
+      triggerToast(isAr ? 'تم شراء الشوكولاته السائلة بنجاح! 🍫💧' : 'Liquid Chocolate purchased! 🍫💧');
+    } else if (coins >= cost) {
+      setCoins((prev) => prev - cost);
+      setLiquidChocolates((prev) => prev + 1);
+      triggerToast(isAr ? 'تم شراء الشوكولاته السائلة بنجاح! 🍫💧' : 'Liquid Chocolate purchased! 🍫💧');
     }
   };
 
@@ -982,7 +1519,7 @@ export default function App() {
   const handleExchangeCake = (cakeAmount = 1) => {
     const isAr = language === 'ar';
     if (cakes >= cakeAmount) {
-      const coinsEarned = cakeAmount * 45;
+      const coinsEarned = cakeAmount * 32;
       setCakes((prev) => prev - cakeAmount);
       setCoins((prev) => prev + coinsEarned);
       soundManager.playVictory();
@@ -996,6 +1533,202 @@ export default function App() {
         isAr
           ? 'عذراً، لا تملك كعكاً للاستبدال! يربح الكعك عند إزالة 70 سهم 🎂'
           : 'No cakes available to exchange! Earn cakes by removing 70 arrows 🎂'
+      );
+    }
+  };
+
+  const handleBuyWithCake = (itemType: string, cakeCost: number) => {
+    const isAr = language === 'ar';
+    if (cakes < cakeCost) {
+      triggerToast(isAr ? 'عذراً! لا تملك كعك كافي للشراء 🎂' : 'Not enough cakes! 🎂');
+      return;
+    }
+
+    setCakes((prev) => prev - cakeCost);
+    soundManager.playVictory();
+
+    if (itemType === 'coins') {
+      const coinsEarned = cakeCost * 32;
+      setCoins((prev) => prev + coinsEarned);
+      triggerToast(
+        isAr
+          ? `🎂 تم شراء ${coinsEarned} نقطة بالكعك بنجاح! 🪙`
+          : `🎂 Bought ${coinsEarned} coins with cakes!`
+      );
+    } else if (itemType === 'hammer') {
+      setHammers((prev) => prev + 1);
+      triggerToast(isAr ? '🔨 تم شراء مطرقة سحرية بالكعك!' : '🔨 Magic Hammer bought with cakes!');
+    } else if (itemType === 'chocolate') {
+      setChocolates((prev) => prev + 1);
+      triggerToast(isAr ? '🍫 تم شراء شوكولاتة سحرية بالكعك!' : '🍫 Magic Chocolate bought with cakes!');
+    } else if (itemType === 'creamHammer') {
+      setCreamHammers((prev) => prev + 1);
+      triggerToast(isAr ? '🍦🔨 تم شراء مطرقة كريمة بالكعك!' : '🍦🔨 Cream Hammer bought with cakes!');
+    } else if (itemType === 'cream') {
+      setCreams((prev) => prev + 1);
+      triggerToast(isAr ? '🍦 تم شراء كريمة سحرية بالكعك!' : '🍦 Magic Cream bought with cakes!');
+    } else if (itemType === 'liquidChocolate') {
+      setLiquidChocolates((prev) => prev + 1);
+      triggerToast(isAr ? '🍫💧 تم شراء الشوكولاته السائلة بالكعك!' : '🍫💧 Liquid Chocolate bought with cakes!');
+    } else if (itemType === 'thunderCoins100') {
+      setThunders((prev) => prev + 100);
+      triggerToast(
+        isAr
+          ? '⚡ تم شراء +100 عملة رعد بنجاح باستخدام 2 كعكة! 🎉'
+          : '⚡ Bought +100 Thunder Coins using 2 cakes! 🎉'
+      );
+    } else if (itemType === 'smartMultiplier') {
+      setSmartCakeMultiplierLevelsRemaining((prev) => prev + 4);
+      triggerToast(
+        isAr
+          ? '🎂⚡ تم تفعيل مضاعف الكعك الذكي لمدة 4 مراحل! مضاعفة كافة النقاط والمكافآت! 🪙'
+          : '🎂⚡ Smart Cake Multiplier activated for 4 levels! All rewards doubled! 🪙'
+      );
+    } else if (itemType === 'cakeStarArrowSkin') {
+      if (!unlockedArrowSkins.includes('cake_star')) {
+        setUnlockedArrowSkins((prev) => [...prev, 'cake_star']);
+      }
+      setSelectedArrowSkin('cake_star');
+      triggerToast(
+        isAr
+          ? '🎂⭐ تم فتح وتفعيل أسهم نجوم الكعك! (مضاعفة نجوم البقاء في مراحل الأحداث فقط) 🌟'
+          : '🎂⭐ Cake Star Arrows unlocked & equipped! (2x Survival Stars in Event Stages) 🌟'
+      );
+    } else if (itemType === 'spaceCoins') {
+      const gained = 2 * cakeCost;
+      setSpaceCoins((prev) => prev + gained);
+      triggerToast(
+        isAr
+          ? `🚀 تم شراء ${gained} عملات فضاء بالكعك!`
+          : `🚀 Bought ${gained} Space Coins with cakes!`
+      );
+    } else if (itemType === 'cakeSkin') {
+      if (!unlockedSkins.includes('cake')) {
+        setUnlockedSkins((prev) => [...prev, 'cake']);
+      }
+      setSelectedSkin('cake');
+      triggerToast(
+        isAr
+          ? '🧁✨ تم فتح وتفعيل خلفية مخبز الكاب كيك! (تمنح كاب كيك مجاني عند إزالة كل 35 سهماً)'
+          : '🧁✨ Cupcake Bakery background unlocked & equipped! (Grants 1 free cupcake for every 35 arrows cleared)'
+      );
+    } else if (itemType === 'cakeKingdomSkin') {
+      if (!unlockedSkins.includes('cake_kingdom')) {
+        setUnlockedSkins((prev) => [...prev, 'cake_kingdom']);
+      }
+      setSelectedSkin('cake_kingdom');
+      triggerToast(
+        isAr
+          ? '🏰🎂 تم فتح وتفعيل خلفية مملكة الكعك الملكية! (احتمال 25% كعكة + 25% كاب كيك عند إكمال أي مرحلة)'
+          : '🏰🎂 Royal Cake Kingdom background unlocked & equipped! (25% cake & 25% cupcake bonus on level completion)'
+      );
+    } else if (itemType === 'chicken') {
+      setChickens((prev) => prev + 1);
+      triggerToast(
+        isAr
+          ? '🐔🔥 تم شراء دجاج محمر بالكعك! (حذف ٤ أسهم)'
+          : '🐔🔥 Bought Roasted Chicken with cakes! (Removes 4 arrows)'
+      );
+    } else if (itemType === 'oracleEye') {
+      setOracleEyes((prev) => prev + 1);
+      triggerToast(
+        isAr
+          ? '👁️🔮 تم شراء عين العرافة الكونية بالكعك بنجاح!'
+          : '👁️🔮 Oracle Eye purchased with cakes!'
+      );
+    } else if (itemType === 'deluxeCupcakePack') {
+      setOracleEyes((prev) => prev + 1);
+      setHammers((prev) => prev + 1);
+      setLiquidChocolates((prev) => prev + 1);
+      triggerToast(
+        isAr
+          ? '🧁💎 تم شراء صندوق الكاب كيك الفاخر (عين العراف + مطرقة + شوكولاته سائلة)!'
+          : '🧁💎 Deluxe Cupcake Box purchased!'
+      );
+    } else if (itemType === 'cakeChest') {
+      setHammers((prev) => prev + 1);
+      setCreams((prev) => prev + 1);
+      setLiquidChocolates((prev) => prev + 1);
+      triggerToast(
+        isAr
+          ? '🎁🎂 تم شراء صندوق الكعك الملوكي (مطرقة + كريمة + شوكولاته سائلة)!'
+          : '🎁🎂 Royal Cake Chest purchased!'
+      );
+    }
+  };
+
+  const handleBuyWithThunder = (itemType: string, thunderCost: number) => {
+    const isAr = language === 'ar';
+    if (thunders < thunderCost) {
+      triggerToast(isAr ? 'عذراً! لا تملك عملات رعد كافية للشراء ⚡' : 'Not enough thunder coins! ⚡');
+      return;
+    }
+
+    setThunders((prev) => prev - thunderCost);
+    soundManager.playThunder();
+
+    if (itemType === 'coins') {
+      const coinsEarned = 25;
+      setCoins((prev) => prev + coinsEarned);
+      triggerToast(
+        isAr
+          ? `⚡ تم شراء ${coinsEarned} نقطة بـ ${thunderCost} عملة رعد بنجاح! 🪙`
+          : `⚡ Bought ${coinsEarned} coins with ${thunderCost} thunder!`
+      );
+    } else if (itemType === 'hammer') {
+      setHammers((prev) => prev + 1);
+      triggerToast(isAr ? '🔨⚡ تم شراء مطرقة سحرية بمتجر الرعد!' : '🔨⚡ Bought Magic Hammer in Thunder Shop!');
+    } else if (itemType === 'chocolate') {
+      setChocolates((prev) => prev + 1);
+      triggerToast(isAr ? '🍫⚡ تم شراء شوكولاتة بمتجر الرعد!' : '🍫⚡ Bought Magic Chocolate in Thunder Shop!');
+    } else if (itemType === 'liquidChocolate') {
+      setLiquidChocolates((prev) => prev + 1);
+      triggerToast(isAr ? '🍫💧⚡ تم شراء شوكولاتة سائلة بمتجر الرعد!' : '🍫💧⚡ Bought Liquid Chocolate in Thunder Shop!');
+    } else if (itemType === 'chicken') {
+      setChickens((prev) => prev + 1);
+      triggerToast(isAr ? '🐔🔥⚡ تم شراء دجاج محمر بمتجر الرعد!' : '🐔🔥⚡ Bought Roasted Chicken in Thunder Shop!');
+    } else if (itemType === 'cream') {
+      setCreams((prev) => prev + 1);
+      triggerToast(isAr ? '🍦⚡ تم شراء كريمة سحرية بمتجر الرعد!' : '🍦⚡ Bought Magic Cream in Thunder Shop!');
+    } else if (itemType === 'cake') {
+      setCakes((prev) => prev + 1);
+      triggerToast(isAr ? '🎂⚡ تم شراء كعكة واحدة بمتجر الرعد!' : '🎂⚡ Bought 1 Cake in Thunder Shop!');
+    } else if (itemType === 'stormBundle') {
+      setHammers((prev) => prev + 2);
+      setChocolates((prev) => prev + 2);
+      setLiquidChocolates((prev) => prev + 1);
+      setChickens((prev) => prev + 1);
+      triggerToast(
+        isAr
+          ? '⚡📦 تم شراء حزمة العاصفة الرعدية الفائقة (مطرقتين + شوكولاتتين + شوكولاته سائلة + دجاج محمر)!'
+          : '⚡📦 Bought Super Storm Energy Bundle!'
+      );
+    } else if (itemType === 'midnightThunderSkin') {
+      if (!unlockedSkins.includes('midnight_thunder')) {
+        setUnlockedSkins((prev) => [...prev, 'midnight_thunder']);
+      }
+      setSelectedSkin('midnight_thunder');
+      triggerToast(
+        isAr
+          ? '🌩️⚡ تم فتح وتفعيل خلفية عاصفة منتصف الليل الرعدية! (+3 عملات رعد إضافية عن كل مرحلة)'
+          : '🌩️⚡ Midnight Thunderstorm unlocked & equipped! (+3 bonus thunder on level completion)'
+      );
+    } else if (itemType === 'neonArrowSkin') {
+      if (!unlockedArrowSkins.includes('neon')) {
+        setUnlockedArrowSkins((prev) => [...prev, 'neon']);
+      }
+      setSelectedArrowSkin('neon');
+      triggerToast(
+        isAr
+          ? '⚡🏹 تم فتح وتفعيل أسهم النيون المتوهجة!'
+          : '⚡🏹 Neon Glow arrows unlocked & equipped!'
+      );
+    } else if (itemType === 'timedLevelsPack') {
+      setHasUnlockedTimedLevels(true);
+      triggerToast(
+        isAr
+          ? '⏱️⚡ تم شراء حزمة المراحل المؤقتة الـ ١٠ بـ ٥٠ عملة رعد بنجاح! يمكنك العثور عليها في قائمة اختيار المستويات!'
+          : '⏱️⚡ Timed Levels Pack (10 Levels) unlocked! Access them in Level Select!'
       );
     }
   };
@@ -1077,14 +1810,89 @@ export default function App() {
     }, 450);
   };
 
+  const handleUseOracleEye = () => {
+    const isAr = language === 'ar';
+    soundManager.playClick();
+
+    if (oracleEyes <= 0) {
+      triggerToast(isAr ? 'لا تملك عين العرافة! يمكنك شراؤها من متجر الكعك 🎂👁️' : 'No Oracle Eye left! Buy in Cake Shop 🎂👁️');
+      handleOpenShopWithTab('cake');
+      return;
+    }
+
+    const unescaped = arrows.filter((a) => !a.isEscaped);
+    if (unescaped.length === 0) return;
+
+    soundManager.playVictory();
+
+    // Find free (unblocked) arrows using canArrowEscape with exact grid dimensions
+    const freeArrows = unescaped.filter((arrow) => {
+      const res = canArrowEscape(arrow, unescaped, activeLevel.gridSize.cols, activeLevel.gridSize.rows);
+      return res.canEscape;
+    });
+
+    let selectedToHighlight: Arrow[] = [];
+    if (freeArrows.length > 0) {
+      selectedToHighlight = freeArrows.slice(0, 3);
+    } else {
+      selectedToHighlight = unescaped.slice(0, 3);
+    }
+
+    const highlightIds = new Set(selectedToHighlight.map((a) => a.id));
+    setHighlightedArrowIds(highlightIds);
+
+    setOracleEyes((prev) => Math.max(0, prev - 1));
+    triggerToast(
+      isAr
+        ? `👁️🔮 أضاءت عين العرافة البراقة أول ${highlightIds.size} أسهم حرة! ✨`
+        : `👁️🔮 Oracle Eye illuminated the first ${highlightIds.size} free arrows! ✨`
+    );
+  };
+
   const handleUseLightning = () => {
     const isAr = language === 'ar';
     soundManager.playClick();
+
+    if (lightnings <= 0) {
+      triggerToast(isAr ? 'لا تملك ضربة رعد! يمكنك شراؤها بـ 85 نقطة ⚡' : 'No thunder strikes! Buy for 85 coins ⚡');
+      handleOpenShopWithTab('tools');
+      return;
+    }
+
+    const unescaped = arrows.filter((a) => !a.isEscaped);
+    if (unescaped.length === 0) return;
+
+    soundManager.playThunder();
+    setLightnings((prev) => Math.max(0, prev - 1));
+
+    // Select up to 3 random unescaped arrows to delete (Thunder Strike deletes 3 arrows)
+    const shuffled = [...unescaped].sort(() => Math.random() - 0.5);
+    const toRemove = shuffled.slice(0, 3);
+    const removedIds = new Set(toRemove.map((a) => a.id));
+
+    setArrows((prev) =>
+      prev.map((a) => {
+        if (removedIds.has(a.id)) {
+          return {
+            ...a,
+            isEscaped: true,
+            isFlying: true,
+            flyDirection: { x: 0, y: -1 },
+          };
+        }
+        return a;
+      })
+    );
+
     triggerToast(
       isAr
-        ? `⚡ عملات الرعد تظهر في الأعلى عند تفعيل خلفية عاصفة المطر! ⛈️`
-        : `⚡ Thunder currency is accumulated when using the Rainstorm theme! ⛈️`
+        ? `⚡⚡⚡ ضربة الرعد! تم حذف 3 أسهم عشوائية بنجاح!`
+        : `⚡⚡⚡ Thunder Strike! Removed 3 random arrows!`
     );
+
+    setTimeout(() => {
+      registerEscapedArrowsForCake(removedIds.size);
+    }, 450);
   };
 
   const handleUseCreamHammer = () => {
@@ -1255,13 +2063,127 @@ export default function App() {
     }, 500);
   };
 
+  const handleUseLiquidChocolate = () => {
+    const isAr = language === 'ar';
+    soundManager.playClick();
+
+    if (liquidChocolates <= 0) {
+      triggerToast(isAr ? 'لا تملك شوكولاته سائلة! يمكنك شراؤها من قسم الكعك 🍫💧' : 'No liquid chocolate! Buy from cake shop 🍫💧');
+      handleOpenShopWithTab('cake');
+      return;
+    }
+
+    const unescaped = arrows.filter((a) => !a.isEscaped);
+    if (unescaped.length === 0) return;
+
+    soundManager.playSmash();
+
+    // Select up to 3 random unescaped arrows to remove (Liquid Chocolate deletes 3 arrows)
+    const shuffled = [...unescaped].sort(() => 0.5 - Math.random());
+    const selectedToSmash = shuffled.slice(0, 3);
+    const smashedIds = new Set(selectedToSmash.map((a) => a.id));
+
+    const estimatedTile = Math.max(24, Math.min(54, Math.floor((Math.min(window.innerWidth, 460) - 32) / activeLevel.gridSize.cols)));
+    const liquidChocolateRainItems: RainItem[] = selectedToSmash.map((arrow, idx) => ({
+      id: `liquidchocolate-rain-${arrow.id}-${Date.now()}`,
+      type: 'liquidChocolate',
+      x: arrow.gridX * estimatedTile + estimatedTile / 2,
+      y: arrow.gridY * estimatedTile + estimatedTile / 2,
+      delay: idx * 50,
+    }));
+    setRainItems(liquidChocolateRainItems);
+
+    setLiquidChocolates((prev) => Math.max(0, prev - 1));
+
+    triggerToast(
+      isAr
+        ? `🍫💧 تساقط مطر الشوكولاته السائلة لإزالة ${smashedIds.size} أسهم!`
+        : `🍫💧 Liquid Chocolate rain deleted ${smashedIds.size} arrows!`
+    );
+
+    setTimeout(() => {
+      setArrows((prev) => {
+        const next = prev.map((a) => (smashedIds.has(a.id) ? { ...a, isEscaped: true } : a));
+        const remaining = next.filter((a) => !a.isEscaped).length;
+        const newEscapedCount = next.length - remaining;
+        setEscapedCount(newEscapedCount);
+
+        if (remaining === 0) {
+          setTimeout(() => {
+            handleLevelCompleted();
+          }, 400);
+        }
+        return next;
+      });
+      registerEscapedArrowsForCake(smashedIds.size);
+      setRainItems([]);
+    }, 500);
+  };
+
+  const handleUseChicken = () => {
+    const isAr = language === 'ar';
+    soundManager.playClick();
+
+    if (chickens <= 0) {
+      triggerToast(isAr ? 'لا تملك دجاج محمر! يمكنك شراؤه من قسم الكعك 🐔🔥' : 'No roasted chicken! Buy from cake shop 🐔🔥');
+      handleOpenShopWithTab('cake');
+      return;
+    }
+
+    const unescaped = arrows.filter((a) => !a.isEscaped);
+    if (unescaped.length === 0) return;
+
+    soundManager.playSmash();
+
+    // Select up to 4 random unescaped arrows to remove (Roasted Chicken deletes 4 arrows)
+    const shuffled = [...unescaped].sort(() => 0.5 - Math.random());
+    const selectedToSmash = shuffled.slice(0, 4);
+    const smashedIds = new Set(selectedToSmash.map((a) => a.id));
+
+    const estimatedTile = Math.max(24, Math.min(54, Math.floor((Math.min(window.innerWidth, 460) - 32) / activeLevel.gridSize.cols)));
+    const chickenRainItems: RainItem[] = selectedToSmash.map((arrow, idx) => ({
+      id: `chicken-rain-${arrow.id}-${Date.now()}`,
+      type: 'chicken',
+      x: arrow.gridX * estimatedTile + estimatedTile / 2,
+      y: arrow.gridY * estimatedTile + estimatedTile / 2,
+      delay: idx * 50,
+    }));
+    setRainItems(chickenRainItems);
+
+    setChickens((prev) => Math.max(0, prev - 1));
+
+    triggerToast(
+      isAr
+        ? `🐔🔥 تساقط الدجاج المحمر وإزالة ${smashedIds.size} أسهم!`
+        : `🐔🔥 Roasted Chicken rain deleted ${smashedIds.size} arrows!`
+    );
+
+    setTimeout(() => {
+      setArrows((prev) => {
+        const next = prev.map((a) => (smashedIds.has(a.id) ? { ...a, isEscaped: true } : a));
+        const remaining = next.filter((a) => !a.isEscaped).length;
+        const newEscapedCount = next.length - remaining;
+        setEscapedCount(newEscapedCount);
+
+        if (remaining === 0) {
+          setTimeout(() => {
+            handleLevelCompleted();
+          }, 400);
+        }
+        return next;
+      });
+      registerEscapedArrowsForCake(smashedIds.size);
+      setRainItems([]);
+    }, 500);
+  };
+
   const handleUseSpaceCream = () => {
     const isAr = language === 'ar';
     soundManager.playClick();
 
     if (spaceCreams <= 0) {
-      triggerToast(isAr ? 'لا تملك كريمة فضائية! يمكنك شراؤها بـ 20 عملة فضاء 🌌' : 'No space cream! Buy for 20 space coins 🌌');
-      setShowShopModal(true);
+      triggerToast(isAr ? 'لا تملك كريمة فضائية! يمكنك شراؤها من متجر الفضاء 🌌🍦' : 'No space cream! Buy from galaxy shop 🌌🍦');
+      handleOpenShopWithTab('galaxy');
       return;
     }
 
@@ -1286,6 +2208,7 @@ export default function App() {
     setRainItems(spaceCreamRainItems);
 
     setSpaceCreams((prev) => Math.max(0, prev - 1));
+
     triggerToast(
       isAr
         ? `🌌🍦 تساقط مطر الكريمة الفضائية لإزالة ${smashedIds.size} أسهم!`
@@ -1321,6 +2244,16 @@ export default function App() {
 
   // Handle Arrow Escaped successfully
   const handleArrowEscaped = (arrowId: string) => {
+    // 0. Remove from highlighted set if present
+    setHighlightedArrowIds((prev) => {
+      if (prev.has(arrowId)) {
+        const next = new Set(prev);
+        next.delete(arrowId);
+        return next;
+      }
+      return prev;
+    });
+
     // 1. ALWAYS count towards Cake 70-Arrow progress
     registerEscapedArrowsForCake(1);
 
@@ -1357,6 +2290,84 @@ export default function App() {
               ? '💎 اكتمل عداد النيون الكرستالي (50 سهم)! حصلت على كعكة مجانية 🎂 + 30 نقطة! 🎉'
               : '💎 Crystal Neon Counter complete (50 arrows)! Granted 1 free cake 🎂 + 30 coins! 🎉'
           );
+          return 0;
+        }
+        return next;
+      });
+    }
+
+    // 4. Cake / Cupcake Theme bonus counter (خلفية الكاب كيك - عند إزالة 35 سهم تمنح كاب كيك)
+    if (selectedSkin === 'cake') {
+      setCakeArrowCounter((prev) => {
+        const next = prev + 1;
+        if (next >= 35) {
+          setCakes((c) => c + 1);
+          const isAr = language === 'ar';
+          soundManager.playVictory();
+          triggerToast(
+            isAr
+              ? '🧁✨ مكافأة خلفية الكاب كيك: أزلت 35 سهماً بنجاح وحصلت على كاب كيك مجاني! (+1 🧁) 🎉'
+              : '🧁✨ Cupcake Theme Bonus: Cleared 35 arrows! Received 1 free Cupcake! (+1 🧁) 🎉'
+          );
+          return 0;
+        }
+        return next;
+      });
+    }
+
+    // 5. Royal Emerald Palace Theme bonus counter (خلفية القصر الزمردي - عند إزالة 100 سهم فرصة 51% لمطرقة سحرية + 30 عملة رعد ⚡)
+    if (selectedSkin === 'emerald_palace') {
+      setEmeraldPalaceEscapedCount((prev) => {
+        const next = prev + 1;
+        if (next >= 100) {
+          const isAr = language === 'ar';
+          const wonHammer = Math.random() < 0.51;
+          if (wonHammer) {
+            setHammers((h) => h + 1);
+            setThunders((t) => t + 30);
+            soundManager.playVictory();
+            triggerToast(
+              isAr
+                ? '🏰💎 (فرصة 51%) نجاح! حصلت على مطرقة سحرية 🔨 + 30 عملة رعد ⚡ مجاناً! 🎉'
+                : '🏰💎 (51% Chance) Success! Received 1 Magic Hammer 🔨 + 30 Thunder Coins ⚡! 🎉'
+            );
+          } else {
+            setThunders((t) => t + 10);
+            triggerToast(
+              isAr
+                ? '🏰💎 اكتمل عداد 100 سهم! لم تصب فرصة الـ 51% للمطرقة هذه المرة، وحصلت على 10 عملات رعد! ⚡'
+                : '🏰💎 100-arrow counter complete! Missed 51% Hammer chance this time, received 10 Thunder Coins! ⚡'
+            );
+          }
+          return 0;
+        }
+        return next;
+      });
+    }
+
+    // 6. Royal Cake Kingdom Theme bonus counter (خلفية مملكة الكعك - عند إزالة 100 سهم: فرصة 49% لكعكة 🎂 و 51% لكاب كيك 🧁)
+    if (selectedSkin === 'cake_kingdom') {
+      setCakeKingdomEscapedCount((prev) => {
+        const next = prev + 1;
+        if (next >= 100) {
+          const isAr = language === 'ar';
+          const wonCake = Math.random() < 0.49;
+          soundManager.playVictory();
+          if (wonCake) {
+            setCakes((c) => c + 1);
+            triggerToast(
+              isAr
+                ? '🏰🎂 (فرصة 49%) نجاح! اكتمل عداد 100 سهم وحصلت على 1 كعكة ملكية مجانية! 🎂🎉'
+                : '🏰🎂 (49% Chance) Success! Cleared 100 arrows and won 1 free Royal Cake! 🎂🎉'
+            );
+          } else {
+            setCakes((c) => c + 1);
+            triggerToast(
+              isAr
+                ? '🏰🧁 (فرصة 51%) نجاح! اكتمل عداد 100 سهم وحصلت على 1 كاب كيك ملكي مجاني! 🧁🎉'
+                : '🏰🧁 (51% Chance) Success! Cleared 100 arrows and won 1 free Royal Cupcake! 🧁🎉'
+            );
+          }
           return 0;
         }
         return next;
@@ -1407,18 +2418,38 @@ export default function App() {
       } else if (escapedArrow.isGhost || escapedArrow.type === 'ghost') {
         const isAr = language === 'ar';
         triggerToast(isAr ? '👻 سهم الشبح اخترق العوائق وهرب ببراعة!' : '👻 Ghost Arrow phased through obstacles!');
-      }
-
-      // Rain & Thunderstorm Theme bonus (27% chance on each single arrow escape to drop 2 to 6 thunder bolts ⚡)
-      if (selectedSkin === 'rainstorm' && Math.random() < 0.27) {
-        const rewardThunders = Math.floor(Math.random() * 5) + 2; // 2 to 6 inclusive
-        setThunders((prev) => prev + rewardThunders);
+      } else if (escapedArrow.isThunder || escapedArrow.type === 'thunder') {
         const isAr = language === 'ar';
+        setThunders((prev) => prev + 5);
         soundManager.playThunder();
         triggerToast(
           isAr
-            ? `⛈️⚡ خروج سهم! تساقطت صواعق العاصفة ومنحتك +${rewardThunders} عملة رعد ⚡!`
-            : `⛈️⚡ Single arrow escape! Rainstorm dropped +${rewardThunders} Thunder ⚡ currency!`
+            ? '⚡🏹 سهم الصاعقة الرعدية هرب! تم منحك +5 عملات رعد إضافية! ⚡'
+            : '⚡🏹 Electric Thunder Arrow escaped! Granted +5 Thunder coins! ⚡'
+        );
+      } else if (escapedArrow.isSilver || escapedArrow.type === 'silver') {
+        const isAr = language === 'ar';
+        const isThunderSkin = selectedSkin === 'midnight_thunder' || selectedSkin === 'rainstorm' || gameMode === 'thunder';
+        const baseSilverCoins = 20;
+        const silverCoins = isThunderSkin ? baseSilverCoins * 2 : baseSilverCoins;
+        setCoins((prev) => prev + silverCoins);
+        soundManager.playPop();
+        triggerToast(
+          isThunderSkin
+            ? (isAr
+                ? '🥈⚡ مضاعف العاصفة الرعدية: سهم الفضة النادر منحك +40 نقطة ذهبية (×2)! 🪙'
+                : '🥈⚡ Midnight Thunder 2x: Silver Arrow granted +40 Gold Coins (2x)! 🪙')
+            : (isAr
+                ? '🥈⚡ سهم الفضة النادر هرب! حصلت على +20 نقطة ذهبية بنجاح! 🪙'
+                : '🥈⚡ Rare Silver Arrow escaped! +20 Gold Coins granted! 🪙')
+        );
+      } else if (escapedArrow.isTimedBomb || escapedArrow.type === 'timed_bomb') {
+        const isAr = language === 'ar';
+        soundManager.playPop();
+        triggerToast(
+          isAr
+            ? '💣⚡ تم إطلاق سهم القنبلة المؤقتة بنجاح! (0 نقاط)'
+            : '💣⚡ Timed Bomb Arrow launched! (0 pts)'
         );
       }
     }
@@ -1516,6 +2547,37 @@ export default function App() {
     setShowLevelSelectModal(false);
   };
 
+  const handleBuyMonsterPack = () => {
+    const isAr = language === 'ar';
+    if (coins < 154) {
+      triggerToast(
+        isAr
+          ? '❌ تحتاج إلى ١٥٤ نقطة لفتح طور معركة الوحش!'
+          : '❌ Need 154 coins to unlock Monster Battle Mode!'
+      );
+      return;
+    }
+    setCoins((c) => c - 154);
+    setHasUnlockedMonsterMode(true);
+    setGameMode('monster');
+    soundManager.playVictory();
+    triggerToast(
+      isAr
+        ? '🎉⚔️ تم فتح طور معركة الوحش (٥ مراحل) بـ ١٥٤ نقطة بنجاح! بالتوفيق في معركتك ضد الوحوش!'
+        : '🎉⚔️ Successfully unlocked Monster Battle Mode (5 Stages) for 154 coins! Good luck!'
+    );
+  };
+
+  const handleSelectMonsterLevel = (monsterId: number) => {
+    if (!hasUnlockedMonsterMode) {
+      handleBuyMonsterPack();
+      return;
+    }
+    setGameMode('monster');
+    setCurrentMonsterLevelId(monsterId);
+    setShowLevelSelectModal(false);
+  };
+
   const handleClaimTask = (taskId: string, rewardType: string, rewardAmount: number) => {
     const isAr = language === 'ar';
     soundManager.playVictory();
@@ -1564,11 +2626,20 @@ export default function App() {
         ? (starsPerLongLevel[currentLongLevelId] || 0) > 0
         : gameMode === 'thunder'
         ? (starsPerThunderLevel[currentThunderLevelId] || 0) > 0
+        : gameMode === 'timed'
+        ? (starsPerTimedLevel[currentTimedLevelId] || 0) > 0
+        : gameMode === 'monster'
+        ? (starsPerMonsterLevel[currentMonsterLevelId] || 0) > 0
         : (starsPerLevel[currentLevelId] || 0) > 0;
+
+    // Survival star bonus multiplier (Cake Star Arrow perk doubles survival stars reward in event levels only)
+    const isEventMode = gameMode === 'galaxy' || gameMode === 'long' || gameMode === 'thunder';
+    const isCakeStarActive = selectedArrowSkin === 'cake_star' && isEventMode;
+    const survivalStarMultiplier = isCakeStarActive ? 2 : 1;
 
     if (gameMode === 'galaxy') {
       const prevGalaxyStars = starsPerGalaxyLevel[currentGalaxyLevelId] || 0;
-      pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 4;
+      pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 4 * survivalStarMultiplier;
       if (selectedSkin === 'golden_throne' && pointsEarned > 0) {
         pointsEarned *= 2;
       }
@@ -1580,12 +2651,9 @@ export default function App() {
       };
       setStarsPerGalaxyLevel(updatedGalaxyStars);
       setUnlockedGalaxyLevel((prev) => Math.max(prev, currentGalaxyLevelId + 1));
-      if (pointsEarned > 0) {
-        setCoins((prev) => prev + pointsEarned);
-      }
     } else if (gameMode === 'long') {
       const prevLongStars = starsPerLongLevel[currentLongLevelId] || 0;
-      pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 8;
+      pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 8 * survivalStarMultiplier;
       if (selectedSkin === 'golden_throne' && pointsEarned > 0) {
         pointsEarned *= 2;
       }
@@ -1597,12 +2665,9 @@ export default function App() {
       };
       setStarsPerLongLevel(updatedLongStars);
       setUnlockedLongLevel((prev) => Math.max(prev, currentLongLevelId + 1));
-      if (pointsEarned > 0) {
-        setCoins((prev) => prev + pointsEarned);
-      }
     } else if (gameMode === 'thunder') {
       const prevThunderStars = starsPerThunderLevel[currentThunderLevelId] || 0;
-      pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 6;
+      pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 6 * survivalStarMultiplier;
       if (selectedSkin === 'golden_throne' && pointsEarned > 0) {
         pointsEarned *= 2;
       }
@@ -1614,9 +2679,34 @@ export default function App() {
       };
       setStarsPerThunderLevel(updatedThunderStars);
       setUnlockedThunderLevel((prev) => Math.max(prev, currentThunderLevelId + 1));
-      if (pointsEarned > 0) {
-        setCoins((prev) => prev + pointsEarned);
+    } else if (gameMode === 'timed') {
+      const prevTimedStars = starsPerTimedLevel[currentTimedLevelId] || 0;
+      pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 10 * survivalStarMultiplier;
+      if (selectedSkin === 'golden_throne' && pointsEarned > 0) {
+        pointsEarned *= 2;
       }
+
+      const newTimedStars = Math.max(prevTimedStars, starsEarned);
+      const updatedTimedStars = {
+        ...starsPerTimedLevel,
+        [currentTimedLevelId]: newTimedStars,
+      };
+      setStarsPerTimedLevel(updatedTimedStars);
+      setUnlockedTimedLevel((prev) => Math.max(prev, currentTimedLevelId + 1));
+    } else if (gameMode === 'monster') {
+      const prevMonsterStars = starsPerMonsterLevel[currentMonsterLevelId] || 0;
+      pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 12 * survivalStarMultiplier;
+      if (selectedSkin === 'golden_throne' && pointsEarned > 0) {
+        pointsEarned *= 2;
+      }
+
+      const newMonsterStars = Math.max(prevMonsterStars, starsEarned);
+      const updatedMonsterStars = {
+        ...starsPerMonsterLevel,
+        [currentMonsterLevelId]: newMonsterStars,
+      };
+      setStarsPerMonsterLevel(updatedMonsterStars);
+      setUnlockedMonsterLevel((prev) => Math.max(prev, currentMonsterLevelId + 1));
     } else {
       const prevStars = starsPerLevel[currentLevelId] || 0;
       pointsEarned = isAlreadyCompleted ? 0 : starsEarned * 4;
@@ -1631,12 +2721,21 @@ export default function App() {
       };
       setStarsPerLevel(updatedStars);
 
-      if (pointsEarned > 0) {
-        setCoins((prev) => prev + pointsEarned);
-      }
-
       const nextUnlocked = computeUnlockedLevel(updatedStars);
       setUnlockedLevel(nextUnlocked);
+    }
+
+    const hasTimedBomb = activeLevel.arrows.some((a) => a.isTimedBomb || a.type === 'timed_bomb');
+    if (hasTimedBomb) {
+      pointsEarned = 0;
+    }
+
+    if (isCakeStarActive && pointsEarned > 0) {
+      triggerToast(
+        isAr
+          ? '🎂⭐ ميزة أسهم نجوم الكعك: مضاعفة مكافأة نجوم البقاء (×2) في مراحل الأحداث! 🌟⚡'
+          : '🎂⭐ Cake Star Arrows Perk: 2x Survival Star Reward in Event Stage! 🌟⚡'
+      );
     }
 
     if (selectedSkin === 'golden_throne' && pointsEarned > 0) {
@@ -1647,20 +2746,81 @@ export default function App() {
       );
     }
 
-    setLastCoinsEarned(pointsEarned);
-
-    // Space Coins Reward: 10% chance to earn 2 to 5 space coins on level completion (only for first-time completions)
-    let spaceEarned = 0;
-    if (!isAlreadyCompleted && Math.random() < 0.10) {
-      spaceEarned = Math.floor(Math.random() * 4) + 2; // 2 to 5 coins
-      setSpaceCoins((prev) => prev + spaceEarned);
+    if (selectedSkin === 'emerald_palace' && pointsEarned > 0) {
+      pointsEarned = Math.round(pointsEarned * 1.25);
       triggerToast(
         isAr
-          ? `🌌 حظ فلكي! ربحت +${spaceEarned} عملات فضاء! 🚀`
-          : `🌌 Space reward! +${spaceEarned} Space Coins won! 🚀`
+          ? '🏰💎 مكافأة القصر الزمردي: +25% نقاط إضافية على هذا الفوز! 🪙✨'
+          : '🏰💎 Emerald Palace Perk: +25% bonus coins on victory! 🪙✨'
       );
     }
-    setSpaceCoinsEarned(spaceEarned);
+
+    // Thunder Coins Bonus: 15% chance to earn 2 to 5 thunder coins ⚡ on level completion
+    let thunderBonusEarned = 0;
+    if (!isAlreadyCompleted && Math.random() < 0.15) {
+      thunderBonusEarned = Math.floor(Math.random() * 4) + 2; // 2 to 5 coins
+    }
+
+    // Smart Cake Multiplier logic (doubles all level completion points & thunder drops)
+    if (smartCakeMultiplierLevelsRemaining > 0) {
+      if (pointsEarned > 0) {
+        pointsEarned *= 2;
+      }
+      if (thunderBonusEarned > 0) {
+        thunderBonusEarned *= 2;
+      }
+      triggerToast(
+        isAr
+          ? `🎂⚡ مضاعف الكعك الذكي: تم مضاعفة كافة جوائز المرحلة (متبقي ${smartCakeMultiplierLevelsRemaining - 1} مراحل)! 🪙`
+          : `🎂⚡ Smart Cake Multiplier: All level rewards doubled! (${smartCakeMultiplierLevelsRemaining - 1} levels left) 🪙`
+      );
+      setSmartCakeMultiplierLevelsRemaining((prev) => Math.max(0, prev - 1));
+    }
+
+    if (pointsEarned > 0) {
+      setCoins((prev) => prev + pointsEarned);
+    }
+
+    setLastCoinsEarned(pointsEarned);
+
+    if (thunderBonusEarned > 0) {
+      setThunders((prev) => prev + thunderBonusEarned);
+      triggerToast(
+        isAr
+          ? `⚡ مكافأة العاصفة! ربحت +${thunderBonusEarned} عملات رعد مجانية! 🪙⚡`
+          : `⚡ Storm bonus! +${thunderBonusEarned} Thunder Coins won! 🪙⚡`
+      );
+    }
+
+    // Cake Kingdom Theme Perk (25% chance for 1 bonus cake + 25% chance for 1 bonus cupcake 🎂)
+    if (selectedSkin === 'cake_kingdom') {
+      if (Math.random() < 0.25) {
+        setCakes((prev) => prev + 1);
+        triggerToast(
+          isAr
+            ? '🏰🎂 ميزة مملكة الكعك الملكية! حصلت على 1 كعكة ملكية مجانية (احتمال 25%)! 🎉'
+            : '🏰🎂 Cake Kingdom Perk! Won 1 bonus royal cake (25% chance)! 🎉'
+        );
+      }
+      if (Math.random() < 0.25) {
+        setCakes((prev) => prev + 1);
+        triggerToast(
+          isAr
+            ? '🧁✨ ميزة مملكة الكعك الملكية! حصلت على 1 كاب كيك ملكي مجاني (احتمال 25%)! 🎉'
+            : '🧁✨ Cake Kingdom Perk! Won 1 bonus royal cupcake (25% chance)! 🎉'
+        );
+      }
+    }
+
+    // Midnight Thunderstorm Perk (+3 bonus thunder coins on every level completion ⚡)
+    if (selectedSkin === 'midnight_thunder') {
+      setThunders((prev) => prev + 3);
+      triggerToast(
+        isAr
+          ? '🌩️⚡ ميزة عاصفة منتصف الليل! تم منحك +3 عملات رعد إضافية! ⚡'
+          : '🌩️⚡ Midnight Thunder Perk! Granted +3 bonus thunder coins! ⚡'
+      );
+    }
 
     setShowVictoryModal(true);
   };
@@ -1671,11 +2831,17 @@ export default function App() {
       const nextId = Math.min(25, currentGalaxyLevelId + 1);
       setCurrentGalaxyLevelId(nextId);
     } else if (gameMode === 'long') {
-      const nextId = Math.min(25, currentLongLevelId + 1);
+      const nextId = Math.min(30, currentLongLevelId + 1);
       setCurrentLongLevelId(nextId);
     } else if (gameMode === 'thunder') {
-      const nextId = Math.min(5, currentThunderLevelId + 1);
+      const nextId = Math.min(26, currentThunderLevelId + 1);
       setCurrentThunderLevelId(nextId);
+    } else if (gameMode === 'timed') {
+      const nextId = Math.min(10, currentTimedLevelId + 1);
+      setCurrentTimedLevelId(nextId);
+    } else if (gameMode === 'monster') {
+      const nextId = Math.min(5, currentMonsterLevelId + 1);
+      setCurrentMonsterLevelId(nextId);
     } else {
       const nextId = currentLevelId + 1;
       setCurrentLevelId(nextId);
@@ -1687,6 +2853,37 @@ export default function App() {
     setDrops(activeLevel.maxDrops || 3);
     setEscapedCount(0);
     setShowVictoryModal(false);
+    setHighlightedArrowIds(new Set());
+    if (gameMode === 'timed') {
+      setLevelTimeLeft(activeLevel.timeLimitSeconds || 45);
+    }
+  };
+
+  const handleTimedBombExploded = (arrowId?: string) => {
+    soundManager.playSmash();
+    setDrops((prev) => {
+      const nextDrops = Math.max(0, prev - 1);
+      if (nextDrops === 0) {
+        triggerToast(
+          language === 'ar'
+            ? '💥💣 انفجر السهم المتفجر ونفذت نجوم البقاء! تمت إعادة المرحلة تلقائياً! 🔄'
+            : '💥💣 Timed bomb exploded & out of Survival Stars! Level restarted! 🔄'
+        );
+        setTimeout(() => {
+          handleRestartLevel();
+        }, 1000);
+      } else {
+        triggerToast(
+          language === 'ar'
+            ? '💥💣 انفجر السهم المتفجر! فقدت نجمة بقاء ⭐'
+            : '💥💣 Timed bomb exploded! Lost 1 Survival Star ⭐'
+        );
+        if (arrowId) {
+          handleArrowEscaped(arrowId);
+        }
+      }
+      return nextDrops;
+    });
   };
 
   const totalArrowsCount = activeLevel.arrows.length;
@@ -1699,6 +2896,8 @@ export default function App() {
       className={`min-h-screen w-full transition-colors duration-500 font-sans flex items-center justify-center p-0 sm:p-3 md:p-5 overflow-x-hidden antialiased select-none ${
         selectedSkin === 'golden_throne'
           ? 'bg-amber-950 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-600 via-yellow-950 to-amber-950 text-amber-100'
+          : selectedSkin === 'emerald_palace'
+          ? 'bg-emerald-950 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-700 via-teal-950 to-slate-950 text-emerald-100'
           : 'bg-slate-950 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-950 via-slate-900 to-indigo-950 text-slate-800'
       }`}
     >
@@ -1709,6 +2908,12 @@ export default function App() {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-b from-amber-400/20 via-yellow-500/10 to-transparent blur-3xl animate-pulse" />
             <div className="absolute bottom-10 left-10 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl animate-pulse" />
             <div className="absolute top-20 right-10 w-96 h-96 bg-yellow-400/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+          </>
+        ) : selectedSkin === 'emerald_palace' ? (
+          <>
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-b from-emerald-400/20 via-teal-500/10 to-transparent blur-3xl animate-pulse" />
+            <div className="absolute bottom-10 left-10 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl animate-pulse" />
+            <div className="absolute top-20 right-10 w-96 h-96 bg-teal-400/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
           </>
         ) : (
           <>
@@ -1722,8 +2927,14 @@ export default function App() {
       <div className={`w-full max-w-[460px] sm:max-w-[480px] h-screen sm:h-[94vh] sm:max-h-[900px] sm:rounded-[46px] border-0 sm:border-[8px] sm:border-slate-800/90 shadow-[0_25px_70px_rgba(0,0,0,0.6)] flex flex-col relative overflow-hidden backdrop-blur-md transition-colors duration-500 ${
         selectedSkin === 'golden_throne'
           ? 'bg-gradient-to-b from-amber-950 via-yellow-950/95 to-amber-950 text-amber-100 sm:border-amber-500/80 shadow-[0_0_50px_rgba(245,158,11,0.4)]'
+          : selectedSkin === 'emerald_palace'
+          ? 'bg-gradient-to-b from-emerald-950 via-teal-950/95 to-slate-950 text-emerald-100 sm:border-emerald-500/80 shadow-[0_0_50px_rgba(16,185,129,0.4)]'
+          : selectedSkin === 'cake'
+          ? 'bg-gradient-to-b from-pink-950 via-rose-950 to-amber-950 text-pink-100 sm:border-pink-500/80 shadow-[0_0_50px_rgba(244,114,182,0.4)]'
           : gameMode === 'thunder' || selectedSkin === 'rainstorm' || selectedSkin === 'midnight_thunder'
           ? 'bg-slate-950 text-white border-sky-500/80 shadow-[0_0_50px_rgba(14,165,233,0.4)]'
+          : gameMode === 'monster'
+          ? 'bg-gradient-to-b from-rose-950 via-slate-950 to-red-950 text-white sm:border-rose-500/80 shadow-[0_0_60px_rgba(225,29,72,0.5)]'
           : gameMode === 'galaxy' || selectedSkin === 'nebula' || selectedSkin === 'supernova'
           ? 'bg-gradient-to-b from-slate-950 via-purple-950/95 to-indigo-950 text-white'
           : 'bg-gradient-to-b from-sky-50/90 via-white to-slate-100/95 text-slate-800'
@@ -1752,6 +2963,8 @@ export default function App() {
         <div className={`w-full px-4 py-1.5 flex items-center justify-between text-white shadow-md z-30 shrink-0 select-none ${
           gameMode === 'thunder' || selectedSkin === 'rainstorm' || selectedSkin === 'midnight_thunder'
             ? 'bg-gradient-to-r from-slate-950 via-sky-900 to-indigo-950 border-b border-sky-400/30'
+            : gameMode === 'monster'
+            ? 'bg-gradient-to-r from-rose-900 via-red-800 to-purple-950 border-b border-rose-500/50'
             : gameMode === 'galaxy'
             ? 'bg-gradient-to-r from-purple-700 via-indigo-600 to-pink-600'
             : gameMode === 'long'
@@ -1760,11 +2973,13 @@ export default function App() {
         }`}>
           <div className="flex items-center gap-2">
             <div className="w-6.5 h-6.5 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-xs shadow-inner font-bold">
-              {gameMode === 'thunder' ? '⚡' : gameMode === 'galaxy' ? '🌌' : gameMode === 'long' ? '📜' : '🎯'}
+              {gameMode === 'thunder' ? '⚡' : gameMode === 'monster' ? '👹' : gameMode === 'galaxy' ? '🌌' : gameMode === 'long' ? '📜' : '🎯'}
             </div>
             <span className="font-black text-xs sm:text-sm tracking-wide">
               {gameMode === 'thunder'
                 ? isAr ? `أحداث المطر والعواصف - مرحلة ${activeLevel.id}` : `Rain & Thunder Event Level ${activeLevel.id}`
+                : gameMode === 'monster'
+                ? isAr ? `معركة الوحش 👹⚔️ - المرحلة ${activeLevel.id}` : `Monster Battle 👹⚔️ - Stage ${activeLevel.id}`
                 : gameMode === 'galaxy'
                 ? isAr ? `مراحل الأحداث - المجرة ${activeLevel.id}` : `Galaxy Level ${activeLevel.id}`
                 : gameMode === 'long'
@@ -1804,6 +3019,11 @@ export default function App() {
             onOpenLanding={() => setShowLandingModal(true)}
             onOpenTips={handleOpenTips}
             onOpenTasks={() => setShowTasksModal(true)}
+            onOpenFriends={() => setShowFriendsModal(true)}
+            onOpenTrade={() => {
+              setSelectedTradeFriend(null);
+              setShowTradeModal(true);
+            }}
             onToggleSound={() => {
               const next = !soundEnabled;
               setSoundEnabled(next);
@@ -1885,6 +3105,46 @@ export default function App() {
               </div>
             )}
 
+            {/* Cake Kingdom 17% Cake Chance Active Banner */}
+            {selectedSkin === 'cake' && (
+              <div className="mb-1.5 bg-gradient-to-r from-pink-950 via-rose-950 to-amber-950 border-2 border-pink-400/90 text-pink-100 font-black text-xs px-3.5 py-1.5 rounded-2xl shadow-xl flex items-center justify-between gap-2.5 w-full max-w-md animate-fade-in">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base animate-pulse">🎂✨</span>
+                  <div className="flex flex-col">
+                    <span className="text-[11px] leading-none text-pink-200">
+                      {isAr ? 'خلفية مملكة الكعك (احتمال 17% كعكة):' : 'Cake Kingdom Theme (17% Cake Chance):'}
+                    </span>
+                    <span className="text-[9px] text-pink-300/90 font-semibold mt-0.5">
+                      {isAr ? 'احتمال 17% للحصول على كعكة مجانية عند إكمال أي مرحلة! 🎂' : '17% chance to earn 1 free cake upon level clear! 🎂'}
+                    </span>
+                  </div>
+                </div>
+                <span className="bg-gradient-to-r from-pink-500 via-rose-400 to-amber-400 text-slate-950 font-black text-xs px-2.5 py-1 rounded-xl shadow-md border border-pink-200 shrink-0">
+                  17% 🎂
+                </span>
+              </div>
+            )}
+
+            {/* Smart Cake Multiplier Active Banner */}
+            {smartCakeMultiplierLevelsRemaining > 0 && (
+              <div className="mb-1.5 bg-gradient-to-r from-amber-950 via-pink-950 to-slate-900 border-2 border-amber-400/90 text-amber-100 font-black text-xs px-3.5 py-1.5 rounded-2xl shadow-xl flex items-center justify-between gap-2.5 w-full max-w-md animate-fade-in">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base animate-pulse">🎂⚡</span>
+                  <div className="flex flex-col">
+                    <span className="text-[11px] leading-none text-amber-200">
+                      {isAr ? `مضاعف الكعك الذكي نشط (متبقي ${smartCakeMultiplierLevelsRemaining} مراحل):` : `Smart Cake Multiplier Active (${smartCakeMultiplierLevelsRemaining} levels left):`}
+                    </span>
+                    <span className="text-[9px] text-pink-300 font-semibold mt-0.5">
+                      {isAr ? 'مضاعفة جميع المكافآت والنقاط وعملات الفضاء والرعد! 🪙⚡' : 'Doubles all level rewards, coins, space & thunder coins! 🪙⚡'}
+                    </span>
+                  </div>
+                </div>
+                <span className="bg-gradient-to-r from-amber-400 via-yellow-300 to-pink-500 text-slate-950 font-black text-xs px-2.5 py-1 rounded-xl shadow-md border border-amber-200 shrink-0">
+                  ⚡×2 ({smartCakeMultiplierLevelsRemaining})
+                </span>
+              </div>
+            )}
+
             {/* Rainstorm Thunder Currency Active Banner */}
             {selectedSkin === 'rainstorm' && (
               <div className="mb-1.5 bg-gradient-to-r from-slate-950 via-sky-950 to-blue-950 border-2 border-sky-400/90 text-sky-100 font-black text-xs px-3.5 py-1.5 rounded-2xl shadow-xl flex items-center justify-between gap-2.5 w-full max-w-md animate-fade-in">
@@ -1962,6 +3222,151 @@ export default function App() {
               </div>
             )}
 
+            {/* Cake / Cupcake Theme 35-Arrow Progress Counter Banner */}
+            {selectedSkin === 'cake' && (
+              <div className="mb-1.5 bg-gradient-to-r from-slate-950 via-rose-950 to-pink-950 border-2 border-pink-400/80 text-pink-100 font-black text-xs px-3.5 py-1.5 rounded-2xl shadow-xl flex items-center justify-between gap-2.5 w-full max-w-md animate-fade-in">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base animate-bounce">🧁</span>
+                  <div className="flex flex-col">
+                    <span className="text-[11px] leading-none text-pink-200">
+                      {isAr ? 'عداد مخبز الكاب كيك (+1 كاب كيك 🧁):' : 'Cupcake Bakery Counter (+1 Cupcake 🧁):'}
+                    </span>
+                    <span className="text-[9px] text-pink-300/90 font-semibold mt-0.5">
+                      {isAr ? 'كاب كيك مجاني 🧁 عند إزالة كل 35 سهماً!' : '1 Free Cupcake 🧁 for every 35 cleared arrows!'}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-20 sm:w-24 bg-slate-950 h-2.5 rounded-full overflow-hidden border border-pink-400/40 p-0.5">
+                    <div
+                      className="bg-gradient-to-r from-pink-400 via-rose-400 to-amber-300 h-full rounded-full transition-all duration-300"
+                      style={{ width: `${Math.min(100, (cakeArrowCounter / 35) * 100)}%` }}
+                    />
+                  </div>
+                  <span className="text-xs font-black text-pink-200 bg-pink-950/90 px-2 py-0.5 rounded-lg border border-pink-400/40 shrink-0">
+                    {cakeArrowCounter} / 35
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* Royal Emerald Palace Theme 100-Arrow Progress Counter Banner */}
+            {selectedSkin === 'emerald_palace' && (
+              <div className="mb-1.5 bg-gradient-to-r from-slate-950 via-emerald-950 to-teal-950 border-2 border-emerald-400/80 text-emerald-100 font-black text-xs px-3.5 py-1.5 rounded-2xl shadow-xl flex items-center justify-between gap-2.5 w-full max-w-md animate-fade-in">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base animate-bounce">🏰💎</span>
+                  <div className="flex flex-col">
+                    <span className="text-[11px] leading-none text-emerald-200">
+                      {isAr ? 'عداد القصر الزمردي (فرصة ٥١٪ لمطرقة 🔨 + عملات رعد ⚡):' : 'Emerald Palace Counter (51% Hammer 🔨 + Thunder ⚡ Chance):'}
+                    </span>
+                    <span className="text-[9px] text-emerald-300/90 font-semibold mt-0.5">
+                      {isAr ? 'عند إزالة 100 سهم: فرصة 51% لمطرقة 🔨 + 30 عملة رعد ⚡!' : 'Clear 100 arrows: 51% chance for Hammer 🔨 + 30 Thunder Coins ⚡!'}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-20 sm:w-24 bg-slate-950 h-2.5 rounded-full overflow-hidden border border-emerald-400/40 p-0.5">
+                    <div
+                      className="bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-300 h-full rounded-full transition-all duration-300"
+                      style={{ width: `${Math.min(100, (emeraldPalaceEscapedCount / 100) * 100)}%` }}
+                    />
+                  </div>
+                  <span className="text-xs font-black text-emerald-300 bg-emerald-950/90 px-2 py-0.5 rounded-lg border border-emerald-400/40 shrink-0">
+                    {emeraldPalaceEscapedCount} / 100
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* Royal Cake Kingdom Theme 100-Arrow Progress Counter Banner */}
+            {selectedSkin === 'cake_kingdom' && (
+              <div className="mb-1.5 bg-gradient-to-r from-pink-950 via-rose-950 to-amber-950 border-2 border-pink-400/80 text-pink-100 font-black text-xs px-3.5 py-1.5 rounded-2xl shadow-xl flex items-center justify-between gap-2.5 w-full max-w-md animate-fade-in">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-base animate-bounce">🏰🎂</span>
+                  <div className="flex flex-col">
+                    <span className="text-[11px] leading-none text-pink-200">
+                      {isAr ? 'عداد مملكة الكعك (كعكة 🎂 أو كاب كيك 🧁):' : 'Cake Kingdom Counter (Cake 🎂 or Cupcake 🧁):'}
+                    </span>
+                    <span className="text-[9px] text-pink-300/90 font-semibold mt-0.5">
+                      {isAr ? 'عند إزالة 100 سهم: فرصة 49% لكعكة 🎂 أو 51% لكاب كيك 🧁!' : 'Clear 100 arrows: 49% for Cake 🎂 or 51% for Cupcake 🧁!'}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-20 sm:w-24 bg-slate-950 h-2.5 rounded-full overflow-hidden border border-pink-400/40 p-0.5">
+                    <div
+                      className="bg-gradient-to-r from-pink-500 via-rose-400 to-amber-300 h-full rounded-full transition-all duration-300"
+                      style={{ width: `${Math.min(100, (cakeKingdomEscapedCount / 100) * 100)}%` }}
+                    />
+                  </div>
+                  <span className="text-xs font-black text-pink-200 bg-pink-950/90 px-2 py-0.5 rounded-lg border border-pink-400/40 shrink-0">
+                    {cakeKingdomEscapedCount} / 100
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* Timed Level Countdown Timer Banner */}
+            {gameMode === 'timed' && levelTimeLeft !== null && (
+              <div className={`mb-2 px-4 py-2 rounded-2xl border-2 font-black text-xs sm:text-sm flex items-center justify-between gap-3 shadow-xl w-full max-w-sm transition-all animate-bounce ${
+                levelTimeLeft <= 10
+                  ? 'bg-gradient-to-r from-red-950 via-rose-900 to-red-950 border-red-500 text-red-200 animate-pulse'
+                  : 'bg-gradient-to-r from-amber-950 via-slate-900 to-amber-950 border-amber-400 text-amber-200'
+              }`}>
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">⏱️⚡</span>
+                  <div className="flex flex-col">
+                    <span className="text-xs leading-none">
+                      {isAr ? 'مرحلة مؤقتة سريعة!' : 'Timed Challenge Level!'}
+                    </span>
+                    <span className="text-[10px] text-slate-300 font-medium mt-0.5">
+                      {isAr ? 'أخرج جميع الأسهم قبل انتهاء المؤقت' : 'Escape all arrows before time runs out'}
+                    </span>
+                  </div>
+                </div>
+                <div className={`px-3 py-1 rounded-xl text-sm font-black border flex items-center gap-1 ${
+                  levelTimeLeft <= 10
+                    ? 'bg-red-600 text-white border-red-300 animate-ping'
+                    : 'bg-amber-500 text-slate-950 border-amber-300'
+                }`}>
+                  <span>⏱️</span>
+                  <span>{levelTimeLeft}s</span>
+                </div>
+              </div>
+            )}
+
+            {/* Monster Battle Countdown Timer & 2-Second Obstacle Status Banner */}
+            {gameMode === 'monster' && (
+              <div className="w-full max-w-sm mb-2 flex flex-col gap-1.5 animate-fade-in">
+                {/* Timer & Monster Battle Status */}
+                <div className={`px-4 py-2 rounded-2xl border-2 font-black text-xs sm:text-sm flex items-center justify-between gap-3 shadow-xl transition-all ${
+                  (levelTimeLeft || 0) <= 10
+                    ? 'bg-gradient-to-r from-red-950 via-rose-900 to-red-950 border-red-500 text-red-200 animate-pulse shadow-[0_0_25px_rgba(225,29,72,0.7)]'
+                    : 'bg-gradient-to-r from-rose-950 via-slate-950 to-red-950 border-rose-500/80 text-rose-100 shadow-[0_0_15px_rgba(225,29,72,0.4)]'
+                }`}>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl animate-bounce">👹⚔️</span>
+                    <div className="flex flex-col">
+                      <span className="text-xs leading-none text-rose-200 font-bold">
+                        {isAr ? 'مؤقت معركة الوحش ⏱️' : 'Monster Battle Timer ⏱️'}
+                      </span>
+                      <span className="text-[10px] text-rose-300/80 font-medium mt-0.5">
+                        {isAr ? 'احذر من هجوم الوحش عند الصفر!' : 'Watch out for monster attack at 0s!'}
+                      </span>
+                    </div>
+                  </div>
+                  <div className={`px-3 py-1 rounded-xl text-sm font-black border flex items-center gap-1 ${
+                    (levelTimeLeft || 0) <= 10
+                      ? 'bg-red-600 text-white border-red-300 animate-bounce'
+                      : 'bg-gradient-to-r from-rose-600 to-red-600 text-white border-rose-400'
+                  }`}>
+                    <span>⏱️</span>
+                    <span>{levelTimeLeft !== null ? levelTimeLeft : 60}s</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Board */}
             <ArrowMazeBoard
               arrows={arrows}
@@ -1976,6 +3381,11 @@ export default function App() {
               onUseHammer={handleUseHammer}
               rainItems={rainItems}
               gameMode={gameMode}
+              onTimedBombExploded={handleTimedBombExploded}
+              highlightedArrowIds={highlightedArrowIds}
+              isMonsterObstacleActive={monsterObstacleActive}
+              monsterObstacleTimer={monsterObstacleTimer}
+              levelTimeLeft={levelTimeLeft}
             />
 
             {/* In-Game Action Bar Dock */}
@@ -2008,6 +3418,20 @@ export default function App() {
                 <span>{isAr ? 'المتجر' : 'Shop'}</span>
               </button>
 
+              {/* Oracle Eye Power-up Button */}
+              <button
+                id="btn-oracle-eye"
+                onClick={handleUseOracleEye}
+                className="px-3.5 py-2 rounded-2xl border-2 border-indigo-400 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white font-black text-xs sm:text-sm flex items-center gap-1.5 shadow-md hover:scale-105 active:scale-95 cursor-pointer transition-all"
+                title={isAr ? 'عين العرافة الكونية - كشف وإطلاق الأسهم الحرة فوراً!' : 'Oracle Eye - Reveal and escape free arrows!'}
+              >
+                <span className="text-lg animate-pulse">👁️🔮</span>
+                <span>{isAr ? 'عين العرافة' : 'Oracle Eye'}</span>
+                <span className="bg-indigo-950 text-indigo-200 font-extrabold text-[11px] px-1.5 py-0.2 rounded-full shadow-inner">
+                  {oracleEyes}
+                </span>
+              </button>
+
               {/* My Inventory / Bag Button */}
               <button
                 id="btn-inventory"
@@ -2021,7 +3445,7 @@ export default function App() {
                 <span className="text-lg">🎒</span>
                 <span>{isAr ? 'الحقيبة' : 'Bag'}</span>
                 <span className="bg-amber-950 text-amber-200 font-extrabold text-[11px] px-1.5 py-0.2 rounded-full shadow-inner">
-                  {creams + creamHammers + chocolates + hammers + tomatoes + spaceCreams + cakes}
+                  {creams + creamHammers + chocolates + hammers + tomatoes + liquidChocolates + cakes}
                 </span>
               </button>
 
@@ -2091,6 +3515,12 @@ export default function App() {
               ? currentGalaxyLevelId
               : gameMode === 'long'
               ? currentLongLevelId
+              : gameMode === 'thunder'
+              ? currentThunderLevelId
+              : gameMode === 'timed'
+              ? currentTimedLevelId
+              : gameMode === 'monster'
+              ? currentMonsterLevelId
               : currentLevelId
           }
           stars={
@@ -2098,6 +3528,12 @@ export default function App() {
               ? starsPerGalaxyLevel[currentGalaxyLevelId] || 3
               : gameMode === 'long'
               ? starsPerLongLevel[currentLongLevelId] || 3
+              : gameMode === 'thunder'
+              ? starsPerThunderLevel[currentThunderLevelId] || 3
+              : gameMode === 'timed'
+              ? starsPerTimedLevel[currentTimedLevelId] || 3
+              : gameMode === 'monster'
+              ? starsPerMonsterLevel[currentMonsterLevelId] || 3
               : starsPerLevel[currentLevelId] || 3
           }
           coinsEarned={lastCoinsEarned}
@@ -2129,15 +3565,38 @@ export default function App() {
           unlockedThunderLevel={unlockedThunderLevel}
           currentThunderLevel={currentThunderLevelId}
           starsPerThunderLevel={starsPerThunderLevel}
+          unlockedTimedLevel={unlockedTimedLevel}
+          currentTimedLevel={currentTimedLevelId}
+          starsPerTimedLevel={starsPerTimedLevel}
+          hasUnlockedTimedLevels={hasUnlockedTimedLevels}
+          unlockedMonsterLevel={unlockedMonsterLevel}
+          currentMonsterLevel={currentMonsterLevelId}
+          starsPerMonsterLevel={starsPerMonsterLevel}
+          hasUnlockedMonsterMode={hasUnlockedMonsterMode}
           isEventUnlocked={isEventUnlocked}
           gameMode={gameMode}
           initialTab={levelSelectTab}
           coins={coins}
+          thunders={thunders}
           language={language}
           onSelectMainLevel={handleSelectMainLevel}
           onSelectGalaxyLevel={handleSelectGalaxyLevel}
           onSelectLongLevel={handleSelectLongLevel}
           onSelectThunderLevel={handleSelectThunderLevel}
+          onSelectTimedLevel={(timedId) => {
+            setGameMode('timed');
+            setCurrentTimedLevelId(timedId);
+            setShowLevelSelectModal(false);
+          }}
+          onSelectMonsterLevel={handleSelectMonsterLevel}
+          onBuyMonsterPack={handleBuyMonsterPack}
+          onBuyTimedPack={() => {
+            if (thunders >= 50) {
+              handleBuyWithThunder('timedLevelsPack', 50);
+            } else {
+              triggerToast(language === 'ar' ? 'عملات الرعد غير كافية! تحتاج 50⚡' : 'Not enough thunder coins! Needs 50⚡');
+            }
+          }}
           onUnlockEvent={handleUnlockEventInModal}
           onClose={() => setShowLevelSelectModal(false)}
         />
@@ -2180,13 +3639,20 @@ export default function App() {
           spaceCoins={spaceCoins}
           tomatoes={tomatoes}
           spaceCreams={spaceCreams}
+          liquidChocolates={liquidChocolates}
           hammers={hammers}
           thunders={thunders}
+          lightnings={lightnings}
           creams={creams}
           creamHammers={creamHammers}
           chocolates={chocolates}
           cakes={cakes}
+          chickens={chickens}
+          oracleEyes={oracleEyes}
           cakeArrowCounter={cakeArrowCounter}
+          smartCakeMultiplierLevelsRemaining={smartCakeMultiplierLevelsRemaining}
+          hasUnlockedTimedLevels={hasUnlockedTimedLevels}
+          hasUnlockedMonsterMode={hasUnlockedMonsterMode}
           selectedSkin={selectedSkin}
           unlockedSkins={unlockedSkins}
           selectedArrowSkin={selectedArrowSkin}
@@ -2211,11 +3677,15 @@ export default function App() {
           onBuyChocolate={handleBuyChocolate}
           onBuyTomato={handleBuyTomato}
           onBuySpaceCream={handleBuySpaceCream}
+          onBuyLiquidChocolate={handleBuyLiquidChocolate}
           onBuyBundle={handleBuyBundle}
           onBuyCakeBundle={handleBuyCakeBundle}
           onBuySpaceBundle={handleBuySpaceBundle}
+          onBuyMonsterPack={handleBuyMonsterPack}
           onExchangeCoins={handleExchangeCoinsForSpaceCoins}
           onExchangeCake={handleExchangeCake}
+          onBuyWithCake={handleBuyWithCake}
+          onBuyWithThunder={handleBuyWithThunder}
           initialTab={shopModalTab}
           onClose={() => setShowShopModal(false)}
         />
@@ -2235,12 +3705,16 @@ export default function App() {
           spaceCoins={spaceCoins}
           tomatoes={tomatoes}
           spaceCreams={spaceCreams}
+          liquidChocolates={liquidChocolates}
           hammers={hammers}
           thunders={thunders}
+          lightnings={lightnings}
           creams={creams}
           creamHammers={creamHammers}
           chocolates={chocolates}
           cakes={cakes}
+          chickens={chickens}
+          oracleEyes={oracleEyes}
           selectedSkin={selectedSkin}
           unlockedSkins={unlockedSkins}
           selectedArrowSkin={selectedArrowSkin}
@@ -2252,6 +3726,9 @@ export default function App() {
           onUseThunder={handleUseLightning}
           onUseTomato={handleUseTomato}
           onUseSpaceCream={handleUseSpaceCream}
+          onUseLiquidChocolate={handleUseLiquidChocolate}
+          onUseChicken={handleUseChicken}
+          onUseOracleEye={handleUseOracleEye}
           onToggleHammer={handleToggleHammer}
           onExchangeCake={handleExchangeCake}
           onSelectSkin={(skin) => setSelectedSkin(skin)}
@@ -2295,6 +3772,44 @@ export default function App() {
           taskStats={taskStats}
           onClaimTask={handleClaimTask}
           onClose={() => setShowTasksModal(false)}
+        />
+      )}
+
+      {showFriendsModal && (
+        <FriendsModal
+          isOpen={showFriendsModal}
+          onClose={() => setShowFriendsModal(false)}
+          language={language}
+          playerId={playerId}
+          playerName={playerName}
+          onUpdatePlayerName={handleUpdatePlayerName}
+          friends={friends}
+          requests={friendRequests}
+          onAcceptRequest={handleAcceptFriendRequest}
+          onDeclineRequest={handleDeclineFriendRequest}
+          onAddFriend={handleAddFriend}
+          onRemoveFriend={handleRemoveFriend}
+          onOpenTradeWithFriend={handleOpenTradeWithFriend}
+          onSendGift={handleSendGift}
+          giftSentFriendIds={giftSentFriendIds}
+        />
+      )}
+
+      {showTradeModal && (
+        <TradeModal
+          isOpen={showTradeModal}
+          onClose={() => setShowTradeModal(false)}
+          language={language}
+          friends={friends}
+          selectedFriendForTrade={selectedTradeFriend}
+          coins={coins}
+          thunders={thunders}
+          hammers={hammers}
+          cakes={cakes}
+          creams={creams}
+          chocolates={chocolates}
+          spaceCreams={spaceCreams}
+          onExecuteTrade={handleExecuteTrade}
         />
       )}
 

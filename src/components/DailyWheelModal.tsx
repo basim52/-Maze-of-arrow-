@@ -17,7 +17,7 @@ const PRIZES: WheelPrize[] = [
   { id: 'c100', labelAr: '100 كوينز 🪙', labelEn: '100 Coins 🪙', icon: '💰', color: 'from-yellow-400 to-amber-600', type: 'coins', amount: 100 },
   { id: 'thun1', labelAr: 'صاعقة ⚡', labelEn: 'Thunder ⚡', icon: '⚡', color: 'from-cyan-400 to-blue-600', type: 'thunder', amount: 1 },
   { id: 'crm1', labelAr: 'كريم 🍦', labelEn: 'Cream 🍦', icon: '🍦', color: 'from-pink-400 to-rose-500', type: 'cream', amount: 1 },
-  { id: 'sc1', labelAr: 'عملة فضائية 🌌', labelEn: 'Space Coin 🌌', icon: '🌌', color: 'from-purple-500 to-indigo-600', type: 'spaceCoins', amount: 1 },
+  { id: 'sc1', labelAr: '5 عملات رعد ⚡', labelEn: '5 Thunder Coins ⚡', icon: '⚡', color: 'from-amber-400 to-yellow-600', type: 'thunder', amount: 5 },
   { id: 'c250', labelAr: '250 كنز 🪙', labelEn: '250 Jackpot 🪙', icon: '👑', color: 'from-emerald-400 to-teal-600', type: 'coins', amount: 250 },
   { id: 'choc1', labelAr: 'شوكولاتة 🍫', labelEn: 'Chocolate 🍫', icon: '🍫', color: 'from-amber-600 to-amber-800', type: 'chocolate', amount: 1 },
 ];

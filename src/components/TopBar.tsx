@@ -11,7 +11,7 @@ interface TopBarProps {
   maxDrops: number;
   language: 'ar' | 'en';
   soundEnabled: boolean;
-  gameMode?: 'main' | 'galaxy' | 'long' | 'thunder';
+  gameMode?: 'main' | 'galaxy' | 'long' | 'thunder' | 'timed' | 'monster';
   onOpenSettings: () => void;
   onOpenLevelSelect: () => void;
   onOpenEventLevels: () => void;
@@ -20,6 +20,8 @@ interface TopBarProps {
   onOpenLanding?: () => void;
   onOpenTips?: () => void;
   onOpenTasks?: () => void;
+  onOpenFriends?: () => void;
+  onOpenTrade?: () => void;
   onToggleSound: () => void;
   onRestartLevel: () => void;
   coins: number;
@@ -49,6 +51,8 @@ export const TopBar: React.FC<TopBarProps> = ({
   onOpenLanding,
   onOpenTips,
   onOpenTasks,
+  onOpenFriends,
+  onOpenTrade,
   onToggleSound,
   onRestartLevel,
   coins,
@@ -64,6 +68,18 @@ export const TopBar: React.FC<TopBarProps> = ({
       ? isAr
         ? 'مرحلة طويلة '
         : 'Long Level '
+      : gameMode === 'thunder'
+      ? isAr
+        ? 'مرحلة الرعد '
+        : 'Thunder Level '
+      : gameMode === 'timed'
+      ? isAr
+        ? 'مرحلة مؤقتة '
+        : 'Timed Level '
+      : gameMode === 'monster'
+      ? isAr
+        ? 'معركة الوحش '
+        : 'Monster Boss '
       : isAr
       ? 'المستوى '
       : 'Level ';
@@ -127,29 +143,24 @@ export const TopBar: React.FC<TopBarProps> = ({
             <Sparkles className="w-3.5 h-3.5 text-amber-200 fill-amber-100 animate-pulse" />
             <span>{isAr ? toArabicDigits(coins) : coins}</span>
           </button>
-
-          {/* Thunder ⚡ Pill Badge */}
-          <button
-            onClick={() => {
-              soundManager.playClick();
-              onOpenShop();
-            }}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 text-white font-black text-xs shadow-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer border border-sky-300/40"
-            title={isAr ? 'رصيد عملة الرعد ⚡' : 'Thunder Currency ⚡'}
-          >
-            <span className="text-xs sm:text-sm animate-pulse">⚡</span>
-            <span>{isAr ? toArabicDigits(thunders) : thunders}</span>
-          </button>
         </div>
 
         {/* Center: Level Title & Subtitle Badge */}
         <div className="flex flex-col items-center justify-center text-center">
-          <h1 className="text-2xl sm:text-3xl font-black text-sky-500 drop-shadow-[0_2px_8px_rgba(56,189,248,0.3)] tracking-tight">
+          <h1 className={`text-2xl sm:text-3xl font-black tracking-tight ${
+            gameMode === 'monster'
+              ? 'text-rose-400 drop-shadow-[0_2px_10px_rgba(244,63,94,0.6)]'
+              : gameMode === 'thunder'
+              ? 'text-sky-300 drop-shadow-[0_2px_10px_rgba(56,189,248,0.6)]'
+              : gameMode === 'galaxy'
+              ? 'text-purple-300 drop-shadow-[0_2px_10px_rgba(192,132,252,0.6)]'
+              : 'text-sky-500 drop-shadow-[0_2px_8px_rgba(56,189,248,0.3)]'
+          }`}>
             {levelText}
           </h1>
           <span className={`text-xs sm:text-sm font-black tracking-wider px-2.5 py-0.5 rounded-full border -mt-0.5 shadow-2xs ${
-            difficultyAr === 'صعب جداً جداً'
-              ? 'bg-gradient-to-r from-purple-900 via-rose-900 to-red-900 text-amber-300 border-purple-500 animate-pulse'
+            difficultyAr === 'صعب جداً جداً' || gameMode === 'monster'
+              ? 'bg-gradient-to-r from-rose-950 via-red-900 to-purple-950 text-rose-300 border-rose-500/80 animate-pulse'
               : 'text-rose-500 bg-rose-50 border-rose-100'
           }`}>
             {isAr ? difficultyAr : difficultyEn}
@@ -171,18 +182,41 @@ export const TopBar: React.FC<TopBarProps> = ({
             <span>{isAr ? toArabicDigits(coins) : coins}</span>
           </button>
 
-          {/* Mobile Thunder Button */}
-          <button
-            onClick={() => {
-              soundManager.playClick();
-              onOpenShop();
-            }}
-            className="sm:hidden flex items-center gap-1 px-2 py-1 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black text-[11px] shadow-xs cursor-pointer border border-sky-300/40"
-            title={isAr ? 'عملة الرعد ⚡' : 'Thunder ⚡'}
-          >
-            <span className="text-[11px] animate-pulse">⚡</span>
-            <span>{isAr ? toArabicDigits(thunders) : thunders}</span>
-          </button>
+          {/* Friends Button (زر إضافة الأصدقاء) */}
+          {onOpenFriends && (
+            <button
+              id="btn-friends"
+              onClick={() => {
+                soundManager.playClick();
+                onOpenFriends();
+              }}
+              className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-indigo-500 via-sky-500 to-teal-500 border-2 border-sky-300 shadow-sm flex items-center justify-center text-white hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0 relative"
+              title={isAr ? 'إضافة أصدقاء وقائمة الناس 👥' : 'Add Friends & Community 👥'}
+            >
+              <span className="text-base sm:text-lg">👥</span>
+              <span className="absolute -top-1 -right-1 bg-sky-500 text-white text-[8px] font-black px-1.5 py-0.2 rounded-full border border-white shadow-2xs">
+                {isAr ? 'أصدقاء' : 'Friends'}
+              </span>
+            </button>
+          )}
+
+          {/* Trade Button (زر التبادل مع الناس) */}
+          {onOpenTrade && (
+            <button
+              id="btn-trade"
+              onClick={() => {
+                soundManager.playClick();
+                onOpenTrade();
+              }}
+              className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-600 to-emerald-700 border-2 border-emerald-300 shadow-sm flex items-center justify-center text-white hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0 relative"
+              title={isAr ? 'التبادل والمقايضة مع الناس 🔄' : 'Trade & Exchange 🔄'}
+            >
+              <span className="text-base sm:text-lg">🔄</span>
+              <span className="absolute -top-1 -right-1 bg-emerald-500 text-white text-[8px] font-black px-1.5 py-0.2 rounded-full border border-white shadow-2xs animate-pulse">
+                {isAr ? 'تبادل' : 'Trade'}
+              </span>
+            </button>
+          )}
 
           {/* Palette Button with Shop badge */}
           <button

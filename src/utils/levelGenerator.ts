@@ -8620,32 +8620,50 @@ export function generateRandomSolvableLevel(levelNumber: number): Level {
 }
 
 export const HAMMER_REQUIRED_LEVEL_IDS = [45, 52, 60, 68, 77, 93, 100, 108, 115, 122, 125, 140, 160, 180, 200, 205, 225, 240];
-export const MONSTER_BOSS_LEVEL_IDS = [55, 69, 85, 105, 120, 138, 150, 158, 173, 188, 200, 210, 230, 250];
-export const DIAMOND_VETERAN_LEVEL_IDS = [23, 74, 87, 98, 100, 179, 187, 194];
+export const MONSTER_BOSS_LEVEL_IDS = [28, 45, 55, 69, 78, 85, 100, 105, 120, 132, 135, 138, 150, 158, 173, 188, 200, 210, 218, 230, 231, 250, 260];
+export const DIAMOND_VETERAN_LEVEL_IDS = [12, 23, 36, 50, 65, 74, 87, 98, 114, 148, 165, 179, 187, 194, 215, 235];
 export const ICE_ARROW_LEVEL_IDS = [
-  3, 6, 9, 14, 18, 22, 28, 33, 38, 42, 47, 52, 58, 63, 68, 72, 78, 84, 88, 94,
+  3, 6, 9, 14, 18, 22, 33, 38, 42, 47, 52, 58, 63, 68, 72, 84, 88, 94,
   102, 112, 124, 134, 146, 162, 175, 184, 198, 212, 226, 238, 250
 ];
 
 export function createMonsterBossLevel(levelNumber: number): Level {
-  let nameAr = `👹🔥 ${levelNumber} - مرحلة الوحش الخارقة`;
-  let nameEn = `👹🔥 ${levelNumber} - Monster Boss Level`;
+  let nameAr = `👹🔥 ${levelNumber} - مرحلة الوحش الأسود الخارقة`;
+  let nameEn = `👹🔥 ${levelNumber} - Black Monster Boss Level`;
 
-  if (levelNumber === 55) {
+  if (levelNumber === 28) {
+    nameAr = `👹🔥 28 - مرحلة الوحش الأسود: كابوس الظلام الشديد`;
+    nameEn = `👹🔥 28 - Black Monster Boss: Deep Darkness Nightmare`;
+  } else if (levelNumber === 45) {
+    nameAr = `👹🔥 45 - مرحلة الوحش الأسود: حصن الوحش الفولاذي`;
+    nameEn = `👹🔥 45 - Black Monster Boss: Steel Monster Fortress`;
+  } else if (levelNumber === 55) {
     nameAr = `👹🔥 55 - مرحلة الوحش: غابة الوحوش الكاسرة`;
     nameEn = `👹🔥 55 - Monster Boss: Fierce Beast Forest`;
   } else if (levelNumber === 69) {
     nameAr = `👹🔥 69 - مرحلة الوحش: عرش التنين الشرس`;
     nameEn = `👹🔥 69 - Monster Boss: Fierce Dragon Throne`;
+  } else if (levelNumber === 78) {
+    nameAr = `👹🔥 78 - مرحلة الوحش الأسود: عاصفة الموت السوداء`;
+    nameEn = `👹🔥 78 - Black Monster Boss: Black Death Tempest`;
   } else if (levelNumber === 85) {
     nameAr = `👹🔥 85 - مرحلة الوحش: ممر النار المجهول`;
     nameEn = `👹🔥 85 - Monster Boss: Unknown Fire Pass`;
+  } else if (levelNumber === 100) {
+    nameAr = `👹🔥 100 - مرحلة الوحش الأسود: ملك الجحيم المئوي`;
+    nameEn = `👹🔥 100 - Black Monster Boss: Centennial Hell King`;
   } else if (levelNumber === 105) {
     nameAr = `👹🔥 105 - مرحلة الوحش: مقبرة الأسهم المظلمة`;
     nameEn = `👹🔥 105 - Monster Boss: Dark Arrow Graveyard`;
   } else if (levelNumber === 120) {
-    nameAr = `👹🔥 120 - مرحلة الوحش: متاهة الشياطين`;
-    nameEn = `👹🔥 120 - Monster Boss: Demon Labyrinth`;
+    nameAr = `👹🔥 120 - مرحلة الوحش الأسود: متاهة الشياطين المظلمة`;
+    nameEn = `👹🔥 120 - Black Monster Boss: Demon Labyrinth`;
+  } else if (levelNumber === 132) {
+    nameAr = `👹🔥 132 - مرحلة الوحش الأسود: متاهة الرعب المطلق`;
+    nameEn = `👹🔥 132 - Black Monster Boss: Absolute Terror Maze`;
+  } else if (levelNumber === 135) {
+    nameAr = `👹🔥 135 - مرحلة الوحش الأسود: غضب البركان الأسود`;
+    nameEn = `👹🔥 135 - Black Monster Boss: Black Volcano Wrath`;
   } else if (levelNumber === 138) {
     nameAr = `👹🔥 138 - مرحلة الوحش: كوكب الجحيم الأسطوري`;
     nameEn = `👹🔥 138 - Monster Boss: Mythic Hell Planet`;
@@ -8665,14 +8683,23 @@ export function createMonsterBossLevel(levelNumber: number): Level {
     nameAr = `👹🔥 200 - مرحلة الوحش النهائية: سيد الأسهم الأخير`;
     nameEn = `👹🔥 200 - Monster Boss Final: Ultimate Arrow Master`;
   } else if (levelNumber === 210) {
-    nameAr = `👹🔥 210 - مرحلة الوحش الكونية: حارس المجرة الأخير`;
-    nameEn = `👹🔥 210 - Cosmic Monster Boss: Ultimate Galaxy Guardian`;
+    nameAr = `👹🔥 210 - مرحلة الوحش الأسود الكونية: حارس المجرة الأخير`;
+    nameEn = `👹🔥 210 - Black Monster Boss: Ultimate Galaxy Guardian`;
+  } else if (levelNumber === 218) {
+    nameAr = `👹🔥 218 - مرحلة الوحش الأسود: عرش الظلال الأسطوري`;
+    nameEn = `👹🔥 218 - Black Monster Boss: Mythic Shadow Throne`;
   } else if (levelNumber === 230) {
     nameAr = `👹🔥 230 - مرحلة الوحش: كوكب النجوم الساطعة الكوني`;
     nameEn = `👹🔥 230 - Monster Boss: Shining Star Planet`;
+  } else if (levelNumber === 231) {
+    nameAr = `👹🔥 231 - مرحلة الوحش الأسود: قمة الفوضى الفائقة`;
+    nameEn = `👹🔥 231 - Black Monster Boss: Super Chaos Pinnacle`;
   } else if (levelNumber === 250) {
     nameAr = `👹🔥 250 - مرحلة الوحش الإمبراطورية: عرش السوبرنوفا الأخير 🌌`;
     nameEn = `👹🔥 250 - Emperor Boss: Final Supernova Throne 🌌`;
+  } else if (levelNumber === 260) {
+    nameAr = `👹🔥 260 - مرحلة الوحش الإمبراطورية: عرش الكون الأبدي 🌌⚡`;
+    nameEn = `👹🔥 260 - Emperor Boss: Eternal Cosmic Throne 🌌⚡`;
   }
 
   const cols = 12;
@@ -9195,7 +9222,7 @@ export function getLevel(id: number): Level {
     }
   }
 
-  // Diamond Veteran Arrow levels (87, 98, 100, 179, 194)
+  // Diamond Veteran Arrow levels
   if (DIAMOND_VETERAN_LEVEL_IDS.includes(id)) {
     if (!level.nameAr.includes('💎')) {
       level.nameAr = `💎 ${level.nameAr} - سهم محنك الماسي (7 نقاط)`;
@@ -9203,10 +9230,9 @@ export function getLevel(id: number): Level {
     if (!level.nameEn.includes('💎')) {
       level.nameEn = `💎 ${level.nameEn} - Diamond Veteran Arrow (7 pts)`;
     }
-    // Convert MAJORITY (~70-75%) of arrows in this level to Diamond Veteran Arrows, with a mix of other arrow types for variety
+    // 60% Diamond Veteran Arrows (3 out of every 5 = 60%), 40% Standard Arrows
     level.arrows = level.arrows.map((a, idx) => {
-      // 3 out of every 4 arrows (75%) will be Diamond Veteran arrows
-      if (idx % 4 !== 3) {
+      if (idx % 5 < 3) {
         return {
           ...a,
           type: 'diamond',
@@ -9214,13 +9240,19 @@ export function getLevel(id: number): Level {
           isBomb: false,
           isGhost: false,
           isStar: false,
+          isIce: false,
+          isThunder: false,
         };
       } else {
-        // Keep non-diamond arrows with their original or varied non-diamond type
         return {
           ...a,
+          type: 'standard',
           isDiamond: false,
-          type: a.type === 'diamond' ? 'standard' : (a.type || 'standard'),
+          isBomb: false,
+          isGhost: false,
+          isStar: false,
+          isIce: false,
+          isThunder: false,
         };
       }
     });
@@ -9233,32 +9265,62 @@ export function getLevel(id: number): Level {
     );
   }
 
-  // Ice Arrow levels & general ice arrow integration across levels
-  if (ICE_ARROW_LEVEL_IDS.includes(id)) {
-    if (!level.nameAr.includes('🧊')) {
-      level.nameAr = `🧊 ${level.nameAr} - أسهم الجليد ❄️`;
-    }
-    if (!level.nameEn.includes('🧊')) {
-      level.nameEn = `🧊 ${level.nameEn} - Ice Arrows ❄️`;
-    }
-    level.arrows = level.arrows.map((a, idx) => {
-      if (idx % 2 === 0) {
-        return {
-          ...a,
-          type: 'ice',
-          isIce: true,
-        };
+  // Ice Arrow levels & general ice arrow integration across non-diamond levels
+  if (!DIAMOND_VETERAN_LEVEL_IDS.includes(id)) {
+    if (ICE_ARROW_LEVEL_IDS.includes(id)) {
+      if (!level.nameAr.includes('🧊')) {
+        level.nameAr = `🧊 ${level.nameAr} - أسهم الجليد ❄️`;
       }
-      return a;
-    });
-  } else if (id >= 3) {
-    // Ice Arrow mechanic present in almost all levels (1-2 frozen arrows per level)
+      if (!level.nameEn.includes('🧊')) {
+        level.nameEn = `🧊 ${level.nameEn} - Ice Arrows ❄️`;
+      }
+      level.arrows = level.arrows.map((a, idx) => {
+        if (idx % 2 === 0) {
+          return {
+            ...a,
+            type: 'ice',
+            isIce: true,
+          };
+        }
+        return a;
+      });
+    } else if (id >= 3) {
+      // Ice Arrow mechanic present in almost all non-diamond levels (1-2 frozen arrows per level)
+      level.arrows = level.arrows.map((a, idx) => {
+        if (idx === 0 || idx % 4 === 0) {
+          return {
+            ...a,
+            type: 'ice',
+            isIce: true,
+          };
+        }
+        return a;
+      });
+    }
+  }
+
+  // 20% Timed Bomb Arrow levels (id % 5 === 3 for main levels, excluding event & long levels)
+  if (id % 5 === 3) {
+    if (!level.nameAr.includes('💣') && !level.nameAr.includes('⏳')) {
+      level.nameAr = `⏳ ${level.nameAr} - قنبلة موقوتة 💣`;
+    }
+    if (!level.nameEn.includes('💣') && !level.nameEn.includes('⏳')) {
+      level.nameEn = `⏳ ${level.nameEn} - Timed Bomb Arrow 💣`;
+    }
+    let bombCount = 0;
     level.arrows = level.arrows.map((a, idx) => {
-      if (idx === 0 || idx % 4 === 0) {
+      if ((idx === 1 || (level.arrows.length >= 6 && idx === 4)) && bombCount < 2) {
+        bombCount++;
         return {
           ...a,
-          type: 'ice',
-          isIce: true,
+          type: 'timed_bomb',
+          isTimedBomb: true,
+          timer: 18,
+          isBomb: false,
+          isGhost: false,
+          isStar: false,
+          isDiamond: false,
+          isIce: false,
         };
       }
       return a;
@@ -12752,7 +12814,7 @@ function seededRandom(seed: number) {
 
 // Generator for Long Panoramic Maze Levels (32x14 Grid, Dual Maze Clusters with Long Connecting Corridors)
 export function getLongLevel(id: number): Level {
-  const levelId = Math.min(Math.max(1, id), 25);
+  const levelId = Math.min(Math.max(1, id), 30);
   const cols = 32;
   const rows = 14;
   let seed = levelId * 1543 + 789;
@@ -12867,9 +12929,9 @@ export function getLongLevel(id: number): Level {
   };
 }
 
-// Generator for 5 Special Thunder Event Levels (Distinct Rain & Lightning Atmosphere)
+// Generator for 26 Special Thunder Event Levels (Distinct Rain & Lightning Atmosphere)
 export function getThunderLevel(id: number): Level {
-  const levelId = Math.min(Math.max(1, id), 5);
+  const levelId = Math.min(Math.max(1, id), 26);
   const cols = 18;
   const rows = 12;
   let seed = levelId * 8765 + 43210;
@@ -12890,20 +12952,62 @@ export function getThunderLevel(id: number): Level {
     cells.forEach((c) => occupied.add(`${c.x},${c.y}`));
   };
 
-  const targetCount = 18 + levelId * 3; // 21 to 33 arrows
+  const targetCount = Math.min(48, 18 + levelId * 2); // 20 to 48 arrows
   let attempts = 0;
 
-  while (arrows.length < targetCount && attempts < 400) {
+  while (arrows.length < targetCount && attempts < 500) {
     attempts++;
     const gx = Math.floor(1 + seededRandom(seed++) * (cols - 2));
     const gy = Math.floor(1 + seededRandom(seed++) * (rows - 2));
     const dir = directions[Math.floor(seededRandom(seed++) * directions.length)];
     const len = Math.floor(2 + seededRandom(seed++) * 4);
 
-    const isDiamond = levelId >= 2 && seededRandom(seed++) > 0.8;
-    const isIce = levelId >= 3 && seededRandom(seed++) > 0.82;
-    const isDouble = levelId >= 1 && seededRandom(seed++) > 0.75;
-    const isStar = seededRandom(seed++) > 0.85;
+    let isStar = false;
+    let isDiamond = false;
+    let isSilver = false;
+    let isThunder = false;
+    let isTimedBomb = false;
+    let isIce = false;
+    let isDouble = false;
+    let arrowType: Arrow['type'] = 'standard';
+
+    if (levelId === 26) {
+      // Probability for Level 26: 35% Gold (Star), 15% Diamond, 1% Silver, 49% Standard
+      const rand = seededRandom(seed++);
+      if (rand < 0.35) {
+        isStar = true;
+        arrowType = 'star';
+      } else if (rand < 0.50) {
+        isDiamond = true;
+        arrowType = 'diamond';
+      } else if (rand < 0.51) {
+        isSilver = true;
+        arrowType = 'silver';
+      } else {
+        arrowType = 'standard';
+      }
+    } else {
+      isThunder = seededRandom(seed++) > 0.72; // Electric Thunder Arrow
+      isTimedBomb = false; // Exclude timed bombs from event levels
+      isDiamond = !isThunder && levelId >= 2 && seededRandom(seed++) > 0.8;
+      isIce = !isThunder && !isDiamond && levelId >= 3 && seededRandom(seed++) > 0.82;
+      isDouble = !isThunder && levelId >= 1 && seededRandom(seed++) > 0.75;
+      isStar = !isThunder && seededRandom(seed++) > 0.85;
+
+      arrowType = isThunder
+        ? 'thunder'
+        : isTimedBomb
+        ? 'timed_bomb'
+        : isDiamond
+        ? 'diamond'
+        : isIce
+        ? 'ice'
+        : isDouble
+        ? 'double'
+        : isStar
+        ? 'star'
+        : 'standard';
+    }
 
     const candidate: Arrow = {
       id: `thunder-${levelId}-a-${arrows.length}`,
@@ -12912,19 +13016,15 @@ export function getThunderLevel(id: number): Level {
       direction: dir,
       color: colors[arrows.length % colors.length],
       length: len,
+      isThunder,
+      isTimedBomb,
+      timer: isTimedBomb ? 18 : undefined,
       isDiamond,
       isIce,
       isDouble,
       isStar,
-      type: isDiamond
-        ? 'diamond'
-        : isIce
-        ? 'ice'
-        : isDouble
-        ? 'double'
-        : isStar
-        ? 'star'
-        : 'standard',
+      isSilver,
+      type: arrowType,
     };
 
     if (!isArrowInBounds(candidate, cols, rows)) continue;
@@ -12940,15 +13040,196 @@ export function getThunderLevel(id: number): Level {
 
   return {
     id: levelId,
-    nameAr: `مرحلة العاصفة والرعد ${levelId} ⚡⛈️`,
-    nameEn: `Thunder Tempest Level ${levelId} ⚡⛈️`,
-    difficulty: levelId <= 2 ? 'صعب' : 'صعب جداً',
-    difficultyEn: levelId <= 2 ? 'Hard' : 'Very Hard',
+    nameAr: levelId === 26 ? `مرحلة الأسطورة والكنوز 26 ⭐💎⚡` : `مرحلة العاصفة والرعد ${levelId} ⚡⛈️`,
+    nameEn: levelId === 26 ? `Legendary Treasure Realm 26 ⭐💎⚡` : `Thunder Tempest Level ${levelId} ⚡⛈️`,
+    difficulty: levelId === 26 ? 'صعب جداً جداً' : levelId <= 5 ? 'متوسط' : levelId <= 15 ? 'صعب' : 'صعب جداً',
+    difficultyEn: levelId === 26 ? 'Extremely Hard' : levelId <= 5 ? 'Medium' : levelId <= 15 ? 'Hard' : 'Very Hard',
     gridSize: { cols, rows },
     arrows: boundedArrows,
     maxDrops: 3,
   };
 }
+
+// 10 Temporary Timed Levels (مراحل مؤقتة)
+export function getTimedLevel(id: number): Level {
+  const levelId = Math.min(Math.max(1, id), 10);
+  const cols = 15;
+  const rows = 10;
+  let seed = levelId * 777 + 99;
+
+  const colors: ArrowColor[] = ['cyan', 'lime', 'yellow', 'purple', 'pink', 'orange'];
+  const directions: Direction[] = ['right', 'left', 'up', 'down', 'up-right', 'up-left', 'down-right', 'down-left'];
+
+  const occupied = new Set<string>();
+  const arrows: Arrow[] = [];
+
+  const isCellFree = (x: number, y: number) => {
+    if (x < 0 || x >= cols || y < 0 || y >= rows) return false;
+    return !occupied.has(`${x},${y}`);
+  };
+
+  const markArrowCells = (candidate: Arrow) => {
+    const cells = getArrowOccupiedCells(candidate);
+    cells.forEach((c) => occupied.add(`${c.x},${c.y}`));
+  };
+
+  const targetCount = 14 + levelId * 2; // 16 to 34 arrows
+  let attempts = 0;
+
+  while (arrows.length < targetCount && attempts < 500) {
+    attempts++;
+    const gx = Math.floor(1 + seededRandom(seed++) * (cols - 2));
+    const gy = Math.floor(1 + seededRandom(seed++) * (rows - 2));
+    const dir = directions[Math.floor(seededRandom(seed++) * directions.length)];
+    const len = Math.floor(2 + seededRandom(seed++) * 3);
+
+    const isDouble = seededRandom(seed++) > 0.82;
+    const isStar = seededRandom(seed++) > 0.85;
+
+    const candidate: Arrow = {
+      id: `timed-${levelId}-a-${arrows.length}`,
+      gridX: gx,
+      gridY: gy,
+      direction: dir,
+      color: colors[arrows.length % colors.length],
+      length: len,
+      isDouble,
+      isStar,
+      type: isDouble ? 'double' : isStar ? 'star' : 'standard',
+    };
+
+    if (!isArrowInBounds(candidate, cols, rows)) continue;
+
+    const candidateCells = getArrowOccupiedCells(candidate);
+    if (candidateCells.every((c) => isCellFree(c.x, c.y))) {
+      markArrowCells(candidate);
+      arrows.push(candidate);
+    }
+  }
+
+  const boundedArrows = arrows.filter((a) => isArrowInBounds(a, cols, rows));
+  // Time limits decrease with higher levels (+10% increased time buffer)
+  const baseTime = Math.max(25, 65 - levelId * 3);
+  const timeLimit = Math.round(baseTime * 1.1);
+
+  return {
+    id: levelId,
+    nameAr: `مرحلة مؤقتة ${levelId} ⏱️⚡`,
+    nameEn: `Timed Level ${levelId} ⏱️⚡`,
+    difficulty: levelId <= 3 ? 'متوسط' : levelId <= 7 ? 'صعب' : 'صعب جداً',
+    difficultyEn: levelId <= 3 ? 'Medium' : levelId <= 7 ? 'Hard' : 'Very Hard',
+    gridSize: { cols, rows },
+    arrows: boundedArrows,
+    maxDrops: 3,
+    timeLimitSeconds: timeLimit,
+  };
+}
+
+// 5 Monster Battle Levels (طور معركة الوحش) - سعر الفتح 154 نقطة
+export function getMonsterLevel(id: number): Level {
+  const levelId = Math.min(Math.max(1, id), 5);
+  const cols = 14 + (levelId - 1);
+  const rows = 9 + Math.floor((levelId - 1) / 2);
+  let seed = levelId * 9876 + 154;
+
+  const namesAr = [
+    'وحش العاصفة الحديدية 👹⚡ (المرحلة ١)',
+    'تنين اللهب الأسود 🐲🔥 (المرحلة ٢)',
+    'عملاق الكريستال الجليدي 🧊👾 (المرحلة ٣)',
+    'شبح الظلال الأرجواني 👻🔮 (المرحلة ٤)',
+    'ملك الوحوش الأسطوري 👑👹🔥 (المرحلة ٥)',
+  ];
+  const namesEn = [
+    'Iron Storm Monster 👹⚡ (Stage 1)',
+    'Black Flame Dragon 🐲🔥 (Stage 2)',
+    'Ice Crystal Titan 🧊👾 (Stage 3)',
+    'Purple Shadow Phantom 👻🔮 (Stage 4)',
+    'Legendary Monster King 👑👹🔥 (Stage 5)',
+  ];
+
+  const colors: ArrowColor[] = ['cyan', 'lime', 'yellow', 'purple', 'pink', 'orange'];
+  const directions: Direction[] = ['right', 'left', 'up', 'down', 'up-right', 'up-left', 'down-right', 'down-left'];
+
+  const occupied = new Set<string>();
+  const arrows: Arrow[] = [];
+
+  const isCellFree = (x: number, y: number) => {
+    if (x < 0 || x >= cols || y < 0 || y >= rows) return false;
+    return !occupied.has(`${x},${y}`);
+  };
+
+  const markArrowCells = (candidate: Arrow) => {
+    const cells = getArrowOccupiedCells(candidate);
+    cells.forEach((c) => occupied.add(`${c.x},${c.y}`));
+  };
+
+  const targetCount = 16 + (levelId - 1) * 4;
+  let attempts = 0;
+
+  while (arrows.length < targetCount && attempts < 600) {
+    attempts++;
+    const gx = Math.floor(1 + seededRandom(seed++) * (cols - 2));
+    const gy = Math.floor(1 + seededRandom(seed++) * (rows - 2));
+    const dir = directions[Math.floor(seededRandom(seed++) * directions.length)];
+    const len = Math.floor(2 + seededRandom(seed++) * 3);
+
+    const isDouble = seededRandom(seed++) > 0.7;
+    const isStar = seededRandom(seed++) > 0.8;
+    const isThunder = levelId >= 1 && seededRandom(seed++) > 0.82;
+    const isGhost = levelId >= 3 && seededRandom(seed++) > 0.85;
+    const isDiamond = levelId >= 4 && seededRandom(seed++) > 0.88;
+
+    const type = isDouble
+      ? 'double'
+      : isStar
+      ? 'star'
+      : isThunder
+      ? 'thunder'
+      : isGhost
+      ? 'ghost'
+      : isDiamond
+      ? 'diamond'
+      : 'standard';
+
+    const candidate: Arrow = {
+      id: `monster-${levelId}-a-${arrows.length}`,
+      gridX: gx,
+      gridY: gy,
+      direction: dir,
+      color: colors[arrows.length % colors.length],
+      length: len,
+      isDouble,
+      isStar,
+      isThunder,
+      isGhost,
+      isDiamond,
+      type,
+    };
+
+    if (!isArrowInBounds(candidate, cols, rows)) continue;
+
+    const candidateCells = getArrowOccupiedCells(candidate);
+    if (candidateCells.every((c) => isCellFree(c.x, c.y))) {
+      markArrowCells(candidate);
+      arrows.push(candidate);
+    }
+  }
+
+  const boundedArrows = arrows.filter((a) => isArrowInBounds(a, cols, rows));
+
+  return {
+    id: levelId,
+    nameAr: namesAr[levelId - 1],
+    nameEn: namesEn[levelId - 1],
+    difficulty: levelId <= 2 ? 'صعب' : 'صعب جداً',
+    difficultyEn: levelId <= 2 ? 'Hard' : 'Very Hard',
+    gridSize: { cols, rows },
+    arrows: boundedArrows,
+    maxDrops: 3,
+    timeLimitSeconds: 60 - (levelId - 1) * 5, // 60s, 55s, 50s, 45s, 40s
+  };
+}
+
 
 
 

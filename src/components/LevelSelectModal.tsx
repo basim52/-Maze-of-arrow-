@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { X, Lock, Star, Sparkles, Rocket } from 'lucide-react';
+import { X, Lock, Star, Sparkles, Rocket, Swords } from 'lucide-react';
 import { soundManager } from '../utils/sound';
-import { HANDCRAFTED_LEVELS, HAMMER_REQUIRED_LEVEL_IDS, MONSTER_BOSS_LEVEL_IDS, DIAMOND_VETERAN_LEVEL_IDS } from '../utils/levelGenerator';
+import { HANDCRAFTED_LEVELS, HAMMER_REQUIRED_LEVEL_IDS, MONSTER_BOSS_LEVEL_IDS, DIAMOND_VETERAN_LEVEL_IDS, getTimedLevel, getMonsterLevel } from '../utils/levelGenerator';
 
 interface LevelSelectModalProps {
   unlockedLevel: number;
@@ -16,15 +16,28 @@ interface LevelSelectModalProps {
   unlockedThunderLevel?: number;
   currentThunderLevel?: number;
   starsPerThunderLevel?: Record<number, number>;
+  unlockedTimedLevel?: number;
+  currentTimedLevel?: number;
+  starsPerTimedLevel?: Record<number, number>;
+  hasUnlockedTimedLevels?: boolean;
+  unlockedMonsterLevel?: number;
+  currentMonsterLevel?: number;
+  starsPerMonsterLevel?: Record<number, number>;
+  hasUnlockedMonsterMode?: boolean;
   isEventUnlocked: boolean;
-  gameMode: 'main' | 'galaxy' | 'long' | 'thunder';
-  initialTab?: 'main' | 'galaxy' | 'long';
+  gameMode: 'main' | 'galaxy' | 'long' | 'thunder' | 'timed' | 'monster';
+  initialTab?: 'main' | 'galaxy' | 'long' | 'timed' | 'monster';
   coins: number;
+  thunders?: number;
   language: 'ar' | 'en';
   onSelectMainLevel: (levelId: number) => void;
   onSelectGalaxyLevel: (galaxyId: number) => void;
   onSelectLongLevel: (longId: number) => void;
   onSelectThunderLevel?: (thunderId: number) => void;
+  onSelectTimedLevel?: (timedId: number) => void;
+  onSelectMonsterLevel?: (monsterId: number) => void;
+  onBuyTimedPack?: () => void;
+  onBuyMonsterPack?: () => void;
   onUnlockEvent: () => void;
   onClose: () => void;
 }
@@ -42,33 +55,52 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
   unlockedThunderLevel = 1,
   currentThunderLevel = 1,
   starsPerThunderLevel = {},
+  unlockedTimedLevel = 1,
+  currentTimedLevel = 1,
+  starsPerTimedLevel = {},
+  hasUnlockedTimedLevels = false,
+  unlockedMonsterLevel = 1,
+  currentMonsterLevel = 1,
+  starsPerMonsterLevel = {},
+  hasUnlockedMonsterMode = false,
   isEventUnlocked,
   gameMode,
   initialTab = 'main',
   coins,
+  thunders = 0,
   language,
   onSelectMainLevel,
   onSelectGalaxyLevel,
   onSelectLongLevel,
   onSelectThunderLevel,
+  onSelectTimedLevel,
+  onSelectMonsterLevel,
+  onBuyTimedPack,
+  onBuyMonsterPack,
   onUnlockEvent,
   onClose,
 }) => {
   const isAr = language === 'ar';
-  const [activeTab, setActiveTab] = useState<'main' | 'galaxy' | 'long'>(initialTab);
+  const [activeTab, setActiveTab] = useState<'main' | 'galaxy' | 'long' | 'timed' | 'monster'>(initialTab);
 
-  // Main levels 1 to 250
-  const TOTAL_MAIN_LEVELS = Math.max(250, unlockedLevel, currentLevel + 5);
+  // Main levels 1 to 260
+  const TOTAL_MAIN_LEVELS = Math.max(260, unlockedLevel, currentLevel + 5);
   const mainLevelIds = Array.from({ length: TOTAL_MAIN_LEVELS }, (_, i) => i + 1);
 
   // Galaxy event levels 1 to 25
   const galaxyLevelIds = Array.from({ length: 25 }, (_, i) => i + 1);
 
-  // Long maze levels 1 to 25
-  const longLevelIds = Array.from({ length: 25 }, (_, i) => i + 1);
+  // Long maze levels 1 to 30
+  const longLevelIds = Array.from({ length: 30 }, (_, i) => i + 1);
 
-  // Thunder event levels 1 to 5
-  const thunderLevelIds = Array.from({ length: 5 }, (_, i) => i + 1);
+  // Thunder tempest levels 1 to 26
+  const thunderLevelIds = Array.from({ length: 26 }, (_, i) => i + 1);
+
+  // Timed levels 1 to 10
+  const timedLevelIds = Array.from({ length: 10 }, (_, i) => i + 1);
+
+  // Monster battle levels 1 to 5
+  const monsterLevelIds = Array.from({ length: 5 }, (_, i) => i + 1);
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-fade-in">
@@ -77,7 +109,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
         <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-3 shrink-0">
           <div>
             <h2 className="text-lg sm:text-xl font-black text-white flex items-center gap-2">
-              <span>{activeTab === 'galaxy' ? '🌌' : activeTab === 'long' ? '📜' : '🎯'}</span>
+              <span>{activeTab === 'galaxy' ? '🌌' : activeTab === 'long' ? '📜' : activeTab === 'timed' ? '⏱️' : activeTab === 'monster' ? '👹' : '🎯'}</span>
               <span>
                 {activeTab === 'main'
                   ? isAr
@@ -87,9 +119,17 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                   ? isAr
                     ? 'مراحل الأحداث الفضائية (١ - ٢٥ 🚀)'
                     : 'Galaxy Event Levels (1 - 25 🚀)'
+                  : activeTab === 'long'
+                  ? isAr
+                    ? 'المراحل الطويلة البانورامية (١ - ٣٠ 🗺️)'
+                    : 'Long Panoramic Levels (1 - 30 🗺️)'
+                  : activeTab === 'timed'
+                  ? isAr
+                    ? 'المراحل المؤقتة (١ - ١٠ ⏱️⚡)'
+                    : 'Temporary Timed Levels (1 - 10 ⏱️⚡)'
                   : isAr
-                  ? 'المراحل الطويلة البانورامية (١ - ٢٠ 🗺️)'
-                  : 'Long Panoramic Levels (1 - 20 🗺️)'}
+                  ? 'طور معركة الوحش (٥ مراحل 👹⚔️)'
+                  : 'Monster Battle Mode (5 Stages 👹⚔️)'}
               </span>
             </h2>
             <p className="text-[11px] text-purple-200/80 font-medium mt-0.5">
@@ -101,9 +141,17 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                 ? isAr
                   ? '🌌 أسهم فضائية، نجوم متلألئة، وخلفيات كوكبية مبهرة!'
                   : '🌌 Space arrows, sparkling stars & planetary backgrounds!'
+                : activeTab === 'long'
+                ? isAr
+                  ? '📜 متاهات عريضة ممتدة ومراحل طويلة بانورامية مليئة بالتحديات!'
+                  : '📜 Wide panoramic mazes with winding long paths!'
+                : activeTab === 'timed'
+                ? isAr
+                  ? '⏱️⚡ مراحل سرعة وتحدي مع مؤقت تنازلي! أخرج الأسهم قبل نفاد الوقت'
+                  : '⏱️⚡ High speed challenge levels with a countdown timer!'
                 : isAr
-                ? '📜 متاهات عريضة ممتدة ومراحل طويلة بانورامية مليئة بالتحديات!'
-                : '📜 Wide panoramic mazes with winding long paths!'}
+                ? '👹⚔️ ٥ مراحل حماسية ضد الوحوش العمالقة! بسعر ١٥٤ نقطة فقط'
+                : '👹⚔️ 5 epic boss monster stages! Price: 154 coins'}
             </p>
           </div>
 
@@ -118,14 +166,14 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
           </button>
         </div>
 
-        {/* Tab Navigation Switcher (3 Tabs) */}
-        <div className="grid grid-cols-3 gap-1 p-1 bg-slate-950 rounded-2xl border border-slate-800 mb-3 shrink-0">
+        {/* Tab Navigation Switcher (5 Tabs) */}
+        <div className="grid grid-cols-5 gap-1 p-1 bg-slate-950 rounded-2xl border border-slate-800 mb-3 shrink-0">
           <button
             onClick={() => {
               soundManager.playClick();
               setActiveTab('main');
             }}
-            className={`py-2 px-1 rounded-xl text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 ${
+            className={`py-2 px-1 rounded-xl text-[10px] sm:text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 ${
               activeTab === 'main'
                 ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white shadow-md'
                 : 'text-slate-400 hover:text-white'
@@ -140,7 +188,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
               soundManager.playClick();
               setActiveTab('galaxy');
             }}
-            className={`py-2 px-1 rounded-xl text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 relative ${
+            className={`py-2 px-1 rounded-xl text-[10px] sm:text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 relative ${
               activeTab === 'galaxy'
                 ? 'bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 text-white shadow-md'
                 : 'text-purple-300 hover:text-white bg-purple-950/40 border border-purple-800/50'
@@ -160,7 +208,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
               soundManager.playClick();
               setActiveTab('long');
             }}
-            className={`py-2 px-1 rounded-xl text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 ${
+            className={`py-2 px-1 rounded-xl text-[10px] sm:text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 ${
               activeTab === 'long'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-md'
                 : 'text-amber-200 hover:text-white bg-amber-950/30 border border-amber-800/40'
@@ -168,6 +216,46 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
           >
             <span>📜</span>
             <span className="truncate">{isAr ? 'طويلة' : 'Long'}</span>
+          </button>
+
+          <button
+            onClick={() => {
+              soundManager.playClick();
+              setActiveTab('timed');
+            }}
+            className={`py-2 px-1 rounded-xl text-[10px] sm:text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 relative ${
+              activeTab === 'timed'
+                ? 'bg-gradient-to-r from-yellow-500 via-amber-500 to-red-600 text-white shadow-md animate-pulse'
+                : 'text-amber-300 hover:text-white bg-amber-950/40 border border-amber-700/50'
+            }`}
+          >
+            <span>⏱️</span>
+            <span className="truncate">{isAr ? 'مؤقتة' : 'Timed'}</span>
+            {!hasUnlockedTimedLevels && (
+              <span className="bg-amber-400 text-slate-950 text-[8px] px-1 py-0.2 rounded-full font-black shrink-0">
+                50⚡
+              </span>
+            )}
+          </button>
+
+          <button
+            onClick={() => {
+              soundManager.playClick();
+              setActiveTab('monster');
+            }}
+            className={`py-2 px-1 rounded-xl text-[10px] sm:text-[11px] font-black transition-all cursor-pointer flex items-center justify-center gap-1 relative ${
+              activeTab === 'monster'
+                ? 'bg-gradient-to-r from-rose-600 via-red-600 to-purple-800 text-white shadow-md ring-2 ring-rose-400/50'
+                : 'text-rose-300 hover:text-white bg-rose-950/40 border border-rose-800/50'
+            }`}
+          >
+            <span>👹</span>
+            <span className="truncate">{isAr ? 'الوحش' : 'Monster'}</span>
+            {!hasUnlockedMonsterMode && (
+              <span className="bg-rose-500 text-white text-[8px] px-1 py-0.2 rounded-full font-black shrink-0">
+                154🪙
+              </span>
+            )}
           </button>
         </div>
 
@@ -183,6 +271,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
               const isMonsterBossLevel = MONSTER_BOSS_LEVEL_IDS.includes(id);
               const isBossLevel = (id % 5 === 0 || isMonsterBossLevel) && !isHammerLevel && !isDiamondLevel;
               const isStarLevel = id % 4 === 0 && !isHammerLevel && !isBossLevel && !isMonsterBossLevel && !isDiamondLevel;
+              const isTimedBombLevel = id % 5 === 3 && !isHammerLevel && !isBossLevel && !isMonsterBossLevel && !isDiamondLevel && !isStarLevel;
               const stars = starsPerLevel[id] || 0;
               const handcrafted = HANDCRAFTED_LEVELS.find((l) => l.id === id);
 
@@ -245,6 +334,14 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                       title={isAr ? 'مرحلة السهم الذهبي المحنك' : 'Golden Star Arrow Level'}
                     >
                       🌟
+                    </span>
+                  )}
+                  {isTimedBombLevel && !isDiamondLevel && (
+                    <span
+                      className="absolute -top-1.5 -right-1.5 text-xs bg-red-600 text-white font-black px-1.5 py-0.5 rounded-full shadow-xs border border-red-400 animate-pulse"
+                      title={isAr ? 'مرحلة السهم المتفجر المؤقت (18 ثانية)' : 'Timed Bomb Arrow Level (18s)'}
+                    >
+                      💣
                     </span>
                   )}
 
@@ -419,7 +516,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                   <div className="flex items-center justify-between px-1">
                     <span className="text-xs font-black text-cyan-300 flex items-center gap-1">
                       <span>⛈️⚡</span>
-                      <span>{isAr ? 'مراحل أحداث العاصفة والرعد (1 - 5)' : 'Thunder Tempest Events (1 - 5)'}</span>
+                      <span>{isAr ? 'مراحل أحداث العاصفة والرعد (1 - 26)' : 'Thunder Tempest Events (1 - 26)'}</span>
                     </span>
                     <span className="text-[10px] bg-indigo-950 text-cyan-300 px-2 py-0.5 rounded-full border border-indigo-500/50 font-bold">
                       {isAr ? 'خلفية مطر ورعد مميزة' : 'Midnight Thunder'}
@@ -486,7 +583,7 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
               </div>
             )}
           </div>
-        ) : (
+        ) : activeTab === 'long' ? (
           /* Long Panoramic Levels Tab Content (1 to 50 Grid) */
           <div className="flex-1 overflow-y-auto pr-1 grid grid-cols-5 gap-2.5 p-1">
             {longLevelIds.map((id) => {
@@ -537,6 +634,183 @@ export const LevelSelectModal: React.FC<LevelSelectModalProps> = ({
                 </button>
               );
             })}
+          </div>
+        ) : activeTab === 'timed' ? (
+          /* Temporary Timed Levels Tab Content (1 to 10) */
+          <div className="flex-1 overflow-y-auto pr-1 flex flex-col p-1">
+            {!hasUnlockedTimedLevels ? (
+              <div className="flex-1 flex flex-col items-center justify-center p-4 bg-gradient-to-b from-amber-950/60 via-slate-900 to-amber-950/80 rounded-2xl border-2 border-amber-500/50 text-center my-auto">
+                <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-amber-500 to-yellow-400 flex items-center justify-center text-3xl shadow-xl mb-3 animate-bounce">
+                  ⏱️⚡
+                </div>
+                <h3 className="text-base font-black text-amber-200 mb-1">
+                  {isAr ? 'حزمة المراحل المؤقتة (١٠ مراحل)' : 'Timed Levels Pack (10 Levels)'}
+                </h3>
+                <p className="text-xs text-slate-300 max-w-xs mb-4 leading-relaxed">
+                  {isAr
+                    ? 'اشتري حزمة المراحل المؤقتة الـ ١٠ الجديدة بـ ٥٠ عملة رعد! كل مرحلة تحتوي على مؤقت تنازلي سريع، إذا انتهى الوقت تخسر.'
+                    : 'Unlock 10 new timed challenge levels for 50 Thunder Coins! Clear all arrows before the timer expires.'}
+                </p>
+                <button
+                  onClick={() => {
+                    soundManager.playClick();
+                    if (onBuyTimedPack) onBuyTimedPack();
+                  }}
+                  disabled={thunders < 50}
+                  className={`px-5 py-2.5 rounded-2xl font-black text-xs shadow-lg transition-all flex items-center gap-2 cursor-pointer ${
+                    thunders >= 50
+                      ? 'bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-slate-950 hover:scale-105 border border-yellow-200'
+                      : 'bg-slate-800 text-slate-500 border border-slate-700 opacity-60 cursor-not-allowed'
+                  }`}
+                >
+                  <span>⚡</span>
+                  <span>{isAr ? 'شراء بـ ٥٠ عملة رعد (50⚡)' : 'Unlock for 50 Thunder Coins (50⚡)'}</span>
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-5 gap-2.5">
+                {timedLevelIds.map((id) => {
+                  const isUnlocked = id <= unlockedTimedLevel;
+                  const isCurrent = id === currentTimedLevel && gameMode === 'timed';
+                  const stars = starsPerTimedLevel[id] || 0;
+                  const timeSec = getTimedLevel(id).timeLimitSeconds || Math.round(Math.max(25, 65 - id * 3) * 1.1);
+
+                  return (
+                    <button
+                      key={`timed-${id}`}
+                      disabled={!isUnlocked}
+                      onClick={() => {
+                        soundManager.playClick();
+                        if (onSelectTimedLevel) onSelectTimedLevel(id);
+                      }}
+                      className={`relative flex flex-col items-center justify-center p-2 rounded-2xl border-2 transition-all duration-200 aspect-square ${
+                        isCurrent
+                          ? 'bg-gradient-to-tr from-amber-500 via-yellow-500 to-red-600 text-white border-amber-300 shadow-lg scale-105 ring-2 ring-yellow-400/50'
+                          : isUnlocked
+                          ? 'bg-gradient-to-tr from-slate-900 via-amber-950/90 to-slate-900 text-amber-100 border-amber-500/70 hover:border-yellow-300 hover:scale-105 shadow-sm cursor-pointer'
+                          : 'bg-slate-950 text-slate-600 border-slate-800 opacity-60 cursor-not-allowed'
+                      }`}
+                    >
+                      <span className="absolute -top-1.5 -right-1.5 text-[9px] bg-amber-950 text-amber-300 font-extrabold px-1.5 py-0.2 rounded-full border border-amber-500/50">
+                        ⏱️{timeSec}s
+                      </span>
+
+                      {isUnlocked ? (
+                        <>
+                          <span className="text-base font-black text-amber-200">{id}</span>
+                          <div className="flex items-center gap-0.5 mt-0.5">
+                            {[1, 2, 3].map((starIdx) => (
+                              <Star
+                                key={starIdx}
+                                className={`w-3 h-3 ${
+                                  starIdx <= stars ? 'text-amber-400 fill-amber-400' : 'text-amber-950 fill-slate-900'
+                                }`}
+                              />
+                            ))}
+                          </div>
+                        </>
+                      ) : (
+                        <div className="flex flex-col items-center justify-center gap-0.5">
+                          <span className="text-xs font-bold text-slate-500">{id}</span>
+                          <Lock className="w-4 h-4 text-slate-500" />
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        ) : (
+          /* Monster Battle Mode Tab Content (1 to 5) */
+          <div className="flex-1 overflow-y-auto pr-1 flex flex-col p-1">
+            {!hasUnlockedMonsterMode ? (
+              <div className="flex-1 flex flex-col items-center justify-center p-4 bg-gradient-to-b from-rose-950/80 via-slate-900 to-purple-950/80 rounded-2xl border-2 border-rose-500/50 text-center my-auto">
+                <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-rose-600 via-red-500 to-amber-500 flex items-center justify-center text-3xl shadow-xl mb-3 animate-bounce">
+                  👹⚔️
+                </div>
+                <h3 className="text-base font-black text-rose-200 mb-1">
+                  {isAr ? 'طور معركة الوحش (٥ مراحل)' : 'Monster Battle Mode (5 Stages)'}
+                </h3>
+                <p className="text-xs text-slate-300 max-w-xs mb-4 leading-relaxed">
+                  {isAr
+                    ? 'افتَح طور معركة الوحش الخرافي بـ ٥ مراحل ملحمية ضخمة ضد الوحوش والتنانين! بسعر ١٥٤ نقطة فقط!'
+                    : 'Unlock the epic 5-stage Monster Battle Mode against giant boss monsters & dragons! Price: 154 coins.'}
+                </p>
+                <button
+                  onClick={() => {
+                    soundManager.playClick();
+                    if (onBuyMonsterPack) onBuyMonsterPack();
+                  }}
+                  disabled={coins < 154}
+                  className={`px-5 py-2.5 rounded-2xl font-black text-xs shadow-lg transition-all flex items-center gap-2 cursor-pointer ${
+                    coins >= 154
+                      ? 'bg-gradient-to-r from-rose-500 via-red-500 to-amber-500 text-white hover:scale-105 border border-rose-300'
+                      : 'bg-slate-800 text-slate-500 border border-slate-700 opacity-60 cursor-not-allowed'
+                  }`}
+                >
+                  <span>🪙</span>
+                  <span>{isAr ? 'فتح الطور بـ ١٥٤ نقطة (154🪙)' : 'Unlock Mode for 154 Coins (154🪙)'}</span>
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 gap-2.5">
+                {monsterLevelIds.map((id) => {
+                  const isUnlocked = id <= unlockedMonsterLevel;
+                  const isCurrent = id === currentMonsterLevel && gameMode === 'monster';
+                  const stars = starsPerMonsterLevel[id] || 0;
+                  const monsterData = getMonsterLevel(id);
+                  const monsterIcons = ['👹⚡', '🐲🔥', '🧊👾', '👻🔮', '👑👹🔥'];
+
+                  return (
+                    <button
+                      key={`monster-${id}`}
+                      disabled={!isUnlocked}
+                      onClick={() => {
+                        soundManager.playClick();
+                        if (onSelectMonsterLevel) onSelectMonsterLevel(id);
+                      }}
+                      className={`relative flex items-center justify-between p-3 rounded-2xl border-2 transition-all duration-200 ${
+                        isCurrent
+                          ? 'bg-gradient-to-r from-rose-900 via-red-800 to-purple-900 text-white border-rose-400 shadow-lg scale-[1.02] ring-2 ring-rose-400/50'
+                          : isUnlocked
+                          ? 'bg-gradient-to-r from-slate-900 via-rose-950/70 to-slate-900 text-rose-100 border-rose-800/70 hover:border-rose-400 hover:scale-[1.01] shadow-sm cursor-pointer'
+                          : 'bg-slate-950 text-slate-600 border-slate-800 opacity-60 cursor-not-allowed'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-slate-900/80 border border-rose-500/40 flex items-center justify-center text-xl shrink-0">
+                          {monsterIcons[id - 1]}
+                        </div>
+                        <div className="text-right">
+                          <h4 className="text-xs font-black text-rose-200 flex items-center gap-1">
+                            <span>{isAr ? monsterData.nameAr : monsterData.nameEn}</span>
+                          </h4>
+                          <p className="text-[10px] text-slate-400 mt-0.5">
+                            {isAr ? `الصعوبة: ${monsterData.difficulty}` : `Difficulty: ${monsterData.difficultyEn}`}
+                          </p>
+                        </div>
+                      </div>
+
+                      {isUnlocked ? (
+                        <div className="flex items-center gap-1 shrink-0">
+                          {[1, 2, 3].map((starIdx) => (
+                            <Star
+                              key={starIdx}
+                              className={`w-4 h-4 ${
+                                starIdx <= stars ? 'text-amber-400 fill-amber-400' : 'text-slate-800 fill-slate-950'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <Lock className="w-5 h-5 text-slate-600 shrink-0" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
         )}
       </div>

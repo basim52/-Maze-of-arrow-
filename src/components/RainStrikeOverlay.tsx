@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface RainItem {
   id: string;
-  type: 'cream' | 'thunder' | 'hammer' | 'chocolate' | 'tomato' | 'spaceCream' | 'creamHammer';
+  type: 'cream' | 'thunder' | 'hammer' | 'chocolate' | 'tomato' | 'spaceCream' | 'creamHammer' | 'liquidChocolate' | 'chicken';
   x: number; // Center X coordinate in pixels
   y: number; // Center Y coordinate in pixels
   delay: number; // Delay in ms before starting drop
@@ -26,10 +26,12 @@ export const RainStrikeOverlay: React.FC<RainStrikeOverlayProps> = ({ rainItems,
         const isChocolate = item.type === 'chocolate';
         const isTomato = item.type === 'tomato';
         const isSpaceCream = item.type === 'spaceCream';
+        const isLiquidChocolate = item.type === 'liquidChocolate';
+        const isChicken = item.type === 'chicken';
 
         return (
           <React.Fragment key={item.id}>
-            {/* Falling Droplet / Bolt / Hammer / Chocolate / Tomato / Space Cream */}
+            {/* Falling Droplet / Bolt / Hammer / Chocolate / Tomato / Space Cream / Chicken */}
             <div
               className={`absolute flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2 ${
                 isThunder
@@ -46,6 +48,14 @@ export const RainStrikeOverlay: React.FC<RainStrikeOverlayProps> = ({ rainItems,
                 height: `${tileSize * 1.5}px`,
               }}
             >
+              {isChicken && (
+                <div className="relative flex flex-col items-center">
+                  <span className="text-4xl sm:text-5xl filter drop-shadow-[0_0_15px_rgba(245,158,11,0.9)] transform -rotate-12 animate-bounce">
+                    🐔🍗
+                  </span>
+                  <div className="w-3 h-20 bg-gradient-to-t from-amber-500 via-orange-400 to-transparent rounded-full -mt-2 opacity-90 blur-[1px]" />
+                </div>
+              )}
               {isCream && (
                 <div className="relative flex flex-col items-center">
                   {/* Cream Rain drop icon */}
@@ -65,6 +75,17 @@ export const RainStrikeOverlay: React.FC<RainStrikeOverlayProps> = ({ rainItems,
                   </span>
                   {/* Trailing cosmic tail */}
                   <div className="w-3 h-20 bg-gradient-to-t from-purple-500 via-indigo-400 to-transparent rounded-full -mt-2 opacity-90 blur-[1px]" />
+                </div>
+              )}
+
+              {isLiquidChocolate && (
+                <div className="relative flex flex-col items-center">
+                  {/* Liquid Chocolate Rain drop icon */}
+                  <span className="text-4xl sm:text-5xl filter drop-shadow-[0_0_15px_rgba(180,83,9,0.9)] transform -rotate-12 animate-pulse">
+                    🍫💧
+                  </span>
+                  {/* Trailing liquid chocolate stream */}
+                  <div className="w-3 h-20 bg-gradient-to-t from-amber-950 via-amber-800 to-transparent rounded-full -mt-2 opacity-90 blur-[1px]" />
                 </div>
               )}
 
@@ -134,7 +155,9 @@ export const RainStrikeOverlay: React.FC<RainStrikeOverlayProps> = ({ rainItems,
               {/* Expanding Shockwave Ring */}
               <div
                 className={`w-full h-full rounded-full border-4 animate-splat-ring ${
-                  isCream
+                  isChicken
+                    ? 'border-amber-500 bg-amber-200/50'
+                    : isCream
                     ? 'border-pink-400 bg-pink-200/40'
                     : isSpaceCream
                     ? 'border-purple-400 bg-purple-900/50'
@@ -159,6 +182,7 @@ export const RainStrikeOverlay: React.FC<RainStrikeOverlayProps> = ({ rainItems,
                   animationFillMode: 'forwards',
                 }}
               >
+                {isChicken && '💥🐔'}
                 {isCream && '💥🍦'}
                 {isSpaceCream && '💥🌌🍦'}
                 {isChocolate && '💥🍫'}

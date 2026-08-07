@@ -16,7 +16,12 @@ interface ArrowMazeBoardProps {
   isHammerActive?: boolean;
   onUseHammer?: (arrowId: string) => void;
   rainItems?: RainItem[];
-  gameMode?: 'main' | 'galaxy' | 'long' | 'thunder';
+  gameMode?: 'main' | 'galaxy' | 'long' | 'thunder' | 'timed' | 'monster';
+  onTimedBombExploded?: (arrowId?: string) => void;
+  highlightedArrowIds?: Set<string>;
+  isMonsterObstacleActive?: boolean;
+  monsterObstacleTimer?: number;
+  levelTimeLeft?: number | null;
 }
 
 // Color palette matching user's screenshot exact vibrant smooth pastel jelly 3D colors
@@ -150,17 +155,22 @@ const Render3DArrowSVG: React.FC<{
   isBumping: boolean;
   isFlying: boolean;
   tileSize: number;
-  gameMode?: 'main' | 'galaxy';
+  gameMode?: 'main' | 'galaxy' | 'long' | 'thunder';
   selectedArrowSkin?: ArrowSkin;
-}> = ({ arrow, isBumping, isFlying, tileSize, gameMode, selectedArrowSkin = 'classic' }) => {
+  remainingBombTime?: number;
+}> = ({ arrow, isBumping, isFlying, tileSize, gameMode, selectedArrowSkin = 'classic', remainingBombTime }) => {
   const isGalaxy = gameMode === 'galaxy';
+  const isThunderMode = gameMode === 'thunder';
   const theme = COLOR_THEMES[arrow.color] || COLOR_THEMES.cyan;
   const isDouble = arrow.isDouble || arrow.type === 'double';
   const isBomb = arrow.isBomb || arrow.type === 'bomb';
+  const isTimedBomb = arrow.isTimedBomb || arrow.type === 'timed_bomb';
   const isGhost = arrow.isGhost || arrow.type === 'ghost';
   const isStar = arrow.isStar || arrow.type === 'star';
   const isDiamond = arrow.isDiamond || arrow.type === 'diamond';
   const isIce = arrow.isIce || arrow.type === 'ice';
+  const isThunder = arrow.isThunder || arrow.type === 'thunder';
+  const isSilver = arrow.isSilver || arrow.type === 'silver';
 
   // Galaxy Space Color Palettes based on arrow color index
   const galaxyTheme = {
@@ -170,7 +180,22 @@ const Render3DArrowSVG: React.FC<{
     border: arrow.color === 'pink' ? '#BE185D' : arrow.color === 'yellow' ? '#CA8A04' : arrow.color === 'purple' ? '#7E22CE' : '#0284C7',
   };
 
+  // Rainstorm & Thunderstorm Event Special Arrow Color Palettes (Electric Rain Cyan, Storm Blue & Volt Sky)
+  const thunderThemeMap: Record<string, { gradientStart: string; gradientEnd: string; border: string; highlight: string }> = {
+    cyan: { highlight: '#E0F2FE', gradientStart: '#38BDF8', gradientEnd: '#0369A1', border: '#7DD3FC' }, // Electric Rain Cyan -> Deep Storm Blue
+    lime: { highlight: '#ECFDF5', gradientStart: '#34D399', gradientEnd: '#065F46', border: '#6EE7B7' }, // Electric Storm Lime -> Deep Emerald Rain
+    yellow: { highlight: '#FEF08A', gradientStart: '#FDE047', gradientEnd: '#854D0E', border: '#FCD34D' }, // Lightning Volt -> Storm Amber
+    purple: { highlight: '#F0F9FF', gradientStart: '#0EA5E9', gradientEnd: '#0F172A', border: '#38BDF8' }, // Electric Sky -> Dark Midnight Navy
+    pink: { highlight: '#FCE7F3', gradientStart: '#F43F5E', gradientEnd: '#881337', border: '#38BDF8' }, // Electric Rain Rose -> Deep Midnight Red
+    orange: { highlight: '#FFEDD5', gradientStart: '#FB923C', gradientEnd: '#9A3412', border: '#7DD3FC' }, // Lightning Amber -> Deep Storm Orange
+  };
+
+  const thunderTheme = thunderThemeMap[arrow.color] || thunderThemeMap.cyan;
+
   const getSkinTheme = () => {
+    if (selectedArrowSkin === 'thunder_storm') {
+      return thunderTheme;
+    }
     if (selectedArrowSkin === 'neon') {
       const neonMap: Record<string, { gradientStart: string; gradientEnd: string; border: string; highlight: string }> = {
         cyan: { highlight: '#E0F2FE', gradientStart: '#00F0FF', gradientEnd: '#006699', border: '#00F0FF' },
@@ -202,6 +227,12 @@ const Render3DArrowSVG: React.FC<{
     }
     if (selectedArrowSkin === 'galaxy') {
       return { highlight: '#F3E8FF', gradientStart: '#A855F7', gradientEnd: '#312E81', border: '#C084FC' };
+    }
+    if (selectedArrowSkin === 'cake_star') {
+      return { highlight: '#FFF1F2', gradientStart: '#F43F5E', gradientEnd: '#D97706', border: '#FBBF24' };
+    }
+    if (isThunderMode) {
+      return thunderTheme;
     }
     return isGalaxy ? galaxyTheme : theme;
   };
@@ -434,6 +465,20 @@ const Render3DArrowSVG: React.FC<{
           />
         )}
 
+        {/* Electric Rain & Thunderstorm Glow Aura Overlay */}
+        {(isThunderMode || selectedArrowSkin === 'thunder_storm') && (
+          <path
+            d={bodyPath}
+            fill="none"
+            stroke="#38BDF8"
+            strokeWidth={Math.max(1.8, s(2.8))}
+            strokeDasharray="7 3"
+            opacity="0.85"
+            className="animate-pulse pointer-events-none"
+            style={{ filter: 'drop-shadow(0 0 6px #0284C7)' }}
+          />
+        )}
+
         {/* Specular White Gloss Top Edge Highlight */}
         <path
           d={
@@ -475,6 +520,34 @@ const Render3DArrowSVG: React.FC<{
           >
             💣
           </text>
+        )}
+
+        {/* Timed Bomb Arrow Badge & Countdown Badge in the center */}
+        {isTimedBomb && (
+          <g className="select-none pointer-events-none">
+            <rect
+              x={totalWidth / 2 - s(24)}
+              y={cy - s(11)}
+              width={s(48)}
+              height={s(21)}
+              rx={s(10)}
+              fill="#7F1D1D"
+              stroke="#F59E0B"
+              strokeWidth={s(1.5)}
+              className="animate-pulse shadow-md"
+            />
+            <text
+              x={totalWidth / 2}
+              y={cy + s(3.5)}
+              textAnchor="middle"
+              fill="#FEF08A"
+              fontSize={s(10.5)}
+              fontWeight="900"
+              className="drop-shadow-md"
+            >
+              💣⏱️{remainingBombTime ?? arrow.timer ?? 15}s
+            </text>
+          </g>
         )}
 
         {/* Ghost Arrow Badge Icon in the center */}
@@ -537,6 +610,36 @@ const Render3DArrowSVG: React.FC<{
           </text>
         )}
 
+        {/* Electric Thunder Arrow Badge Icon in the center ⚡ */}
+        {isThunder && (
+          <text
+            x={totalWidth / 2}
+            y={cy + s(5)}
+            textAnchor="middle"
+            fill="#FEF08A"
+            fontSize={s(16)}
+            fontWeight="900"
+            className="select-none pointer-events-none drop-shadow-md animate-bounce"
+          >
+            ⚡
+          </text>
+        )}
+
+        {/* Rare Silver Arrow Badge Icon in the center 🥈 */}
+        {isSilver && (
+          <text
+            x={totalWidth / 2}
+            y={cy + s(5)}
+            textAnchor="middle"
+            fill="#E2E8F0"
+            fontSize={s(16)}
+            fontWeight="900"
+            className="select-none pointer-events-none drop-shadow-md animate-pulse"
+          >
+            🥈
+          </text>
+        )}
+
         {/* Cosmic Galaxy Sparkle Badge on standard space arrows */}
         {isGalaxy && !isDouble && !isBomb && !isGhost && !isStar && (
           <text
@@ -569,6 +672,11 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
   onUseHammer,
   rainItems = [],
   gameMode = 'main',
+  onTimedBombExploded,
+  highlightedArrowIds,
+  isMonsterObstacleActive = false,
+  monsterObstacleTimer = 2,
+  levelTimeLeft = null,
 }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [bumpingArrowId, setBumpingArrowId] = useState<string | null>(null);
@@ -608,6 +716,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
 
   const [shatteringIceArrowId, setShatteringIceArrowId] = useState<string | null>(null);
   const [unfrozenArrowIds, setUnfrozenArrowIds] = useState<Set<string>>(new Set());
+  const [bombTimers, setBombTimers] = useState<Record<string, number>>({});
 
   useEffect(() => {
     setBumpingArrowId(null);
@@ -617,8 +726,79 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
     setShatteringIceArrowId(null);
   }, [arrows.length, gridCols, gridRows]);
 
+  useEffect(() => {
+    setBombTimers((prev) => {
+      const next = { ...prev };
+      arrows.forEach((a) => {
+        if ((a.isTimedBomb || a.type === 'timed_bomb') && !a.isEscaped) {
+          if (next[a.id] === undefined) {
+            next[a.id] = a.timer ?? 15;
+          }
+        }
+      });
+      return next;
+    });
+  }, [arrows]);
+
+  useEffect(() => {
+    const hasActiveBomb = arrows.some(
+      (a) => (a.isTimedBomb || a.type === 'timed_bomb') && !a.isEscaped
+    );
+    if (!hasActiveBomb) return;
+
+    const interval = setInterval(() => {
+      setBombTimers((prev) => {
+        const next = { ...prev };
+        let changed = false;
+        let explodedId: string | null = null;
+
+        arrows.forEach((a) => {
+          if ((a.isTimedBomb || a.type === 'timed_bomb') && !a.isEscaped) {
+            const current = next[a.id] ?? a.timer ?? 15;
+            if (current > 1) {
+              next[a.id] = current - 1;
+              changed = true;
+            } else if (current === 1) {
+              next[a.id] = 0;
+              changed = true;
+              explodedId = a.id;
+            }
+          }
+        });
+
+        if (explodedId) {
+          soundManager.playSmash();
+          const targetId = explodedId;
+          setSmashingArrowId(targetId);
+          setTimeout(() => {
+            if (onTimedBombExploded) {
+              onTimedBombExploded(targetId);
+            } else {
+              onArrowEscaped(targetId);
+            }
+            setSmashingArrowId(null);
+          }, 300);
+        }
+
+        return changed ? next : prev;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [arrows, onArrowEscaped, onTimedBombExploded]);
+
   const handleArrowClick = (arrow: Arrow) => {
     if (arrow.isEscaped || flyingArrows[arrow.id] || isCompleted || smashingArrowId) return;
+
+    // Monster 2-Second Obstacle check
+    if (gameMode === 'monster' && isMonsterObstacleActive) {
+      soundManager.playSmash();
+      setBumpingArrowId(arrow.id);
+      setTimeout(() => {
+        setBumpingArrowId(null);
+      }, 400);
+      return;
+    }
 
     if (isHammerActive && onUseHammer) {
       soundManager.playSmash();
@@ -706,10 +886,16 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
               ? 'bg-gradient-to-b from-slate-950 via-rose-950 to-amber-950/90 border-amber-500/80 shadow-[0_0_35px_rgba(245,158,11,0.35)]'
               : selectedSkin === 'crystal_neon'
               ? 'bg-gradient-to-b from-slate-950 via-indigo-950 to-fuchsia-950 border-cyan-400/80 shadow-[0_0_35px_rgba(34,211,238,0.35)]'
+              : selectedSkin === 'cake'
+              ? 'bg-gradient-to-b from-pink-950/95 via-rose-950/90 to-amber-950/95 border-pink-400/90 shadow-[0_0_35px_rgba(244,114,182,0.4)] ring-2 ring-pink-300/30'
+              : selectedSkin === 'cake_kingdom'
+              ? 'bg-gradient-to-b from-amber-950/95 via-rose-950/90 to-pink-950/95 border-amber-400/90 shadow-[0_0_40px_rgba(251,191,36,0.45)] ring-2 ring-amber-300/40'
               : selectedSkin === 'rainstorm'
               ? 'bg-gradient-to-b from-slate-950 via-slate-900 to-sky-950 border-sky-400/80 shadow-[0_0_35px_rgba(56,189,248,0.35)]'
               : selectedSkin === 'midnight_thunder' || gameMode === 'thunder'
               ? 'bg-gradient-to-b from-slate-950 via-indigo-950/95 to-slate-950 border-indigo-500/90 shadow-[0_0_40px_rgba(99,102,241,0.4)] ring-1 ring-purple-400/30'
+              : gameMode === 'monster'
+              ? 'bg-gradient-to-b from-slate-950 via-rose-950/90 to-red-950 border-rose-500/90 shadow-[0_0_45px_rgba(225,29,72,0.5)] ring-2 ring-rose-400/40'
               : selectedSkin === 'hammer'
               ? 'bg-gradient-to-b from-stone-950 via-amber-950 to-stone-900 border-amber-500/80 shadow-[0_0_35px_rgba(217,119,6,0.35)]'
               : selectedSkin === 'neon'
@@ -741,6 +927,24 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
               backgroundPosition: `${tileSize / 2}px ${tileSize / 2}px`,
             }}
           />
+
+          {/* Cake Theme & Cake Kingdom Ambient Floating Elements */}
+          {(selectedSkin === 'cake' || selectedSkin === 'cake_kingdom') && (
+            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+              <div className="absolute top-0 left-1/4 w-36 h-28 bg-pink-500/20 rounded-full blur-2xl animate-pulse" />
+              <div className="absolute bottom-0 right-1/4 w-40 h-32 bg-amber-500/20 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }} />
+              <div className="absolute top-2 right-4 text-xl animate-bounce" style={{ animationDuration: '2.5s' }}>🎂</div>
+              <div className="absolute bottom-4 left-4 text-lg animate-pulse" style={{ animationDuration: '1.8s' }}>✨</div>
+              <div className="absolute top-1/2 left-2 text-sm animate-bounce" style={{ animationDuration: '3s' }}>🧁</div>
+              <div className="absolute top-1/3 right-2 text-sm animate-pulse" style={{ animationDuration: '2.2s' }}>🍰</div>
+              {selectedSkin === 'cake_kingdom' && (
+                <>
+                  <div className="absolute bottom-2 right-10 text-base animate-bounce" style={{ animationDuration: '2.2s' }}>🏰</div>
+                  <div className="absolute top-2 left-6 text-sm animate-pulse">👑</div>
+                </>
+              )}
+            </div>
+          )}
 
           {/* Rain & Thunderstorm Animated Background (Dot Particles) */}
           {selectedSkin === 'rainstorm' && (
@@ -836,6 +1040,107 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
                   }}
                 />
               ))}
+            </div>
+          )}
+
+          {/* Royal Emerald Palace Ambient Backdrop */}
+          {selectedSkin === 'emerald_palace' && (
+            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+              {/* Emerald Aura Glow Blobs */}
+              <div className="absolute -top-10 left-1/4 w-72 h-44 bg-emerald-600/30 rounded-full blur-3xl animate-pulse" />
+              <div className="absolute bottom-2 right-10 w-64 h-40 bg-teal-600/25 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }} />
+              <div className="absolute top-1/3 right-1/4 w-48 h-48 bg-emerald-400/15 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '0.8s' }} />
+
+              {/* Floating Emerald Gems & Sparkles */}
+              <div className="absolute top-3 left-6 text-2xl animate-bounce" style={{ animationDuration: '2.2s' }}>💎</div>
+              <div className="absolute top-6 right-8 text-xl animate-pulse" style={{ animationDuration: '1.7s' }}>✨</div>
+              <div className="absolute bottom-8 left-10 text-xl animate-pulse" style={{ animationDuration: '2.5s' }}>🏰</div>
+              <div className="absolute bottom-4 right-12 text-2xl animate-bounce" style={{ animationDuration: '1.9s' }}>💎</div>
+
+              {/* Glowing Emerald Sparkle Dots */}
+              {[
+                { left: '10%', top: '15%', delay: '0.1s' },
+                { left: '28%', top: '40%', delay: '0.6s' },
+                { left: '45%', top: '20%', delay: '1.1s' },
+                { left: '62%', top: '55%', delay: '0.3s' },
+                { left: '80%', top: '25%', delay: '0.8s' },
+                { left: '88%', top: '70%', delay: '1.4s' },
+                { left: '18%', top: '75%', delay: '0.5s' },
+                { left: '52%', top: '82%', delay: '1.0s' },
+              ].map((sparkle, idx) => (
+                <div
+                  key={`emerald-sparkle-${idx}`}
+                  className="absolute w-2 h-2 rounded-full bg-emerald-300 shadow-[0_0_10px_rgba(52,211,153,0.9)] animate-ping"
+                  style={{
+                    left: sparkle.left,
+                    top: sparkle.top,
+                    animationDelay: sparkle.delay,
+                    animationDuration: '2.2s',
+                  }}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Monster Battle Arena Ambient Backdrop & 2-Second Obstacle Shield */}
+          {gameMode === 'monster' && (
+            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+              {/* Fiery Lava Blobs & Crimson Aura */}
+              <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-80 h-44 bg-rose-600/35 rounded-full blur-3xl animate-pulse" />
+              <div className="absolute bottom-0 right-10 w-72 h-40 bg-red-700/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1.2s' }} />
+              <div className="absolute top-1/3 left-5 w-56 h-56 bg-orange-600/20 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '0.6s' }} />
+
+              {/* Giant Monster Glowing Eyes Silhouette */}
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 flex items-center justify-center gap-10 opacity-75 drop-shadow-[0_0_25px_rgba(225,29,72,0.9)] animate-pulse" style={{ animationDuration: '2s' }}>
+                <div className="text-3xl sm:text-4xl transform -rotate-12 select-none">👁️🔥</div>
+                <div className="text-3xl sm:text-4xl transform rotate-12 select-none">🔥👁️</div>
+              </div>
+
+              {/* Floating Flames, Claws & Lava Embers */}
+              <div className="absolute top-4 left-6 text-2xl animate-bounce" style={{ animationDuration: '2.5s' }}>👹</div>
+              <div className="absolute top-8 right-8 text-xl animate-pulse" style={{ animationDuration: '1.8s' }}>⚔️</div>
+              <div className="absolute bottom-6 left-8 text-xl animate-bounce" style={{ animationDuration: '2.2s' }}>🌋</div>
+              <div className="absolute bottom-6 right-10 text-2xl animate-pulse" style={{ animationDuration: '1.5s' }}>🔥</div>
+
+              {/* Rising Lava Sparkles */}
+              {[
+                { left: '12%', top: '20%', delay: '0.1s', size: 'w-2 h-2', color: 'bg-rose-400' },
+                { left: '26%', top: '45%', delay: '0.5s', size: 'w-2.5 h-2.5', color: 'bg-red-500' },
+                { left: '42%', top: '15%', delay: '0.9s', size: 'w-3 h-3', color: 'bg-amber-400' },
+                { left: '58%', top: '60%', delay: '0.3s', size: 'w-2 h-2', color: 'bg-rose-500' },
+                { left: '74%', top: '28%', delay: '0.7s', size: 'w-2.5 h-2.5', color: 'bg-orange-400' },
+                { left: '88%', top: '75%', delay: '1.2s', size: 'w-2 h-2', color: 'bg-red-400' },
+                { left: '20%', top: '80%', delay: '0.4s', size: 'w-3 h-3', color: 'bg-rose-600' },
+                { left: '68%', top: '85%', delay: '1.0s', size: 'w-2 h-2', color: 'bg-amber-500' },
+              ].map((ember, idx) => (
+                <div
+                  key={`ember-${idx}`}
+                  className={`absolute rounded-full shadow-[0_0_12px_rgba(225,29,72,1)] animate-ping ${ember.size} ${ember.color}`}
+                  style={{
+                    left: ember.left,
+                    top: ember.top,
+                    animationDelay: ember.delay,
+                    animationDuration: '1.8s',
+                  }}
+                />
+              ))}
+
+              {/* 2-Second Monster Obstacle Shield Active Overlay */}
+              {isMonsterObstacleActive && (
+                <div className="absolute inset-0 bg-rose-950/45 backdrop-blur-[1px] border-4 border-rose-500/90 rounded-3xl z-30 flex flex-col items-center justify-center pointer-events-none animate-pulse shadow-[0_0_50px_rgba(225,29,72,0.8)]">
+                  <div className="bg-gradient-to-r from-rose-950 via-red-900 to-rose-950 text-rose-100 border-2 border-rose-400 px-4 py-2 rounded-2xl shadow-2xl flex items-center gap-2 animate-bounce">
+                    <span className="text-2xl">⛓️👹🔥</span>
+                    <div className="flex flex-col text-center">
+                      <span className="text-xs sm:text-sm font-black text-white">
+                        عائق الوحش نشط لمدة ثانيتين!
+                      </span>
+                      <span className="text-[10px] text-rose-200">
+                        انتظر انتهائه للحركة ⏳
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
@@ -974,6 +1279,15 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
                     </div>
                   )}
 
+                  {/* Oracle Eye Glowing Illuminated Highlight Overlay (العين البراقة تنور الأسهم) */}
+                  {highlightedArrowIds?.has(arrow.id) && (
+                    <div className="absolute -inset-1 sm:-inset-1.5 rounded-2xl bg-gradient-to-r from-amber-300 via-yellow-300 to-amber-400 opacity-95 blur-[1px] animate-pulse pointer-events-none z-30 border-2 border-yellow-200 shadow-[0_0_25px_rgba(250,204,21,1)]">
+                      <div className="absolute -top-3.5 -right-2 text-sm animate-bounce z-40 drop-shadow-md">
+                        👁️✨
+                      </div>
+                    </div>
+                  )}
+
                   <Render3DArrowSVG
                     arrow={{ ...arrow, isIce: isArrowFrozen }}
                     isBumping={isBumping}
@@ -981,6 +1295,7 @@ export const ArrowMazeBoard: React.FC<ArrowMazeBoardProps> = ({
                     tileSize={tileSize}
                     gameMode={gameMode}
                     selectedArrowSkin={selectedArrowSkin}
+                    remainingBombTime={bombTimers[arrow.id]}
                   />
                 </div>
               );

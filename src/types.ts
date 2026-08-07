@@ -22,13 +22,17 @@ export interface Arrow {
   direction: Direction;
   color: ArrowColor;
   length: number; // Standard length in grid units
-  type?: 'standard' | 'double' | 'bomb' | 'ghost' | 'star' | 'diamond' | 'ice'; // Type of arrow: standard, double-headed, bomb, ghost, bonus star, diamond veteran, or frozen ice arrow
+  type?: 'standard' | 'double' | 'bomb' | 'ghost' | 'star' | 'diamond' | 'ice' | 'thunder' | 'silver' | 'timed_bomb'; // Type of arrow
   isDouble?: boolean;
   isBomb?: boolean;
+  isTimedBomb?: boolean;
+  timer?: number;
   isGhost?: boolean;
   isStar?: boolean;
   isDiamond?: boolean;
   isIce?: boolean;
+  isThunder?: boolean;
+  isSilver?: boolean;
   cells?: { x: number; y: number }[]; // Ordered list of grid coordinates relative to (gridX, gridY) or absolute grid positions
   isEscaped?: boolean;
   isFlying?: boolean;
@@ -46,11 +50,41 @@ export interface Level {
   arrows: Arrow[];
   maxDrops: number;
   requiresHammer?: boolean;
+  timeLimitSeconds?: number;
 }
 
-export type ThemeSkin = 'candy' | 'jelly' | 'neon' | 'cyber' | 'nebula' | 'supernova' | 'rainstorm' | 'hammer' | 'crystal_neon' | 'golden_throne' | 'midnight_thunder';
+export type ThemeSkin = 'candy' | 'jelly' | 'neon' | 'cyber' | 'nebula' | 'supernova' | 'rainstorm' | 'hammer' | 'crystal_neon' | 'golden_throne' | 'midnight_thunder' | 'cake' | 'cake_kingdom' | 'emerald_palace';
 
-export type ArrowSkin = 'classic' | 'neon' | 'gold' | 'crystal' | 'dragon' | 'cyber' | 'rainbow' | 'phoenix' | 'galaxy';
+export type ArrowSkin = 'classic' | 'neon' | 'gold' | 'crystal' | 'dragon' | 'cyber' | 'rainbow' | 'phoenix' | 'galaxy' | 'cake_star' | 'thunder_storm';
+
+export interface Friend {
+  id: string;
+  name: string;
+  avatar: string;
+  level: number;
+  status: 'online' | 'offline' | 'ingame';
+  isFavorite?: boolean;
+  lastSeenAr?: string;
+  lastSeenEn?: string;
+}
+
+export type ItemType = 'coins' | 'thunders' | 'hammers' | 'cakes' | 'creams' | 'chocolates' | 'tomatoes' | 'spaceCreams';
+
+export interface TradeItem {
+  type: ItemType;
+  amount: number;
+}
+
+export interface TradeOffer {
+  id: string;
+  senderId: string;
+  senderName: string;
+  senderAvatar: string;
+  offeredItems: TradeItem[];
+  requestedItems: TradeItem[];
+  status: 'pending' | 'accepted' | 'declined';
+  timestamp: string;
+}
 
 export interface PlayerStats {
   currentLevel: number;
@@ -66,6 +100,7 @@ export interface PlayerStats {
   language: 'ar' | 'en';
   hammers: number;
   thunders: number;
+  lightnings?: number;
   creams: number;
   creamHammers?: number;
 }

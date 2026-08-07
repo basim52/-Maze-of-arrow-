@@ -9,7 +9,7 @@ interface VictoryModalProps {
   coinsEarned: number;
   spaceCoinsEarned?: number;
   dropsCount?: number;
-  gameMode?: 'main' | 'galaxy' | 'long';
+  gameMode?: 'main' | 'galaxy' | 'long' | 'thunder' | 'timed' | 'monster';
   language: 'ar' | 'en';
   onNextLevel: () => void;
   onReplay: () => void;
@@ -29,7 +29,16 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({
   onLevelSelect,
 }) => {
   const isAr = language === 'ar';
-  const pointsPerStar = gameMode === 'long' ? 8 : 4;
+  const pointsPerStar =
+    gameMode === 'monster'
+      ? 12
+      : gameMode === 'timed'
+      ? 10
+      : gameMode === 'thunder'
+      ? 6
+      : gameMode === 'long'
+      ? 8
+      : 4;
 
   useEffect(() => {
     soundManager.playVictory();

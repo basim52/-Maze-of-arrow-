@@ -8,13 +8,17 @@ interface InventoryModalProps {
   coins: number;
   spaceCoins: number;
   tomatoes: number;
-  spaceCreams: number;
+  spaceCreams?: number;
+  liquidChocolates?: number;
   hammers: number;
   thunders: number;
+  lightnings?: number;
   creams: number;
   creamHammers?: number;
   chocolates: number;
   cakes?: number;
+  chickens?: number;
+  oracleEyes?: number;
   selectedSkin: ThemeSkin;
   unlockedSkins: ThemeSkin[];
   selectedArrowSkin?: ArrowSkin;
@@ -25,7 +29,10 @@ interface InventoryModalProps {
   onUseChocolate: () => void;
   onUseThunder?: () => void;
   onUseTomato: () => void;
-  onUseSpaceCream: () => void;
+  onUseSpaceCream?: () => void;
+  onUseLiquidChocolate?: () => void;
+  onUseChicken?: () => void;
+  onUseOracleEye?: () => void;
   onToggleHammer: () => void;
   onExchangeCake?: (cakeCount: number) => void;
   onSelectSkin: (skin: ThemeSkin) => void;
@@ -99,19 +106,37 @@ const SKINS_INFO: SkinInfo[] = [
     icon: '💎',
     gradient: 'from-cyan-500 via-indigo-600 to-fuchsia-600',
   },
+  {
+    id: 'cake',
+    nameAr: 'خلفية مملكة الكعك 🎂✨',
+    nameEn: 'Cake Kingdom Background 🎂✨',
+    icon: '🎂',
+    gradient: 'from-pink-500 via-rose-400 to-amber-300',
+  },
+  {
+    id: 'emerald_palace',
+    nameAr: 'خلفية القصر الزمردي 🏰💎✨',
+    nameEn: 'Royal Emerald Palace Background 🏰💎✨',
+    icon: '💎',
+    gradient: 'from-emerald-600 via-teal-800 to-slate-950',
+  },
 ];
 
 export const InventoryModal: React.FC<InventoryModalProps> = ({
   coins,
   spaceCoins,
   tomatoes,
-  spaceCreams,
+  spaceCreams = 0,
+  liquidChocolates = 0,
   hammers,
   thunders,
+  lightnings = 0,
   creams,
   creamHammers = 0,
   chocolates,
   cakes = 0,
+  chickens = 0,
+  oracleEyes = 0,
   selectedSkin,
   unlockedSkins,
   selectedArrowSkin = 'classic',
@@ -123,6 +148,9 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
   onUseThunder,
   onUseTomato,
   onUseSpaceCream,
+  onUseLiquidChocolate,
+  onUseChicken,
+  onUseOracleEye,
   onToggleHammer,
   onExchangeCake,
   onSelectSkin,
@@ -132,8 +160,8 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
 }) => {
   const isAr = language === 'ar';
   const [viewMode, setViewMode] = useState<'main' | 'event'>('main');
-  const totalStandardTools = creams + creamHammers + chocolates + hammers + cakes;
-  const totalEventTools = tomatoes + spaceCreams;
+  const totalStandardTools = creams + creamHammers + chocolates + hammers + cakes + lightnings + oracleEyes;
+  const totalEventTools = tomatoes + spaceCreams + liquidChocolates + chickens;
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 animate-fade-in">
@@ -171,10 +199,10 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
             <span>{isAr ? 'النقود:' : 'Coins:'}</span>
             <span className="text-amber-600 font-black text-sm">{coins} 🪙</span>
           </div>
-          <div className="flex items-center gap-1 text-purple-900 font-black text-xs sm:text-sm bg-purple-100/80 px-2.5 py-1 rounded-full border border-purple-200">
-            <span>🚀</span>
-            <span>{spaceCoins}</span>
-            <span className="text-[10px] text-purple-700">{isAr ? 'فضاء' : 'Space'}</span>
+          <div className="flex items-center gap-1 text-yellow-900 font-black text-xs sm:text-sm bg-yellow-100/80 px-2.5 py-1 rounded-full border border-yellow-300">
+            <span>⚡</span>
+            <span>{thunders}</span>
+            <span className="text-[10px] text-yellow-700">{isAr ? 'عملة رعد' : 'Thunder'}</span>
           </div>
         </div>
 
@@ -269,7 +297,9 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
                 <button
                   onClick={() => {
                     soundManager.playClick();
-                    onUseSpaceCream();
+                    if (onUseSpaceCream) {
+                      onUseSpaceCream();
+                    }
                     onClose();
                   }}
                   className="px-3.5 py-2.5 bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white font-black text-xs rounded-xl shadow-md shadow-purple-200 hover:scale-105 active:scale-95 cursor-pointer transition-all shrink-0"
@@ -285,6 +315,106 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
                   className="px-3 py-2 bg-purple-100 hover:bg-purple-200 text-purple-900 font-bold text-xs rounded-xl border border-purple-300 cursor-pointer shrink-0"
                 >
                   {isAr ? 'متجر الفضاء' : 'Galaxy Shop'}
+                </button>
+              )}
+            </div>
+
+            {/* Liquid Chocolate Item */}
+            <div className="p-3.5 rounded-2xl border-2 border-amber-300 bg-gradient-to-r from-amber-50 via-orange-50/70 to-yellow-50/60 flex items-center justify-between gap-2 shadow-xs">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl bg-white p-2 rounded-2xl shadow-xs border border-amber-200">
+                  🍫💧
+                </span>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-black text-sm text-amber-950 flex items-center gap-1">
+                      {isAr ? 'الشوكولاته السائلة' : 'Liquid Chocolate'}
+                      <span className="bg-amber-600 text-white text-[9px] px-1.5 py-0.2 rounded-full font-black">
+                        🍫
+                      </span>
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-amber-800 font-medium mt-0.5">
+                    {isAr ? 'تزيل 3 أسهم دفعة واحدة من اللوحة' : 'Removes 3 arrows at once'}
+                  </p>
+                  <span className="inline-block mt-1 bg-amber-200 text-amber-900 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-amber-300">
+                    {isAr ? `الممتلكات: ${liquidChocolates}` : `Owned: ${liquidChocolates}`}
+                  </span>
+                </div>
+              </div>
+
+              {liquidChocolates > 0 ? (
+                <button
+                  onClick={() => {
+                    soundManager.playClick();
+                    if (onUseLiquidChocolate) {
+                      onUseLiquidChocolate();
+                    }
+                    onClose();
+                  }}
+                  className="px-3.5 py-2.5 bg-gradient-to-r from-amber-600 via-orange-600 to-amber-500 hover:from-amber-700 hover:to-orange-700 text-white font-black text-xs rounded-xl shadow-md shadow-amber-200 hover:scale-105 active:scale-95 cursor-pointer transition-all shrink-0"
+                >
+                  {isAr ? 'استخدم الآن' : 'Use Now'}
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    soundManager.playClick();
+                    onOpenShop();
+                  }}
+                  className="px-3 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold text-xs rounded-xl border border-amber-300 cursor-pointer shrink-0"
+                >
+                  {isAr ? 'قسم الكعك' : 'Cake Shop'}
+                </button>
+              )}
+            </div>
+
+            {/* Roasted Chicken Item (دجاج محمر 🐔) */}
+            <div className="p-3.5 rounded-2xl border-2 border-amber-400 bg-gradient-to-r from-amber-50 via-orange-50/80 to-yellow-50/70 flex items-center justify-between gap-2 shadow-xs">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl bg-white p-2 rounded-2xl shadow-xs border border-amber-300">
+                  🐔
+                </span>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-black text-sm text-amber-950 flex items-center gap-1">
+                      {isAr ? 'الدجاج المحمر' : 'Roasted Chicken'}
+                      <span className="bg-amber-500 text-white text-[9px] px-1.5 py-0.2 rounded-full font-black">
+                        🐔🔥
+                      </span>
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-amber-800 font-medium mt-0.5">
+                    {isAr ? 'تزيل 4 أسهم دفعة واحدة من اللوحة (بسعر 2 كعكة)' : 'Removes 4 arrows at once (2 Cakes)'}
+                  </p>
+                  <span className="inline-block mt-1 bg-amber-200 text-amber-900 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-amber-300">
+                    {isAr ? `الممتلكات: ${chickens}` : `Owned: ${chickens}`}
+                  </span>
+                </div>
+              </div>
+
+              {chickens > 0 ? (
+                <button
+                  onClick={() => {
+                    soundManager.playClick();
+                    if (onUseChicken) {
+                      onUseChicken();
+                    }
+                    onClose();
+                  }}
+                  className="px-3.5 py-2.5 bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 hover:from-amber-600 hover:to-orange-600 text-white font-black text-xs rounded-xl shadow-md shadow-amber-200 hover:scale-105 active:scale-95 cursor-pointer transition-all shrink-0"
+                >
+                  {isAr ? 'استخدم الآن' : 'Use Now'}
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    soundManager.playClick();
+                    onOpenShop();
+                  }}
+                  className="px-3 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold text-xs rounded-xl border border-amber-300 cursor-pointer shrink-0"
+                >
+                  {isAr ? 'قسم الكعك' : 'Cake Shop'}
                 </button>
               )}
             </div>
@@ -336,8 +466,6 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
                 </button>
               )}
             </div>
-
-            {/* Back to Main Bag Button */}
             <button
               onClick={() => {
                 soundManager.playClick();
@@ -384,8 +512,8 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
                   </div>
                   <p className="text-[11px] text-purple-200/80 font-medium">
                     {isAr
-                      ? 'الكريمة الفضائية والطماطة الفضائية'
-                      : 'Space Cream & Space Tomato'}
+                      ? 'الشوكولاته السائلة والطماطة الفضائية'
+                      : 'Liquid Chocolate & Space Tomato'}
                   </p>
                 </div>
               </div>
@@ -418,6 +546,54 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
               </div>
 
               <div className="grid grid-cols-1 gap-2.5">
+                {/* Oracle Eye Item (عين العرافة الكونية 👁️🔮✨) */}
+                <div className="p-3 rounded-2xl border-2 border-indigo-300 bg-gradient-to-r from-indigo-50 via-purple-50/70 to-pink-50/60 flex items-center justify-between gap-2 shadow-xs">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl sm:text-3xl bg-white p-2 rounded-2xl shadow-xs border border-indigo-200 animate-pulse">
+                      👁️🔮
+                    </span>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-extrabold text-sm text-indigo-950 flex items-center gap-1">
+                          {isAr ? 'عين العرافة (Oracle Eye)' : 'Oracle Eye'}
+                          <span className="bg-indigo-600 text-white text-[9px] px-1.5 py-0.2 rounded-full font-black">
+                            👁️
+                          </span>
+                        </span>
+                        <span className="bg-indigo-200 text-indigo-900 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-indigo-300">
+                          {oracleEyes} {isAr ? 'متوفر' : 'owned'}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-indigo-800/80 font-medium">
+                        {isAr ? 'تطلق وتزيل الأسهم الحرة الكونية فوراً ✨' : 'Instantly escapes unblocked free arrows'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {oracleEyes > 0 ? (
+                    <button
+                      onClick={() => {
+                        soundManager.playClick();
+                        if (onUseOracleEye) onUseOracleEye();
+                        onClose();
+                      }}
+                      className="px-3.5 py-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:from-indigo-700 hover:to-pink-600 text-white font-black text-xs rounded-xl shadow-md shadow-indigo-200 hover:scale-105 active:scale-95 cursor-pointer transition-all shrink-0"
+                    >
+                      {isAr ? 'استخدم الآن' : 'Use Now'}
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        soundManager.playClick();
+                        onOpenShop();
+                      }}
+                      className="px-2.5 py-1.5 bg-slate-100 hover:bg-indigo-100 text-slate-500 hover:text-indigo-700 font-bold text-[11px] rounded-xl border border-slate-200 cursor-pointer shrink-0"
+                    >
+                      {isAr ? 'متجر الكعك' : 'Cake Shop'}
+                    </button>
+                  )}
+                </div>
+
                 {/* Cream Item */}
                 <div className="p-3 rounded-2xl border-2 border-pink-200 bg-gradient-to-r from-pink-50/70 to-rose-50/50 flex items-center justify-between gap-2 shadow-xs">
                   <div className="flex items-center gap-3">
@@ -553,6 +729,53 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
                   )}
                 </div>
 
+                {/* Lightning Strike Item (ضربة البرق ⚡) */}
+                <div className="p-3 rounded-2xl border-2 border-yellow-300 bg-gradient-to-r from-amber-50 via-yellow-50/80 to-indigo-50/70 flex items-center justify-between gap-2 shadow-xs">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl sm:text-3xl bg-white p-2 rounded-2xl shadow-xs border border-yellow-300">
+                      ⚡
+                    </span>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-extrabold text-sm text-amber-950 flex items-center gap-1">
+                          {isAr ? 'ضربة البرق ⚡' : 'Lightning Strike ⚡'}
+                        </span>
+                        <span className="bg-yellow-200 text-amber-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-yellow-300">
+                          {lightnings} {isAr ? 'متوفر' : 'owned'}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-amber-800/90 font-medium">
+                        {isAr ? 'تحذف 3 أسهم عشوائية فوراً من اللوحة' : 'Deletes 3 random arrows instantly'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {lightnings > 0 ? (
+                    <button
+                      onClick={() => {
+                        soundManager.playClick();
+                        if (onUseThunder) {
+                          onUseThunder();
+                        }
+                        onClose();
+                      }}
+                      className="px-3.5 py-2 bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 hover:scale-105 text-slate-950 font-black text-xs rounded-xl shadow-md active:scale-95 cursor-pointer transition-all shrink-0"
+                    >
+                      {isAr ? 'استخدم الآن' : 'Use Now'}
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        soundManager.playClick();
+                        onOpenShop();
+                      }}
+                      className="px-2.5 py-1.5 bg-slate-100 hover:bg-yellow-100 text-slate-500 hover:text-amber-800 font-bold text-[11px] rounded-xl border border-slate-200 cursor-pointer shrink-0"
+                    >
+                      {isAr ? 'شراء' : 'Buy'}
+                    </button>
+                  )}
+                </div>
+
                 {/* Hammer Item */}
                 <div className="p-3 rounded-2xl border-2 border-amber-300 bg-gradient-to-r from-amber-50 to-orange-50 flex items-center justify-between gap-2 shadow-xs">
                   <div className="flex items-center gap-3">
@@ -646,6 +869,7 @@ export const InventoryModal: React.FC<InventoryModalProps> = ({
                     </button>
                   )}
                 </div>
+
               </div>
             </div>
 
